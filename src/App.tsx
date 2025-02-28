@@ -1,14 +1,14 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { AppBar, Box } from "@mui/material";
 import { Home } from "./modules/Home";
-
+import Header from "./modules/Header/Header";
+import { MAIN_COLORS } from "./shared/colors";
 
 const App = () => {
-
   return (
-    <Box sx={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden" }}>
-      <Home />
-    </Box>
+    <AppBar sx={{ backgroundColor: MAIN_COLORS.mainBG }}>
+      <Header />
+    </AppBar>
   );
 };
 
