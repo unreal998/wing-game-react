@@ -1,14 +1,13 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { Home } from "./modules/Home";
-
+import { AppBar } from "@mui/material";
+import { MAIN_COLORS } from "./shared/colors";
+import Referal from "./modules/referal";
 
 const App = () => {
-
   return (
-    <Box sx={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden" }}>
-      <Home />
-    </Box>
+    <AppBar sx={{ height: "100%", backgroundColor: MAIN_COLORS.mainBG }}>
+      <Referal />
+    </AppBar>
   );
 };
 
