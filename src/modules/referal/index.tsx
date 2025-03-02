@@ -11,6 +11,10 @@ import { StyledMainTypography } from "./components/StyledMainTypography";
 import { StyledMainJpg } from "./components/StyledMainJpg";
 import Copy from "../../assets/copy.svg";
 import { StyledCopy } from "./components/StyledCopy";
+import { StyledBasicBox } from "./components/StyledBasicBox";
+import { styled } from "@mui/material";
+import { StyledInputBox } from "./components/StyledInputBox";
+import { StyledInput } from "./components/StyledInput";
 
 const Referal = () => {
   const [inviteText, setInviteText] = useState("Invite a friend");
@@ -86,27 +90,7 @@ const Referal = () => {
             </Typography>
           </Box>
         </Box>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            marginTop: "17px",
-            border: `1px solid ${MAIN_COLORS.contentYellow}`,
-            borderRadius: "5px",
-            flexDirection: "column",
-            overflowY: "scroll",
-            scrollbarGutter: "stable",
-            maxHeight: "374px",
-            scrollbarWidth: "thin",
-            scrollbarColor: `${MAIN_COLORS.contentYellow} #FFFFFF0F`,
-            "&::-webkit-scrollbar": { width: "4px" },
-            "&::-webkit-scrollbar-thumb": {
-              backgroundColor: MAIN_COLORS.contentYellow,
-              borderRadius: "2px",
-            },
-            "&::-webkit-scrollbar-track": { backgroundColor: "#FFFFFFF" },
-          }}
-        >
+        <StyledBasicBox>
           <TableBox>
             <StyledHeader sx={{ flex: 1.6, paddingLeft: "5px" }}>
               <TableBoxHead>User</TableBoxHead>
@@ -147,7 +131,7 @@ const Referal = () => {
                 ))}
               </TableBox>
             ))}
-        </Box>
+        </StyledBasicBox>
       </Box>
       <Box sx={{ paddingTop: "24px" }}>
         <Typography
@@ -156,30 +140,13 @@ const Referal = () => {
           Your Invite Link
         </Typography>
         <Box sx={{ display: "flex", gap: "11px" }}>
-          <Box
-            sx={{
-              width: "100%",
-              border: `1px solid ${MAIN_COLORS.contentYellow}`,
-              borderRadius: "9px",
-              backgroundColor: "rgba(217, 217, 217, 0.12)",
-              padding: "19px 21px",
-            }}
-          >
-            <input
+          <StyledInputBox>
+            <StyledInput
               type="text"
               value={inviteText}
               onChange={(e) => setInviteText(e.target.value)}
-              style={{
-                width: "100%",
-                background: "transparent",
-                border: "none",
-                outline: "none",
-                color: "white",
-                fontSize: "16px",
-                fontWeight: 600,
-              }}
             />
-          </Box>
+          </StyledInputBox>
           <StyledCopy onClick={copyToClipboard}>
             <img
               src={Copy}
@@ -192,4 +159,5 @@ const Referal = () => {
     </Box>
   );
 };
+
 export default Referal;
