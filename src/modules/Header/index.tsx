@@ -2,26 +2,12 @@ import React, { useState } from "react";
 import { AppBar, Box, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
-import Rechanle from "../../assets/Rectangle.svg";
-import RechanleT from "../../assets/RectangleT.svg";
 import USDT from "../../assets/usdt.svg";
+import { StyledMain } from "./components/StyledMain";
 
 const Header = () => {
   return (
-    <Box
-      sx={{
-        width: "100hv",
-        height: "50px",
-        backgroundColor: MAIN_COLORS.headerBG,
-        borderRadius: "52px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginLeft: "14px",
-        marginRight: "14px",
-        marginTop: "24px",
-      }}
-    >
+    <StyledMain>
       <Box
         sx={{ gap: "9px", display: "flex", paddingLeft: "19px", width: "50vh" }}
       >
@@ -47,11 +33,26 @@ const Header = () => {
               Dev948
             </Typography>
             <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
-              |v|
+              LVL:23
             </Typography>
           </Box>
-          <img src={RechanleT} alt="RechanleT" />
-          <img src={Rechanle} alt="Rechanle" style={{ width: "55px" }} />
+          <Box
+            sx={{
+              width: "96px",
+              backgroundColor: "rgba(255, 255, 255, 0.06)",
+              height: "3px",
+              borderRadius: "34px",
+            }}
+          >
+            <Box
+              sx={{
+                width: "34%",
+                height: "100%",
+                backgroundColor: "#63EE6A",
+                borderRadius: "34px",
+              }}
+            ></Box>
+          </Box>
         </Box>
       </Box>
       <Box
@@ -68,7 +69,7 @@ const Header = () => {
           TON: 234
         </Typography>
       </Box>
-    </Box>
+    </StyledMain>
   );
 };
 export default Header;

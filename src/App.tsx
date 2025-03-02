@@ -1,7 +1,6 @@
 import React from "react";
-import { AppBar, Box } from "@mui/material";
-import { Home } from "./modules/Home";
-import Header from "./modules/Header/Header";
+import { AppBar } from "@mui/material";
+import Header from "./modules/Header";
 import { MAIN_COLORS } from "./shared/colors";
 
 const App = () => {
