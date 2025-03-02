@@ -14,7 +14,7 @@ import Uk from "../../assets/flagUk.png";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 
-const Header = () => {
+const Languageselector = () => {
   const { t } = useTranslation();
 
   const [languageAnchorEl, setLanguageAnchorEl] = useState<null | HTMLElement>(
@@ -86,4 +86,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Languageselector;
