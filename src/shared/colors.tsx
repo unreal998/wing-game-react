@@ -8,4 +8,5 @@ export const MAIN_COLORS = {
   referalBox: "rgba(0, 0, 0, 0.46)",
   referalBottom: "rgba(255, 255, 255, 0.14)",
   gold: "#FFDE00",
+  witeText: "#FFFFFF",
 };
