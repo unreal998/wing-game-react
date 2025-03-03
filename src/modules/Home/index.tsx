@@ -1,5 +1,6 @@
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { useEffect } from "react";
 
 const Model = () => {
   const model = useGLTF("/dania.glb");
