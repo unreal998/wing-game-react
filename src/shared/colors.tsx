@@ -3,4 +3,7 @@ export const MAIN_COLORS = {
   textColor: "#FFFFFF",
   border: "rgba(255, 255, 255, 0.12)",
   mainBG: "#01121D",
+  contentYellow: "#63EE6A",
+  footerText: "rgba(255, 255, 255, 0.69)",
+  witeText: "#FFFFFF",
 };
