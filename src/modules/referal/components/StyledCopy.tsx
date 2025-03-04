@@ -1,5 +1,4 @@
 import { Box, styled } from "@mui/material";
-import { MAIN_COLORS } from "../../../shared/colors";
 
 export const StyledCopy = styled(Box)({
   backgroundColor: "rgba(217, 217, 217, 0.12)",

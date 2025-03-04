@@ -10,7 +10,6 @@ export const StyledBasicBox = styled(Box)({
   flexDirection: "column",
   overflowY: "scroll",
   scrollbarGutter: "stable",
-  maxHeight: "374px",
   scrollbarWidth: "thin",
   scrollbarColor: `${MAIN_COLORS.contentYellow} #FFFFFF0F`,
   "&::-webkit-scrollbar": { width: "4px" },

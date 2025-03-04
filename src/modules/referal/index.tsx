@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { TableBox } from "./components/TableBox";
 import Male from "../../assets/Male.svg";
@@ -12,9 +12,9 @@ import { StyledMainJpg } from "./components/StyledMainJpg";
 import Copy from "../../assets/copy.svg";
 import { StyledCopy } from "./components/StyledCopy";
 import { StyledBasicBox } from "./components/StyledBasicBox";
-import { styled } from "@mui/material";
 import { StyledInputBox } from "./components/StyledInputBox";
 import { StyledInput } from "./components/StyledInput";
+import { heightProportion } from "../../shared/utils";
 
 const Referal = () => {
   const [inviteText, setInviteText] = useState("Invite a friend");
@@ -30,8 +30,12 @@ const Referal = () => {
       });
   };
 
+  const tableHeight = useMemo(() => {
+    return heightProportion - 265;
+  }, []);
+
   return (
-    <Box sx={{ padding: "25px 15px 0 15px" }}>
+    <Box sx={{ padding: "5px 15px 0 15px", height: `${heightProportion}px` }}>
       <Box>
         <Typography
           sx={{ fontSize: "24px", fontWeight: 700, paddingBottom: "8px" }}
@@ -90,7 +94,7 @@ const Referal = () => {
             </Typography>
           </Box>
         </Box>
-        <StyledBasicBox>
+        <StyledBasicBox height={`${tableHeight}px`}>
           <TableBox>
             <StyledHeader sx={{ flex: 1.6, paddingLeft: "5px" }}>
               <TableBoxHead>User</TableBoxHead>
@@ -132,28 +136,28 @@ const Referal = () => {
               </TableBox>
             ))}
         </StyledBasicBox>
-      </Box>
-      <Box sx={{ paddingTop: "24px" }}>
-        <Typography
-          sx={{ fontSize: "16px", fontWeight: 600, paddingBottom: "9px" }}
-        >
-          Your Invite Link
-        </Typography>
-        <Box sx={{ display: "flex", gap: "11px" }}>
-          <StyledInputBox>
-            <StyledInput
-              type="text"
-              value={inviteText}
-              onChange={(e) => setInviteText(e.target.value)}
-            />
-          </StyledInputBox>
-          <StyledCopy onClick={copyToClipboard}>
-            <img
-              src={Copy}
-              alt="Copy"
-              style={{ width: "16px", height: "16px", cursor: "pointer" }}
-            />
-          </StyledCopy>
+        <Box sx={{ paddingTop: "24px" }}>
+          <Typography
+            sx={{ fontSize: "16px", fontWeight: 600, paddingBottom: "9px" }}
+          >
+            Your Invite Link
+          </Typography>
+          <Box sx={{ display: "flex", gap: "11px" }}>
+            <StyledInputBox>
+              <StyledInput
+                type="text"
+                value={inviteText}
+                onChange={(e) => setInviteText(e.target.value)}
+              />
+            </StyledInputBox>
+            <StyledCopy onClick={copyToClipboard}>
+              <img
+                src={Copy}
+                alt="Copy"
+                style={{ width: "16px", height: "16px", cursor: "pointer" }}
+              />
+            </StyledCopy>
+          </Box>
         </Box>
       </Box>
     </Box>

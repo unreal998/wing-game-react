@@ -1,4 +1,3 @@
-import React from "react";
 import { styled, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 
