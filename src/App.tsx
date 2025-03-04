@@ -4,13 +4,12 @@ import Referal from "./modules/referal";
 import { AppBar } from "@mui/material";
 import Footer from "./modules/Footer";
 import Header from "./modules/Header";
+import Settings from "./modules/Settings";
 
 const App = () => {
   return (
     <AppBar sx={{ height: "100%", backgroundColor: MAIN_COLORS.mainBG }}>
-      <Header />
-      <Referal />
-      <Footer />
+      <Settings />
     </AppBar>
   );
 };
