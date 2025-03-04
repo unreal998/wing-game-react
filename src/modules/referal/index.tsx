@@ -46,7 +46,7 @@ const Referal = () => {
           <Box
             sx={{
               backgroundColor: MAIN_COLORS.referalBox,
-              border: `1px solid  ${MAIN_COLORS.contentYellow}`,
+              border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
               display: "flex",
               flexDirection: "column",
               borderRadius: "9px",
@@ -71,7 +71,7 @@ const Referal = () => {
           <Box
             sx={{
               backgroundColor: MAIN_COLORS.referalBox,
-              border: `1px solid  ${MAIN_COLORS.contentYellow}`,
+              border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
               display: "flex",
               flexDirection: "column",
               borderRadius: "9px",

@@ -10,12 +10,15 @@ import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
 import { StyledCenterFooter } from "./componets/StyledCenterFooter";
 import { StyledFooterBox } from "./componets/StyledFooterBox";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ position: "fixed", bottom: 0, left: 0, width: "100%" }}>
       <StyledFooterBox>
-        <StyledFooterBoxes>
+        <StyledFooterBoxes onClick={() => navigate("/referal")}>
           <img
             src={Linked}
             alt="linked"
@@ -23,7 +26,7 @@ const Footer = () => {
           />
           <Typography
             sx={{
-              color: MAIN_COLORS.contentYellow,
+              color: MAIN_COLORS.activeTabColor,
               fontSize: "12px",
               fontWeight: 700,
             }}
@@ -31,19 +34,19 @@ const Footer = () => {
             Referal
           </Typography>
         </StyledFooterBoxes>
-        <StyledFooterBoxes>
+        <StyledFooterBoxes onClick={() => navigate("/mission")}>
           <img src={Mission} alt="mission" />
           <StyledFooterBoxesTypography>Mission</StyledFooterBoxesTypography>
         </StyledFooterBoxes>
-        <StyledCenterFooter>
+        <StyledCenterFooter onClick={() => navigate("/")}>
           <img src={Wind} alt=" wind " />
           <StyledFooterBoxesTypography>Home</StyledFooterBoxesTypography>
         </StyledCenterFooter>
-        <StyledFooterBoxes>
+        <StyledFooterBoxes onClick={() => navigate("/shop")}>
           <img src={Cart} alt="cart" />
           <StyledFooterBoxesTypography>Shop</StyledFooterBoxesTypography>
         </StyledFooterBoxes>
-        <StyledFooterBoxes>
+        <StyledFooterBoxes onClick={() => navigate("/wallet")}>
           <img
             src={Wallet}
             alt=" wallet"
