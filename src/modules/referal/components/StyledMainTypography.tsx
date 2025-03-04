@@ -1,8 +1,7 @@
 import { styled, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 
-export const StyledFooterBoxesTypography = styled(Typography)({
-  color: MAIN_COLORS.footerText,
+export const StyledMainTypography = styled(Typography)({
   fontSize: "12px",
-  fontWeight: 400,
+  color: MAIN_COLORS.textColor,
 });

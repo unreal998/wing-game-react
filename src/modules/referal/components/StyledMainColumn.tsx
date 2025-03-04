@@ -1,10 +1,9 @@
 import { Box, styled } from "@mui/material";
 
-export const StyledFooterBoxes = styled(Box)({
+export const StyledMainColumn = styled(Box)({
+  flex: 0.7,
   display: "flex",
   flexDirection: "column",
-  gap: "7px",
+  alignItems: "flex-start",
   justifyContent: "center",
-  alignItems: "center",
-  flex: 1,
 });

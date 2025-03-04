@@ -1,9 +1,8 @@
 import { Box, styled } from "@mui/material";
-import React from "react";
 import { MAIN_COLORS } from "../../../shared/colors";
 
 export const StyledMain = styled(Box)({
-  width: "100hv",
+  width: "100wv",
   height: "50px",
   backgroundColor: MAIN_COLORS.headerBG,
   borderRadius: "52px",
@@ -12,5 +11,5 @@ export const StyledMain = styled(Box)({
   alignItems: "center",
   marginLeft: "14px",
   marginRight: "14px",
-  marginTop: "24px",
+  marginTop: "2vh",
 });

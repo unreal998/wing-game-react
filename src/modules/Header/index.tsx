@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { AppBar, Box, Typography } from "@mui/material";
+import React from "react";
+import { Box, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
 import USDT from "../../assets/usdt.svg";
