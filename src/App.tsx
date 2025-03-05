@@ -6,6 +6,7 @@ import Footer from "./modules/Footer";
 import Header from "./modules/Header";
 import { Home } from "./modules/Home";
 import { Route, Routes } from "react-router-dom";
+import Wallet from "./modules/Wallet";
 
 const App = () => {
   return (
@@ -14,7 +15,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/referal" element={<Referal />} />
-        <Route path="/wallet" element={<Home />} />
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/shop" element={<Home />} />
         <Route path="/settings" element={<Home />} />
         <Route path="/missions" element={<Home />} />

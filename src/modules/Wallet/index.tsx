@@ -9,12 +9,8 @@ import { StyledTableBox } from "./components/StyledTableBox";
 
 const Wallet = () => {
   return (
-    <Box sx={{ padding: "25px 15px 0 15px" }}>
-      <Typography
-        sx={{ fontSize: "24px", fontWeight: 700, paddingBottom: "8px" }}
-      >
-        Wallet
-      </Typography>
+    <Box sx={{ padding: "0px 15px 0 15px" }}>
+      <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>Wallet</Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box
           sx={{
@@ -86,7 +82,6 @@ const Wallet = () => {
           display: "flex",
           alignItems: "center",
           gap: "9px",
-          paddingTop: "40px",
         }}
       >
         <Typography
@@ -112,11 +107,11 @@ const Wallet = () => {
           }}
         />
       </Box>
-      <StyledBasicBox>
+      <StyledBasicBox sx={{ marginTop: "0" }}>
         <img
           src={Mask}
           alt="mask"
-          style={{ paddingTop: "25px", width: "88px" }}
+          style={{ paddingTop: "5px", width: "88px" }}
         />
         <Typography
           sx={{
@@ -124,8 +119,8 @@ const Wallet = () => {
             fontWeight: 400,
             paddingLeft: "28px",
             paddingRight: "28px",
-            paddingTop: "10px",
-            paddingBottom: "11px",
+            paddingTop: "5px",
+            paddingBottom: "5px",
           }}
         >
           Connect your wallet to access <br />
@@ -145,14 +140,14 @@ const Wallet = () => {
           </Typography>
         </ButtonStyled>
       </StyledBasicBox>
-      <StyledTableBox>
+      <StyledTableBox sx={{ marginTop: "5px" }}>
         <Box
           sx={{
             width: "100hv",
             marginRight: "15px",
             paddingLeft: "18px",
-            paddingTop: "13px",
-            paddingBottom: "13px",
+            paddingTop: "5px",
+            paddingBottom: "5px",
             display: "flex",
             borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
           }}
@@ -161,53 +156,7 @@ const Wallet = () => {
             History
           </Typography>
         </Box>
-        <Box
-          sx={{
-            width: "100hv",
-            marginRight: "15px",
-            paddingLeft: "18px",
-            paddingTop: "4px",
-            paddingBottom: "4px",
-            display: "flex",
-            borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
-          }}
-        >
-          <Box sx={{ flex: 1.2 }}>
-            <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-              2024.06.04{" "}
-            </Typography>
-            <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-              18:02
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              flex: 0.8,
-              display: "flex",
-              alignItems: "center",
-              gap: "15px",
-            }}
-          >
-            <Typography
-              sx={{
-                color: MAIN_COLORS.contentYellow,
-                fontSize: "14px",
-                fontWeight: 700,
-              }}
-            >
-              5,000
-            </Typography>
-            <Typography
-              sx={{
-                color: MAIN_COLORS.textColor,
-                fontSize: "14px",
-                fontWeight: 500,
-              }}
-            >
-              BONUS
-            </Typography>
-          </Box>
-        </Box>
+
         <Box
           sx={{
             width: "100hv",
