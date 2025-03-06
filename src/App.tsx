@@ -6,6 +6,7 @@ import Footer from "./modules/Footer";
 import Header from "./modules/Header";
 import { Home } from "./modules/Home";
 import { Route, Routes } from "react-router-dom";
+import Missions from "./modules/Missions";
 
 const App = () => {
   return (
@@ -17,7 +18,7 @@ const App = () => {
         <Route path="/wallet" element={<Home />} />
         <Route path="/shop" element={<Home />} />
         <Route path="/settings" element={<Home />} />
-        <Route path="/missions" element={<Home />} />
+        <Route path="/missions" element={<Missions />} />
       </Routes>
       <Footer />
     </AppBar>

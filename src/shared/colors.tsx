@@ -9,4 +9,6 @@ export const MAIN_COLORS = {
   referalBottom: "rgba(255, 255, 255, 0.14)",
   gold: "#FFDE00",
   witeText: "#FFFFFF",
+  contentYellow: "#63EE6A",
+  dailyBorder: "1px solid rgba(99, 238, 106, 0.37)",
 };
