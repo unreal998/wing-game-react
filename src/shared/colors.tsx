@@ -7,6 +7,7 @@ export const MAIN_COLORS = {
   footerText: "rgba(255, 255, 255, 0.69)",
   referalBox: "rgba(0, 0, 0, 0.46)",
   referalBottom: "rgba(255, 255, 255, 0.14)",
+  walletButton: "rgba(255, 255, 255, 0.25)",
   gold: "#FFDE00",
   witeText: "#FFFFFF",
 };
