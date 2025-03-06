@@ -2,10 +2,23 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { heightProportion } from "../../shared/utils";
+import { StyledBox } from "./components/StyledBox";
+import Telegram from "../../assets/telegram.svg";
+import Youtube from "../../assets/youtube.svg";
+import { StyledSHIB } from "./components/StyledSHIB";
+import { StyledBoxMission } from "./components/StyledBoxMissions";
+import { StyledSubscrible } from "./components/StyledSubscrible";
+import {
+  missions,
+  missionTitles,
+} from "../../shared/components/missionComponent";
+import { StyledBoxMissioHead } from "../referal/components/StyledBoxMissionHead";
+import { StyledTypographyMissioHead } from "./components/StyledTypographyMissioHead";
+import { StyledDailyMissions } from "./components/StyledDailyMissions";
 
 const Missions = () => {
   return (
-    <Box sx={{ padding: "15px 15px 0 15px", height: `${heightProportion}px` }}>
+    <Box sx={{ padding: "5px 15px 0 15px", height: `${heightProportion}px` }}>
       <Box
         sx={{
           display: "flex",
@@ -49,76 +62,32 @@ const Missions = () => {
           </Typography>
         </Box>
       </Box>
-      <Box
-        sx={{ display: "flex", width: "100%", paddingTop: "10px", gap: "8px" }}
-      >
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            border: MAIN_COLORS.dailyBorder,
-            borderRadius: "5px",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "12px",
-              fontWeight: 700,
-              paddingTop: "10px",
-              paddingBottom: "10px",
-              color: MAIN_COLORS.contentYellow,
-            }}
-          >
-            Daily missions
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            border: MAIN_COLORS.dailyBorder,
-            borderRadius: "5px",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "12px",
-              fontWeight: 700,
-              paddingTop: "10px",
-              paddingBottom: "10px",
-              color: MAIN_COLORS.textColor,
-            }}
-          >
-            Daily bonus
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            border: MAIN_COLORS.dailyBorder,
-            borderRadius: "5px",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "12px",
-              fontWeight: 700,
-              paddingTop: "10px",
-              paddingBottom: "10px",
-              color: MAIN_COLORS.textColor,
-            }}
-          >
-            Quests
-          </Typography>
-        </Box>
-      </Box>
+      <StyledDailyMissions>
+        {missionTitles.map((mission, index) => (
+          <StyledBoxMissioHead key={index}>
+            <StyledTypographyMissioHead sx={{ color: mission.color }}>
+              {mission.text}
+            </StyledTypographyMissioHead>
+          </StyledBoxMissioHead>
+        ))}
+      </StyledDailyMissions>
+      <StyledBox>
+        {missions.map((mission, index) => (
+          <StyledBoxMission key={index}>
+            <img
+              src={mission.img}
+              alt="icon"
+              style={{ padding: mission.padding }}
+            />
+            <Box sx={{ padding: mission.textPadding }}>
+              <StyledSubscrible>
+                Subscribe to Tron announcements
+              </StyledSubscrible>
+              <StyledSHIB>5,000 SHIB</StyledSHIB>
+            </Box>
+          </StyledBoxMission>
+        ))}
+      </StyledBox>
     </Box>
   );
 };
