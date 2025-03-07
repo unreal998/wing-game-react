@@ -5,10 +5,11 @@ import Gear from "../../assets/gear.svg";
 import USDT from "../../assets/usdt.svg";
 import Flash from "../../assets/flash.png";
 import { StyledMain } from "./components/StyledMain";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   return (
     <Stack
       sx={{
@@ -29,7 +30,7 @@ const Header = () => {
             width: "50vh",
           }}
         >
-          <img src={Gear} alt="gear" />
+          <img src={Gear} alt="gear" onClick={() => navigate("/settings")} />
           <Box
             sx={{
               width: "100%",
