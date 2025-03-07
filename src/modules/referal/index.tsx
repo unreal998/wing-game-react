@@ -31,7 +31,7 @@ const Referal = () => {
   };
 
   const tableHeight = useMemo(() => {
-    return heightProportion - 265;
+    return heightProportion - 285;
   }, []);
 
   return (
