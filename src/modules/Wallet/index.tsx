@@ -9,9 +9,15 @@ import { StyledTableBox } from "./components/StyledTableBox";
 
 const Wallet = () => {
   return (
-    <Box sx={{ padding: "0px 15px 0 15px" }}>
+    <Box sx={{ padding: "5px 15px 0 15px" }}>
       <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>Wallet</Typography>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          paddingTop: "8px",
+        }}
+      >
         <Box
           sx={{
             backgroundColor: MAIN_COLORS.referalBox,
@@ -82,6 +88,8 @@ const Wallet = () => {
           display: "flex",
           alignItems: "center",
           gap: "9px",
+          paddingTop: "17px",
+          paddingBottom: "17px",
         }}
       >
         <Typography
@@ -107,11 +115,11 @@ const Wallet = () => {
           }}
         />
       </Box>
-      <StyledBasicBox sx={{ marginTop: "0" }}>
+      <StyledBasicBox sx={{ marginTop: "0px", marginBottom: "17px" }}>
         <img
           src={Mask}
           alt="mask"
-          style={{ paddingTop: "5px", width: "88px" }}
+          style={{ paddingTop: "15px", width: "88px" }}
         />
         <Typography
           sx={{
@@ -119,8 +127,8 @@ const Wallet = () => {
             fontWeight: 400,
             paddingLeft: "28px",
             paddingRight: "28px",
-            paddingTop: "5px",
-            paddingBottom: "5px",
+            paddingTop: "15px",
+            paddingBottom: "15px",
           }}
         >
           Connect your wallet to access <br />
