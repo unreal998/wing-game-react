@@ -26,9 +26,7 @@ const Missions = () => {
           alignItems: "center",
         }}
       >
-        <Typography
-          sx={{ fontSize: "24px", fontWeight: 700, paddingBottom: "8px" }}
-        >
+        <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>
           Missions
         </Typography>
 
