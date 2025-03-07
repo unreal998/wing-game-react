@@ -4,14 +4,16 @@ import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
 import USDT from "../../assets/usdt.svg";
 import { StyledMain } from "./components/StyledMain";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <StyledMain>
       <Box
         sx={{ gap: "9px", display: "flex", paddingLeft: "19px", width: "50vh" }}
       >
-        <img src={Gear} alt="gear" />
+        <img src={Gear} alt="gear" onClick={() => navigate("/settings")} />
         <Box
           sx={{
             width: "100%",
