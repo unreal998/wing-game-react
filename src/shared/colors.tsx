@@ -3,11 +3,12 @@ export const MAIN_COLORS = {
   textColor: "#FFFFFF",
   border: "rgba(255, 255, 255, 0.12)",
   mainBG: "#01121D",
-  contentYellow: "#63EE6A",
+  activeTabColor: "#63EE6A",
   footerText: "rgba(255, 255, 255, 0.69)",
   referalBox: "rgba(0, 0, 0, 0.46)",
   referalBottom: "rgba(255, 255, 255, 0.14)",
   walletButton: "rgba(255, 255, 255, 0.25)",
   gold: "#FFDE00",
   witeText: "#FFFFFF",
+  contentYellow: "#63EE6A",
 };
