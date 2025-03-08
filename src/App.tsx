@@ -15,7 +15,7 @@ const App = () => {
   if (tg) {
     tg.expand();
   }
-
+  alert(tg);
   return (
     <AppBar sx={{ height: "100%", backgroundColor: MAIN_COLORS.mainBG }}>
       <Header />
