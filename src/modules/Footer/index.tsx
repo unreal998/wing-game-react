@@ -12,7 +12,7 @@ import { StyledCenterFooter } from "./componets/StyledCenterFooter";
 import { StyledFooterBox } from "./componets/StyledFooterBox";
 import { useLocation, useNavigate } from "react-router-dom";
 import useSound from "use-sound";
-import FooterButtonPress from "./sounds/footerButton.mp3";
+import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import PowerIcon from "./componets/PowerIcon";
 import {
   selectDisabledPowerButton,
