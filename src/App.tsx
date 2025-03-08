@@ -7,6 +7,7 @@ import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
 import { Route, Routes } from "react-router-dom";
+import Wallet from "./modules/Wallet";
 
 // @ts-ignore
 let tg = window.Telegram?.WebApp; //получаем объект webapp телеграма
@@ -22,7 +23,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/referal" element={<Referal />} />
-        <Route path="/wallet" element={<Home />} />
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/shop" element={<Home />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/missions" element={<Home />} />
