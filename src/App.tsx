@@ -7,6 +7,7 @@ import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
 import { Route, Routes } from "react-router-dom";
+import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 
 // @ts-ignore
@@ -24,8 +25,9 @@ const App = () => {
         <Route path="/referal" element={<Referal />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/shop" element={<Home />} />
+        <Route path="/settings" element={<Home />} />
+        <Route path="/missions" element={<Missions />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/missions" element={<Home />} />
       </Routes>
       <Footer />
     </AppBar>
