@@ -8,7 +8,14 @@ import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
 import { Route, Routes } from "react-router-dom";
 
+// @ts-ignore
+let tg = window.Telegram?.WebApp; //получаем объект webapp телеграма
+
 const App = () => {
+  if (tg) {
+    tg.expand();
+  }
+
   return (
     <AppBar sx={{ height: "100%", backgroundColor: MAIN_COLORS.mainBG }}>
       <Header />
