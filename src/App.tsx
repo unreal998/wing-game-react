@@ -4,21 +4,31 @@ import Referal from "./modules/referal";
 import { AppBar } from "@mui/material";
 import Footer from "./modules/Footer";
 import Header from "./modules/Header";
+import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
 import { Route, Routes } from "react-router-dom";
 import Missions from "./modules/Missions";
+import Wallet from "./modules/Wallet";
+
+// @ts-ignore
+let tg = window.Telegram?.WebApp; //получаем объект webapp телеграма
 
 const App = () => {
+  if (tg) {
+    tg.expand();
+  }
+  alert(tg);
   return (
     <AppBar sx={{ height: "100%", backgroundColor: MAIN_COLORS.mainBG }}>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/referal" element={<Referal />} />
-        <Route path="/wallet" element={<Home />} />
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/shop" element={<Home />} />
         <Route path="/settings" element={<Home />} />
         <Route path="/missions" element={<Missions />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
       <Footer />
     </AppBar>
