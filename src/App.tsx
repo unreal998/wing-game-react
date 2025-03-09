@@ -12,6 +12,7 @@ import Wallet from "./modules/Wallet";
 
 const App = () => {
   useEffect(() => {
+    console.log((window as any).Telegram);
     const tg = (window as any).Telegram?.WebApp;
     alert(tg);
     if (tg) {
