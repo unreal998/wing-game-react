@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { viewport, init, isTMA } from "@telegram-apps/sdk";
+import WebApp from "@twa-dev/sdk";
 import { MAIN_COLORS } from "./shared/colors";
 import Referal from "./modules/referal";
 import { Box } from "@mui/material";
@@ -13,30 +13,7 @@ import Wallet from "./modules/Wallet";
 
 const App = () => {
   useEffect(() => {
-    const setupTelegram = async () => {
-      try {
-        if (await isTMA()) {
-          init();
-          alert("✅ Telegram Mini App API доступен!");
-
-          if (viewport.expand.isAvailable()) {
-            viewport.expand(); // Разворачиваем Mini App
-            alert("🔹 Мини-приложение развернуто!");
-          }
-
-          if (viewport.requestFullscreen.isAvailable()) {
-            viewport.requestFullscreen(); // Запрос на полноэкранный режим
-            alert("🔹 Включен полноэкранный режим!");
-          }
-        } else {
-          alert("❌ Mini App не запущен в Telegram!");
-        }
-      } catch (error) {
-        alert("⚠ Ошибка при инициализации Telegram API:" + error);
-      }
-    };
-
-    setupTelegram(); // Вызываем асинхронную функцию внутри useEffect
+    WebApp.expand();
   }, []);
 
   return (
