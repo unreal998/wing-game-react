@@ -12,10 +12,6 @@ import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 
 const App = () => {
-  useEffect(() => {
-    WebApp.expand();
-  }, []);
-
   return (
     <Box
       sx={{
