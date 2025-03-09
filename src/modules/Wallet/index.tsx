@@ -1,4 +1,4 @@
-import { Box, Switch, Typography } from "@mui/material";
+import { Box, Switch, Tab, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import USDT from "../../assets/usdt.svg";
@@ -8,7 +8,6 @@ import { ButtonStyled } from "./components/ButtonStyled";
 import { StyledTableBox } from "./components/StyledTableBox";
 import { InfoBox } from "../../shared/components/InfoBox";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { TabListTab } from "../../shared/components/TabListTab";
 
 const Wallet = () => {
   const [value, setValue] = useState(0);
@@ -110,11 +109,43 @@ const Wallet = () => {
           }}
           onChange={handleTabChange}
         >
-          <TabListTab label={"Wallet"} value={0} />
-          <TabListTab label={"History"} value={1} />
+          <Tab
+            sx={{
+              fontSize: "12px",
+              fontWeight: 700,
+              padding: "0 10px",
+              color: MAIN_COLORS.textColor,
+              border: MAIN_COLORS.dailyBorder,
+              borderRadius: "5px",
+              minHeight: "35px",
+              "& .MuiButtonBase-root-MuiTab-root.Mui-selected": {
+                color: MAIN_COLORS.activeTabColor,
+              },
+            }}
+            label={"Wallet"}
+            value={0}
+            key={0}
+          />
+          <Tab
+            sx={{
+              fontSize: "12px",
+              fontWeight: 700,
+              padding: "0 10px",
+              color: MAIN_COLORS.textColor,
+              border: MAIN_COLORS.dailyBorder,
+              borderRadius: "5px",
+              minHeight: "35px",
+              "& .MuiButtonBase-root-MuiTab-root.Mui-selected": {
+                color: MAIN_COLORS.activeTabColor,
+              },
+            }}
+            label={"History"}
+            value={1}
+            key={1}
+          />
         </TabList>
-        <TabPanel value={0}>
-          <StyledBasicBox sx={{ marginTop: "0px", marginBottom: "17px" }}>
+        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
+          <StyledBasicBox>
             <img
               src={Mask}
               alt="mask"
@@ -148,7 +179,7 @@ const Wallet = () => {
             </ButtonStyled>
           </StyledBasicBox>
         </TabPanel>
-        <TabPanel value={1}>
+        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
           <StyledTableBox sx={{ marginTop: "5px" }}>
             <Box
               sx={{

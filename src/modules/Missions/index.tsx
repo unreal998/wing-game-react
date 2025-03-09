@@ -13,7 +13,6 @@ import {
   missionTitles,
 } from "../../shared/mocks/missionComponentMocks";
 import { InfoBox } from "../../shared/components/InfoBox";
-import { TabListTab } from "../../shared/components/TabListTab";
 import { MAIN_COLORS } from "../../shared/colors";
 
 const Missions = () => {
