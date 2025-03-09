@@ -16,7 +16,7 @@ const Header = () => {
         backgroundColor: MAIN_COLORS.headerBG,
         marginLeft: "14px",
         marginRight: "14px",
-        marginTop: "2vh",
+        marginTop: "8vh",
         borderRadius: "12px",
         padding: "11px",
       }}
