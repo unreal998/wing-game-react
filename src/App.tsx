@@ -17,22 +17,22 @@ const App = () => {
       try {
         if (await isTMA()) {
           init();
-          console.log("✅ Telegram Mini App API доступен!");
+          alert("✅ Telegram Mini App API доступен!");
 
           if (viewport.expand.isAvailable()) {
             viewport.expand(); // Разворачиваем Mini App
-            console.log("🔹 Мини-приложение развернуто!");
+            alert("🔹 Мини-приложение развернуто!");
           }
 
           if (viewport.requestFullscreen.isAvailable()) {
             viewport.requestFullscreen(); // Запрос на полноэкранный режим
-            console.log("🔹 Включен полноэкранный режим!");
+            alert("🔹 Включен полноэкранный режим!");
           }
         } else {
-          console.warn("❌ Mini App не запущен в Telegram!");
+          alert("❌ Mini App не запущен в Telegram!");
         }
       } catch (error) {
-        console.error("⚠ Ошибка при инициализации Telegram API:", error);
+        alert("⚠ Ошибка при инициализации Telegram API:" + error);
       }
     };
 
