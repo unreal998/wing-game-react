@@ -13,9 +13,13 @@ import Wallet from "./modules/Wallet";
 
 const App = () => {
   useEffect(() => {
-    WebApp.requestFullscreen();
-    WebApp.lockOrientation();
-    WebApp.disableVerticalSwipes();
+    try {
+      WebApp.requestFullscreen();
+      WebApp.lockOrientation();
+      WebApp.disableVerticalSwipes();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (
