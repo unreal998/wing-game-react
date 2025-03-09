@@ -12,6 +12,12 @@ import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 
 const App = () => {
+  useEffect(() => {
+    WebApp.requestFullscreen();
+    WebApp.lockOrientation();
+    WebApp.disableVerticalSwipes();
+  }, []);
+
   return (
     <Box
       sx={{
