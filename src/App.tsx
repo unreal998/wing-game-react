@@ -13,6 +13,7 @@ import Wallet from "./modules/Wallet";
 const App = () => {
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
+    alert(tg);
     if (tg) {
       tg.ready();
       tg.expand();
