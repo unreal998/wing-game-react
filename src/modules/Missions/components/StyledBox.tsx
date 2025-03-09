@@ -3,9 +3,7 @@ import { MAIN_COLORS } from "../../../shared/colors";
 
 export const StyledBox = styled(Box)({
   width: "100%",
-  height: "350px",
   display: "flex",
-  marginTop: "17px",
   flexDirection: "column",
   overflowY: "scroll",
   scrollbarGutter: "stable",

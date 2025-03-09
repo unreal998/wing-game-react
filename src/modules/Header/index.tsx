@@ -84,7 +84,9 @@ const Header = () => {
           }}
         >
           <img src={USDT} alt="usdt" />
-          <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
+          <Typography
+            sx={{ fontSize: "12px", fontWeight: 500, color: "white" }}
+          >
             TON: 234
           </Typography>
         </Box>
@@ -129,7 +131,9 @@ const Header = () => {
             }}
           >
             <img src={USDT} alt="usdt" />
-            <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
+            <Typography
+              sx={{ fontSize: "12px", fontWeight: 500, color: "white" }}
+            >
               TON 234
             </Typography>
           </Box>

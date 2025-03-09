@@ -17,7 +17,7 @@ const Model = () => {
   const isAnimationPlaying = useSelector(selectDisabledPowerButton());
   scene.position.set(0, 0, 0);
   const [playSound, { stop }] = useSound(WindBlowing, {
-    volume: 0.5,
+    volume: 0.3,
     onend: () => setCycleBGSound(false),
   });
 

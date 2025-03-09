@@ -15,6 +15,7 @@ import { StyledBasicBox } from "./components/StyledBasicBox";
 import { StyledInputBox } from "./components/StyledInputBox";
 import { StyledInput } from "./components/StyledInput";
 import { heightProportion } from "../../shared/utils";
+import { InfoBox } from "../../shared/components/InfoBox";
 
 const Referal = () => {
   const [inviteText, setInviteText] = useState("Invite a friend");
@@ -43,56 +44,8 @@ const Referal = () => {
           Referal
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box
-            sx={{
-              backgroundColor: MAIN_COLORS.referalBox,
-              border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
-              display: "flex",
-              flexDirection: "column",
-              borderRadius: "9px",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontWeight: 700,
-                padding: "9px 45px 0px 45px",
-              }}
-            >
-              234
-            </Typography>
-            <Typography
-              sx={{ fontSize: "17px", fontWeight: 700, paddingBottom: "9px" }}
-            >
-              Your bonus
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: MAIN_COLORS.referalBox,
-              border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
-              display: "flex",
-              flexDirection: "column",
-              borderRadius: "9px",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontWeight: 700,
-                padding: "9px 41px 0px 41px",
-              }}
-            >
-              10%
-            </Typography>
-            <Typography
-              sx={{ fontSize: "17px", fontWeight: 700, paddingBottom: "9px" }}
-            >
-              Your bonus
-            </Typography>
-          </Box>
+          <InfoBox value={"234"} subtitle={"Your bonus"}></InfoBox>
+          <InfoBox value={"10 %"} subtitle={"Your bonus"}></InfoBox>
         </Box>
         <StyledBasicBox height={`${tableHeight}px`}>
           <TableBox>

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MAIN_COLORS } from "./shared/colors";
 import Referal from "./modules/referal";
-import { AppBar } from "@mui/material";
+import { Box } from "@mui/material";
 import Footer from "./modules/Footer";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
@@ -10,27 +10,38 @@ import { Route, Routes } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 
-// @ts-ignore
-let tg = window.Telegram?.WebApp; //получаем объект webapp телеграма
-
 const App = () => {
-  if (tg) {
-    tg.expand();
-  }
+  useEffect(() => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+  }, []);
+
   return (
-    <AppBar sx={{ height: "100%", backgroundColor: MAIN_COLORS.mainBG }}>
+    <Box
+      sx={{
+        height: "100vh",
+        backgroundColor: MAIN_COLORS.mainBG,
+        display: "flex",
+        flexDirection: "column",
+        color: "white",
+      }}
+    >
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/referal" element={<Referal />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/shop" element={<Home />} />
-        <Route path="/settings" element={<Home />} />
-        <Route path="/missions" element={<Missions />} />
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
+      <Box sx={{ flexGrow: 1 }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/referal" element={<Referal />} />
+          <Route path="/wallet" element={<Wallet />} />
+          <Route path="/shop" element={<Home />} />
+          <Route path="/missions" element={<Missions />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </Box>
       <Footer />
-    </AppBar>
+    </Box>
   );
 };
 

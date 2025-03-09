@@ -13,7 +13,6 @@ export const MAIN_COLORS = {
   checkboxTrack: "rgba(255, 255, 255, 0.10)",
   basicBox: "rgba(0, 0, 0, 0.36)",
   witeText: "#FFFFFF",
-  contentYellow: "#63EE6A",
   dailyBorder: "1px solid rgba(99, 238, 106, 0.37)",
   missionTable: "rgba(255, 255, 255, 0.6)",
 };

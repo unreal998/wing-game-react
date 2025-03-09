@@ -1,24 +1,42 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
-import { MAIN_COLORS } from "../../shared/colors";
+import { Box, Tab, Typography } from "@mui/material";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import React, { useMemo, useState } from "react";
 import { heightProportion } from "../../shared/utils";
 import { StyledBox } from "./components/StyledBox";
-import Telegram from "../../assets/telegram.svg";
-import Youtube from "../../assets/youtube.svg";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
 import {
   missions,
   missionTitles,
-} from "../../shared/components/missionComponent";
-import { StyledBoxMissioHead } from "../referal/components/StyledBoxMissionHead";
-import { StyledTypographyMissioHead } from "./components/StyledTypographyMissioHead";
-import { StyledDailyMissions } from "./components/StyledDailyMissions";
+} from "../../shared/mocks/missionComponentMocks";
+import { InfoBox } from "../../shared/components/InfoBox";
+import { TabListTab } from "../../shared/components/TabListTab";
+import { MAIN_COLORS } from "../../shared/colors";
 
 const Missions = () => {
+  const [value, setValue] = useState(0);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  const wrapperHeight = useMemo(() => {
+    return heightProportion - 170;
+  }, []);
+
   return (
-    <Box sx={{ padding: "5px 15px 0 15px", height: `${heightProportion}px` }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        padding: "5px 15px 0 15px",
+        height: `${heightProportion}px`,
+        gap: "15px",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -30,62 +48,72 @@ const Missions = () => {
           Missions
         </Typography>
 
-        <Box
-          sx={{
-            backgroundColor: MAIN_COLORS.referalBox,
-            border: `1px solid  ${MAIN_COLORS.contentYellow}`,
-            display: "flex",
-            flexDirection: "column",
-            borderRadius: "9px",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "24px",
-              fontWeight: 700,
-              padding: "9px 45px 0px 45px",
-            }}
-          >
-            234
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "12px",
-              fontWeight: 700,
-              padding: "0px 15px 9px 15px",
-            }}
-          >
-            Your name coin
-          </Typography>
-        </Box>
+        <InfoBox value={"234"} subtitle={"Your name coin"} />
       </Box>
-      <StyledDailyMissions>
-        {missionTitles.map((mission, index) => (
-          <StyledBoxMissioHead key={index}>
-            <StyledTypographyMissioHead sx={{ color: mission.color }}>
-              {mission.text}
-            </StyledTypographyMissioHead>
-          </StyledBoxMissioHead>
+
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <TabList
+            sx={{
+              display: "flex",
+              minHeight: "0px",
+              "& .MuiTabs-list": {
+                gap: "10px",
+              },
+              "& .MuiTabs-indicator": {
+                display: "none",
+              },
+            }}
+            onChange={handleTabChange}
+          >
+            {missionTitles.map((mission, index) => (
+              <Tab
+                sx={{
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  padding: "0 10px",
+                  color: MAIN_COLORS.textColor,
+                  border: MAIN_COLORS.dailyBorder,
+                  borderRadius: "5px",
+                  minHeight: "35px",
+                  "& .MuiButtonBase-root-MuiTab-root.Mui-selected": {
+                    color: MAIN_COLORS.activeTabColor,
+                  },
+                }}
+                label={mission.text}
+                value={index}
+                key={index}
+              />
+            ))}
+          </TabList>
+        </Box>
+        {missionTitles.map((_, index) => (
+          <TabPanel
+            sx={{
+              padding: 0,
+            }}
+            value={index}
+          >
+            <StyledBox height={`${wrapperHeight}px`}>
+              {missions.map((mission, index) => (
+                <StyledBoxMission key={index}>
+                  <img
+                    src={mission.img}
+                    alt="icon"
+                    style={{ padding: mission.padding }}
+                  />
+                  <Box sx={{ padding: mission.textPadding }}>
+                    <StyledSubscrible>
+                      Subscribe to Tron announcements
+                    </StyledSubscrible>
+                    <StyledSHIB>5,000 SHIB</StyledSHIB>
+                  </Box>
+                </StyledBoxMission>
+              ))}
+            </StyledBox>
+          </TabPanel>
         ))}
-      </StyledDailyMissions>
-      <StyledBox>
-        {missions.map((mission, index) => (
-          <StyledBoxMission key={index}>
-            <img
-              src={mission.img}
-              alt="icon"
-              style={{ padding: mission.padding }}
-            />
-            <Box sx={{ padding: mission.textPadding }}>
-              <StyledSubscrible>
-                Subscribe to Tron announcements
-              </StyledSubscrible>
-              <StyledSHIB>5,000 SHIB</StyledSHIB>
-            </Box>
-          </StyledBoxMission>
-        ))}
-      </StyledBox>
+      </TabContext>
     </Box>
   );
 };

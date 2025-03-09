@@ -5,7 +5,7 @@ export const StyledBasicBox = styled(Box)({
   width: "100%",
   display: "flex",
   marginTop: "17px",
-  border: `1px solid ${MAIN_COLORS.contentYellow}`,
+  border: `1px solid ${MAIN_COLORS.activeTabColor}`,
   backgroundColor: MAIN_COLORS.basicBox,
   borderRadius: "5px",
   flexDirection: "column",

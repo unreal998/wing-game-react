@@ -134,7 +134,7 @@ const Footer = () => {
             Referal
           </Typography>
         </StyledFooterBoxes>
-        <StyledFooterBoxes onClick={() => handleNavigationChange("/mission")}>
+        <StyledFooterBoxes onClick={() => handleNavigationChange("/missions")}>
           <img src={Mission} alt="mission" />
           <StyledFooterBoxesTypography>Mission</StyledFooterBoxesTypography>
         </StyledFooterBoxes>

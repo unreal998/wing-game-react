@@ -4,7 +4,7 @@ import { MAIN_COLORS } from "../../../shared/colors";
 export const ButtonStyled = styled(Button)({
   height: "45px",
   width: "233px",
-  backgroundColor: MAIN_COLORS.contentYellow,
+  backgroundColor: MAIN_COLORS.activeTabColor,
   borderRadius: "10px",
   color: "black",
   textTransform: "none",

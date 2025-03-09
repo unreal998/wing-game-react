@@ -12,7 +12,7 @@ export const CustomSwitch = styled(Switch)(() => ({
     padding: 4,
     "&.Mui-checked": {
       transform: "translateX(26px)",
-      color: MAIN_COLORS.contentYellow,
+      color: MAIN_COLORS.activeTabColor,
       "& + .MuiSwitch-track": {
         backgroundColor: "rgba(255, 255, 255, 0.1)",
       },
