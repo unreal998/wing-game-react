@@ -7,9 +7,13 @@ import "./i18n";
 import { BrowserRouter } from "react-router-dom";
 import WebApp from "@twa-dev/sdk";
 
-WebApp.showAlert(WebApp.isExpanded.toString());
-WebApp.expand();
-WebApp.showAlert("Hey there");
+try {
+  WebApp.showAlert(WebApp.isExpanded.toString());
+  WebApp.expand();
+  WebApp.showAlert("Hey there");
+} catch (err: any) {
+  WebApp.showAlert(err.toString());
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
