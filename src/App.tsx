@@ -15,6 +15,7 @@ import Shop from "./modules/Shop";
 const App = () => {
   useEffect(() => {
     try {
+      WebApp.showAlert(WebApp.platform);
       WebApp.requestFullscreen();
       WebApp.lockOrientation();
       WebApp.disableVerticalSwipes();
