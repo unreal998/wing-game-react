@@ -11,6 +11,7 @@ import { Route, Routes } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
+import { Planet } from "./modules/Planet";
 
 const App = () => {
   useEffect(() => {
@@ -39,6 +40,7 @@ const App = () => {
       <Box sx={{ flexGrow: 1 }}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/planet" element={<Planet />} />
           <Route path="/referal" element={<Referal />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/shop" element={<Shop />} />

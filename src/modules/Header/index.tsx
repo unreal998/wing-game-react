@@ -20,12 +20,12 @@ const Header = () => {
     playSound();
     navigate("/settings");
   }, [playSound, navigate]);
-  
+
   const isMobile =
     WebApp.platform &&
     WebApp.platform !== "unknown" &&
     WebApp.platform !== "tdesktop";
-  
+
   return (
     <Stack
       sx={{
