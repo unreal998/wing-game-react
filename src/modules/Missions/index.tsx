@@ -1,4 +1,4 @@
-import { Box, Tab, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -13,6 +13,7 @@ import {
   missionTitles,
 } from "../../shared/mocks/missionComponentMocks";
 import { InfoBox } from "../../shared/components/InfoBox";
+import { StyledTabMission } from "./StyledTabMission";
 import { MAIN_COLORS } from "../../shared/colors";
 
 const Missions = () => {
@@ -50,7 +51,7 @@ const Missions = () => {
         <InfoBox value={"234"} subtitle={"Your name coin"} />
       </Box>
 
-      <TabContext value={value}>
+      <TabContext value={value.toString()}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList
             sx={{
@@ -66,21 +67,9 @@ const Missions = () => {
             onChange={handleTabChange}
           >
             {missionTitles.map((mission, index) => (
-              <Tab
-                sx={{
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  padding: "0 10px",
-                  color: MAIN_COLORS.textColor,
-                  border: MAIN_COLORS.dailyBorder,
-                  borderRadius: "5px",
-                  minHeight: "35px",
-                  "& .MuiButtonBase-root-MuiTab-root.Mui-selected": {
-                    color: MAIN_COLORS.activeTabColor,
-                  },
-                }}
+              <StyledTabMission
                 label={mission.text}
-                value={index}
+                value={index.toString()}
                 key={index}
               />
             ))}
@@ -91,11 +80,12 @@ const Missions = () => {
             sx={{
               padding: 0,
             }}
-            value={index}
+            value={index.toString()}
+            key={index}
           >
             <StyledBox height={`${wrapperHeight}px`}>
-              {missions.map((mission, index) => (
-                <StyledBoxMission key={index}>
+              {missions.map((mission, idx) => (
+                <StyledBoxMission key={idx}>
                   <img
                     src={mission.img}
                     alt="icon"
