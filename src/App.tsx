@@ -15,10 +15,11 @@ import Shop from "./modules/Shop";
 const App = () => {
   useEffect(() => {
     try {
-      WebApp.showAlert(WebApp.platform);
-      WebApp.requestFullscreen();
+      if (WebApp.platform !== "tdesktop") {
+        WebApp.requestFullscreen();
+        WebApp.disableVerticalSwipes();
+      }
       WebApp.lockOrientation();
-      WebApp.disableVerticalSwipes();
     } catch (err) {
       console.log(err);
     }

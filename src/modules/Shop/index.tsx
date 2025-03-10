@@ -1,4 +1,11 @@
-import { Box, Slider, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Slider,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 
@@ -17,6 +24,7 @@ const Shop = () => {
           justifyContent: "space-between",
           paddingTop: "8px",
           width: "100%",
+          gap: "10px",
         }}
       >
         <Stack
@@ -26,22 +34,26 @@ const Shop = () => {
           width="100%"
         >
           <Stack gap="5px" direction="row">
-            <Typography
-              bgcolor={MAIN_COLORS.mainGreyBG}
-              borderRadius="4px"
-              padding="8px 14px"
-              fontWeight="800"
+            <Button
+              sx={{
+                bgcolor: MAIN_COLORS.mainGreyBG,
+                borderRadius: "4px",
+                padding: "8px 14px",
+                fontWeight: "800",
+              }}
             >
               TON
-            </Typography>
-            <Typography
-              bgcolor={MAIN_COLORS.mainGreyBG}
-              borderRadius="4px"
-              padding="8px 14px"
-              fontWeight="800"
+            </Button>
+            <Button
+              sx={{
+                bgcolor: MAIN_COLORS.mainGreyBG,
+                borderRadius: "4px",
+                padding: "8px 14px",
+                fontWeight: "800",
+              }}
             >
               USD
-            </Typography>
+            </Button>
           </Stack>
           <TextField
             sx={{
@@ -57,7 +69,9 @@ const Shop = () => {
           ></TextField>
         </Stack>
         <Box>
-          <Typography></Typography>
+          <Typography fontWeight="600">
+            Cost of all generators (TRON):
+          </Typography>
           <Slider
             aria-label="Volume"
             value={value}
