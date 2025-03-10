@@ -15,10 +15,9 @@ const Header = () => {
 
   const [playSound] = useSound(FooterButtonPress);
 
-  // Обработчик клика с воспроизведением звука
   const handleSoundClick = useCallback(() => {
     playSound();
-    navigate("/settings"); // Переход к настройкам после воспроизведения звука
+    navigate("/settings");
   }, [playSound, navigate]);
   return (
     <Stack
