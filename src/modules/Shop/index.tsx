@@ -72,7 +72,7 @@ const Shop = () => {
           justifyContent: "space-between",
           paddingTop: "8px",
           width: "100%",
-          gap: "15px",
+          gap: "10px",
         }}
       >
         <Stack
