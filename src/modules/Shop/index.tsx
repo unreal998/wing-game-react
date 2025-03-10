@@ -197,7 +197,7 @@ const Shop = () => {
               onClick={handleSoundClick}
             />
           </TabList>
-          <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
+          <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={0}>
             <Box
               display="flex"
               flexDirection="column"
@@ -223,7 +223,7 @@ const Shop = () => {
               </Typography>
             </Box>
           </TabPanel>
-          <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
+          <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={1}>
             <Stack gap="10px">
               <Stack gap="10px">
                 <Stack direction="row" justifyContent="space-between">
