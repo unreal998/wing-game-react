@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
@@ -6,15 +6,26 @@ import USDT from "../../assets/usdt.svg";
 import Flash from "../../assets/flash.png";
 import { StyledMain } from "./components/StyledMain";
 import { useLocation, useNavigate } from "react-router-dom";
+import useSound from "use-sound";
+import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import WebApp from "@twa-dev/sdk";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [playSound] = useSound(FooterButtonPress);
+
+  const handleSoundClick = useCallback(() => {
+    playSound();
+    navigate("/settings");
+  }, [playSound, navigate]);
+  
   const isMobile =
     WebApp.platform &&
     WebApp.platform !== "unknown" &&
     WebApp.platform !== "tdesktop";
+  
   return (
     <Stack
       sx={{
@@ -35,7 +46,7 @@ const Header = () => {
             width: "50vh",
           }}
         >
-          <img src={Gear} alt="gear" onClick={() => navigate("/settings")} />
+          <img src={Gear} alt="gear" onClick={handleSoundClick} />
           <Box
             sx={{
               width: "100%",
