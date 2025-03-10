@@ -225,9 +225,6 @@ const Shop = () => {
           </TabPanel>
           <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
             <Stack gap="10px">
-              <Typography fontWeight="600">
-                Profit in {selectedValue}
-              </Typography>
               <Stack gap="10px">
                 <Stack direction="row" justifyContent="space-between">
                   <ProfitBox
