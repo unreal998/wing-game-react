@@ -20,6 +20,7 @@ import {
 } from "../Home/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { powerButtonPressed, setPressTimeDelay } from "../Home/slices";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Footer = () => {
   const nextPressButtonTimeDelay = useSelector(selectNextPressTimeDelay());
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -86,7 +88,7 @@ const Footer = () => {
               borderRadius: "7px",
             }}
           >
-            {calculateTime} hour
+            {calculateTime} {t("hour")}
           </Typography>
           <Button
             sx={{
@@ -112,7 +114,7 @@ const Footer = () => {
                 fontWeight: 400,
               }}
             >
-              Push Power
+              {t("Push Power")}
             </Typography>
           </Button>
         </Stack>
@@ -131,12 +133,14 @@ const Footer = () => {
               fontWeight: 700,
             }}
           >
-            Referal
+            {t("Referal")}
           </Typography>
         </StyledFooterBoxes>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/missions")}>
           <img src={Mission} alt="mission" />
-          <StyledFooterBoxesTypography>Mission</StyledFooterBoxesTypography>
+          <StyledFooterBoxesTypography>
+            {t("Mission")}
+          </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
         <StyledCenterFooter onClick={() => handleNavigationChange("/")}>
           <img src={Wind} alt=" wind " />

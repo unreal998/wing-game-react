@@ -11,6 +11,7 @@ import { Route, Routes } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
+import "./i18n";
 
 const App = () => {
   useEffect(() => {
