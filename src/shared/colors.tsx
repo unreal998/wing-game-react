@@ -3,7 +3,7 @@ export const MAIN_COLORS = {
   textColor: "#FFFFFF",
   mainBG: "#01121D",
   activeTabColor: "#63EE6A",
-  footerText: "rgba(255, 255, 255, 0.69)",
+  missionTable: "rgba(255, 255, 255, 0.69)",
   referalBox: "rgba(0, 0, 0, 0.46)",
   mainGreyBG: "rgba(255, 255, 255, 0.14)",
   walletButton: "rgba(255, 255, 255, 0.25)",
@@ -13,5 +13,4 @@ export const MAIN_COLORS = {
   basicBox: "rgba(0, 0, 0, 0.36)",
   witeText: "#FFFFFF",
   dailyBorder: "1px solid rgba(99, 238, 106, 0.37)",
-  missionTable: "rgba(255, 255, 255, 0.6)",
 };

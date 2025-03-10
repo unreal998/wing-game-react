@@ -1,13 +1,40 @@
-import { Box, Slider, Stack, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Slider,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
+import { ProfitBox } from "./components/ProfitBox";
 
 const Shop = () => {
-  const [value, setValue] = useState<number>(30);
+  const [generatorValue, setGeneratorValue] = useState<number>(30);
+  const [generatorCountValue, setGeneratorCountValue] = useState<number>(30);
+
+  const [selectedValue, setSelectedValue] = useState<string>("TON");
 
   const handleGeneratorsSlide = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number);
+    setGeneratorValue(newValue as number);
   };
+
+  const handleNumberOfGeneratorsSlide = (
+    event: Event,
+    newValue: number | number[],
+  ) => {
+    setGeneratorCountValue(newValue as number);
+  };
+
+  const globalCalculationSumm = useMemo(() => {
+    const currency = selectedValue === "TON" ? 20 : 1;
+    return generatorCountValue * currency * (generatorValue / 10);
+  }, [generatorCountValue, selectedValue, generatorValue]);
+
+  const globalCalculationEnergy = useMemo(() => {
+    return (generatorCountValue * (generatorValue / 1000)).toFixed(3);
+  }, [generatorCountValue, generatorValue]);
 
   return (
     <Box sx={{ padding: "5px 15px 0 15px" }}>
@@ -17,6 +44,7 @@ const Shop = () => {
           justifyContent: "space-between",
           paddingTop: "8px",
           width: "100%",
+          gap: "15px",
         }}
       >
         <Stack
@@ -26,22 +54,38 @@ const Shop = () => {
           width="100%"
         >
           <Stack gap="5px" direction="row">
-            <Typography
-              bgcolor={MAIN_COLORS.mainGreyBG}
-              borderRadius="4px"
-              padding="8px 14px"
-              fontWeight="800"
+            <Button
+              sx={{
+                color: "white",
+                bgcolor: MAIN_COLORS.mainGreyBG,
+                borderRadius: "4px",
+                padding: "8px 14px",
+                fontWeight: "800",
+                border:
+                  selectedValue === "TON"
+                    ? `1px solid ${MAIN_COLORS.activeTabColor}`
+                    : "none",
+              }}
+              onClick={() => setSelectedValue("TON")}
             >
               TON
-            </Typography>
-            <Typography
-              bgcolor={MAIN_COLORS.mainGreyBG}
-              borderRadius="4px"
-              padding="8px 14px"
-              fontWeight="800"
+            </Button>
+            <Button
+              sx={{
+                color: "white",
+                bgcolor: MAIN_COLORS.mainGreyBG,
+                borderRadius: "4px",
+                padding: "8px 14px",
+                fontWeight: "800",
+                border:
+                  selectedValue === "USD"
+                    ? `1px solid ${MAIN_COLORS.activeTabColor}`
+                    : "none",
+              }}
+              onClick={() => setSelectedValue("USD")}
             >
               USD
-            </Typography>
+            </Button>
           </Stack>
           <TextField
             sx={{
@@ -49,24 +93,140 @@ const Shop = () => {
               borderRadius: "4px",
               backgroundColor: MAIN_COLORS.mainGreyBG,
               "& .MuiOutlinedInput-root": {
-                color: MAIN_COLORS.walletButton,
+                color: MAIN_COLORS.missionTable,
               },
             }}
             variant="outlined"
-            placeholder="Your Amount"
+            placeholder={`${globalCalculationSumm.toString()} ${selectedValue}`}
           ></TextField>
         </Stack>
-        <Slider
-          aria-label="Volume"
-          value={value}
-          sx={{
-            color: MAIN_COLORS.activeTabColor,
-            "& .MuiSlider-rail": {
-              color: MAIN_COLORS.referalBox,
-            },
-          }}
-          onChange={handleGeneratorsSlide}
-        />
+        <Stack flexDirection="column" gap="10px">
+          <Box>
+            <Typography fontWeight="600">
+              Cost of all generators (TRON): {`${generatorValue}`}
+            </Typography>
+            <Slider
+              aria-label="Generator"
+              value={generatorValue}
+              sx={{
+                color: MAIN_COLORS.activeTabColor,
+                "& .MuiSlider-rail": {
+                  color: MAIN_COLORS.referalBox,
+                },
+                "& .Mui-active": {
+                  boxShadow: "0 0 0 9px black",
+                },
+              }}
+              onChange={handleGeneratorsSlide}
+            />
+          </Box>
+          <Box>
+            <Typography fontWeight="600">
+              Number of generators: {`${generatorCountValue}`}
+            </Typography>
+            <Slider
+              aria-label="Generator Count"
+              value={generatorCountValue}
+              sx={{
+                color: MAIN_COLORS.activeTabColor,
+                "& .MuiSlider-rail": {
+                  color: MAIN_COLORS.referalBox,
+                },
+                "& .Mui-active": {
+                  boxShadow: "0 0 0 9px black",
+                },
+              }}
+              onChange={handleNumberOfGeneratorsSlide}
+            />
+          </Box>
+        </Stack>
+        <Box
+          display="flex"
+          flexDirection="column"
+          padding="10px"
+          bgcolor={MAIN_COLORS.mainGreyBG}
+          gap="15px"
+          borderRadius="5px"
+        >
+          <Typography fontWeight="400">
+            Energy produced per hour:{" "}
+            {<b>{(+globalCalculationEnergy / 60).toFixed(5)} MWh</b>}
+          </Typography>
+          <Typography fontWeight="400">
+            Energy produced per day: {<b>{globalCalculationEnergy} MWh</b>}
+          </Typography>
+        </Box>
+        <Stack gap="10px">
+          <Typography fontWeight="600">Profit in {selectedValue}</Typography>
+          <Stack gap="10px">
+            <Stack direction="row" justifyContent="space-between">
+              <ProfitBox
+                value={(
+                  +globalCalculationEnergy * (selectedValue === "TON" ? 20 : 1)
+                ).toString()}
+                subtitle="Profit per day"
+              ></ProfitBox>
+              <ProfitBox
+                value={(
+                  +globalCalculationEnergy *
+                  (selectedValue === "TON" ? 20 : 1) *
+                  7
+                ).toString()}
+                subtitle="Profit per week"
+              ></ProfitBox>
+            </Stack>
+            <Stack direction="row" justifyContent="space-between">
+              <ProfitBox
+                value={(
+                  +globalCalculationEnergy *
+                  (selectedValue === "TON" ? 20 : 1) *
+                  30
+                ).toString()}
+                subtitle="Profit per month"
+              ></ProfitBox>
+              <ProfitBox
+                value={(
+                  +globalCalculationEnergy *
+                  (selectedValue === "TON" ? 20 : 1) *
+                  365
+                ).toString()}
+                subtitle="Profit per year"
+              ></ProfitBox>
+            </Stack>
+          </Stack>
+        </Stack>
+        <Box
+          display="flex"
+          width="100%"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Button
+            sx={{
+              width: "80%",
+              display: "flex",
+              gap: "7px",
+              padding: "12px",
+              backgroundColor: MAIN_COLORS.activeTabColor,
+              borderRadius: "10px",
+              "&.Mui-disabled": {
+                backgroundColor: "rgb(134 134 134)",
+              },
+            }}
+            variant="contained"
+            onClick={() => {}}
+          >
+            <Typography
+              sx={{
+                color: "rgb(0, 0, 0)",
+                fontSize: "20px",
+                fontWeight: 400,
+              }}
+            >
+              Buy
+            </Typography>
+          </Button>
+        </Box>
       </Stack>
     </Box>
   );

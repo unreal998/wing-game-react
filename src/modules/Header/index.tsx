@@ -8,6 +8,7 @@ import { StyledMain } from "./components/StyledMain";
 import { useLocation, useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
+import WebApp from "@twa-dev/sdk";
 
 const Header = () => {
   const location = useLocation();
@@ -19,13 +20,19 @@ const Header = () => {
     playSound();
     navigate("/settings");
   }, [playSound, navigate]);
+  
+  const isMobile =
+    WebApp.platform &&
+    WebApp.platform !== "unknown" &&
+    WebApp.platform !== "tdesktop";
+  
   return (
     <Stack
       sx={{
         backgroundColor: MAIN_COLORS.headerBG,
         marginLeft: "14px",
         marginRight: "14px",
-        marginTop: "11vh",
+        marginTop: isMobile ? "11vh" : "2vh",
         borderRadius: "12px",
         padding: "11px",
       }}
