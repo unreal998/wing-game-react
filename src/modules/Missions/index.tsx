@@ -1,4 +1,4 @@
-import { Box, Tab, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -13,7 +13,7 @@ import {
   missionTitles,
 } from "../../shared/mocks/missionComponentMocks";
 import { InfoBox } from "../../shared/components/InfoBox";
-import { MAIN_COLORS } from "../../shared/colors";
+
 import { StyledTabMission } from "./StyledTabMission";
 
 const Missions = () => {
