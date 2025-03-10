@@ -40,7 +40,9 @@ const Footer = () => {
         </StyledFooterBoxes>
         <StyledCenterFooter onClick={() => navigate("/")}>
           <img src={Wind} alt=" wind " />
-          <StyledFooterBoxesTypography>Home</StyledFooterBoxesTypography>
+          <StyledFooterBoxesTypography onClick={() => navigate("/home")}>
+            Home
+          </StyledFooterBoxesTypography>
         </StyledCenterFooter>
         <StyledFooterBoxes onClick={() => navigate("/shop")}>
           <img src={Cart} alt="cart" />
