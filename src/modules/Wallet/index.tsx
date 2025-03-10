@@ -1,5 +1,5 @@
 import { Box, Switch, Tab, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import USDT from "../../assets/usdt.svg";
 import { StyledBasicBox } from "./components/StyledBasicBox";
@@ -8,10 +8,30 @@ import { ButtonStyled } from "./components/ButtonStyled";
 import { StyledTableBox } from "./components/StyledTableBox";
 import { InfoBox } from "../../shared/components/InfoBox";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
+
+const tabStyles = {
+  fontSize: "12px",
+  fontWeight: 700,
+  padding: "0 10px",
+  color: MAIN_COLORS.textColor,
+  border: MAIN_COLORS.dailyBorder,
+  borderRadius: "5px",
+  minHeight: "35px",
+  "&.Mui-selected": {
+    color: MAIN_COLORS.activeTabColor,
+  },
+};
 
 const Wallet = () => {
-  const [value, setValue] = useState(0);
+  const [playSound] = useSound(FooterButtonPress);
 
+  const handleSoundClick = useCallback(() => {
+    playSound();
+  }, [playSound]);
+
+  const [value, setValue] = useState(0);
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -110,38 +130,18 @@ const Wallet = () => {
           onChange={handleTabChange}
         >
           <Tab
-            sx={{
-              fontSize: "12px",
-              fontWeight: 700,
-              padding: "0 10px",
-              color: MAIN_COLORS.textColor,
-              border: MAIN_COLORS.dailyBorder,
-              borderRadius: "5px",
-              minHeight: "35px",
-              "& .MuiButtonBase-root-MuiTab-root.Mui-selected": {
-                color: MAIN_COLORS.activeTabColor,
-              },
-            }}
+            sx={tabStyles}
             label={"Wallet"}
             value={0}
             key={0}
+            onClick={handleSoundClick}
           />
           <Tab
-            sx={{
-              fontSize: "12px",
-              fontWeight: 700,
-              padding: "0 10px",
-              color: MAIN_COLORS.textColor,
-              border: MAIN_COLORS.dailyBorder,
-              borderRadius: "5px",
-              minHeight: "35px",
-              "& .MuiButtonBase-root-MuiTab-root.Mui-selected": {
-                color: MAIN_COLORS.activeTabColor,
-              },
-            }}
+            sx={tabStyles}
             label={"History"}
             value={1}
             key={1}
+            onClick={handleSoundClick}
           />
         </TabList>
         <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
