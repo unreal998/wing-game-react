@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import Linked from "../../assets/link.svg";
+import LinkedActive from "../../assets/linkActive.svg";
 import { MAIN_COLORS } from "../../shared/colors";
 import Mission from "../../assets/mission.svg";
+import MissionActive from "../../assets/missionActive.svg";
 import Wind from "../../assets/wind.svg";
+import WindActive from "../../assets/windActive.svg";
 import Cart from "../../assets/cart-shopping.svg";
+import CartActive from "../../assets/cart-shoppingActive.svg";
 import Wallet from "../../assets/wallet.svg";
+import WalletActive from "../../assets/walletActive.svg";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
 import { StyledCenterFooter } from "./componets/StyledCenterFooter";
@@ -99,6 +104,11 @@ const Footer = () => {
               "&.Mui-disabled": {
                 backgroundColor: "rgb(134 134 134)",
               },
+              boxShadow: `
+              0px 4px 4px 0px rgba(0, 0, 0, 0.25),
+              0px -2px 4px 0px rgba(0, 0, 0, 1) inset,
+              0px 1px 4px 0px rgba(255, 255, 255, 0.14) inset
+              `,
             }}
             variant="contained"
             disabled={isButtonDisabled}
@@ -120,13 +130,16 @@ const Footer = () => {
       <StyledFooterBox>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/referal")}>
           <img
-            src={Linked}
+            src={location.pathname === "/referal" ? LinkedActive : Linked}
             alt="linked"
             style={{ width: "22px", height: "22px" }}
           />
           <Typography
             sx={{
-              color: MAIN_COLORS.activeTabColor,
+              color:
+                location.pathname === "/referal"
+                  ? MAIN_COLORS.activeTabColor
+                  : MAIN_COLORS.missionTable,
               fontSize: "12px",
               fontWeight: 700,
             }}
@@ -135,24 +148,69 @@ const Footer = () => {
           </Typography>
         </StyledFooterBoxes>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/missions")}>
-          <img src={Mission} alt="mission" />
-          <StyledFooterBoxesTypography>Mission</StyledFooterBoxesTypography>
+          <img
+            src={location.pathname === "/missions" ? MissionActive : Mission}
+            alt="mission"
+          />
+          <StyledFooterBoxesTypography
+            sx={{
+              color:
+                location.pathname === "/missions"
+                  ? MAIN_COLORS.activeTabColor
+                  : MAIN_COLORS.missionTable,
+            }}
+          >
+            Mission
+          </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
         <StyledCenterFooter onClick={() => handleNavigationChange("/")}>
-          <img src={Wind} alt=" wind " />
-          <StyledFooterBoxesTypography>Home</StyledFooterBoxesTypography>
+          <img
+            src={location.pathname === "/" ? WindActive : Wind}
+            alt=" wind "
+          />
+          <StyledFooterBoxesTypography
+            sx={{
+              color:
+                location.pathname === "/"
+                  ? MAIN_COLORS.activeTabColor
+                  : MAIN_COLORS.missionTable,
+            }}
+          >
+            Home
+          </StyledFooterBoxesTypography>
         </StyledCenterFooter>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/shop")}>
-          <img src={Cart} alt="cart" />
-          <StyledFooterBoxesTypography>Shop</StyledFooterBoxesTypography>
+          <img
+            src={location.pathname === "/shop" ? CartActive : Cart}
+            alt="cart"
+          />
+          <StyledFooterBoxesTypography
+            sx={{
+              color:
+                location.pathname === "/shop"
+                  ? MAIN_COLORS.activeTabColor
+                  : MAIN_COLORS.missionTable,
+            }}
+          >
+            Shop
+          </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/wallet")}>
           <img
-            src={Wallet}
+            src={location.pathname === "/wallet" ? WalletActive : Wallet}
             alt=" wallet"
             style={{ marginBottom: "5px", paddingTop: "5px" }}
           />
-          <StyledFooterBoxesTypography>Wallet</StyledFooterBoxesTypography>
+          <StyledFooterBoxesTypography
+            sx={{
+              color:
+                location.pathname === "/wallet"
+                  ? MAIN_COLORS.activeTabColor
+                  : MAIN_COLORS.missionTable,
+            }}
+          >
+            Wallet
+          </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
       </StyledFooterBox>
     </Box>

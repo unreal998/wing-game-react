@@ -1,5 +1,14 @@
-import { Box, Switch, Tab, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Drawer,
+  Stack,
+  Switch,
+  Tab,
+  Typography,
+} from "@mui/material";
 import React, { useCallback, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import { MAIN_COLORS } from "../../shared/colors";
 import USDT from "../../assets/usdt.svg";
 import { StyledBasicBox } from "./components/StyledBasicBox";
@@ -10,6 +19,8 @@ import { InfoBox } from "../../shared/components/InfoBox";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
+import Tonkeeper from "../../assets/Tonkeeper.png";
+import TelegramWallet from "../../assets/TelegramWallet.png";
 
 const tabStyles = {
   fontSize: "12px",
@@ -26,6 +37,7 @@ const tabStyles = {
 
 const Wallet = () => {
   const [playSound] = useSound(FooterButtonPress);
+  const [addWalletModalOpen, setAddWalletModalOpen] = useState(false);
 
   const handleSoundClick = useCallback(() => {
     playSound();
@@ -35,6 +47,13 @@ const Wallet = () => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const [walletNumber, setWalletNumber] = useState("");
+
+  const handleAddWalletClick = useCallback(() => {
+    setWalletNumber("TSzuyCCUbSDSQUDxfCVMty24z4GkncMxw4");
+    setAddWalletModalOpen(false);
+  }, []);
 
   return (
     <Box sx={{ padding: "5px 15px 0 15px" }}>
@@ -151,33 +170,174 @@ const Wallet = () => {
               alt="mask"
               style={{ paddingTop: "15px", width: "88px" }}
             />
-            <Typography
-              sx={{
-                fontSize: "12px",
-                fontWeight: 400,
-                paddingLeft: "28px",
-                paddingRight: "28px",
-                paddingTop: "15px",
-                paddingBottom: "15px",
-              }}
-            >
-              Connect your wallet to access <br />
-              upcoming crypto features. Our team is working <br /> hard to bring
-              them to you soon!
-            </Typography>
-            <ButtonStyled>
+            {walletNumber ? (
               <Typography
                 sx={{
-                  color: "inherit",
-                  fontSize: "12px",
+                  fontSize: "16px",
                   fontWeight: 400,
-                  textTransform: "uppercase",
+                  paddingLeft: "28px",
+                  paddingRight: "28px",
+                  paddingTop: "15px",
+                  paddingBottom: "15px",
                 }}
               >
-                Connect wallet
+                Your wallet: <br /> <br />
+                <b>{walletNumber}</b>
               </Typography>
-            </ButtonStyled>
+            ) : (
+              <Typography
+                sx={{
+                  fontSize: "12px",
+                  fontWeight: 400,
+                  paddingLeft: "28px",
+                  paddingRight: "28px",
+                  paddingTop: "15px",
+                  paddingBottom: "15px",
+                }}
+              >
+                Connect your wallet to access <br />
+                upcoming crypto features. Our team is working <br /> hard to
+                bring them to you soon!
+              </Typography>
+            )}
+            {!walletNumber && (
+              <ButtonStyled onClick={() => setAddWalletModalOpen(true)}>
+                <Typography
+                  sx={{
+                    color: "inherit",
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Connect wallet
+                </Typography>
+              </ButtonStyled>
+            )}
           </StyledBasicBox>
+          <Drawer
+            open={addWalletModalOpen}
+            anchor="bottom"
+            sx={{
+              "& .MuiDrawer-paper": {
+                margin: "0px 10px",
+                borderRadius: "10px",
+                backgroundColor: "#031C2B",
+              },
+            }}
+          >
+            <Stack
+              direction="column"
+              padding="7px 20px"
+              color="white"
+              alignItems="center"
+              justifyContent="center"
+              gap="20px"
+            >
+              <Box width="100%" display="flex" justifyContent="flex-end">
+                <Box
+                  bgcolor={MAIN_COLORS.basicBox}
+                  padding="6px"
+                  borderRadius="100%"
+                  onClick={() => setAddWalletModalOpen(false)}
+                >
+                  <CloseIcon sx={{ color: MAIN_COLORS.missionTable }} />
+                </Box>
+              </Box>
+              <Typography
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                }}
+              >
+                {" "}
+                Connect your wallet
+              </Typography>
+              <Box
+                display="flex"
+                width="100%"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Button
+                  sx={{
+                    width: "80%",
+                    display: "flex",
+                    gap: "7px",
+                    padding: "15px 20px",
+                    backgroundColor: MAIN_COLORS.activeTabColor,
+                    borderRadius: "10px",
+                    "&.Mui-disabled": {
+                      backgroundColor: "rgb(134 134 134)",
+                    },
+                    boxShadow: `
+                    0px 4px 4px 0px rgba(0, 0, 0, 0.25),
+                    0px -2px 4px 0px rgba(0, 0, 0, 1) inset,
+                    0px 1px 4px 0px rgba(255, 255, 255, 0.14) inset
+                    `,
+                    textTransform: "none",
+                  }}
+                  variant="contained"
+                  onClick={() => {}}
+                >
+                  <Typography
+                    sx={{
+                      color: "rgb(0, 0, 0)",
+                      fontSize: "16px",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Open wallet in telegram
+                  </Typography>
+                </Button>
+              </Box>
+              <Stack
+                direction="row"
+                justifyContent="space-around"
+                width="100%"
+                paddingBottom="35px"
+              >
+                <Stack
+                  gap="10px"
+                  alignItems="center"
+                  onClick={handleAddWalletClick}
+                >
+                  <img
+                    width="55px"
+                    height="55px"
+                    src={TelegramWallet}
+                    alt="telegram wallet"
+                  ></img>
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                    }}
+                  >
+                    Telegram Wallet
+                  </Typography>
+                </Stack>
+                <Stack
+                  gap="10px"
+                  alignItems="center"
+                  onClick={handleAddWalletClick}
+                >
+                  <img
+                    width="55px"
+                    height="55px"
+                    src={Tonkeeper}
+                    alt="tonekeeper"
+                  ></img>
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                    }}
+                  >
+                    Tonkeeper
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Stack>
+          </Drawer>
         </TabPanel>
         <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
           <StyledTableBox sx={{ marginTop: "5px" }}>

@@ -285,6 +285,11 @@ const Shop = () => {
               "&.Mui-disabled": {
                 backgroundColor: "rgb(134 134 134)",
               },
+              boxShadow: `
+              0px 4px 4px 0px rgba(0, 0, 0, 0.25),
+              0px -2px 4px 0px rgba(0, 0, 0, 1) inset,
+              0px 1px 4px 0px rgba(255, 255, 255, 0.14) inset
+            `,
             }}
             variant="contained"
             onClick={() => {}}
@@ -293,7 +298,7 @@ const Shop = () => {
               sx={{
                 color: "rgb(0, 0, 0)",
                 fontSize: "20px",
-                fontWeight: 400,
+                fontWeight: 600,
               }}
             >
               Buy
