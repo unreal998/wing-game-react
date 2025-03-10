@@ -128,7 +128,7 @@ const Header = () => {
                 gap: "35px",
               }}
             >
-              <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+              <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
                 442.8593 Kwt
               </Typography>
             </Box>
@@ -136,21 +136,22 @@ const Header = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "center",
               width: "80px",
               backgroundColor: "rgba(217, 217, 217, 0.17)",
               border: `1px solid ${MAIN_COLORS.activeTabColor}`,
               flexDirection: "row",
               borderRadius: "9px",
               alignItems: "center",
-              padding: "5px 13px",
+              padding: "10px 13px",
+              gap: "10px",
             }}
           >
             <img src={USDT} alt="usdt" />
             <Typography
-              sx={{ fontSize: "12px", fontWeight: 500, color: "white" }}
+              sx={{ fontSize: "14px", fontWeight: 600, color: "white" }}
             >
-              TON 234
+              234
             </Typography>
           </Box>
         </StyledMain>

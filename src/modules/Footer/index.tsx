@@ -25,6 +25,7 @@ import {
 } from "../Home/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { powerButtonPressed, setPressTimeDelay } from "../Home/slices";
+import PowerIconActive from "./componets/PowerIconActive";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -84,14 +85,14 @@ const Footer = () => {
           <Typography
             sx={{
               color: MAIN_COLORS.textColor,
-              fontSize: "12px",
-              fontWeight: 400,
+              fontSize: "16px",
+              fontWeight: 600,
               backgroundColor: "rgba(0, 0, 0, 0.8)",
               padding: "12px",
               borderRadius: "7px",
             }}
           >
-            {calculateTime} hour
+            {calculateTime} Hour
           </Typography>
           <Button
             sx={{
@@ -114,12 +115,13 @@ const Footer = () => {
             disabled={isButtonDisabled}
             onClick={handlePushPower}
           >
-            <PowerIcon />
+            {isButtonDisabled ? <PowerIcon /> : <PowerIconActive />}
             <Typography
               sx={{
                 color: "rgb(0, 0, 0)",
                 fontSize: "20px",
-                fontWeight: 400,
+                fontWeight: 600,
+                fontStyle: "italic",
               }}
             >
               Push Power
