@@ -16,9 +16,11 @@ import "./i18n";
 const App = () => {
   useEffect(() => {
     try {
-      WebApp.requestFullscreen();
+      if (WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop") {
+        WebApp.requestFullscreen();
+        WebApp.disableVerticalSwipes();
+      }
       WebApp.lockOrientation();
-      WebApp.disableVerticalSwipes();
     } catch (err) {
       console.log(err);
     }
