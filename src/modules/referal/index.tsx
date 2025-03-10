@@ -50,13 +50,37 @@ const Referal = () => {
         <StyledBasicBox height={`${tableHeight}px`}>
           <TableBox>
             <StyledHeader sx={{ flex: 1.6, paddingLeft: "5px" }}>
-              <TableBoxHead>User</TableBoxHead>
+              <TableBoxHead>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  User
+                </Typography>
+              </TableBoxHead>
             </StyledHeader>
             <StyledHeader sx={{ flex: 0.7 }}>
-              <TableBoxHead>Level</TableBoxHead>
+              <TableBoxHead>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  Level
+                </Typography>
+              </TableBoxHead>
             </StyledHeader>
             <StyledHeader sx={{ flex: 0.7 }}>
-              <TableBoxHead>Coin</TableBoxHead>
+              <TableBoxHead>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  Coin
+                </Typography>
+              </TableBoxHead>
             </StyledHeader>
           </TableBox>
           {Array(10)
