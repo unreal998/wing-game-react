@@ -15,7 +15,7 @@ import Shop from "./modules/Shop";
 const App = () => {
   useEffect(() => {
     try {
-      if (WebApp.platform !== "tdesktop") {
+      if (WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop") {
         WebApp.requestFullscreen();
         WebApp.disableVerticalSwipes();
       }

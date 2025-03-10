@@ -6,17 +6,22 @@ import USDT from "../../assets/usdt.svg";
 import Flash from "../../assets/flash.png";
 import { StyledMain } from "./components/StyledMain";
 import { useLocation, useNavigate } from "react-router-dom";
+import WebApp from "@twa-dev/sdk";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const isMobile =
+    WebApp.platform &&
+    WebApp.platform !== "unknown" &&
+    WebApp.platform !== "tdesktop";
   return (
     <Stack
       sx={{
         backgroundColor: MAIN_COLORS.headerBG,
         marginLeft: "14px",
         marginRight: "14px",
-        marginTop: "11vh",
+        marginTop: isMobile ? "11vh" : "2vh",
         borderRadius: "12px",
         padding: "11px",
       }}
