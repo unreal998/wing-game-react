@@ -189,7 +189,7 @@ const Wallet = () => {
                 paddingTop: "5px",
                 paddingBottom: "5px",
                 display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
+                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
               }}
             >
               <Typography sx={{ fontSize: "16px", fontWeight: 900 }}>
@@ -205,7 +205,7 @@ const Wallet = () => {
                 paddingTop: "4px",
                 paddingBottom: "4px",
                 display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
+                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
               }}
             >
               <Box sx={{ flex: 1.2 }}>
@@ -252,7 +252,7 @@ const Wallet = () => {
                 paddingTop: "4px",
                 paddingBottom: "4px",
                 display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
+                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
               }}
             >
               <Box sx={{ flex: 1.2 }}>
@@ -299,7 +299,7 @@ const Wallet = () => {
                 paddingTop: "4px",
                 paddingBottom: "4px",
                 display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
+                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
               }}
             >
               <Box sx={{ flex: 1.2 }}>

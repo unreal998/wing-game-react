@@ -37,7 +37,7 @@ const Header = () => {
               paddingTop: "7px",
               paddingBottom: "7px",
               paddingRight: "22px",
-              borderRight: `1px solid ${MAIN_COLORS.border}`,
+              borderRight: `1px solid ${MAIN_COLORS.mainGreyBG}`,
             }}
           >
             <Box

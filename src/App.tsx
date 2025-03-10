@@ -10,6 +10,7 @@ import { Home } from "./modules/Home";
 import { Route, Routes } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
+import Shop from "./modules/Shop";
 
 const App = () => {
   useEffect(() => {
@@ -38,7 +39,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/referal" element={<Referal />} />
           <Route path="/wallet" element={<Wallet />} />
-          <Route path="/shop" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
           <Route path="/missions" element={<Missions />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>

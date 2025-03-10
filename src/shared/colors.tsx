@@ -1,12 +1,11 @@
 export const MAIN_COLORS = {
   headerBG: "rgba(0, 0, 0, 0.17)",
   textColor: "#FFFFFF",
-  border: "rgba(255, 255, 255, 0.12)",
   mainBG: "#01121D",
   activeTabColor: "#63EE6A",
   footerText: "rgba(255, 255, 255, 0.69)",
   referalBox: "rgba(0, 0, 0, 0.46)",
-  referalBottom: "rgba(255, 255, 255, 0.14)",
+  mainGreyBG: "rgba(255, 255, 255, 0.14)",
   walletButton: "rgba(255, 255, 255, 0.25)",
   electrisityBoxBG: "rgba(0, 0, 0, 0.29)",
   gold: "#FFDE00",
