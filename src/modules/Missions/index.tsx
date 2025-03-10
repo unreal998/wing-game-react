@@ -13,8 +13,8 @@ import {
   missionTitles,
 } from "../../shared/mocks/missionComponentMocks";
 import { InfoBox } from "../../shared/components/InfoBox";
-
 import { StyledTabMission } from "./StyledTabMission";
+import { MAIN_COLORS } from "../../shared/colors";
 
 const Missions = () => {
   const [value, setValue] = useState(0);

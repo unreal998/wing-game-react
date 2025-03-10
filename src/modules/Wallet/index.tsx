@@ -1,5 +1,5 @@
-import { Box, Switch, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Switch, Tab, Typography } from "@mui/material";
+import React, { useCallback, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import USDT from "../../assets/usdt.svg";
 import { StyledBasicBox } from "./components/StyledBasicBox";
@@ -8,11 +8,30 @@ import { ButtonStyled } from "./components/ButtonStyled";
 import { StyledTableBox } from "./components/StyledTableBox";
 import { InfoBox } from "../../shared/components/InfoBox";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { TabListTab } from "../../shared/components/TabListTab";
+import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
+
+const tabStyles = {
+  fontSize: "12px",
+  fontWeight: 700,
+  padding: "0 10px",
+  color: MAIN_COLORS.textColor,
+  border: MAIN_COLORS.dailyBorder,
+  borderRadius: "5px",
+  minHeight: "35px",
+  "&.Mui-selected": {
+    color: MAIN_COLORS.activeTabColor,
+  },
+};
 
 const Wallet = () => {
-  const [value, setValue] = useState(0);
+  const [playSound] = useSound(FooterButtonPress);
 
+  const handleSoundClick = useCallback(() => {
+    playSound();
+  }, [playSound]);
+
+  const [value, setValue] = useState(0);
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -110,11 +129,23 @@ const Wallet = () => {
           }}
           onChange={handleTabChange}
         >
-          <TabListTab label={"Wallet"} value={0} />
-          <TabListTab label={"History"} value={1} />
+          <Tab
+            sx={tabStyles}
+            label={"Wallet"}
+            value={0}
+            key={0}
+            onClick={handleSoundClick}
+          />
+          <Tab
+            sx={tabStyles}
+            label={"History"}
+            value={1}
+            key={1}
+            onClick={handleSoundClick}
+          />
         </TabList>
-        <TabPanel value={0}>
-          <StyledBasicBox sx={{ marginTop: "0px", marginBottom: "17px" }}>
+        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
+          <StyledBasicBox>
             <img
               src={Mask}
               alt="mask"
@@ -148,7 +179,7 @@ const Wallet = () => {
             </ButtonStyled>
           </StyledBasicBox>
         </TabPanel>
-        <TabPanel value={1}>
+        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
           <StyledTableBox sx={{ marginTop: "5px" }}>
             <Box
               sx={{
@@ -158,7 +189,7 @@ const Wallet = () => {
                 paddingTop: "5px",
                 paddingBottom: "5px",
                 display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
+                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
               }}
             >
               <Typography sx={{ fontSize: "16px", fontWeight: 900 }}>
@@ -174,7 +205,7 @@ const Wallet = () => {
                 paddingTop: "4px",
                 paddingBottom: "4px",
                 display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
+                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
               }}
             >
               <Box sx={{ flex: 1.2 }}>
@@ -221,7 +252,7 @@ const Wallet = () => {
                 paddingTop: "4px",
                 paddingBottom: "4px",
                 display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
+                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
               }}
             >
               <Box sx={{ flex: 1.2 }}>
@@ -268,7 +299,7 @@ const Wallet = () => {
                 paddingTop: "4px",
                 paddingBottom: "4px",
                 display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.referalBottom}`,
+                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
               }}
             >
               <Box sx={{ flex: 1.2 }}>
