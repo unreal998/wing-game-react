@@ -1,3 +1,5 @@
-const HEADER_AND_FOOTER_SIZE = 167;
+import WebApp from "@twa-dev/sdk";
 
-export const heightProportion = window.innerHeight - HEADER_AND_FOOTER_SIZE;
+const HEADER_AND_FOOTER_SIZE = 202;
+export const heightProportion =
+  (WebApp.viewportStableHeight || window.innerHeight) - HEADER_AND_FOOTER_SIZE;

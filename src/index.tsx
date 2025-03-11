@@ -4,7 +4,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import "./i18n";
-import { MemoryRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -13,9 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <MemoryRouter>
+      <BrowserRouter>
         <App />
-      </MemoryRouter>
+      </BrowserRouter>
     </React.StrictMode>
   </Provider>,
 );

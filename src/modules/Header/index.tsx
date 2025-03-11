@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
@@ -6,17 +6,33 @@ import USDT from "../../assets/usdt.svg";
 import Flash from "../../assets/flash.png";
 import { StyledMain } from "./components/StyledMain";
 import { useLocation, useNavigate } from "react-router-dom";
+import useSound from "use-sound";
+import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
+import WebApp from "@twa-dev/sdk";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [playSound] = useSound(FooterButtonPress);
+
+  const handleSoundClick = useCallback(() => {
+    playSound();
+    navigate("/settings");
+  }, [playSound, navigate]);
+
+  const isMobile =
+    WebApp.platform &&
+    WebApp.platform !== "unknown" &&
+    WebApp.platform !== "tdesktop";
+
   return (
     <Stack
       sx={{
         backgroundColor: MAIN_COLORS.headerBG,
         marginLeft: "14px",
         marginRight: "14px",
-        marginTop: "2vh",
+        marginTop: isMobile ? "11vh" : "2vh",
         borderRadius: "12px",
         padding: "11px",
       }}
@@ -30,14 +46,14 @@ const Header = () => {
             width: "50vh",
           }}
         >
-          <img src={Gear} alt="gear" onClick={() => navigate("/settings")} />
+          <img src={Gear} alt="gear" onClick={handleSoundClick} />
           <Box
             sx={{
               width: "100%",
               paddingTop: "7px",
               paddingBottom: "7px",
               paddingRight: "22px",
-              borderRight: `1px solid ${MAIN_COLORS.border}`,
+              borderRight: `1px solid ${MAIN_COLORS.mainGreyBG}`,
             }}
           >
             <Box
@@ -84,7 +100,9 @@ const Header = () => {
           }}
         >
           <img src={USDT} alt="usdt" />
-          <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
+          <Typography
+            sx={{ fontSize: "12px", fontWeight: 500, color: "white" }}
+          >
             TON: 234
           </Typography>
         </Box>
@@ -110,7 +128,7 @@ const Header = () => {
                 gap: "35px",
               }}
             >
-              <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+              <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
                 442.8593 Kwt
               </Typography>
             </Box>
@@ -118,19 +136,22 @@ const Header = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "center",
               width: "80px",
               backgroundColor: "rgba(217, 217, 217, 0.17)",
               border: `1px solid ${MAIN_COLORS.activeTabColor}`,
               flexDirection: "row",
               borderRadius: "9px",
               alignItems: "center",
-              padding: "5px 13px",
+              padding: "10px 13px",
+              gap: "10px",
             }}
           >
             <img src={USDT} alt="usdt" />
-            <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-              TON 234
+            <Typography
+              sx={{ fontSize: "14px", fontWeight: 600, color: "white" }}
+            >
+              234
             </Typography>
           </Box>
         </StyledMain>

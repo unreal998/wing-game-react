@@ -6,7 +6,7 @@ type HomeState = {
 };
 
 export const initialHomeState: HomeState = {
-  nextPressTimeDelay: 4000,
+  nextPressTimeDelay: 20000,
   disabledPowerButton: true,
 };
 

@@ -15,6 +15,7 @@ import { StyledBasicBox } from "./components/StyledBasicBox";
 import { StyledInputBox } from "./components/StyledInputBox";
 import { StyledInput } from "./components/StyledInput";
 import { heightProportion } from "../../shared/utils";
+import { InfoBox } from "../../shared/components/InfoBox";
 
 const Referal = () => {
   const [inviteText, setInviteText] = useState("Invite a friend");
@@ -43,67 +44,43 @@ const Referal = () => {
           Referal
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box
-            sx={{
-              backgroundColor: MAIN_COLORS.referalBox,
-              border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
-              display: "flex",
-              flexDirection: "column",
-              borderRadius: "9px",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontWeight: 700,
-                padding: "9px 45px 0px 45px",
-              }}
-            >
-              234
-            </Typography>
-            <Typography
-              sx={{ fontSize: "17px", fontWeight: 700, paddingBottom: "9px" }}
-            >
-              Your bonus
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: MAIN_COLORS.referalBox,
-              border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
-              display: "flex",
-              flexDirection: "column",
-              borderRadius: "9px",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontWeight: 700,
-                padding: "9px 41px 0px 41px",
-              }}
-            >
-              10%
-            </Typography>
-            <Typography
-              sx={{ fontSize: "17px", fontWeight: 700, paddingBottom: "9px" }}
-            >
-              Your bonus
-            </Typography>
-          </Box>
+          <InfoBox value={"234"} subtitle={"Your bonus"}></InfoBox>
+          <InfoBox value={"10 %"} subtitle={"Your bonus"}></InfoBox>
         </Box>
         <StyledBasicBox height={`${tableHeight}px`}>
           <TableBox>
             <StyledHeader sx={{ flex: 1.6, paddingLeft: "5px" }}>
-              <TableBoxHead>User</TableBoxHead>
+              <TableBoxHead>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  User
+                </Typography>
+              </TableBoxHead>
             </StyledHeader>
             <StyledHeader sx={{ flex: 0.7 }}>
-              <TableBoxHead>Level</TableBoxHead>
+              <TableBoxHead>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  Level
+                </Typography>
+              </TableBoxHead>
             </StyledHeader>
             <StyledHeader sx={{ flex: 0.7 }}>
-              <TableBoxHead>Coin</TableBoxHead>
+              <TableBoxHead>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  Coin
+                </Typography>
+              </TableBoxHead>
             </StyledHeader>
           </TableBox>
           {Array(10)

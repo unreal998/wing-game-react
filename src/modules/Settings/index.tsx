@@ -1,10 +1,8 @@
-import React, { useState, useMemo } from "react";
-import { Box, styled, Switch, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { MAIN_COLORS } from "../../shared/colors";
 import { heightProportion } from "../../shared/utils";
-import Header from "../Header";
-import Footer from "../Footer";
 import Question from "../../assets/question.svg";
 import { StyledBasicBox } from "../referal/components/StyledBasicBox";
 import { TableBox } from "../referal/components/TableBox";
@@ -24,7 +22,6 @@ type LanguageCode = keyof typeof languages;
 const Settings = () => {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const { t, i18n } = useTranslation();
-  const tableHeight = useMemo(() => heightProportion - 265, []);
 
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode>(
@@ -38,7 +35,7 @@ const Settings = () => {
   };
 
   const [colors, setColors] = useState([
-    MAIN_COLORS.contentYellow,
+    MAIN_COLORS.activeTabColor,
     MAIN_COLORS.walletButton,
   ]);
 
