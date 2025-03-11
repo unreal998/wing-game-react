@@ -2,5 +2,11 @@
   "Test": "Test",
   "Settings": "Settings",
   "Language": "Language",
-  "Sound": "Sound effect"
+  "Sound": "Sound effect",
+  "Referal": "Referal",
+  "Mission": "Mission",
+  "Home": "Home",
+  "Shop": "Shop",
+  "Wallet": "Wallet",
+  "hour": "hour"
 }

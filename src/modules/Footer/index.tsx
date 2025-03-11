@@ -20,6 +20,7 @@ import {
 } from "../Home/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { powerButtonPressed, setPressTimeDelay } from "../Home/slices";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Footer = () => {
   const nextPressButtonTimeDelay = useSelector(selectNextPressTimeDelay());
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -86,7 +88,7 @@ const Footer = () => {
               borderRadius: "7px",
             }}
           >
-            {calculateTime} hour
+            {calculateTime} {t("hour")}
           </Typography>
           <Button
             sx={{
@@ -131,20 +133,28 @@ const Footer = () => {
               fontWeight: 700,
             }}
           >
-            Referal
+            {t("Referal")}
           </Typography>
         </StyledFooterBoxes>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/mission")}>
           <img src={Mission} alt="mission" />
-          <StyledFooterBoxesTypography>Mission</StyledFooterBoxesTypography>
+          <StyledFooterBoxesTypography>
+            {t("Mission")}
+          </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
         <StyledCenterFooter onClick={() => handleNavigationChange("/")}>
           <img src={Wind} alt=" wind " />
-          <StyledFooterBoxesTypography>Home</StyledFooterBoxesTypography>
+          <StyledFooterBoxesTypography>
+            {" "}
+            {t("Home")}{" "}
+          </StyledFooterBoxesTypography>
         </StyledCenterFooter>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/shop")}>
           <img src={Cart} alt="cart" />
-          <StyledFooterBoxesTypography>Shop</StyledFooterBoxesTypography>
+          <StyledFooterBoxesTypography>
+            {" "}
+            {t("Shop")}{" "}
+          </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/wallet")}>
           <img
@@ -152,7 +162,10 @@ const Footer = () => {
             alt=" wallet"
             style={{ marginBottom: "5px", paddingTop: "5px" }}
           />
-          <StyledFooterBoxesTypography>Wallet</StyledFooterBoxesTypography>
+          <StyledFooterBoxesTypography>
+            {" "}
+            {t("Wallet")}{" "}
+          </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
       </StyledFooterBox>
     </Box>

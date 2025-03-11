@@ -2,5 +2,11 @@
   "Test": "Test Russian",
   "Settings": "Настройки",
   "Language": "Язык",
-  "Sound": "Звуковой эффект"
+  "Sound": "Звуковой эффект",
+  "Referal": "Реферал",
+  "Mission": "Миссия",
+  "Home": "Главная",
+  "Shop": "Магазин",
+  "Wallet": "Кошелек",
+  "hour": "час"
 }
