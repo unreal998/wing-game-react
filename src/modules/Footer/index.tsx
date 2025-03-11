@@ -164,7 +164,7 @@ const Footer = () => {
                   : MAIN_COLORS.missionTable,
             }}
           >
-            Mission
+            {t("Mission")}
           </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
         <StyledCenterFooter onClick={() => handleNavigationChange("/")}>
@@ -180,7 +180,7 @@ const Footer = () => {
                   : MAIN_COLORS.missionTable,
             }}
           >
-            Home
+            {t("Home")}
           </StyledFooterBoxesTypography>
         </StyledCenterFooter>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/shop")}>
@@ -196,7 +196,7 @@ const Footer = () => {
                   : MAIN_COLORS.missionTable,
             }}
           >
-            Shop
+            {t("Shop")}
           </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
         <StyledFooterBoxes onClick={() => handleNavigationChange("/wallet")}>
@@ -213,7 +213,7 @@ const Footer = () => {
                   : MAIN_COLORS.missionTable,
             }}
           >
-            Wallet
+            {t("Wallet")}
           </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
       </StyledFooterBox>

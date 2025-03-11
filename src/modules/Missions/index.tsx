@@ -8,16 +8,21 @@ import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
-import {
-  missions,
-  missionTitles,
-} from "../../shared/mocks/missionComponentMocks";
+import { missions } from "../../shared/mocks/missionComponentMocks";
 import { InfoBox } from "../../shared/components/InfoBox";
-import { StyledTabMission } from "./StyledTabMission";
-import { MAIN_COLORS } from "../../shared/colors";
+import { StyledTabMission } from "./components/StyledTabMission";
+
+import { useTranslation } from "react-i18next";
 
 const Missions = () => {
   const [value, setValue] = useState(0);
+  const { t } = useTranslation();
+
+  const missionTitles = [
+    { text: t("Daily missions") },
+    { text: t("Daily bonus") },
+    { text: t("Quests") },
+  ];
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -45,10 +50,10 @@ const Missions = () => {
         }}
       >
         <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>
-          Missions
+          {t("Missions")}
         </Typography>
 
-        <InfoBox value={"234"} subtitle={"Your name coin"} />
+        <InfoBox value={"234"} subtitle={t("Your name coin")} />
       </Box>
 
       <TabContext value={value.toString()}>
@@ -93,7 +98,7 @@ const Missions = () => {
                   />
                   <Box sx={{ padding: mission.textPadding }}>
                     <StyledSubscrible>
-                      Subscribe to Tron announcements
+                      {t("Subscribe to Tron announcements")}
                     </StyledSubscrible>
                     <StyledSHIB>5,000 SHIB</StyledSHIB>
                   </Box>
