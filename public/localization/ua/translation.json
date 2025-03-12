@@ -13,7 +13,7 @@
   "Daily missions": "Щоденні місії",
   "Daily bonus": "Щоденний бонус",
   "Quests": "Квести",
-  "Your name coin": "Ім'я вашої монети",
+  "Your name coin": "Ім'я монети",
   "Subscribe to Tron announcements": "Підписатися на анонси Трон",
   "Your bonus": "Ваш бонус",
   "Rang": "Ранг",
@@ -32,5 +32,13 @@
   "Energy produced per day": "Енергія, вироблена за день",
   "Energy produced per week": "Енергія, вироблена за тиждень",
   "Energy produced per month": "Енергія, вироблена за місяць",
-  "Buy": "Купити"
+  "Buy": "Купити",
+  "Auto payout": "Автоматична виплата",
+  "Connect": "Підключіть свій гаманець, щоб отримати доступ  до майбутніх криптовалютних функцій. Наша команда наполегливо працює над тим,  щоб незабаром надати їх вам!",
+  "History": "Історія",
+  "BONUS": "БОНУС",
+  "Open wallet in telegram": "Відкрити гаманець у телеграмі",
+  "Connect your wallet": "Підключи свій гаманець",
+  "telegram wallet": "телеграм-гаманець",
+  "Tonkeeper": "Tonkeeper"
 }

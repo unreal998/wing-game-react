@@ -21,6 +21,9 @@ import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
 import Tonkeeper from "../../assets/Tonkeeper.png";
 import TelegramWallet from "../../assets/TelegramWallet.png";
+import { useTranslation } from "react-i18next";
+import HistoryItem from "./components/HistoryItem";
+import { ButtonGame } from "../../shared/ButtonGame";
 
 const tabStyles = {
   fontSize: "12px",
@@ -36,8 +39,17 @@ const tabStyles = {
 };
 
 const Wallet = () => {
+  const { t } = useTranslation();
   const [playSound] = useSound(FooterButtonPress);
   const [addWalletModalOpen, setAddWalletModalOpen] = useState(false);
+  const wallets = [
+    {
+      src: TelegramWallet,
+      alt: "telegram wallet",
+      label: t("telegram wallet"),
+    },
+    { src: Tonkeeper, alt: "tonkeeper", label: t("Tonkeeper") },
+  ];
 
   const handleSoundClick = useCallback(() => {
     playSound();
@@ -57,7 +69,10 @@ const Wallet = () => {
 
   return (
     <Box sx={{ padding: "5px 15px 0 15px" }}>
-      <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>Wallet</Typography>
+      <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>
+        {" "}
+        {t("Wallet")}{" "}
+      </Typography>
       <Box
         sx={{
           display: "flex",
@@ -65,7 +80,7 @@ const Wallet = () => {
           paddingTop: "8px",
         }}
       >
-        <InfoBox value={"234"} subtitle={"Your name coin"} />
+        <InfoBox value={"234"} subtitle={t("Your name coin")} />
         <Box
           sx={{
             backgroundColor: MAIN_COLORS.referalBox,
@@ -118,7 +133,7 @@ const Wallet = () => {
             fontWeight: 700,
           }}
         >
-          Auto payout
+          {t("Auto payout")}
         </Typography>
         <Switch
           sx={{
@@ -150,14 +165,14 @@ const Wallet = () => {
         >
           <Tab
             sx={tabStyles}
-            label={"Wallet"}
+            label={t("Wallet")}
             value={0}
             key={0}
             onClick={handleSoundClick}
           />
           <Tab
             sx={tabStyles}
-            label={"History"}
+            label={t("History")}
             value={1}
             key={1}
             onClick={handleSoundClick}
@@ -195,9 +210,7 @@ const Wallet = () => {
                   paddingBottom: "15px",
                 }}
               >
-                Connect your wallet to access <br />
-                upcoming crypto features. Our team is working <br /> hard to
-                bring them to you soon!
+                {t("Connect")}
               </Typography>
             )}
             {!walletNumber && (
@@ -251,7 +264,7 @@ const Wallet = () => {
                 }}
               >
                 {" "}
-                Connect your wallet
+                {t("Connect your wallet")}
               </Typography>
               <Box
                 display="flex"
@@ -259,22 +272,9 @@ const Wallet = () => {
                 alignItems="center"
                 justifyContent="center"
               >
-                <Button
+                <ButtonGame
                   sx={{
-                    width: "80%",
-                    display: "flex",
-                    gap: "7px",
                     padding: "15px 20px",
-                    backgroundColor: MAIN_COLORS.activeTabColor,
-                    borderRadius: "10px",
-                    "&.Mui-disabled": {
-                      backgroundColor: "rgb(134 134 134)",
-                    },
-                    boxShadow: `
-                    0px 4px 4px 0px rgba(0, 0, 0, 0.25),
-                    0px -2px 4px 0px rgba(0, 0, 0, 1) inset,
-                    0px 1px 4px 0px rgba(255, 255, 255, 0.14) inset
-                    `,
                     textTransform: "none",
                   }}
                   variant="contained"
@@ -287,9 +287,9 @@ const Wallet = () => {
                       fontWeight: 600,
                     }}
                   >
-                    Open wallet in telegram
+                    {t("Open wallet in telegram")}
                   </Typography>
-                </Button>
+                </ButtonGame>
               </Box>
               <Stack
                 direction="row"
@@ -297,44 +297,17 @@ const Wallet = () => {
                 width="100%"
                 paddingBottom="35px"
               >
-                <Stack
-                  gap="10px"
-                  alignItems="center"
-                  onClick={handleAddWalletClick}
-                >
-                  <img
-                    width="55px"
-                    height="55px"
-                    src={TelegramWallet}
-                    alt="telegram wallet"
-                  ></img>
-                  <Typography
-                    sx={{
-                      fontWeight: 600,
-                    }}
+                {wallets.map(({ src, alt, label }, index) => (
+                  <Stack
+                    key={index}
+                    gap="10px"
+                    alignItems="center"
+                    onClick={handleAddWalletClick}
                   >
-                    Telegram Wallet
-                  </Typography>
-                </Stack>
-                <Stack
-                  gap="10px"
-                  alignItems="center"
-                  onClick={handleAddWalletClick}
-                >
-                  <img
-                    width="55px"
-                    height="55px"
-                    src={Tonkeeper}
-                    alt="tonekeeper"
-                  ></img>
-                  <Typography
-                    sx={{
-                      fontWeight: 600,
-                    }}
-                  >
-                    Tonkeeper
-                  </Typography>
-                </Stack>
+                    <img width="55px" height="55px" src={src} alt={alt} />
+                    <Typography sx={{ fontWeight: 600 }}>{label}</Typography>
+                  </Stack>
+                ))}
               </Stack>
             </Stack>
           </Drawer>
@@ -353,151 +326,19 @@ const Wallet = () => {
               }}
             >
               <Typography sx={{ fontSize: "16px", fontWeight: 900 }}>
-                History
+                {t("History")}
               </Typography>
             </Box>
 
-            <Box
-              sx={{
-                width: "100hv",
-                marginRight: "15px",
-                paddingLeft: "18px",
-                paddingTop: "4px",
-                paddingBottom: "4px",
-                display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
-              }}
-            >
-              <Box sx={{ flex: 1.2 }}>
-                <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-                  2024.06.04{" "}
-                </Typography>
-                <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-                  18:02
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  flex: 0.8,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "15px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: MAIN_COLORS.activeTabColor,
-                    fontSize: "14px",
-                    fontWeight: 700,
-                  }}
-                >
-                  5,000
-                </Typography>
-                <Typography
-                  sx={{
-                    color: MAIN_COLORS.textColor,
-                    fontSize: "14px",
-                    fontWeight: 500,
-                  }}
-                >
-                  BONUS
-                </Typography>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                width: "100hv",
-                marginRight: "15px",
-                paddingLeft: "18px",
-                paddingTop: "4px",
-                paddingBottom: "4px",
-                display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
-              }}
-            >
-              <Box sx={{ flex: 1.2 }}>
-                <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-                  2024.06.04{" "}
-                </Typography>
-                <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-                  18:02
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  flex: 0.8,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "15px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: MAIN_COLORS.activeTabColor,
-                    fontSize: "14px",
-                    fontWeight: 700,
-                  }}
-                >
-                  5,000
-                </Typography>
-                <Typography
-                  sx={{
-                    color: MAIN_COLORS.textColor,
-                    fontSize: "14px",
-                    fontWeight: 500,
-                  }}
-                >
-                  BONUS
-                </Typography>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                width: "100hv",
-                marginRight: "15px",
-                paddingLeft: "18px",
-                paddingTop: "4px",
-                paddingBottom: "4px",
-                display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
-              }}
-            >
-              <Box sx={{ flex: 1.2 }}>
-                <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-                  2024.06.04{" "}
-                </Typography>
-                <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>
-                  18:02
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  flex: 0.8,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "15px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: MAIN_COLORS.activeTabColor,
-                    fontSize: "14px",
-                    fontWeight: 700,
-                  }}
-                >
-                  5,000
-                </Typography>
-                <Typography
-                  sx={{
-                    color: MAIN_COLORS.textColor,
-                    fontSize: "14px",
-                    fontWeight: 500,
-                  }}
-                >
-                  BONUS
-                </Typography>
-              </Box>
-            </Box>
+            {[...Array(3)].map((_, i) => (
+              <HistoryItem
+                key={i}
+                date="2024.06.04"
+                time="18:02"
+                amount="5,000"
+                label={t("BONUS")}
+              />
+            ))}
           </StyledTableBox>
         </TabPanel>
       </TabContext>
