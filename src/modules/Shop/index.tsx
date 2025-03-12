@@ -10,6 +10,8 @@ import { TabStyles } from "./components/TabStyles";
 import { useTranslation } from "react-i18next";
 import { ButtonShopStyled } from "./components/ButtonShopStyled";
 import { TextFieldStyled } from "./components/TextFieldStyled";
+import { MainBox } from "../../shared/MainBox";
+import { NamedStyled } from "../../shared/components/NameStyled";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -50,11 +52,8 @@ const Shop = () => {
   }, [generatorCountValue, generatorValue]);
 
   return (
-    <Box sx={{ padding: "5px 15px 0 15px" }}>
-      <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>
-        {" "}
-        {t("Market")}{" "}
-      </Typography>
+    <MainBox>
+      <NamedStyled>{t("Market")} </NamedStyled>
       <Stack
         sx={{
           justifyContent: "space-between",
@@ -253,7 +252,7 @@ const Shop = () => {
           </ButtonGame>
         </Box>
       </Stack>
-    </Box>
+    </MainBox>
   );
 };
 export default Shop;

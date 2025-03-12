@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Drawer,
-  Stack,
-  Switch,
-  Tab,
-  Typography,
-} from "@mui/material";
+import { Box, Drawer, Stack, Switch, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { MAIN_COLORS } from "../../shared/colors";
@@ -24,19 +16,19 @@ import TelegramWallet from "../../assets/TelegramWallet.png";
 import { useTranslation } from "react-i18next";
 import HistoryItem from "./components/HistoryItem";
 import { ButtonGame } from "../../shared/ButtonGame";
-
-const tabStyles = {
-  fontSize: "12px",
-  fontWeight: 700,
-  padding: "0 10px",
-  color: MAIN_COLORS.textColor,
-  border: MAIN_COLORS.dailyBorder,
-  borderRadius: "5px",
-  minHeight: "35px",
-  "&.Mui-selected": {
-    color: MAIN_COLORS.activeTabColor,
-  },
-};
+import { TabStyles } from "./components/TabStyles";
+import { WalletTypography } from "./components/WalletTypography";
+import { StackWallet } from "./components/StackWallet";
+import { ButtonGameBox } from "./components/ButtonGameBox";
+import { ButtonGameTypography } from "./components/ButtonGameTypography";
+import { StackWalletStyle } from "./components/StackWalletStyle";
+import { ButtonStyledTypography } from "./components/ButtonStyledTypography";
+import { TabPanelBoxStyled } from "./components/TabPanelBoxStyled";
+import { MainBox } from "../../shared/MainBox";
+import { NamedStyled } from "../../shared/components/NameStyled";
+import { BoxPayot } from "./components/BoxPayot";
+import { DrawerWallet } from "./components/DrawerWallet";
+import { InfoBoxWallet } from "./components/InfoBoxWallet";
 
 const Wallet = () => {
   const { t } = useTranslation();
@@ -59,6 +51,10 @@ const Wallet = () => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const tabs = [
+    { label: t("Wallet"), value: 0 },
+    { label: t("History"), value: 1 },
+  ];
 
   const [walletNumber, setWalletNumber] = useState("");
 
@@ -68,11 +64,8 @@ const Wallet = () => {
   }, []);
 
   return (
-    <Box sx={{ padding: "5px 15px 0 15px" }}>
-      <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>
-        {" "}
-        {t("Wallet")}{" "}
-      </Typography>
+    <MainBox>
+      <NamedStyled>{t("Wallet")} </NamedStyled>
       <Box
         sx={{
           display: "flex",
@@ -81,15 +74,7 @@ const Wallet = () => {
         }}
       >
         <InfoBox value={"234"} subtitle={t("Your name coin")} />
-        <Box
-          sx={{
-            backgroundColor: MAIN_COLORS.referalBox,
-            border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
-            display: "flex",
-            borderRadius: "9px",
-            alignItems: "center",
-          }}
-        >
+        <InfoBoxWallet>
           <Box sx={{ paddingLeft: "14px" }}>
             <img src={USDT} alt="usdt" />
           </Box>
@@ -115,17 +100,9 @@ const Wallet = () => {
               TON
             </Typography>
           </Box>
-        </Box>
+        </InfoBoxWallet>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: "9px",
-          paddingTop: "15px",
-          paddingBottom: "15px",
-        }}
-      >
+      <BoxPayot>
         <Typography
           sx={{
             color: MAIN_COLORS.textColor,
@@ -148,35 +125,25 @@ const Wallet = () => {
             },
           }}
         />
-      </Box>
+      </BoxPayot>
       <TabContext value={value}>
         <TabList
           sx={{
             display: "flex",
             minHeight: "0px",
-            "& .MuiTabs-list": {
-              gap: "10px",
-            },
-            "& .MuiTabs-indicator": {
-              display: "none",
-            },
+            "& .MuiTabs-list": { gap: "10px" },
+            "& .MuiTabs-indicator": { display: "none" },
           }}
           onChange={handleTabChange}
         >
-          <Tab
-            sx={tabStyles}
-            label={t("Wallet")}
-            value={0}
-            key={0}
-            onClick={handleSoundClick}
-          />
-          <Tab
-            sx={tabStyles}
-            label={t("History")}
-            value={1}
-            key={1}
-            onClick={handleSoundClick}
-          />
+          {tabs.map(({ label, value }) => (
+            <TabStyles
+              key={value}
+              label={label}
+              value={value}
+              onClick={handleSoundClick}
+            />
+          ))}
         </TabList>
         <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
           <StyledBasicBox>
@@ -186,67 +153,29 @@ const Wallet = () => {
               style={{ paddingTop: "15px", width: "88px" }}
             />
             {walletNumber ? (
-              <Typography
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  paddingLeft: "28px",
-                  paddingRight: "28px",
-                  paddingTop: "15px",
-                  paddingBottom: "15px",
-                }}
-              >
-                Your wallet: <br /> <br />
+              <WalletTypography>
+                {t(" Your wallet: ")} <br /> <br />
                 <b>{walletNumber}</b>
-              </Typography>
+              </WalletTypography>
             ) : (
-              <Typography
+              <WalletTypography
                 sx={{
                   fontSize: "12px",
-                  fontWeight: 400,
-                  paddingLeft: "28px",
-                  paddingRight: "28px",
-                  paddingTop: "15px",
-                  paddingBottom: "15px",
                 }}
               >
                 {t("Connect")}
-              </Typography>
+              </WalletTypography>
             )}
             {!walletNumber && (
               <ButtonStyled onClick={() => setAddWalletModalOpen(true)}>
-                <Typography
-                  sx={{
-                    color: "inherit",
-                    fontSize: "12px",
-                    fontWeight: 400,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Connect wallet
-                </Typography>
+                <ButtonStyledTypography>
+                  {t("Connect wallet")}
+                </ButtonStyledTypography>
               </ButtonStyled>
             )}
           </StyledBasicBox>
-          <Drawer
-            open={addWalletModalOpen}
-            anchor="bottom"
-            sx={{
-              "& .MuiDrawer-paper": {
-                margin: "0px 10px",
-                borderRadius: "10px",
-                backgroundColor: "#031C2B",
-              },
-            }}
-          >
-            <Stack
-              direction="column"
-              padding="7px 20px"
-              color="white"
-              alignItems="center"
-              justifyContent="center"
-              gap="20px"
-            >
+          <DrawerWallet open={addWalletModalOpen} anchor="bottom">
+            <StackWallet>
               <Box width="100%" display="flex" justifyContent="flex-end">
                 <Box
                   bgcolor={MAIN_COLORS.basicBox}
@@ -263,15 +192,9 @@ const Wallet = () => {
                   fontWeight: 600,
                 }}
               >
-                {" "}
                 {t("Connect your wallet")}
               </Typography>
-              <Box
-                display="flex"
-                width="100%"
-                alignItems="center"
-                justifyContent="center"
-              >
+              <ButtonGameBox>
                 <ButtonGame
                   sx={{
                     padding: "15px 20px",
@@ -280,23 +203,12 @@ const Wallet = () => {
                   variant="contained"
                   onClick={() => {}}
                 >
-                  <Typography
-                    sx={{
-                      color: "rgb(0, 0, 0)",
-                      fontSize: "16px",
-                      fontWeight: 600,
-                    }}
-                  >
+                  <ButtonGameTypography>
                     {t("Open wallet in telegram")}
-                  </Typography>
+                  </ButtonGameTypography>
                 </ButtonGame>
-              </Box>
-              <Stack
-                direction="row"
-                justifyContent="space-around"
-                width="100%"
-                paddingBottom="35px"
-              >
+              </ButtonGameBox>
+              <StackWalletStyle>
                 {wallets.map(({ src, alt, label }, index) => (
                   <Stack
                     key={index}
@@ -308,32 +220,21 @@ const Wallet = () => {
                     <Typography sx={{ fontWeight: 600 }}>{label}</Typography>
                   </Stack>
                 ))}
-              </Stack>
-            </Stack>
-          </Drawer>
+              </StackWalletStyle>
+            </StackWallet>
+          </DrawerWallet>
         </TabPanel>
         <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
           <StyledTableBox sx={{ marginTop: "5px" }}>
-            <Box
-              sx={{
-                width: "100hv",
-                marginRight: "15px",
-                paddingLeft: "18px",
-                paddingTop: "5px",
-                paddingBottom: "5px",
-                display: "flex",
-                borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
-              }}
-            >
+            <TabPanelBoxStyled>
               <Typography sx={{ fontSize: "16px", fontWeight: 900 }}>
                 {t("History")}
               </Typography>
-            </Box>
-
+            </TabPanelBoxStyled>
             {[...Array(3)].map((_, i) => (
               <HistoryItem
                 key={i}
-                date="2024.06.04"
+                date="2025.03.12"
                 time="18:02"
                 amount="5,000"
                 label={t("BONUS")}
@@ -342,7 +243,7 @@ const Wallet = () => {
           </StyledTableBox>
         </TabPanel>
       </TabContext>
-    </Box>
+    </MainBox>
   );
 };
 export default Wallet;
