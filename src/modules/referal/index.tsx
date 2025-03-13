@@ -19,6 +19,8 @@ import { InfoBox } from "../../shared/components/InfoBox";
 import { useTranslation } from "react-i18next";
 import { BoxStyle } from "./components/BoxStyle";
 import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
+import { MainBox } from "../../shared/MainBox";
+import { NamedStyled } from "../../shared/components/NameStyled";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
@@ -40,13 +42,9 @@ const Referal = () => {
   const tableHeight = useMemo(() => heightProportion - 285, []);
 
   return (
-    <Box sx={{ padding: "5px 15px 0 15px", height: `${heightProportion}px` }}>
+    <MainBox height={heightProportion}>
       <Box>
-        <Typography
-          sx={{ fontSize: "24px", fontWeight: 700, paddingBottom: "8px" }}
-        >
-          {t("Referal")}
-        </Typography>
+        <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>
         <BoxStyle>
           <InfoBox value={"234"} subtitle={t("Your bonus")} />
           <InfoBox value={"10 %"} subtitle={t("Rang")} />
@@ -111,7 +109,7 @@ const Referal = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </MainBox>
   );
 };
 

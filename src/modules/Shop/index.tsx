@@ -1,4 +1,4 @@
-import { Box, Slider, Stack, TextField, Typography } from "@mui/material";
+import { Box, Slider, Stack, Typography } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
@@ -12,6 +12,7 @@ import { ButtonShopStyled } from "./components/ButtonShopStyled";
 import { TextFieldStyled } from "./components/TextFieldStyled";
 import { MainBox } from "../../shared/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
+import { TabPanelBox } from "./components/TabPanelBox";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -165,14 +166,7 @@ const Shop = () => {
             />
           </TabList>
           <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={0}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              padding="10px"
-              bgcolor={MAIN_COLORS.mainGreyBG}
-              gap="15px"
-              borderRadius="5px"
-            >
+            <TabPanelBox>
               <Typography fontWeight="400">
                 {t("Energy produced per hour")}:{" "}
                 {<b>{(+globalCalculationEnergy / 60).toFixed(5)} MWh</b>}
@@ -189,7 +183,7 @@ const Shop = () => {
                 {t("Energy produced per month")}:{" "}
                 {<b>{+globalCalculationEnergy * 30} MWh</b>}
               </Typography>
-            </Box>
+            </TabPanelBox>
           </TabPanel>
           <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={1}>
             <Stack gap="10px">

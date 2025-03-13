@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { heightProportion } from "../../shared/utils";
 import Question from "../../assets/question.svg";
 import { StyledBasicBox } from "../referal/components/StyledBasicBox";
-import { TableBox } from "../referal/components/TableBox";
 import { CustomSwitch } from "./components/CustomSwitch";
 import LanguageSelector from "../../shared/LanguageSelector";
+import { TabBoxSettings } from "./components/TableBoxSettings";
+import { MainBox } from "../../shared/MainBox";
+import { NamedStyled } from "../../shared/components/NameStyled";
+import { SubMainBox } from "./components/SubMainBox";
 
 const Settings = () => {
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -15,25 +18,14 @@ const Settings = () => {
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
   };
-
   return (
-    <Box sx={{ padding: "5px 15px 0 15px", height: `${heightProportion}px` }}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Typography
-          sx={{ fontSize: "24px", fontWeight: 700, paddingBottom: "8px" }}
-        >
-          {t("Settings")}
-        </Typography>
+    <MainBox height={heightProportion}>
+      <SubMainBox>
+        <NamedStyled paddingBottom="8px">{t("Settings")}</NamedStyled>
         <img src={Question} alt="question" />
-      </Box>
+      </SubMainBox>
       <StyledBasicBox height={"160px"}>
-        <TableBox sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <TabBoxSettings>
           <Typography
             sx={{
               paddingTop: "10px",
@@ -44,16 +36,9 @@ const Settings = () => {
             {t("Language")}:
           </Typography>
           <LanguageSelector onLanguageChange={handleLanguageChange} />
-        </TableBox>
+        </TabBoxSettings>
 
-        <TableBox
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            justifyContent: "space-between",
-          }}
-        >
+        <TabBoxSettings justifyContent="space-between">
           <Typography sx={{ paddingTop: "10px", paddingBottom: "10px" }}>
             {t("Sound")}
           </Typography>
@@ -61,9 +46,9 @@ const Settings = () => {
             checked={soundEnabled}
             onChange={() => setSoundEnabled(!soundEnabled)}
           />
-        </TableBox>
+        </TabBoxSettings>
       </StyledBasicBox>
-    </Box>
+    </MainBox>
   );
 };
 

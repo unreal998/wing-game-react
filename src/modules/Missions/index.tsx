@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -13,6 +13,7 @@ import { InfoBox } from "../../shared/components/InfoBox";
 import { StyledTabMission } from "./components/StyledTabMission";
 
 import { useTranslation } from "react-i18next";
+import { NamedStyled } from "../../shared/components/NameStyled";
 
 const Missions = () => {
   const [value, setValue] = useState(0);
@@ -49,9 +50,7 @@ const Missions = () => {
           alignItems: "center",
         }}
       >
-        <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>
-          {t("Missions")}
-        </Typography>
+        <NamedStyled>{t("Missions")}</NamedStyled>
 
         <InfoBox value={"234"} subtitle={t("Your name coin")} />
       </Box>
