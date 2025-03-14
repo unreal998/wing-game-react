@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import WebApp from "@twa-dev/sdk";
 import { MAIN_COLORS } from "./shared/colors";
-import Referal from "./modules/referal";
+import Referal from "./modules/Referal";
 import { Box } from "@mui/material";
 import Footer from "./modules/Footer";
 import Header from "./modules/Header";

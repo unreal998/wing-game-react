@@ -11,8 +11,3 @@ export const missions = [
   { img: Telegram, padding: "10px", textPadding: "10px 0px 10px 0px" },
   { img: Youtube, padding: "10px", textPadding: "10px 0px 10px 4px" },
 ];
-export const missionTitles = [
-  { text: "Daily missions" },
-  { text: "Daily bonus" },
-  { text: "Quests" },
-];
