@@ -64,6 +64,9 @@ const Shop = () => {
     return (generatorCountValue * (generatorValue / 1000)).toFixed(3);
   }, [generatorCountValue, generatorValue]);
 
+  const formatValue = (num: number) =>
+    num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
+
   return (
     <Box sx={{ padding: "5px 15px 0 15px" }}>
       <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>Market</Typography>
@@ -206,62 +209,61 @@ const Shop = () => {
               gap="15px"
               borderRadius="5px"
             >
-              <Typography fontWeight="400">
-                Energy produced per hour:{" "}
-                {<b>{(+globalCalculationEnergy / 60).toFixed(5)} MWh</b>}
-              </Typography>
-              <Typography fontWeight="400">
-                Energy produced per day: {<b>{globalCalculationEnergy} MWh</b>}
-              </Typography>
-              <Typography fontWeight="400">
-                Energy produced per week:{" "}
-                {<b>{+globalCalculationEnergy * 7} MWh</b>}
-              </Typography>
-              <Typography fontWeight="400">
-                Energy produced per month:{" "}
-                {<b>{+globalCalculationEnergy * 30} MWh</b>}
-              </Typography>
+              {[
+                {
+                  label: "Energy produced per hour",
+                  value: +globalCalculationEnergy / 60,
+                },
+                {
+                  label: "Energy produced per day",
+                  value: +globalCalculationEnergy,
+                },
+                {
+                  label: "Energy produced per week",
+                  value: +globalCalculationEnergy * 7,
+                },
+                {
+                  label: "Energy produced per month",
+                  value: +globalCalculationEnergy * 30,
+                },
+              ].map(({ label, value }) => (
+                <Typography key={label} fontWeight="400">
+                  {label}: <b>{formatValue(value)} MWh</b>
+                </Typography>
+              ))}
             </Box>
           </TabPanel>
+
           <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={1}>
             <Stack gap="10px">
-              <Stack gap="10px">
-                <Stack direction="row" justifyContent="space-between">
-                  <ProfitBox
-                    value={(
-                      +globalCalculationEnergy *
-                      (selectedValue === "TON" ? 20 : 1)
-                    ).toString()}
-                    subtitle="Profit per day"
-                  ></ProfitBox>
-                  <ProfitBox
-                    value={(
-                      +globalCalculationEnergy *
-                      (selectedValue === "TON" ? 20 : 1) *
-                      7
-                    ).toString()}
-                    subtitle="Profit per week"
-                  ></ProfitBox>
+              {[
+                [
+                  { label: "Profit per day", multiplier: 1 },
+                  { label: "Profit per week", multiplier: 7 },
+                ],
+                [
+                  { label: "Profit per month", multiplier: 30 },
+                  { label: "Profit per year", multiplier: 365 },
+                ],
+              ].map((row, rowIndex) => (
+                <Stack
+                  key={rowIndex}
+                  direction="row"
+                  justifyContent="space-between"
+                >
+                  {row.map(({ label, multiplier }) => (
+                    <ProfitBox
+                      key={label}
+                      value={formatValue(
+                        +globalCalculationEnergy *
+                          (selectedValue === "TON" ? 20 : 1) *
+                          multiplier,
+                      )}
+                      subtitle={label}
+                    />
+                  ))}
                 </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <ProfitBox
-                    value={(
-                      +globalCalculationEnergy *
-                      (selectedValue === "TON" ? 20 : 1) *
-                      30
-                    ).toString()}
-                    subtitle="Profit per month"
-                  ></ProfitBox>
-                  <ProfitBox
-                    value={(
-                      +globalCalculationEnergy *
-                      (selectedValue === "TON" ? 20 : 1) *
-                      365
-                    ).toString()}
-                    subtitle="Profit per year"
-                  ></ProfitBox>
-                </Stack>
-              </Stack>
+              ))}
             </Stack>
           </TabPanel>
         </TabContext>
