@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { heightProportion } from "../../shared/utils";
 import Question from "../../assets/question.svg";
-import { StyledBasicBox } from "../referal/components/StyledBasicBox";
+import { StyledBasicBox } from "../Referal/components/StyledBasicBox";
 import { CustomSwitch } from "./components/CustomSwitch";
 import LanguageSelector from "../../shared/LanguageSelector";
 import { TabBoxSettings } from "./components/TableBoxSettings";
