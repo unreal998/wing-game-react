@@ -11,16 +11,15 @@ import { StyledMainTypography } from "./components/StyledMainTypography";
 import { StyledMainJpg } from "./components/StyledMainJpg";
 import Copy from "../../assets/copy.svg";
 import { StyledCopy } from "./components/StyledCopy";
-import { StyledBasicBox } from "./components/StyledBasicBox";
 import { StyledInputBox } from "./components/StyledInputBox";
 import { StyledInput } from "./components/StyledInput";
 import { heightProportion } from "../../shared/utils";
 import { InfoBox } from "../../shared/components/InfoBox";
 import { useTranslation } from "react-i18next";
-import { BoxStyle } from "./components/BoxStyle";
-import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
 import { MainBox } from "../../shared/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
+import { StyledBasicBox } from "./components/StyledBasicBox";
+import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
@@ -45,10 +44,10 @@ const Referal = () => {
     <MainBox height={heightProportion}>
       <Box>
         <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>
-        <BoxStyle>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <InfoBox value={"234"} subtitle={t("Your bonus")} />
-          <InfoBox value={"10 %"} subtitle={t("Rang")} />
-        </BoxStyle>
+          <InfoBox value={"10%"} subtitle={t("Rang")} />
+        </Box>
         <StyledBasicBox height={`${tableHeight}px`}>
           <TableBox>
             {["User", "Level", "Coin"].map((item, index) => (

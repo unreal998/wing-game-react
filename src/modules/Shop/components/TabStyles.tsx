@@ -4,7 +4,7 @@ import { MAIN_COLORS } from "../../../shared/colors";
 export const TabStyles = styled(Tab)({
   fontSize: "12px",
   fontWeight: 700,
-  padding: "0 10px",
+  padding: "0px 10px",
   color: MAIN_COLORS.textColor,
   border: MAIN_COLORS.dailyBorder,
   borderRadius: "5px",

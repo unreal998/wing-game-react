@@ -8,4 +8,8 @@ export const TabPanelBox = styled(Box)({
   bgcolor: MAIN_COLORS.mainGreyBG,
   gap: "15px",
   borderRadius: "5px",
+  "@media (max-height: 732px)": {
+    paddingTop: "0px",
+    paddingBottom: "0px",
+  },
 });

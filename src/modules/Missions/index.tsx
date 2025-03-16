@@ -30,7 +30,7 @@ const Missions = () => {
   };
 
   const wrapperHeight = useMemo(() => {
-    return heightProportion - 170;
+    return heightProportion - 100;
   }, []);
 
   return (
@@ -87,7 +87,10 @@ const Missions = () => {
             value={index.toString()}
             key={index}
           >
-            <StyledBox height={`${wrapperHeight}px`}>
+            <StyledBox
+              height={`${wrapperHeight}px`}
+              sx={{ "@media (max-height: 670px)": { height: "325px" } }}
+            >
               {missions.map((mission, idx) => (
                 <StyledBoxMission key={idx}>
                   <img

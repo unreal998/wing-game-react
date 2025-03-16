@@ -57,13 +57,24 @@ const Shop = () => {
 
   return (
     <MainBox>
-      <NamedStyled>{t("Market")} </NamedStyled>
+      <NamedStyled
+        sx={{
+          "@media (max-height: 670px)": {
+            paddingTop: "0px",
+          },
+        }}
+      >
+        {t("Market")}{" "}
+      </NamedStyled>
       <Stack
         sx={{
           justifyContent: "space-between",
           paddingTop: "8px",
           width: "100%",
           gap: "10px",
+          "@media (max-height: 732px)": {
+            padding: "0px",
+          },
         }}
       >
         <Stack
@@ -117,6 +128,10 @@ const Shop = () => {
                 "& .Mui-active": {
                   boxShadow: "0 0 0 9px black",
                 },
+                "@media (max-height: 732px)": {
+                  paddingTop: "0px",
+                  paddingBottom: "0px",
+                },
               }}
               onChange={handleGeneratorsSlide}
             />
@@ -136,6 +151,10 @@ const Shop = () => {
                 "& .Mui-active": {
                   boxShadow: "0 0 0 9px black",
                 },
+                "@media (max-height: 732px)": {
+                  paddingTop: "0px",
+                  paddingBottom: "0px",
+                },
               }}
               onChange={handleNumberOfGeneratorsSlide}
             />
@@ -151,6 +170,9 @@ const Shop = () => {
               },
               "& .MuiTabs-indicator": {
                 display: "none",
+              },
+              "@media (max-height: 732px)": {
+                padding: "0px",
               },
             }}
             onChange={handleTabChange}
@@ -168,7 +190,16 @@ const Shop = () => {
               onClick={handleSoundClick}
             />
           </TabList>
-          <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={0}>
+          <TabPanel
+            sx={{
+              padding: 0,
+              marginTop: "10px",
+              "@media (max-height: 732px)": {
+                marginTop: "0px",
+              },
+            }}
+            value={0}
+          >
             <Box
               display="flex"
               flexDirection="column"
@@ -176,6 +207,13 @@ const Shop = () => {
               bgcolor={MAIN_COLORS.mainGreyBG}
               gap="15px"
               borderRadius="5px"
+              sx={{
+                "@media (max-height: 732px)": {
+                  paddingTop: "5px",
+                  paddingBottom: "5px",
+                  gap: "5px",
+                },
+              }}
             >
               {[
                 {
@@ -218,6 +256,12 @@ const Shop = () => {
                   key={rowIndex}
                   direction="row"
                   justifyContent="space-between"
+                  sx={{
+                    "@media (max-height: 732px)": {
+                      paddingTop: "0px",
+                      paddingBottom: "0px",
+                    },
+                  }}
                 >
                   {row.map(({ label, multiplier }) => (
                     <ProfitBox
