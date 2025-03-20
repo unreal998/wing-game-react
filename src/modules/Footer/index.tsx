@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { powerButtonPressed, setPressTimeDelay } from "../Home/slices";
 import { useTranslation } from "react-i18next";
 import PowerIconActive from "./componets/PowerIconActive";
-import { ButtonGame } from "../../shared/ButtonGame";
+import { ButtonGame } from "../../shared/components/ButtonGame";
 import { StyledTime } from "./componets/StyledTime";
 import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";

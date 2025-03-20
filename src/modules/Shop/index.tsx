@@ -5,14 +5,13 @@ import { ProfitBox } from "./components/ProfitBox";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
-import { ButtonGame } from "../../shared/ButtonGame";
+import { ButtonGame } from "../../shared/components/ButtonGame";
 import { TabStyles } from "./components/TabStyles";
 import { useTranslation } from "react-i18next";
 import { ButtonShopStyled } from "./components/ButtonShopStyled";
 import { TextFieldStyled } from "./components/TextFieldStyled";
-import { MainBox } from "../../shared/MainBox";
+import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
-import { TabPanelBox } from "./components/TabPanelBox";
 
 const Shop = () => {
   const { t } = useTranslation();

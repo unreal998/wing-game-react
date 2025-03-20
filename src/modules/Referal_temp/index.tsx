@@ -16,7 +16,7 @@ import { StyledInput } from "./components/StyledInput";
 import { heightProportion } from "../../shared/utils";
 import { InfoBox } from "../../shared/components/InfoBox";
 import { useTranslation } from "react-i18next";
-import { MainBox } from "../../shared/MainBox";
+import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";

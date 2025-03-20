@@ -4,14 +4,10 @@ import { useTranslation } from "react-i18next";
 import { heightProportion } from "../../shared/utils";
 import Question from "../../assets/question.svg";
 import { StyledBasicBox } from "../Referal_temp/components/StyledBasicBox";
-import { TableBox } from "../Referal_temp/components/TableBox";
-import Vector from "../../assets/Vector.svg";
-import Night from "../../assets/night.svg";
-import Light from "../../assets/brightness.svg";
 import { CustomSwitch } from "./components/CustomSwitch";
-import LanguageSelector from "../../shared/LanguageSelector";
+import LanguageSelector from "../../shared/components/LanguageSelector";
 import { TabBoxSettings } from "./components/TableBoxSettings";
-import { MainBox } from "../../shared/MainBox";
+import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { SubMainBox } from "./components/SubMainBox";
 

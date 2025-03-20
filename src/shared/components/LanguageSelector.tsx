@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import Vector from "../assets/Vector.svg";
-import { MAIN_COLORS } from "../shared/colors";
+import Vector from "../../assets/Vector.svg";
+import { MAIN_COLORS } from "../colors";
 
 const languages = {
   en: "English",

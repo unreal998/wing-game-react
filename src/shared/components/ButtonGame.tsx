@@ -1,5 +1,5 @@
 import { Button, styled } from "@mui/material";
-import { MAIN_COLORS } from "./colors";
+import { MAIN_COLORS } from "../colors";
 
 export const ButtonGame = styled(Button)({
   width: "80%",

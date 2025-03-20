@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
-import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
+import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledButtonGame } from "./components/StyledButtonGame";
@@ -29,9 +28,7 @@ const countriesData = [
 ];
 
 const Model = () => {
-  const location = useLocation();
-  const { scene, animations } = useGLTF("/earth.glb");
-  const { actions } = useAnimations(animations, scene);
+  const { scene } = useGLTF("/earth.glb");
   scene.position.set(0, 0, 0);
 
   return <primitive object={scene} />;
