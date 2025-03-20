@@ -1,33 +1,21 @@
-import {
-  Box,
-  Button,
-  Slider,
-  Stack,
-  Tab,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Slider, Stack, Typography } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
-
-const tabStyles = {
-  fontSize: "12px",
-  fontWeight: 700,
-  padding: "0 10px",
-  color: MAIN_COLORS.textColor,
-  border: MAIN_COLORS.dailyBorder,
-  borderRadius: "5px",
-  minHeight: "35px",
-  "&.Mui-selected": {
-    color: MAIN_COLORS.activeTabColor,
-  },
-};
+import { ButtonGame } from "../../shared/ButtonGame";
+import { TabStyles } from "./components/TabStyles";
+import { useTranslation } from "react-i18next";
+import { ButtonShopStyled } from "./components/ButtonShopStyled";
+import { TextFieldStyled } from "./components/TextFieldStyled";
+import { MainBox } from "../../shared/MainBox";
+import { NamedStyled } from "../../shared/components/NameStyled";
+import { TabPanelBox } from "./components/TabPanelBox";
 
 const Shop = () => {
+  const { t } = useTranslation();
   const [generatorValue, setGeneratorValue] = useState<number>(30);
   const [generatorCountValue, setGeneratorCountValue] = useState<number>(30);
   const [value, setValue] = useState(0);
@@ -68,14 +56,25 @@ const Shop = () => {
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
 
   return (
-    <Box sx={{ padding: "5px 15px 0 15px" }}>
-      <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>Market</Typography>
+    <MainBox>
+      <NamedStyled
+        sx={{
+          "@media (max-height: 670px)": {
+            paddingTop: "0px",
+          },
+        }}
+      >
+        {t("Market")}{" "}
+      </NamedStyled>
       <Stack
         sx={{
           justifyContent: "space-between",
           paddingTop: "8px",
           width: "100%",
           gap: "10px",
+          "@media (max-height: 732px)": {
+            padding: "0px",
+          },
         }}
       >
         <Stack
@@ -85,13 +84,8 @@ const Shop = () => {
           width="100%"
         >
           <Stack gap="5px" direction="row">
-            <Button
+            <ButtonShopStyled
               sx={{
-                color: "white",
-                bgcolor: MAIN_COLORS.mainGreyBG,
-                borderRadius: "4px",
-                padding: "8px 14px",
-                fontWeight: "800",
                 border:
                   selectedValue === "TON"
                     ? `1px solid ${MAIN_COLORS.activeTabColor}`
@@ -100,14 +94,9 @@ const Shop = () => {
               onClick={() => setSelectedValue("TON")}
             >
               TON
-            </Button>
-            <Button
+            </ButtonShopStyled>
+            <ButtonShopStyled
               sx={{
-                color: "white",
-                bgcolor: MAIN_COLORS.mainGreyBG,
-                borderRadius: "4px",
-                padding: "8px 14px",
-                fontWeight: "800",
                 border:
                   selectedValue === "USD"
                     ? `1px solid ${MAIN_COLORS.activeTabColor}`
@@ -116,25 +105,17 @@ const Shop = () => {
               onClick={() => setSelectedValue("USD")}
             >
               USD
-            </Button>
+            </ButtonShopStyled>
           </Stack>
-          <TextField
-            sx={{
-              width: "45%",
-              borderRadius: "4px",
-              backgroundColor: MAIN_COLORS.mainGreyBG,
-              "& .MuiOutlinedInput-root": {
-                color: MAIN_COLORS.missionTable,
-              },
-            }}
+          <TextFieldStyled
             variant="outlined"
             placeholder={`${globalCalculationSumm.toString()} ${selectedValue}`}
-          ></TextField>
+          ></TextFieldStyled>
         </Stack>
         <Stack flexDirection="column" gap="10px">
           <Box>
             <Typography fontWeight="600">
-              Cost of all generators (TRON): {`${generatorValue}`}
+              {t("Cost of all generators")} (TRON): {`${generatorValue}`}
             </Typography>
             <Slider
               aria-label="Generator"
@@ -147,13 +128,17 @@ const Shop = () => {
                 "& .Mui-active": {
                   boxShadow: "0 0 0 9px black",
                 },
+                "@media (max-height: 732px)": {
+                  paddingTop: "0px",
+                  paddingBottom: "0px",
+                },
               }}
               onChange={handleGeneratorsSlide}
             />
           </Box>
           <Box>
             <Typography fontWeight="600">
-              Number of generators: {`${generatorCountValue}`}
+              {t("Number of generators")}: {`${generatorCountValue}`}
             </Typography>
             <Slider
               aria-label="Generator Count"
@@ -165,6 +150,10 @@ const Shop = () => {
                 },
                 "& .Mui-active": {
                   boxShadow: "0 0 0 9px black",
+                },
+                "@media (max-height: 732px)": {
+                  paddingTop: "0px",
+                  paddingBottom: "0px",
                 },
               }}
               onChange={handleNumberOfGeneratorsSlide}
@@ -182,25 +171,35 @@ const Shop = () => {
               "& .MuiTabs-indicator": {
                 display: "none",
               },
+              "@media (max-height: 732px)": {
+                padding: "0px",
+              },
             }}
             onChange={handleTabChange}
           >
-            <Tab
-              sx={tabStyles}
-              label={"Energy profit"}
+            <TabStyles
+              label={t("Energy profit")}
               value={0}
               key={0}
               onClick={handleSoundClick}
             />
-            <Tab
-              sx={tabStyles}
-              label={`${selectedValue} profit`}
+            <TabStyles
+              label={`${selectedValue} ${t("profit")}`}
               value={1}
               key={1}
               onClick={handleSoundClick}
             />
           </TabList>
-          <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={0}>
+          <TabPanel
+            sx={{
+              padding: 0,
+              marginTop: "10px",
+              "@media (max-height: 732px)": {
+                marginTop: "0px",
+              },
+            }}
+            value={0}
+          >
             <Box
               display="flex"
               flexDirection="column"
@@ -208,6 +207,13 @@ const Shop = () => {
               bgcolor={MAIN_COLORS.mainGreyBG}
               gap="15px"
               borderRadius="5px"
+              sx={{
+                "@media (max-height: 732px)": {
+                  paddingTop: "5px",
+                  paddingBottom: "5px",
+                  gap: "5px",
+                },
+              }}
             >
               {[
                 {
@@ -250,6 +256,12 @@ const Shop = () => {
                   key={rowIndex}
                   direction="row"
                   justifyContent="space-between"
+                  sx={{
+                    "@media (max-height: 732px)": {
+                      paddingTop: "0px",
+                      paddingBottom: "0px",
+                    },
+                  }}
                 >
                   {row.map(({ label, multiplier }) => (
                     <ProfitBox
@@ -273,26 +285,7 @@ const Shop = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Button
-            sx={{
-              width: "80%",
-              display: "flex",
-              gap: "7px",
-              padding: "12px",
-              backgroundColor: MAIN_COLORS.activeTabColor,
-              borderRadius: "10px",
-              "&.Mui-disabled": {
-                backgroundColor: "rgb(134 134 134)",
-              },
-              boxShadow: `
-              0px 4px 4px 0px rgba(0, 0, 0, 0.25),
-              0px -2px 4px 0px rgba(0, 0, 0, 1) inset,
-              0px 1px 4px 0px rgba(255, 255, 255, 0.14) inset
-            `,
-            }}
-            variant="contained"
-            onClick={() => {}}
-          >
+          <ButtonGame variant="contained" onClick={() => {}}>
             <Typography
               sx={{
                 color: "rgb(0, 0, 0)",
@@ -300,12 +293,12 @@ const Shop = () => {
                 fontWeight: 600,
               }}
             >
-              Buy
+              {t("Buy")}
             </Typography>
-          </Button>
+          </ButtonGame>
         </Box>
       </Stack>
-    </Box>
+    </MainBox>
   );
 };
 export default Shop;

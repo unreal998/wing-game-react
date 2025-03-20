@@ -11,14 +11,21 @@ import { StyledMainTypography } from "./components/StyledMainTypography";
 import { StyledMainJpg } from "./components/StyledMainJpg";
 import Copy from "../../assets/copy.svg";
 import { StyledCopy } from "./components/StyledCopy";
-import { StyledBasicBox } from "./components/StyledBasicBox";
 import { StyledInputBox } from "./components/StyledInputBox";
 import { StyledInput } from "./components/StyledInput";
 import { heightProportion } from "../../shared/utils";
 import { InfoBox } from "../../shared/components/InfoBox";
+import { useTranslation } from "react-i18next";
+import { MainBox } from "../../shared/MainBox";
+import { NamedStyled } from "../../shared/components/NameStyled";
+import { StyledBasicBox } from "./components/StyledBasicBox";
+import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
+
+const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
 const Referal = () => {
-  const [inviteText, setInviteText] = useState("Invite a friend");
+  const { t } = useTranslation();
+  const [inviteText, setInviteText] = useState(t("Invite a friend"));
 
   const copyToClipboard = () => {
     navigator.clipboard
@@ -31,57 +38,31 @@ const Referal = () => {
       });
   };
 
-  const tableHeight = useMemo(() => {
-    return heightProportion - 285;
-  }, []);
+  const tableHeight = useMemo(() => heightProportion - 285, []);
 
   return (
-    <Box sx={{ padding: "5px 15px 0 15px", height: `${heightProportion}px` }}>
+    <MainBox height={heightProportion}>
       <Box>
-        <Typography
-          sx={{ fontSize: "24px", fontWeight: 700, paddingBottom: "8px" }}
-        >
-          Referal
-        </Typography>
+        <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <InfoBox value={"234"} subtitle={"Your bonus"}></InfoBox>
-          <InfoBox value={"10 %"} subtitle={"Your bonus"}></InfoBox>
+          <InfoBox value={"234"} subtitle={t("Your bonus")} />
+          <InfoBox value={"10%"} subtitle={t("Rang")} />
         </Box>
         <StyledBasicBox height={`${tableHeight}px`}>
           <TableBox>
-            <StyledHeader sx={{ flex: 1.6, paddingLeft: "5px" }}>
-              <TableBoxHead>
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                  }}
-                >
-                  User
-                </Typography>
-              </TableBoxHead>
-            </StyledHeader>
-            <StyledHeader sx={{ flex: 0.7 }}>
-              <TableBoxHead>
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                  }}
-                >
-                  Level
-                </Typography>
-              </TableBoxHead>
-            </StyledHeader>
-            <StyledHeader sx={{ flex: 0.7 }}>
-              <TableBoxHead>
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                  }}
-                >
-                  Coin
-                </Typography>
-              </TableBoxHead>
-            </StyledHeader>
+            {["User", "Level", "Coin"].map((item, index) => (
+              <StyledHeader
+                key={index}
+                sx={{
+                  flex: index === 0 ? 1.6 : 0.7,
+                  paddingLeft: index === 0 ? "5px" : "0",
+                }}
+              >
+                <TableBoxHead>
+                  <Typography sx={{ fontSize: "12px" }}>{t(item)}</Typography>
+                </TableBoxHead>
+              </StyledHeader>
+            ))}
           </TableBox>
           {Array(10)
             .fill(null)
@@ -89,16 +70,10 @@ const Referal = () => {
               <TableBox key={index}>
                 <StyledMain>
                   <StyledMainJpg>
-                    <img
-                      src={Male}
-                      alt="male"
-                      style={{
-                        width: "33px",
-                        height: "33px",
-                        borderRadius: "52px",
-                      }}
-                    />
-                    <StyledMainTypography>Name User</StyledMainTypography>
+                    <img src={Male} alt="male" style={commonImgStyle} />
+                    <StyledMainTypography>
+                      {t("Name User")}
+                    </StyledMainTypography>
                   </StyledMainJpg>
                 </StyledMain>
                 {[10, 234].map((value, idx) => (
@@ -114,11 +89,7 @@ const Referal = () => {
             ))}
         </StyledBasicBox>
         <Box sx={{ paddingTop: "24px" }}>
-          <Typography
-            sx={{ fontSize: "16px", fontWeight: 600, paddingBottom: "9px" }}
-          >
-            Your Invite Link
-          </Typography>
+          <HeaderTypographyStyle>{t("Your Invite Link")}</HeaderTypographyStyle>
           <Box sx={{ display: "flex", gap: "11px" }}>
             <StyledInputBox>
               <StyledInput
@@ -137,7 +108,7 @@ const Referal = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </MainBox>
   );
 };
 
