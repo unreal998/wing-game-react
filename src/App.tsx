@@ -12,8 +12,28 @@ import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
 import { Planet } from "./modules/Planet";
+import { useDispatch } from "react-redux";
+import { initAction } from "./modules/Header/slices";
+import { UserInitData } from "./shared/types";
+import { WebAppInitData } from "@twa-dev/types";
+
+function convertToUserData(
+  userData: WebAppInitData["user"] | null,
+): UserInitData | null {
+  if (!userData) {
+    return null;
+  }
+  return {
+    telegramID: userData.id,
+    firstName: userData.first_name,
+    lastName: userData.last_name || "",
+    userName: userData.username || "",
+    language: userData.language_code || "",
+  };
+}
 
 const App = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
     try {
       if (WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop") {
@@ -21,12 +41,15 @@ const App = () => {
         WebApp.disableVerticalSwipes();
       }
       WebApp.lockOrientation();
-      const userData = WebApp.initDataUnsafe?.user;
-      alert(`Hello, ${JSON.stringify(userData)}!`);
+      const userTelegramData = WebApp.initDataUnsafe?.user;
+      const userInitData = convertToUserData(userTelegramData);
+      if (userInitData) {
+        dispatch(initAction(userInitData));
+      }
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <Box
