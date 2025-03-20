@@ -48,7 +48,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         <Box
           sx={{
             position: "absolute",
-            backgroundColor: MAIN_COLORS.referalBox,
+            backgroundColor: "black",
             boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
             borderRadius: "5px",
             padding: "10px",
