@@ -8,7 +8,6 @@ export const ButtonGame = styled(Button)({
   padding: "12px",
   backgroundColor: MAIN_COLORS.activeTabColor,
   borderRadius: "10px",
-  cursor: "pointer",
   "&.Mui-disabled": {
     backgroundColor: "rgb(134 134 134)",
   },
