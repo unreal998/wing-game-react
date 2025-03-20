@@ -69,7 +69,7 @@ const Footer = () => {
 
   return (
     <StyledMainBox>
-      {location.pathname === "/" && (
+      {location.pathname === "/home" && (
         <Stack
           justifyContent={"center"}
           alignItems={"center"}
