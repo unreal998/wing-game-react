@@ -21,7 +21,7 @@ import { ButtonGame } from "../../shared/ButtonGame";
 import { StyledTime } from "./componets/StyledTime";
 import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
-import { footerTabs } from "./componets/FooterTabs";
+import { footerTabs } from "../../shared/components/FooterTabs";
 
 const Footer = () => {
   const navigate = useNavigate();
