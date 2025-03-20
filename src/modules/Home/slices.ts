@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 type HomeState = {
   nextPressTimeDelay: number;
   disabledPowerButton: boolean;
+  selectedCountry: string;
 };
 
 export const initialHomeState: HomeState = {
   nextPressTimeDelay: 20000,
   disabledPowerButton: true,
+  selectedCountry: "",
 };
 
 export const homeSlice = createSlice({
@@ -24,9 +26,13 @@ export const homeSlice = createSlice({
         state.disabledPowerButton = false;
       }
     },
+    setSelectedCountry: (state, { payload }: { payload: string }) => {
+      state.selectedCountry = payload;
+    },
   },
 });
 
-export const { powerButtonPressed, setPressTimeDelay } = homeSlice.actions;
+export const { powerButtonPressed, setPressTimeDelay, setSelectedCountry } =
+  homeSlice.actions;
 
 export type HomeStateType = typeof initialHomeState;

@@ -1,16 +1,36 @@
 import { Box } from "@mui/material";
 import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ButtonGame } from "../../shared/ButtonGame";
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledButtonGame } from "./components/StyledButtonGame";
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { setSelectedCountry } from "../Home/slices";
+
+const countriesData = [
+  {
+    title: "USA",
+    name: "usa",
+  },
+  {
+    title: "Dania",
+    name: "dr",
+  },
+  {
+    title: "Netherlands",
+    name: "nr",
+  },
+  {
+    title: "Germany",
+    name: "gr",
+  },
+];
 
 const Model = () => {
   const location = useLocation();
-  const { scene, animations } = useGLTF("/usa.glb");
+  const { scene, animations } = useGLTF("/earth.glb");
   const { actions } = useAnimations(animations, scene);
   scene.position.set(0, 0, 0);
 
@@ -19,12 +39,21 @@ const Model = () => {
 
 export const Planet = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleButtonPress = useCallback(
+    (selectedCountry: string) => {
+      dispatch(setSelectedCountry(selectedCountry));
+      navigate("/home");
+    },
+    [dispatch, navigate],
+  );
 
   return (
     <Box sx={{ width: "100%", height: "80vh" }}>
       <Canvas
         camera={{
-          position: [9, 2, 0],
+          position: [9, 2, 20],
           rotation: [10, 45, 20],
           scale: [1, 1, 1],
         }}
@@ -38,24 +67,13 @@ export const Planet = () => {
       </Canvas>
 
       <StyledPlanetBox>
-        {[
-          ["USA", "Dania"],
-          ["Netherlands", "Germany"],
-        ].map((row, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: "flex",
-              justifyContent: "space-around",
-              gap: "10px",
-            }}
+        {countriesData.map((country, index) => (
+          <StyledButtonGame
+            key={country.name}
+            onClick={() => handleButtonPress(country.name)}
           >
-            {row.map((country) => (
-              <StyledButtonGame key={country} onClick={() => navigate("/")}>
-                {country}
-              </StyledButtonGame>
-            ))}
-          </Box>
+            {country.title}
+          </StyledButtonGame>
         ))}
       </StyledPlanetBox>
     </Box>

@@ -13,3 +13,8 @@ export const selectDisabledPowerButton =
   () =>
   ({ homeSlice }: HomeSliceStore) =>
     homeSlice.disabledPowerButton;
+
+export const selectSelectedCountry =
+  () =>
+  ({ homeSlice }: HomeSliceStore) =>
+    homeSlice.selectedCountry;

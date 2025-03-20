@@ -107,7 +107,7 @@ const Header = () => {
           </Typography>
         </Box>
       </StyledMain>
-      {location.pathname === "/" && (
+      {location.pathname === "/home" && (
         <StyledMain sx={{ gap: "20px" }}>
           <Box
             sx={{

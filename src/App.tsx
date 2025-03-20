@@ -39,8 +39,8 @@ const App = () => {
       <Header />
       <Box sx={{ flexGrow: 1 }}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/planet" element={<Planet />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Planet />} />
           <Route path="/referal" element={<Referal />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/shop" element={<Shop />} />

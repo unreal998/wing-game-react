@@ -22,6 +22,7 @@ import PowerIcon from "./componets/PowerIcon";
 import {
   selectDisabledPowerButton,
   selectNextPressTimeDelay,
+  selectSelectedCountry,
 } from "../Home/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { powerButtonPressed, setPressTimeDelay } from "../Home/slices";
@@ -34,6 +35,7 @@ const Footer = () => {
   const nextPressButtonTimeDelay = useSelector(selectNextPressTimeDelay());
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
   const dispatch = useDispatch();
+  const selectedCountry = useSelector(selectSelectedCountry());
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -76,7 +78,7 @@ const Footer = () => {
         width: "100%",
       }}
     >
-      {location.pathname === "/" && (
+      {location.pathname === "/home" && (
         <Stack
           justifyContent={"center"}
           alignItems={"center"}
@@ -165,15 +167,21 @@ const Footer = () => {
             Mission
           </StyledFooterBoxesTypography>
         </StyledFooterBoxes>
-        <StyledCenterFooter onClick={() => handleNavigationChange("/")}>
+        <StyledCenterFooter
+          onClick={() =>
+            selectedCountry
+              ? handleNavigationChange("/home")
+              : handleNavigationChange("/")
+          }
+        >
           <img
-            src={location.pathname === "/" ? WindActive : Wind}
+            src={location.pathname === "/home" ? WindActive : Wind}
             alt=" wind "
           />
           <StyledFooterBoxesTypography
             sx={{
               color:
-                location.pathname === "/"
+                location.pathname === "/home"
                   ? MAIN_COLORS.activeTabColor
                   : MAIN_COLORS.missionTable,
             }}
