@@ -19,8 +19,8 @@ import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
 
 function convertToUserData(
-  userData: WebAppInitData["user"] | null,
-): UserInitData | null {
+  userData: WebAppInitData["user"] | undefined,
+): UserInitData {
   if (!userData) {
     return USER_MOCK_TELEGRAM_DATA;
   }

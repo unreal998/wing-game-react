@@ -6,7 +6,6 @@ import { fetchInitData } from "./api";
 function* handleInit(action: { type: string; payload: UserInitData }) {
   try {
     const userData: UserData = yield call(fetchInitData, action.payload);
-    alert(JSON.stringify(userData));
     yield put(initActionSuccess(userData));
   } catch (err: any) {
     yield put(initActionFailure(err.toString()));
