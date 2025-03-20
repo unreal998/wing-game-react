@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -8,23 +8,29 @@ import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
-import {
-  missions,
-  missionTitles,
-} from "../../shared/mocks/missionComponentMocks";
+import { missions } from "../../shared/mocks/missionComponentMocks";
 import { InfoBox } from "../../shared/components/InfoBox";
-import { StyledTabMission } from "./StyledTabMission";
-import { MAIN_COLORS } from "../../shared/colors";
+import { StyledTabMission } from "./components/StyledTabMission";
+
+import { useTranslation } from "react-i18next";
+import { NamedStyled } from "../../shared/components/NameStyled";
 
 const Missions = () => {
   const [value, setValue] = useState(0);
+  const { t } = useTranslation();
+
+  const missionTitles = [
+    { text: t("Daily missions") },
+    { text: t("Daily bonus") },
+    { text: t("Quests") },
+  ];
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   const wrapperHeight = useMemo(() => {
-    return heightProportion - 170;
+    return heightProportion - 100;
   }, []);
 
   return (
@@ -44,11 +50,9 @@ const Missions = () => {
           alignItems: "center",
         }}
       >
-        <Typography sx={{ fontSize: "24px", fontWeight: 700 }}>
-          Missions
-        </Typography>
+        <NamedStyled>{t("Missions")}</NamedStyled>
 
-        <InfoBox value={"234"} subtitle={"Your name coin"} />
+        <InfoBox value={"234"} subtitle={t("Your name coin")} />
       </Box>
 
       <TabContext value={value.toString()}>
@@ -83,7 +87,10 @@ const Missions = () => {
             value={index.toString()}
             key={index}
           >
-            <StyledBox height={`${wrapperHeight}px`}>
+            <StyledBox
+              height={`${wrapperHeight}px`}
+              sx={{ "@media (max-height: 670px)": { height: "325px" } }}
+            >
               {missions.map((mission, idx) => (
                 <StyledBoxMission key={idx}>
                   <img
@@ -93,7 +100,7 @@ const Missions = () => {
                   />
                   <Box sx={{ padding: mission.textPadding }}>
                     <StyledSubscrible>
-                      Subscribe to Tron announcements
+                      {t("Subscribe to Tron announcements")}
                     </StyledSubscrible>
                     <StyledSHIB>5,000 SHIB</StyledSHIB>
                   </Box>

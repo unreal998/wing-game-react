@@ -17,7 +17,11 @@ export const ProfitBox = ({
         borderRadius: "9px",
         alignItems: "center",
         justifyContent: "center",
-        padding: "15px 40px",
+        width: "168px",
+        height: "84px",
+        "@media (max-height: 732px)": {
+          height: "64px",
+        },
       }}
     >
       <Typography

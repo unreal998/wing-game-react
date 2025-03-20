@@ -9,6 +9,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import WebApp from "@twa-dev/sdk";
+import { StyledImgBox } from "./components/StyledImgBox";
+import { StyledBoxTable } from "./components/SledBoxTable";
+import { StyledSchedule } from "./components/StyledSchedule";
+import { StyledSubSchedule } from "./components/StyledSubSchedule";
+import { StyledFlashBox } from "./components/StyledFlashBox";
+import { StyledCurencyBox } from "./components/StyledCurrencyBox";
 
 const Header = () => {
   const location = useLocation();
@@ -47,15 +53,7 @@ const Header = () => {
           }}
         >
           <img src={Gear} alt="gear" onClick={handleSoundClick} />
-          <Box
-            sx={{
-              width: "100%",
-              paddingTop: "7px",
-              paddingBottom: "7px",
-              paddingRight: "22px",
-              borderRight: `1px solid ${MAIN_COLORS.mainGreyBG}`,
-            }}
-          >
+          <StyledBoxTable>
             <Box
               sx={{
                 display: "flex",
@@ -71,55 +69,23 @@ const Header = () => {
                 LVL:23
               </Typography>
             </Box>
-            <Box
-              sx={{
-                width: "96px",
-                backgroundColor: "rgba(255, 255, 255, 0.06)",
-                height: "3px",
-                borderRadius: "34px",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "34%",
-                  height: "100%",
-                  backgroundColor: "#63EE6A",
-                  borderRadius: "34px",
-                }}
-              ></Box>
-            </Box>
-          </Box>
+            <StyledSubSchedule>
+              <StyledSchedule />
+            </StyledSubSchedule>
+          </StyledBoxTable>
         </Box>
-        <Box
-          sx={{
-            gap: "9px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "50vh",
-          }}
-        >
+        <StyledCurencyBox>
           <img src={USDT} alt="usdt" />
           <Typography
             sx={{ fontSize: "12px", fontWeight: 500, color: "white" }}
           >
             TON: 234
           </Typography>
-        </Box>
+        </StyledCurencyBox>
       </StyledMain>
       {location.pathname === "/home" && (
         <StyledMain sx={{ gap: "20px" }}>
-          <Box
-            sx={{
-              gap: "9px",
-              display: "flex",
-              padding: "15px",
-              borderRadius: "7px",
-              width: "50%",
-              alignItems: "center",
-              backgroundColor: MAIN_COLORS.electrisityBoxBG,
-            }}
-          >
+          <StyledFlashBox>
             <img src={Flash} alt="flash" />
             <Box
               sx={{
@@ -132,28 +98,15 @@ const Header = () => {
                 442.8593 Kwt
               </Typography>
             </Box>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              width: "80px",
-              backgroundColor: "rgba(217, 217, 217, 0.17)",
-              border: `1px solid ${MAIN_COLORS.activeTabColor}`,
-              flexDirection: "row",
-              borderRadius: "9px",
-              alignItems: "center",
-              padding: "10px 13px",
-              gap: "10px",
-            }}
-          >
+          </StyledFlashBox>
+          <StyledImgBox>
             <img src={USDT} alt="usdt" />
             <Typography
               sx={{ fontSize: "14px", fontWeight: 600, color: "white" }}
             >
               234
             </Typography>
-          </Box>
+          </StyledImgBox>
         </StyledMain>
       )}
     </Stack>
