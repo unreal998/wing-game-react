@@ -16,12 +16,13 @@ import { useDispatch } from "react-redux";
 import { initAction } from "./modules/Header/slices";
 import { UserInitData } from "./shared/types";
 import { WebAppInitData } from "@twa-dev/types";
+import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | null,
 ): UserInitData | null {
   if (!userData) {
-    return null;
+    return USER_MOCK_TELEGRAM_DATA;
   }
   return {
     telegramID: userData.id,
