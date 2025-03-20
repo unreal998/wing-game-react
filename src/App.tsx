@@ -21,6 +21,8 @@ const App = () => {
         WebApp.disableVerticalSwipes();
       }
       WebApp.lockOrientation();
+      const userData = WebApp.initDataUnsafe?.user;
+      alert(`Hello, ${JSON.stringify(userData)}!`);
     } catch (err) {
       console.log(err);
     }

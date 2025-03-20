@@ -23,7 +23,7 @@ export const footerTabs = [
     label: "Mission",
   },
   {
-    path: "/",
+    path: "/home",
     icon: Wind,
     activeIcon: WindActive,
     label: "Home",

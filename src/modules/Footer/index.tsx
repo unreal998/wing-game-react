@@ -36,10 +36,14 @@ const Footer = () => {
 
   const handleNavigationChange = useCallback(
     (path: string) => {
-      navigate(path);
+      if (path === "/home" && !selectedCountry) {
+        navigate("/");
+      } else {
+        navigate(path);
+      }
       playSound();
     },
-    [playSound, navigate],
+    [playSound, navigate, selectedCountry],
   );
 
   const handlePushPower = useCallback(() => {
