@@ -50,7 +50,7 @@ export const Planet = () => {
   );
 
   return (
-    <Box sx={{ width: "100%", height: "80vh" }}>
+    <Box sx={{ width: "100%", height: "80vh", marginTop: "-130px" }}>
       <Canvas
         camera={{
           position: [9, 2, 20],
