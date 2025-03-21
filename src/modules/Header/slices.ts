@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserData, UserInitData } from "../../shared/types";
 
-type Headertate = {
+type HeaderState = {
   userData: null | UserData;
   userInitData: null | UserInitData;
   errMessage: string;
 };
 
-export const initialHeaderState: Headertate = {
+export const initialHeaderState: HeaderState = {
   userData: null,
   errMessage: "",
   userInitData: null,

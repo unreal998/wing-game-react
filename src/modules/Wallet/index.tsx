@@ -1,6 +1,5 @@
-import { Box, Stack, Switch, Typography } from "@mui/material";
+import { Box, Switch, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { MAIN_COLORS } from "../../shared/colors";
 import USDT from "../../assets/usdt.svg";
 import { StyledBasicBox } from "./components/StyledBasicBox";
@@ -11,43 +10,34 @@ import { InfoBox } from "../../shared/components/InfoBox";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
-import Tonkeeper from "../../assets/Tonkeeper.png";
-import TelegramWallet from "../../assets/TelegramWallet.png";
 import { useTranslation } from "react-i18next";
 import HistoryItem from "./components/HistoryItem";
-import { ButtonGame } from "../../shared/components/ButtonGame";
 import { TabStyles } from "./components/TabStyles";
 import { WalletTypography } from "./components/WalletTypography";
-import { StackWallet } from "./components/StackWallet";
-import { ButtonGameBox } from "./components/ButtonGameBox";
-import { ButtonGameTypography } from "./components/ButtonGameTypography";
-import { StackWalletStyle } from "./components/StackWalletStyle";
 import { ButtonStyledTypography } from "./components/ButtonStyledTypography";
 import { TabPanelBoxStyled } from "./components/TabPanelBoxStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { BoxPayot } from "./components/BoxPayot";
-import { DrawerWallet } from "./components/DrawerWallet";
 import { InfoBoxWallet } from "./components/InfoBoxWallet";
+import { useDispatch, useSelector } from "react-redux";
+import { createWalletAction } from "./slices";
+import { selectUserData } from "../Header/selectors";
+import { selectWalletNumber } from "./selectors";
 
 const Wallet = () => {
   const { t } = useTranslation();
   const [playSound] = useSound(FooterButtonPress);
-  const [addWalletModalOpen, setAddWalletModalOpen] = useState(false);
-  const wallets = [
-    {
-      src: TelegramWallet,
-      alt: "telegram wallet",
-      label: t("telegram wallet"),
-    },
-    { src: Tonkeeper, alt: "tonkeeper", label: t("Tonkeeper") },
-  ];
+  const userData = useSelector(selectUserData());
+  const walletNumber = useSelector(selectWalletNumber());
+  const dispatch = useDispatch();
 
   const handleSoundClick = useCallback(() => {
     playSound();
   }, [playSound]);
 
   const [value, setValue] = useState(0);
+
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -56,12 +46,11 @@ const Wallet = () => {
     { label: t("History"), value: 1 },
   ];
 
-  const [walletNumber, setWalletNumber] = useState("");
-
   const handleAddWalletClick = useCallback(() => {
-    setWalletNumber("TSzuyCCUbSDSQUDxfCVMty24z4GkncMxw4");
-    setAddWalletModalOpen(false);
-  }, []);
+    if (userData) {
+      dispatch(createWalletAction(userData.id));
+    }
+  }, [dispatch, userData]);
 
   return (
     <MainBox>
@@ -167,62 +156,13 @@ const Wallet = () => {
               </WalletTypography>
             )}
             {!walletNumber && (
-              <ButtonStyled onClick={() => setAddWalletModalOpen(true)}>
+              <ButtonStyled onClick={() => handleAddWalletClick()}>
                 <ButtonStyledTypography>
                   {t("Connect wallet")}
                 </ButtonStyledTypography>
               </ButtonStyled>
             )}
           </StyledBasicBox>
-          <DrawerWallet open={addWalletModalOpen} anchor="bottom">
-            <StackWallet>
-              <Box width="100%" display="flex" justifyContent="flex-end">
-                <Box
-                  bgcolor={MAIN_COLORS.basicBox}
-                  padding="6px"
-                  borderRadius="100%"
-                  onClick={() => setAddWalletModalOpen(false)}
-                >
-                  <CloseIcon sx={{ color: MAIN_COLORS.missionTable }} />
-                </Box>
-              </Box>
-              <Typography
-                sx={{
-                  fontSize: "20px",
-                  fontWeight: 600,
-                }}
-              >
-                {t("Connect your wallet")}
-              </Typography>
-              <ButtonGameBox>
-                <ButtonGame
-                  sx={{
-                    padding: "15px 20px",
-                    textTransform: "none",
-                  }}
-                  variant="contained"
-                  onClick={() => {}}
-                >
-                  <ButtonGameTypography>
-                    {t("Open wallet in telegram")}
-                  </ButtonGameTypography>
-                </ButtonGame>
-              </ButtonGameBox>
-              <StackWalletStyle>
-                {wallets.map(({ src, alt, label }, index) => (
-                  <Stack
-                    key={index}
-                    gap="10px"
-                    alignItems="center"
-                    onClick={handleAddWalletClick}
-                  >
-                    <img width="55px" height="55px" src={src} alt={alt} />
-                    <Typography sx={{ fontWeight: 600 }}>{label}</Typography>
-                  </Stack>
-                ))}
-              </StackWalletStyle>
-            </StackWallet>
-          </DrawerWallet>
         </TabPanel>
         <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
           <StyledTableBox sx={{ marginTop: "5px" }}>

@@ -7,6 +7,7 @@ export type UserInitData = {
 };
 
 export type UserData = UserInitData & {
+  id: string;
   wallet: string;
   TONBalance: number;
   WindBalance: number;
