@@ -24,6 +24,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { createWalletAction } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import { selectWalletNumber } from "./selectors";
+import { StyledCopy } from "../Referal_temp/components/StyledCopy";
+import Copy from "../../assets/copy.svg";
+import Earth from "../../assets/earth.png";
+import { useNavigate } from "react-router-dom";
 
 const Wallet = () => {
   const { t } = useTranslation();
@@ -31,10 +35,24 @@ const Wallet = () => {
   const userData = useSelector(selectUserData());
   const walletNumber = useSelector(selectWalletNumber());
   const dispatch = useDispatch();
+  const handleCopyClick = useCallback(() => {
+    if (walletNumber) {
+      navigator.clipboard
+        .writeText(walletNumber)
+        .then(() => console.log("Wallet number copied!"))
+        .catch((err) => console.error("Failed to copy: ", err));
+    }
+  }, [walletNumber]);
 
   const handleSoundClick = useCallback(() => {
     playSound();
   }, [playSound]);
+
+  const navigate = useNavigate();
+
+  const handleEarthClick = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
 
   const [value, setValue] = useState(0);
 
@@ -62,33 +80,19 @@ const Wallet = () => {
           paddingTop: "8px",
         }}
       >
-        <InfoBox value={"234"} subtitle={t("TURX")} />
-        <InfoBoxWallet>
-          <Box sx={{ paddingLeft: "14px" }}>
-            <img src={USDT} alt="usdt" />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+        <InfoBox value={String(userData?.WindBalance)} subtitle={t("TURX")} />
+        <InfoBoxWallet sx={{ border: "none", backgroundColor: "transparent" }}>
+          <img
+            src={Earth}
+            alt="earth"
+            style={{
+              width: "26px",
+              height: "26px",
+              cursor: "pointer",
+              paddingRight: "10px",
             }}
-          >
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontWeight: 700,
-                padding: "9px 26px 0px 26px",
-              }}
-            >
-              234
-            </Typography>
-            <Typography
-              sx={{ fontSize: "12px", fontWeight: 700, paddingBottom: "9px" }}
-            >
-              TON
-            </Typography>
-          </Box>
+            onClick={handleEarthClick}
+          />
         </InfoBoxWallet>
       </Box>
       <BoxPayot>
@@ -144,7 +148,7 @@ const Wallet = () => {
             {walletNumber ? (
               <WalletTypography>
                 {t(" Your wallet: ")} <br /> <br />
-                <b>{walletNumber}</b>
+                <b style={{ fontSize: "10px" }}>{walletNumber}</b>
               </WalletTypography>
             ) : (
               <WalletTypography
@@ -155,6 +159,18 @@ const Wallet = () => {
                 {t("Connect")}
               </WalletTypography>
             )}
+
+            <Box
+              onClick={handleCopyClick}
+              sx={{ cursor: "pointer", paddingBottom: "10px" }}
+            >
+              <img
+                src={Copy}
+                alt="Copy"
+                style={{ width: "16px", height: "16px" }}
+              />
+            </Box>
+
             {!walletNumber && (
               <ButtonStyled onClick={() => handleAddWalletClick()}>
                 <ButtonStyledTypography>
