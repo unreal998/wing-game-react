@@ -16,7 +16,6 @@ import { NamedStyled } from "../../shared/components/NameStyled";
 const Shop = () => {
   const { t } = useTranslation();
   const [generatorValue, setGeneratorValue] = useState<number>(30);
-  const [generatorCountValue, setGeneratorCountValue] = useState<number>(30);
   const [value, setValue] = useState(0);
 
   const [playSound] = useSound(FooterButtonPress);
@@ -31,25 +30,18 @@ const Shop = () => {
     setGeneratorValue(newValue as number);
   };
 
-  const handleNumberOfGeneratorsSlide = (
-    event: Event,
-    newValue: number | number[],
-  ) => {
-    setGeneratorCountValue(newValue as number);
-  };
-
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   const globalCalculationSumm = useMemo(() => {
     const currency = selectedValue === "TON" ? 20 : 1;
-    return generatorCountValue * currency * (generatorValue / 10);
-  }, [generatorCountValue, selectedValue, generatorValue]);
+    return currency * (generatorValue / 10);
+  }, [selectedValue, generatorValue]);
 
   const globalCalculationEnergy = useMemo(() => {
-    return (generatorCountValue * (generatorValue / 1000)).toFixed(3);
-  }, [generatorCountValue, generatorValue]);
+    return (generatorValue / 1000).toFixed(3);
+  }, [generatorValue]);
 
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
@@ -97,13 +89,13 @@ const Shop = () => {
             <ButtonShopStyled
               sx={{
                 border:
-                  selectedValue === "USD"
+                  selectedValue === "TURX"
                     ? `1px solid ${MAIN_COLORS.activeTabColor}`
                     : "none",
               }}
-              onClick={() => setSelectedValue("USD")}
+              onClick={() => setSelectedValue("TURX")}
             >
-              USD
+              TURX
             </ButtonShopStyled>
           </Stack>
           <TextFieldStyled
@@ -114,10 +106,10 @@ const Shop = () => {
         <Stack flexDirection="column" gap="10px">
           <Box>
             <Typography fontWeight="600">
-              {t("Cost of all generators")} (TRON): {`${generatorValue}`}
+              {t("Wind speed")}: {`${generatorValue}`}
             </Typography>
             <Slider
-              aria-label="Generator"
+              aria-label="WindSpeed"
               value={generatorValue}
               sx={{
                 color: MAIN_COLORS.activeTabColor,
@@ -133,29 +125,6 @@ const Shop = () => {
                 },
               }}
               onChange={handleGeneratorsSlide}
-            />
-          </Box>
-          <Box>
-            <Typography fontWeight="600">
-              {t("Number of generators")}: {`${generatorCountValue}`}
-            </Typography>
-            <Slider
-              aria-label="Generator Count"
-              value={generatorCountValue}
-              sx={{
-                color: MAIN_COLORS.activeTabColor,
-                "& .MuiSlider-rail": {
-                  color: MAIN_COLORS.referalBox,
-                },
-                "& .Mui-active": {
-                  boxShadow: "0 0 0 9px black",
-                },
-                "@media (max-height: 732px)": {
-                  paddingTop: "0px",
-                  paddingBottom: "0px",
-                },
-              }}
-              onChange={handleNumberOfGeneratorsSlide}
             />
           </Box>
         </Stack>

@@ -23,6 +23,7 @@ import { StyledTime } from "./componets/StyledTime";
 import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
+import { selectUserData } from "../Header/selectors";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const Footer = () => {
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
+  const userData = useSelector(selectUserData());
   const { t } = useTranslation();
 
   const handleNavigationChange = useCallback(
@@ -47,16 +49,18 @@ const Footer = () => {
   );
 
   const handlePushPower = useCallback(() => {
-    dispatch(powerButtonPressed());
-  }, [dispatch]);
+    if (userData) {
+      dispatch(
+        powerButtonPressed({
+          uid: userData?.id,
+          areaName: selectedCountry.name,
+        }),
+      );
+    }
+  }, [dispatch, userData, selectedCountry]);
 
   const calculateTime = useMemo(() => {
-    const time = new Date(nextPressButtonTimeDelay);
-    const hours = time.getUTCHours();
-    const minutes = time.getUTCMinutes();
-    const seccount = time.getUTCSeconds();
-
-    return `${hours}:${minutes}:${seccount}`;
+    return `${nextPressButtonTimeDelay}`;
   }, [nextPressButtonTimeDelay]);
 
   useEffect(() => {

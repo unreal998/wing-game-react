@@ -52,7 +52,7 @@ const Missions = () => {
       >
         <NamedStyled>{t("Missions")}</NamedStyled>
 
-        <InfoBox value={"234"} subtitle={t("Your name coin")} />
+        <InfoBox value={"234"} subtitle={t("TURX")} />
       </Box>
 
       <TabContext value={value.toString()}>

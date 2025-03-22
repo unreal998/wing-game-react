@@ -5,27 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledButtonGame } from "./components/StyledButtonGame";
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCountry } from "../Home/slices";
-
-const countriesData = [
-  {
-    title: "USA",
-    name: "usa",
-  },
-  {
-    title: "Dania",
-    name: "dr",
-  },
-  {
-    title: "Netherlands",
-    name: "nr",
-  },
-  {
-    title: "Germany",
-    name: "gr",
-  },
-];
+import { selectAreasData } from "../Header/selectors";
+import { AreaType } from "../../shared/types";
 
 const Model = () => {
   const { scene } = useGLTF("/earth.glb");
@@ -37,9 +20,10 @@ const Model = () => {
 export const Planet = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const areasData = useSelector(selectAreasData());
 
   const handleButtonPress = useCallback(
-    (selectedCountry: string) => {
+    (selectedCountry: AreaType) => {
       dispatch(setSelectedCountry(selectedCountry));
       navigate("/home");
     },
@@ -47,7 +31,7 @@ export const Planet = () => {
   );
 
   return (
-    <Box sx={{ width: "100%", height: "80vh", marginTop: "-130px" }}>
+    <Box sx={{ width: "100%", height: "80vh", marginTop: "-10px" }}>
       <Canvas
         camera={{
           position: [9, 2, 20],
@@ -64,14 +48,17 @@ export const Planet = () => {
       </Canvas>
 
       <StyledPlanetBox>
-        {countriesData.map((country, index) => (
-          <StyledButtonGame
-            key={country.name}
-            onClick={() => handleButtonPress(country.name)}
-          >
-            {country.title}
-          </StyledButtonGame>
-        ))}
+        {areasData &&
+          areasData?.length &&
+          areasData.map((country, index) => (
+            <StyledButtonGame
+              key={country.name}
+              disabled={!country.available}
+              onClick={() => handleButtonPress(country)}
+            >
+              {country.title}
+            </StyledButtonGame>
+          ))}
       </StyledPlanetBox>
     </Box>
   );

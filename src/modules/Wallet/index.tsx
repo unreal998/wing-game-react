@@ -80,10 +80,7 @@ const Wallet = () => {
           paddingTop: "8px",
         }}
       >
-        <InfoBox
-          value={String(userData?.WindBalance)}
-          subtitle={t("Your name coin")}
-        />
+        <InfoBox value={String(userData?.WindBalance)} subtitle={t("TURX")} />
         <InfoBoxWallet sx={{ border: "none", backgroundColor: "transparent" }}>
           <img
             src={Earth}
