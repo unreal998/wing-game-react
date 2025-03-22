@@ -6,6 +6,14 @@ export type UserInitData = {
   language: string;
 };
 
+export type AreaType = {
+  title: string;
+  name: string;
+  available: boolean;
+  lastButtonPress: number;
+  nextButtonPress: number;
+};
+
 export type UserData = UserInitData & {
   id: string;
   wallet: string;
@@ -14,7 +22,7 @@ export type UserData = UserInitData & {
   transactions: string[];
   referals: string[];
   missions: string[];
-  areas: string[];
+  areas: AreaType[];
   modifiers: string[];
   lvl: number;
   exp: number;

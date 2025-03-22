@@ -8,3 +8,8 @@ export const selectUserData =
   () =>
   ({ headerSlice }: HeaderSliceStore) =>
     headerSlice.userData;
+
+export const selectAreasData =
+  () =>
+  ({ headerSlice }: HeaderSliceStore) =>
+    headerSlice.userData?.areas;
