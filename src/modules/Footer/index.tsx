@@ -60,9 +60,13 @@ const Footer = () => {
   }, [dispatch, userData, selectedCountry]);
 
   const calculateTime = useMemo(() => {
-    return `${nextPressButtonTimeDelay}`;
-  }, [nextPressButtonTimeDelay]);
+    const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
+    const hh = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+    const mm = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+    const ss = String(totalSeconds % 60).padStart(2, "0");
 
+    return `${hh}:${mm}:${ss}`;
+  }, [nextPressButtonTimeDelay]);
   useEffect(() => {
     if (nextPressButtonTimeDelay > 0) {
       setTimeout(() => {
@@ -80,7 +84,7 @@ const Footer = () => {
           marginBottom="10px"
         >
           <StyledTime>
-            {calculateTime} {t("hour")}
+            {calculateTime} {t("remain")}
           </StyledTime>
           <ButtonGame
             variant="contained"

@@ -168,44 +168,38 @@ const Shop = () => {
             }}
             value={0}
           >
-            <Box
-              display="flex"
-              flexDirection="column"
-              padding="10px"
-              bgcolor={MAIN_COLORS.mainGreyBG}
-              gap="15px"
-              borderRadius="5px"
-              sx={{
-                "@media (max-height: 732px)": {
-                  paddingTop: "5px",
-                  paddingBottom: "5px",
-                  gap: "5px",
-                },
-              }}
-            >
+            <Stack gap="10px">
               {[
-                {
-                  label: "Energy produced per hour",
-                  value: +globalCalculationEnergy / 60,
-                },
-                {
-                  label: "Energy produced per day",
-                  value: +globalCalculationEnergy,
-                },
-                {
-                  label: "Energy produced per week",
-                  value: +globalCalculationEnergy * 7,
-                },
-                {
-                  label: "Energy produced per month",
-                  value: +globalCalculationEnergy * 30,
-                },
-              ].map(({ label, value }) => (
-                <Typography key={label} fontWeight="400">
-                  {label}: <b>{formatValue(value)} MWh</b>
-                </Typography>
+                [
+                  { label: "Energy per hour", multiplier: 1 / 60 },
+                  { label: "Energy per day", multiplier: 1 },
+                ],
+                [
+                  { label: "Energy per week", multiplier: 7 },
+                  { label: "Energy per month", multiplier: 30 },
+                ],
+              ].map((row, rowIndex) => (
+                <Stack
+                  key={rowIndex}
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{
+                    "@media (max-height: 732px)": {
+                      paddingTop: "0px",
+                      paddingBottom: "0px",
+                    },
+                  }}
+                >
+                  {row.map(({ label, multiplier }) => (
+                    <ProfitBox
+                      key={label}
+                      value={formatValue(+globalCalculationEnergy * multiplier)}
+                      subtitle={`${label} (MWh)`}
+                    />
+                  ))}
+                </Stack>
               ))}
-            </Box>
+            </Stack>
           </TabPanel>
 
           <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={1}>
