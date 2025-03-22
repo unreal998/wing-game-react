@@ -62,7 +62,7 @@ const Wallet = () => {
           paddingTop: "8px",
         }}
       >
-        <InfoBox value={"234"} subtitle={t("Your name coin")} />
+        <InfoBox value={"234"} subtitle={t("TURX")} />
         <InfoBoxWallet>
           <Box sx={{ paddingLeft: "14px" }}>
             <img src={USDT} alt="usdt" />

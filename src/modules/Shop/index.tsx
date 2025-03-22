@@ -89,11 +89,11 @@ const Shop = () => {
             <ButtonShopStyled
               sx={{
                 border:
-                  selectedValue === "USD"
+                  selectedValue === "TURX"
                     ? `1px solid ${MAIN_COLORS.activeTabColor}`
                     : "none",
               }}
-              onClick={() => setSelectedValue("USD")}
+              onClick={() => setSelectedValue("TURX")}
             >
               TURX
             </ButtonShopStyled>
@@ -106,10 +106,10 @@ const Shop = () => {
         <Stack flexDirection="column" gap="10px">
           <Box>
             <Typography fontWeight="600">
-              {t("Cost of all generators")} (TRON): {`${generatorValue}`}
+              {t("Wind speed")}: {`${generatorValue}`}
             </Typography>
             <Slider
-              aria-label="Generator"
+              aria-label="WindSpeed"
               value={generatorValue}
               sx={{
                 color: MAIN_COLORS.activeTabColor,

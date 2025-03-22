@@ -11,5 +11,5 @@ export async function fetchPowerButtonPress(buttonData: PowerButtonPressType) {
     `${SERVER_URL}/powerButtonPress?uid=${buttonData.uid}`,
     { areaName: buttonData.areaName },
   );
-  return request.data;
+  return request.data.data;
 }
