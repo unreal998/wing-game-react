@@ -15,12 +15,24 @@ import { StyledSchedule } from "./components/StyledSchedule";
 import { StyledSubSchedule } from "./components/StyledSubSchedule";
 import { StyledFlashBox } from "./components/StyledFlashBox";
 import { StyledCurencyBox } from "./components/StyledCurrencyBox";
+import { useSelector } from "react-redux";
+import { selectUserData } from "./selectors";
+import Earth from "../../assets/earth.png";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const handleEarthClick = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
 
   const [playSound] = useSound(FooterButtonPress);
+
+  const userData = useSelector(selectUserData());
+  console.log(userData);
+
+  const state = useSelector((state) => state);
+  console.log(state);
 
   const handleSoundClick = useCallback(() => {
     playSound();
@@ -63,14 +75,14 @@ const Header = () => {
               }}
             >
               <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
-                Dev948
+                {userData?.userName}
               </Typography>
               <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
-                LVL:23
+                LVL:{userData?.lvl}
               </Typography>
             </Box>
             <StyledSubSchedule>
-              <StyledSchedule />
+              <StyledSchedule sx={{ width: `${userData?.lvl}%` }} />
             </StyledSubSchedule>
           </StyledBoxTable>
         </Box>
@@ -79,12 +91,18 @@ const Header = () => {
           <Typography
             sx={{ fontSize: "12px", fontWeight: 500, color: "white" }}
           >
-            TON: 234
+            TON: {userData?.TONBalance}
           </Typography>
         </StyledCurencyBox>
       </StyledMain>
       {location.pathname === "/home" && (
-        <StyledMain sx={{ gap: "20px" }}>
+        <StyledMain
+          sx={{
+            gap: "20px",
+            alignItems: "center",
+            backgroundColor: MAIN_COLORS.electrisityBoxBG,
+          }}
+        >
           <StyledFlashBox>
             <img src={Flash} alt="flash" />
             <Box
@@ -95,18 +113,16 @@ const Header = () => {
               }}
             >
               <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
-                442.8593 Kwt
+                {userData?.WindBalance} Kwt
               </Typography>
             </Box>
           </StyledFlashBox>
-          <StyledImgBox>
-            <img src={USDT} alt="usdt" />
-            <Typography
-              sx={{ fontSize: "14px", fontWeight: 600, color: "white" }}
-            >
-              234
-            </Typography>
-          </StyledImgBox>
+          <img
+            src={Earth}
+            alt="earth"
+            style={{ width: "26px", height: "26px", cursor: "pointer" }}
+            onClick={handleEarthClick}
+          />
         </StyledMain>
       )}
     </Stack>
