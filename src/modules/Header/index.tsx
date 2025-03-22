@@ -29,7 +29,6 @@ const Header = () => {
   const [playSound] = useSound(FooterButtonPress);
 
   const userData = useSelector(selectUserData());
-  console.log(userData);
 
   const state = useSelector((state) => state);
   console.log(state);
@@ -113,7 +112,7 @@ const Header = () => {
               }}
             >
               <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
-                {userData?.WindBalance} Kwt
+                {userData?.WindBalance} TURX
               </Typography>
             </Box>
           </StyledFlashBox>
