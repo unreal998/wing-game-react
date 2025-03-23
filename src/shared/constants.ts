@@ -1,4 +1,4 @@
-export const SERVER_URL = "http://localhost:3003";
+export const SERVER_URL = "http://130.0.235.28:3003";
 
 export const USER_MOCK_TELEGRAM_DATA = {
   telegramID: 123456789,
