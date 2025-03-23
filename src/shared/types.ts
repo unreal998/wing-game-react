@@ -14,6 +14,11 @@ export type AreaType = {
   nextButtonPress: number;
 };
 
+export type UserModifiersType = {
+  areaName: string;
+  windSpeed: number;
+};
+
 export type UserData = UserInitData & {
   id: string;
   wallet: string;
@@ -23,7 +28,7 @@ export type UserData = UserInitData & {
   referals: string[];
   missions: string[];
   areas: AreaType[];
-  modifiers: string[];
+  modifiers: UserModifiersType[];
   lvl: number;
   exp: number;
 };

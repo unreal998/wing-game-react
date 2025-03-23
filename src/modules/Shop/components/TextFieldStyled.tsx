@@ -8,6 +8,10 @@ export const TextFieldStyled = styled(TextField)({
   "& .MuiOutlinedInput-root": {
     color: MAIN_COLORS.missionTable,
   },
+  "& .Mui-disabled": {
+    color: MAIN_COLORS.missionTable,
+    "-webkit-text-fill-color": "white",
+  },
   "@media (max-height: 732px)": {
     paddingTop: "0px",
     paddingBottom: "0px",

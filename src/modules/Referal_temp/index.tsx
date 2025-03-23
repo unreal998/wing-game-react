@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { TableBox } from "./components/TableBox";
 import Male from "../../assets/Male.svg";
@@ -20,23 +20,32 @@ import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../Header/selectors";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
 const Referal = () => {
   const { t } = useTranslation();
-  const [inviteText, setInviteText] = useState(t("Invite a friend"));
+  const userData = useSelector(selectUserData());
+  const referalLink = useMemo(() => {
+    let urlString = `https://t.me/WindGameAppWrapperBot?start=r_`;
+    if (userData) {
+      return `${urlString}${userData.telegramID}`;
+    }
+    return urlString;
+  }, [userData]);
 
-  const copyToClipboard = () => {
+  const copyToClipboard = useCallback(() => {
     navigator.clipboard
-      .writeText(inviteText)
+      .writeText(referalLink)
       .then(() => {
-        console.log("Copied:", inviteText);
+        console.log("Copied:", "");
       })
       .catch((err) => {
         console.error("Error copying text: ", err);
       });
-  };
+  }, [referalLink]);
 
   const tableHeight = useMemo(() => heightProportion - 285, []);
 
@@ -92,11 +101,7 @@ const Referal = () => {
           <HeaderTypographyStyle>{t("Your Invite Link")}</HeaderTypographyStyle>
           <Box sx={{ display: "flex", gap: "11px" }}>
             <StyledInputBox>
-              <StyledInput
-                type="text"
-                value={inviteText}
-                onChange={(e) => setInviteText(e.target.value)}
-              />
+              <StyledInput type="text" value={referalLink} />
             </StyledInputBox>
             <StyledCopy onClick={copyToClipboard}>
               <img

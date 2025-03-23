@@ -13,3 +13,8 @@ export const selectAreasData =
   () =>
   ({ headerSlice }: HeaderSliceStore) =>
     headerSlice.userData?.areas;
+
+export const selectModificatorsData =
+  () =>
+  ({ headerSlice }: HeaderSliceStore) =>
+    headerSlice.userData?.modifiers;

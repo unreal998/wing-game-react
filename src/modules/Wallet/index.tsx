@@ -1,7 +1,6 @@
 import { Box, Switch, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
-import USDT from "../../assets/usdt.svg";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import Mask from "../../assets/Mask.svg";
 import { ButtonStyled } from "./components/ButtonStyled";
@@ -19,15 +18,11 @@ import { TabPanelBoxStyled } from "./components/TabPanelBoxStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { BoxPayot } from "./components/BoxPayot";
-import { InfoBoxWallet } from "./components/InfoBoxWallet";
 import { useDispatch, useSelector } from "react-redux";
 import { createWalletAction } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import { selectWalletNumber } from "./selectors";
-import { StyledCopy } from "../Referal_temp/components/StyledCopy";
 import Copy from "../../assets/copy.svg";
-import Earth from "../../assets/earth.png";
-import { useNavigate } from "react-router-dom";
 
 const Wallet = () => {
   const { t } = useTranslation();
@@ -47,12 +42,6 @@ const Wallet = () => {
   const handleSoundClick = useCallback(() => {
     playSound();
   }, [playSound]);
-
-  const navigate = useNavigate();
-
-  const handleEarthClick = useCallback(() => {
-    navigate("/");
-  }, [navigate]);
 
   const [value, setValue] = useState(0);
 
@@ -81,19 +70,6 @@ const Wallet = () => {
         }}
       >
         <InfoBox value={String(userData?.WindBalance)} subtitle={t("TURX")} />
-        <InfoBoxWallet sx={{ border: "none", backgroundColor: "transparent" }}>
-          <img
-            src={Earth}
-            alt="earth"
-            style={{
-              width: "26px",
-              height: "26px",
-              cursor: "pointer",
-              paddingRight: "10px",
-            }}
-            onClick={handleEarthClick}
-          />
-        </InfoBoxWallet>
       </Box>
       <BoxPayot>
         <Typography
