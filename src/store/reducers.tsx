@@ -3,8 +3,15 @@ import { homeSlice } from "../modules/Home/slices";
 import { headerSlice } from "../modules/Header/slices";
 import { walletSlice } from "../modules/Wallet/slices";
 import { shopSlice } from "../modules/Shop/slices";
+import { referalSlice } from "../modules/Referal_temp/slices";
 
-const slices: any[] = [homeSlice, headerSlice, walletSlice, shopSlice];
+const slices: any[] = [
+  homeSlice,
+  headerSlice,
+  walletSlice,
+  shopSlice,
+  referalSlice,
+];
 
 const toolkitReducers = Object.fromEntries(
   slices.map(({ name, reducer }) => [name, reducer]),

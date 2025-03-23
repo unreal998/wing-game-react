@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { TableBox } from "./components/TableBox";
 import Male from "../../assets/Male.svg";
@@ -20,14 +20,18 @@ import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "../Header/selectors";
+import { getReferalDataAction } from "./slices";
+import { selectReferalData } from "./selectors";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
 const Referal = () => {
   const { t } = useTranslation();
   const userData = useSelector(selectUserData());
+  const referalData = useSelector(selectReferalData());
+  const dispatch = useDispatch();
   const referalLink = useMemo(() => {
     let urlString = `https://t.me/WindGameAppWrapperBot?start=r_`;
     if (userData) {
@@ -35,6 +39,12 @@ const Referal = () => {
     }
     return urlString;
   }, [userData]);
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(getReferalDataAction(userData.telegramID));
+    }
+  }, [dispatch, userData]);
 
   const copyToClipboard = useCallback(() => {
     navigator.clipboard

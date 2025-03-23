@@ -38,7 +38,7 @@ const Footer = () => {
 
   const handleNavigationChange = useCallback(
     (path: string) => {
-      if (path === "/home" && !selectedCountry) {
+      if (!selectedCountry.name) {
         navigate("/");
       } else {
         navigate(path);
