@@ -9,7 +9,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import WebApp from "@twa-dev/sdk";
-import { StyledImgBox } from "./components/StyledImgBox";
 import { StyledBoxTable } from "./components/SledBoxTable";
 import { StyledSchedule } from "./components/StyledSchedule";
 import { StyledSubSchedule } from "./components/StyledSubSchedule";
@@ -29,9 +28,6 @@ const Header = () => {
   const [playSound] = useSound(FooterButtonPress);
 
   const userData = useSelector(selectUserData());
-
-  const state = useSelector((state) => state);
-  console.log(state);
 
   const handleSoundClick = useCallback(() => {
     playSound();

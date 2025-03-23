@@ -1,22 +1,81 @@
 import { Box, Slider, Stack, Typography } from "@mui/material";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabList } from "@mui/lab";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
 import { ButtonGame } from "../../shared/components/ButtonGame";
 import { TabStyles } from "./components/TabStyles";
 import { useTranslation } from "react-i18next";
-import { ButtonShopStyled } from "./components/ButtonShopStyled";
 import { TextFieldStyled } from "./components/TextFieldStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { selectShopData } from "./selectors";
+import { getShopDataByArea } from "./slices";
+import { selectSelectedCountry } from "../Home/selectors";
+import { selectModificatorsData } from "../Header/selectors";
+
+const profitValues = [
+  { label: "Profit per click", multiplier: 1 },
+  { label: "Profit per day", multiplier: 2 },
+  { label: "Profit per week", multiplier: 14 },
+  { label: "Profit per month", multiplier: 60 },
+];
 
 const Shop = () => {
   const { t } = useTranslation();
-  const [generatorValue, setGeneratorValue] = useState<number>(30);
-  const [value, setValue] = useState(0);
+  const [windValue, setWindValue] = useState<number>(0);
+  const [tab, setTab] = useState(0);
+  const shopValues = useSelector(selectShopData());
+  const selectedCountry = useSelector(selectSelectedCountry());
+  const selectModificators = useSelector(selectModificatorsData());
+  const dispatch = useDispatch();
+  const [shopMarks, setShopMarks] = useState<
+    { title: number; value: number; level: number }[]
+  >([]);
+
+  const selectedAreaMidificator = useMemo(() => {
+    if (selectModificators?.length && selectedCountry) {
+      return selectModificators?.find(
+        (modificator) => modificator.areaName === selectedCountry.name,
+      )?.windSpeed;
+    }
+  }, [selectModificators, selectedCountry]);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTab(newValue);
+  };
+
+  const selectedWindPowerIncome = useMemo(() => {
+    return (
+      shopValues.find((value) => value.speed === windValue) || {
+        tonValue: 0,
+        turxValue: 0,
+        price: 0,
+        speed: 0,
+      }
+    );
+  }, [shopValues, windValue]);
+
+  useEffect(() => {
+    if (!shopValues?.length) {
+      dispatch(getShopDataByArea(selectedCountry.name));
+    } else {
+      const shopMarksFromModificator = shopValues.map((mark, index) => {
+        return {
+          title: mark.speed,
+          value: mark.speed,
+          level: index + 1,
+        };
+      });
+      setShopMarks([
+        { title: 0, value: 0, level: 0 },
+        ...shopMarksFromModificator,
+      ]);
+    }
+  }, [shopValues, dispatch, selectedCountry, setShopMarks]);
 
   const [playSound] = useSound(FooterButtonPress);
 
@@ -24,24 +83,16 @@ const Shop = () => {
     playSound();
   }, [playSound]);
 
-  const [selectedValue, setSelectedValue] = useState<string>("TON");
-
-  const handleGeneratorsSlide = (event: Event, newValue: number | number[]) => {
-    setGeneratorValue(newValue as number);
+  const handleWindSlide = (event: Event, newValue: number | number[]) => {
+    const newSlideValue = newValue as number;
+    if (selectedAreaMidificator !== undefined) {
+      setWindValue(
+        newSlideValue < selectedAreaMidificator
+          ? selectedAreaMidificator
+          : newSlideValue,
+      );
+    }
   };
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  const globalCalculationSumm = useMemo(() => {
-    const currency = selectedValue === "TON" ? 20 : 1;
-    return currency * (generatorValue / 10);
-  }, [selectedValue, generatorValue]);
-
-  const globalCalculationEnergy = useMemo(() => {
-    return (generatorValue / 1000).toFixed(3);
-  }, [generatorValue]);
 
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
@@ -74,43 +125,23 @@ const Shop = () => {
           justifyContent="space-between"
           width="100%"
         >
-          <Stack gap="5px" direction="row">
-            <ButtonShopStyled
-              sx={{
-                border:
-                  selectedValue === "TON"
-                    ? `1px solid ${MAIN_COLORS.activeTabColor}`
-                    : "none",
-              }}
-              onClick={() => setSelectedValue("TON")}
-            >
-              TON
-            </ButtonShopStyled>
-            <ButtonShopStyled
-              sx={{
-                border:
-                  selectedValue === "TURX"
-                    ? `1px solid ${MAIN_COLORS.activeTabColor}`
-                    : "none",
-              }}
-              onClick={() => setSelectedValue("TURX")}
-            >
-              TURX
-            </ButtonShopStyled>
-          </Stack>
           <TextFieldStyled
             variant="outlined"
-            placeholder={`${globalCalculationSumm.toString()} ${selectedValue}`}
+            disabled
+            placeholder={`${(selectedWindPowerIncome?.price || 0).toString()} TON`}
           ></TextFieldStyled>
         </Stack>
         <Stack flexDirection="column" gap="10px">
           <Box>
             <Typography fontWeight="600">
-              {t("Wind speed")}: {`${generatorValue}`}
+              {t("Wind speed")}: {`${windValue}`}
             </Typography>
             <Slider
               aria-label="WindSpeed"
-              value={generatorValue}
+              value={windValue}
+              marks={shopMarks}
+              defaultValue={selectedAreaMidificator || 0}
+              step={null}
               sx={{
                 color: MAIN_COLORS.activeTabColor,
                 "& .MuiSlider-rail": {
@@ -124,11 +155,11 @@ const Shop = () => {
                   paddingBottom: "0px",
                 },
               }}
-              onChange={handleGeneratorsSlide}
+              onChange={handleWindSlide}
             />
           </Box>
         </Stack>
-        <TabContext value={value}>
+        <TabContext value={tab}>
           <TabList
             sx={{
               display: "flex",
@@ -146,100 +177,44 @@ const Shop = () => {
             onChange={handleTabChange}
           >
             <TabStyles
-              label={t("Energy profit")}
+              label={t("TURX profit")}
               value={0}
               key={0}
               onClick={handleSoundClick}
             />
             <TabStyles
-              label={`${selectedValue} ${t("profit")}`}
+              label={`TON ${t("profit")}`}
               value={1}
               key={1}
               onClick={handleSoundClick}
             />
           </TabList>
-          <TabPanel
-            sx={{
-              padding: 0,
-              marginTop: "10px",
-              "@media (max-height: 732px)": {
-                marginTop: "0px",
-              },
-            }}
-            value={0}
-          >
-            <Stack gap="10px">
-              {[
-                [
-                  { label: "Energy per hour", multiplier: 1 / 60 },
-                  { label: "Energy per day", multiplier: 1 },
-                ],
-                [
-                  { label: "Energy per week", multiplier: 7 },
-                  { label: "Energy per month", multiplier: 30 },
-                ],
-              ].map((row, rowIndex) => (
-                <Stack
+          <Stack gap="10px">
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              flexWrap="wrap"
+              gap="8px"
+              sx={{
+                "@media (max-height: 732px)": {
+                  paddingTop: "0px",
+                  paddingBottom: "0px",
+                },
+              }}
+            >
+              {profitValues.map((row, rowIndex) => (
+                <ProfitBox
                   key={rowIndex}
-                  direction="row"
-                  justifyContent="space-between"
-                  sx={{
-                    "@media (max-height: 732px)": {
-                      paddingTop: "0px",
-                      paddingBottom: "0px",
-                    },
-                  }}
-                >
-                  {row.map(({ label, multiplier }) => (
-                    <ProfitBox
-                      key={label}
-                      value={formatValue(+globalCalculationEnergy * multiplier)}
-                      subtitle={`${label} (MWh)`}
-                    />
-                  ))}
-                </Stack>
+                  value={formatValue(
+                    tab === 0
+                      ? +selectedWindPowerIncome.turxValue * row.multiplier
+                      : +selectedWindPowerIncome.tonValue * row.multiplier,
+                  )}
+                  subtitle={row.label}
+                />
               ))}
             </Stack>
-          </TabPanel>
-
-          <TabPanel sx={{ padding: 0, marginTop: "10px" }} value={1}>
-            <Stack gap="10px">
-              {[
-                [
-                  { label: "Profit per day", multiplier: 1 },
-                  { label: "Profit per week", multiplier: 7 },
-                ],
-                [
-                  { label: "Profit per month", multiplier: 30 },
-                  { label: "Profit per year", multiplier: 365 },
-                ],
-              ].map((row, rowIndex) => (
-                <Stack
-                  key={rowIndex}
-                  direction="row"
-                  justifyContent="space-between"
-                  sx={{
-                    "@media (max-height: 732px)": {
-                      paddingTop: "0px",
-                      paddingBottom: "0px",
-                    },
-                  }}
-                >
-                  {row.map(({ label, multiplier }) => (
-                    <ProfitBox
-                      key={label}
-                      value={formatValue(
-                        +globalCalculationEnergy *
-                          (selectedValue === "TON" ? 20 : 1) *
-                          multiplier,
-                      )}
-                      subtitle={label}
-                    />
-                  ))}
-                </Stack>
-              ))}
-            </Stack>
-          </TabPanel>
+          </Stack>
         </TabContext>
         <Box
           display="flex"
