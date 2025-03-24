@@ -7,7 +7,7 @@ import Footer from "./modules/Footer";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
@@ -35,6 +35,9 @@ function convertToUserData(
 
 const App = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const isFooterDisabled = location.pathname === "/home";
+
   useEffect(() => {
     try {
       if (WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop") {
@@ -74,7 +77,7 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </Box>
-      <Footer />
+      <Footer isDisabled={isFooterDisabled} />
     </Box>
   );
 };

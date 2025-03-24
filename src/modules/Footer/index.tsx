@@ -25,7 +25,7 @@ import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
 
-const Footer = () => {
+const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const location = useLocation();
@@ -38,7 +38,7 @@ const Footer = () => {
 
   const handleNavigationChange = useCallback(
     (path: string) => {
-      if (path === "/home" && !selectedCountry) {
+      if (path === "/" && !selectedCountry) {
         navigate("/");
       } else {
         navigate(path);
@@ -67,6 +67,7 @@ const Footer = () => {
 
     return `${hh}:${mm}:${ss}`;
   }, [nextPressButtonTimeDelay]);
+
   useEffect(() => {
     if (nextPressButtonTimeDelay > 0) {
       setTimeout(() => {
@@ -99,10 +100,19 @@ const Footer = () => {
       <StyledFooterBox>
         {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
           const isActive = location.pathname === path;
+          const isDisabledOnHome = location.pathname === "/" && path !== "/";
+
           const Component = isCenter ? StyledCenterFooter : StyledFooterBoxes;
 
           return (
-            <Component key={path} onClick={() => handleNavigationChange(path)}>
+            <Component
+              key={path}
+              onClick={() => !isDisabledOnHome && handleNavigationChange(path)}
+              style={{
+                opacity: isDisabledOnHome ? 0.5 : 1,
+                pointerEvents: isDisabledOnHome ? "none" : "auto",
+              }}
+            >
               <img src={isActive ? activeIcon : icon} alt={label} />
               <StyledFooterBoxesTypography
                 sx={{
@@ -120,4 +130,5 @@ const Footer = () => {
     </StyledMainBox>
   );
 };
+
 export default Footer;
