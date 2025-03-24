@@ -40,4 +40,4 @@ export const {
   createWalletActionFailure,
 } = walletSlice.actions;
 
-export type HeaderStateType = typeof initialWalletState;
+export type WalletStateType = typeof initialWalletState;

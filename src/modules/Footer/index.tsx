@@ -38,7 +38,7 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
 
   const handleNavigationChange = useCallback(
     (path: string) => {
-      if (path === "/" && !selectedCountry) {
+      if (!selectedCountry.name) {
         navigate("/");
       } else {
         navigate(path);

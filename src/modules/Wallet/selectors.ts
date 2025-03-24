@@ -1,7 +1,7 @@
-import { walletSlice, HeaderStateType } from "./slices";
+import { walletSlice, WalletStateType } from "./slices";
 
 export type WalletSliceStore = {
-  [walletSlice.name]: HeaderStateType;
+  [walletSlice.name]: WalletStateType;
 };
 
 export const selectWalletNumber =
