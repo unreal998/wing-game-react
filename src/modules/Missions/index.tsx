@@ -1,33 +1,51 @@
-import { Box } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { heightProportion } from "../../shared/utils";
 import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
-import { missions } from "../../shared/mocks/missionComponentMocks";
 import { InfoBox } from "../../shared/components/InfoBox";
 import { StyledTabMission } from "./components/StyledTabMission";
 
 import { useTranslation } from "react-i18next";
 import { NamedStyled } from "../../shared/components/NameStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { selectMissionsData } from "./selectors";
+import { getMissionsDataAction } from "./slices";
+import { selectUserData } from "../Header/selectors";
 
 const Missions = () => {
-  const [value, setValue] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslation();
-
-  const missionTitles = [
-    { text: t("Daily missions") },
-    { text: t("Daily bonus") },
-    { text: t("Quests") },
-  ];
+  const missions = useSelector(selectMissionsData());
+  const dispatch = useDispatch();
+  const userData = useSelector(selectUserData());
+  const missionTitles = useMemo(
+    () => [
+      { text: t("Daily missions"), type: "daily" },
+      { text: t("Quests"), type: "quest" },
+    ],
+    [t],
+  );
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setActiveTab(newValue);
   };
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(
+        getMissionsDataAction({
+          type: missionTitles[activeTab].type,
+          uid: userData.id,
+        }),
+      );
+    }
+  }, [missionTitles, activeTab, dispatch, userData]);
 
   const wrapperHeight = useMemo(() => {
     return heightProportion - 100;
@@ -55,7 +73,7 @@ const Missions = () => {
         <InfoBox value={"234"} subtitle={t("TURX")} />
       </Box>
 
-      <TabContext value={value.toString()}>
+      <TabContext value={activeTab.toString()}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList
             sx={{
@@ -91,21 +109,22 @@ const Missions = () => {
               height={`${wrapperHeight}px`}
               sx={{ "@media (max-height: 670px)": { height: "325px" } }}
             >
-              {missions.map((mission, idx) => (
-                <StyledBoxMission key={idx}>
-                  <img
-                    src={mission.img}
-                    alt="icon"
-                    style={{ padding: mission.padding }}
-                  />
-                  <Box sx={{ padding: mission.textPadding }}>
-                    <StyledSubscrible>
-                      {t("Subscribe to Tron announcements")}
-                    </StyledSubscrible>
-                    <StyledSHIB>5,000 SHIB</StyledSHIB>
-                  </Box>
-                </StyledBoxMission>
-              ))}
+              {missions &&
+                missions.map((mission, idx) => (
+                  <StyledBoxMission key={idx}>
+                    <Checkbox
+                      disabled
+                      checked={false}
+                      style={{ padding: "10px" }}
+                    />
+                    <Box sx={{ padding: "10px 0px 10px 0px" }}>
+                      <StyledSubscrible>
+                        {t("Subscribe to Tron announcements")}
+                      </StyledSubscrible>
+                      <StyledSHIB>5,000 SHIB</StyledSHIB>
+                    </Box>
+                  </StyledBoxMission>
+                ))}
             </StyledBox>
           </TabPanel>
         ))}
