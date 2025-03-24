@@ -123,11 +123,12 @@ const Shop = () => {
           direction="row"
           alignItems="center"
           justifyContent="space-between"
-          width="100%"
+          width="80%"
         >
           <TextFieldStyled
             variant="outlined"
             disabled
+            sx={{ color: MAIN_COLORS.marketBox }}
             placeholder={`${(selectedWindPowerIncome?.price || 0).toString()} TON`}
           ></TextFieldStyled>
         </Stack>

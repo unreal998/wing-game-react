@@ -1,5 +1,12 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { Stack } from "@mui/material";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Stack,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -24,6 +31,9 @@ import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
+import { selectModificatorsData } from "../Header/selectors";
+import { ModalStyled } from "../../shared/components/ModalStyled";
+import { safeAreaInsets } from "@telegram-apps/sdk/dist/dts/scopes/components/viewport/exports.variable";
 
 const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
   const navigate = useNavigate();
@@ -34,7 +44,10 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
+  const modificatorsData = useSelector(selectModificatorsData());
   const { t } = useTranslation();
+
+  const [openModal, setOpenModal] = useState(false);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -50,14 +63,26 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
 
   const handlePushPower = useCallback(() => {
     if (userData) {
-      dispatch(
-        powerButtonPressed({
-          uid: userData?.id,
-          areaName: selectedCountry.name,
-        }),
+      const selectedCountryData = modificatorsData?.find(
+        (modificator) => modificator?.areaName === selectedCountry?.name,
       );
+
+      const isWindSpeedZero = selectedCountryData
+        ? selectedCountryData.windSpeed === 0
+        : false;
+
+      if (isWindSpeedZero) {
+        setOpenModal(true);
+      } else {
+        // dispatch(
+        //   powerButtonPressed({
+        //     uid: userData?.id,
+        //     areaName: selectedCountry.name,
+        //   }),
+        // );
+      }
     }
-  }, [dispatch, userData, selectedCountry]);
+  }, [dispatch, userData, selectedCountry, modificatorsData]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -76,6 +101,10 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
     }
   }, [dispatch, nextPressButtonTimeDelay]);
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <StyledMainBox>
       {location.pathname === "/home" && (
@@ -87,16 +116,46 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
           <StyledTime>
             {calculateTime} {t("remain")}
           </StyledTime>
-          <ButtonGame
-            variant="contained"
-            disabled={isButtonDisabled}
-            onClick={handlePushPower}
-          >
+          <ButtonGame variant="contained" onClick={handlePushPower}>
             {isButtonDisabled ? <PowerIcon /> : <PowerIconActive />}
             <StyledTypographyButton>{t("Push Power")}</StyledTypographyButton>
           </ButtonGame>
         </Stack>
       )}
+
+      <ModalStyled open={openModal} onClose={handleCloseModal}>
+        <DialogTitle
+          sx={{
+            textAlign: "center",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            padding: "0px",
+          }}
+        >
+          {t("Buy wind speed")}
+        </DialogTitle>
+        <DialogContent>
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: "1.2rem",
+              fontFamily: "sans-serif",
+            }}
+          >
+            {t("Your wind speed is zero. Please purchase to proceed.")}
+          </p>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center" }}>
+          <Button
+            onClick={handleCloseModal}
+            color="primary"
+            sx={{ fontWeight: 900 }}
+          >
+            {t("Close")}
+          </Button>
+        </DialogActions>
+      </ModalStyled>
+
       <StyledFooterBox>
         {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
           const isActive = location.pathname === path;

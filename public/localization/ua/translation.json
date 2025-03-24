@@ -44,5 +44,8 @@
   "Connect wallet": "Підключити гаманець",
   " Your wallet: ": "Ваш гаманець: ",
   "Push Power": "Натисныть на кнопку",
-  "remain": "залишилося"
+  "remain": "залишилося",
+  "Buy wind speed": "Купи швидкість вітру",
+  "Your wind speed is zero. Please purchase to proceed.": "Ваша швидкість вітру дорівнює нулю. Будь ласка, купіть в Магазині, щоб продовжити.",
+  "Close": "Закрити"
 }

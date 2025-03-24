@@ -44,5 +44,8 @@
   "Connect wallet": "Подключить кошелек",
   " Your wallet: ": "Ваш кошелек:",
   "Push Power": "Нажмите на кнопку",
-  "remain": "осталось"
+  "remain": "осталось",
+  "Buy wind speed": "Купи скорость ветра",
+  "Your wind speed is zero. Please purchase to proceed.": "Ваша скорость ветра равна нулю. Пожалуйста, купите в Магазине, чтобы продолжить.",
+  "Close": "Закрыть"
 }

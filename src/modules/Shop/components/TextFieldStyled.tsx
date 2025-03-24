@@ -6,10 +6,10 @@ export const TextFieldStyled = styled(TextField)({
   borderRadius: "4px",
   backgroundColor: MAIN_COLORS.mainGreyBG,
   "& .MuiOutlinedInput-root": {
-    color: MAIN_COLORS.missionTable,
+    color: MAIN_COLORS.marketBox,
   },
   "& .Mui-disabled": {
-    color: MAIN_COLORS.missionTable,
+    color: MAIN_COLORS.marketBox,
     "-webkit-text-fill-color": "white",
   },
   "@media (max-height: 732px)": {
