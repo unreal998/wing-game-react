@@ -12,6 +12,8 @@ export type AreaType = {
   available: boolean;
   lastButtonPress: number;
   nextButtonPress: number;
+  referalsToUnlock: number;
+  bought: boolean;
 };
 
 export type UserModifiersType = {

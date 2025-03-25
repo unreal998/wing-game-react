@@ -47,7 +47,6 @@ const Missions = () => {
       );
     }
   }, [missionTitles, activeTab, dispatch, userData]);
-  console.log(missions);
 
   const wrapperHeight = useMemo(() => {
     return heightProportion - 100;
