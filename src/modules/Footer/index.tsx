@@ -1,12 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Stack,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Button,
-} from "@mui/material";
+import { Stack } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -32,8 +25,8 @@ import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
 import { selectModificatorsData } from "../Header/selectors";
-import { ModalStyled } from "../../shared/components/ModalStyled";
-import { safeAreaInsets } from "@telegram-apps/sdk/dist/dts/scopes/components/viewport/exports.variable";
+import { ModalComponent } from "../../shared/components/ModalComponent";
+import { StyledButtonGame } from "../Planet/components/StyledButtonGame";
 
 const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
   const navigate = useNavigate();
@@ -74,15 +67,20 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
       if (isWindSpeedZero) {
         setOpenModal(true);
       } else {
-        // dispatch(
-        //   powerButtonPressed({
-        //     uid: userData?.id,
-        //     areaName: selectedCountry.name,
-        //   }),
-        // );
+        dispatch(
+          powerButtonPressed({
+            uid: userData?.id,
+            areaName: selectedCountry.name,
+          }),
+        );
       }
     }
   }, [dispatch, userData, selectedCountry, modificatorsData]);
+
+  const handleShopButton = useCallback(() => {
+    setOpenModal(false);
+    navigate("/shop");
+  }, [navigate]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -122,40 +120,17 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
           </ButtonGame>
         </Stack>
       )}
-
-      <ModalStyled open={openModal} onClose={handleCloseModal}>
-        <DialogTitle
-          sx={{
-            textAlign: "center",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            padding: "0px",
-          }}
-        >
-          {t("Buy wind speed")}
-        </DialogTitle>
-        <DialogContent>
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: "1.2rem",
-              fontFamily: "sans-serif",
-            }}
-          >
-            {t("Your wind speed is zero. Please purchase to proceed.")}
-          </p>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: "center" }}>
-          <Button
-            onClick={handleCloseModal}
-            color="primary"
-            sx={{ fontWeight: 900 }}
-          >
-            {t("Close")}
-          </Button>
-        </DialogActions>
-      </ModalStyled>
-
+      <ModalComponent
+        title={t("Buy wind speed")}
+        subtitle={t("Your wind speed is zero. Please purchase to proceed.")}
+        handleCloseModal={handleCloseModal}
+        openModal={openModal}
+        additionalbutton={
+          <StyledButtonGame onClick={handleShopButton}>
+            To Shop
+          </StyledButtonGame>
+        }
+      />
       <StyledFooterBox>
         {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
           const isActive = location.pathname === path;
