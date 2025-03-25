@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ShopValues } from "./types";
+import { BuyItemType, ShopValues } from "./types";
 
 type ShopState = {
   loading: boolean;
@@ -36,6 +36,16 @@ export const shopSlice = createSlice({
     setWindValue: (state, { payload }: { payload: number }) => {
       state.windValue = payload;
     },
+    buyItemAction: (state, { payload }: { payload: BuyItemType }) => {
+      state.loading = true;
+    },
+    buyItemActionSuccess: (state) => {
+      state.loading = false;
+    },
+    buyItemActionFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.message = payload;
+    },
   },
 });
 
@@ -44,6 +54,9 @@ export const {
   getShopDataByAreaSuccess,
   getShopDataByAreaFailure,
   setWindValue,
+  buyItemAction,
+  buyItemActionSuccess,
+  buyItemActionFailure,
 } = shopSlice.actions;
 
 export type ShopStateType = typeof initialShopState;
