@@ -17,6 +17,7 @@ export type AreaType = {
 export type UserModifiersType = {
   areaName: string;
   windSpeed: number;
+  name: string;
 };
 
 export type UserData = UserInitData & {

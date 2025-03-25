@@ -135,17 +135,18 @@ const Wallet = () => {
                 {t("Connect")}
               </WalletTypography>
             )}
-
-            <Box
-              onClick={handleCopyClick}
-              sx={{ cursor: "pointer", paddingBottom: "10px" }}
-            >
-              <img
-                src={Copy}
-                alt="Copy"
-                style={{ width: "16px", height: "16px" }}
-              />
-            </Box>
+            {walletNumber && (
+              <Box
+                onClick={handleCopyClick}
+                sx={{ cursor: "pointer", paddingBottom: "10px" }}
+              >
+                <img
+                  src={Copy}
+                  alt="Copy"
+                  style={{ width: "16px", height: "16px" }}
+                />
+              </Box>
+            )}
 
             {!walletNumber && (
               <ButtonStyled onClick={() => handleAddWalletClick()}>

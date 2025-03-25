@@ -16,3 +16,6 @@ const setupStore = () => {
 export const store = setupStore();
 
 sagaMiddleware.run(rootSaga);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

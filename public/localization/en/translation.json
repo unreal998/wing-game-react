@@ -43,5 +43,9 @@
   "Tonkeeper": "Tonkeeper",
   "Connect wallet": "Connect wallet",
   " Your wallet: ": " Your wallet: ",
-  "Push Power": "Push Power"
+  "Push Power": "Push Power",
+  "remain": "remain",
+  "Buy wind speed": "Buy wind speed",
+  "Your wind speed is zero. Please purchase to proceed.": "Your wind speed is zero. Please purchase in Market to proceed.",
+  "Close": "Close"
 }
