@@ -46,6 +46,7 @@ const Missions = () => {
       );
     }
   }, [missionTitles, activeTab, dispatch, userData]);
+  console.log(missions);
 
   const wrapperHeight = useMemo(() => {
     return heightProportion - 100;
@@ -118,10 +119,10 @@ const Missions = () => {
                       style={{ padding: "10px" }}
                     />
                     <Box sx={{ padding: "10px 0px 10px 0px" }}>
-                      <StyledSubscrible>
-                        {t("Subscribe to Tron announcements")}
-                      </StyledSubscrible>
-                      <StyledSHIB>5,000 SHIB</StyledSHIB>
+                      <StyledSubscrible>{mission.title}</StyledSubscrible>
+                      <StyledSHIB>
+                        {mission.reward} {mission.coin}
+                      </StyledSHIB>
                     </Box>
                   </StyledBoxMission>
                 ))}

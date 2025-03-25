@@ -1,8 +1,9 @@
 export type MissionsData = {
   title: string;
   description: number;
-  revard: number;
+  reward: number;
   isCompleated: boolean;
+  coin: string;
 };
 
 export type MissionByTypeRequestType = {

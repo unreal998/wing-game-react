@@ -3,5 +3,5 @@ export type ReferalData = {
   firstName: string;
   lastName: string;
   lvl: number;
-  turxBalance: number;
+  WindBalance: number;
 };
