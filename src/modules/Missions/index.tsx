@@ -19,6 +19,7 @@ import { getMissionsDataAction } from "./slices";
 import { selectUserData } from "../Header/selectors";
 
 const Missions = () => {
+  const [checked, setChecked] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslation();
   const missions = useSelector(selectMissionsData());
@@ -46,6 +47,7 @@ const Missions = () => {
       );
     }
   }, [missionTitles, activeTab, dispatch, userData]);
+  console.log(missions);
 
   const wrapperHeight = useMemo(() => {
     return heightProportion - 100;
@@ -113,15 +115,15 @@ const Missions = () => {
                 missions.map((mission, idx) => (
                   <StyledBoxMission key={idx}>
                     <Checkbox
-                      disabled
-                      checked={false}
-                      style={{ padding: "10px" }}
+                      checked={checked}
+                      onChange={(event) => setChecked(event.target.checked)}
+                      style={{ padding: "10px", color: "#fff" }}
                     />
                     <Box sx={{ padding: "10px 0px 10px 0px" }}>
-                      <StyledSubscrible>
-                        {t("Subscribe to Tron announcements")}
-                      </StyledSubscrible>
-                      <StyledSHIB>5,000 SHIB</StyledSHIB>
+                      <StyledSubscrible>{mission.title}</StyledSubscrible>
+                      <StyledSHIB>
+                        {mission.reward} {mission.coin}
+                      </StyledSHIB>
                     </Box>
                   </StyledBoxMission>
                 ))}

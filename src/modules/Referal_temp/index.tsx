@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "../Header/selectors";
 import { getReferalDataAction } from "./slices";
 import { selectReferalData } from "./selectors";
+import { Console } from "console";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
@@ -83,19 +84,21 @@ const Referal = () => {
               </StyledHeader>
             ))}
           </TableBox>
-          {Array(10)
-            .fill(null)
-            .map((_, index) => (
+
+          {/* Отображение данных */}
+          {referalData && referalData.length > 0 ? (
+            referalData.map((user, index) => (
               <TableBox key={index}>
                 <StyledMain>
                   <StyledMainJpg>
                     <img src={Male} alt="male" style={commonImgStyle} />
                     <StyledMainTypography>
-                      {t("Name User")}
+                      {user.userName || user.firstName || user.lastName || " "}
                     </StyledMainTypography>
                   </StyledMainJpg>
                 </StyledMain>
-                {[10, 234].map((value, idx) => (
+
+                {[user.lvl, user.WindBalance].map((value, idx) => (
                   <StyledMainColumn key={idx}>
                     <StyledMainTypography
                       sx={idx === 1 ? { color: MAIN_COLORS.gold } : {}}
@@ -105,13 +108,19 @@ const Referal = () => {
                   </StyledMainColumn>
                 ))}
               </TableBox>
-            ))}
+            ))
+          ) : (
+            <Typography sx={{ textAlign: "center", padding: "20px" }}>
+              {t("No referrals yet")}
+            </Typography>
+          )}
         </StyledBasicBox>
+
         <Box sx={{ paddingTop: "24px" }}>
           <HeaderTypographyStyle>{t("Your Invite Link")}</HeaderTypographyStyle>
           <Box sx={{ display: "flex", gap: "11px" }}>
             <StyledInputBox>
-              <StyledInput type="text" value={referalLink} />
+              <StyledInput type="text" value={referalLink} readOnly />
             </StyledInputBox>
             <StyledCopy onClick={copyToClipboard}>
               <img
