@@ -1,7 +1,7 @@
 export type MissionsData = {
-  name: string;
-  lvl: number;
-  turxBalance: number;
+  title: string;
+  description: number;
+  revard: number;
   isCompleated: boolean;
 };
 

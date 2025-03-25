@@ -68,9 +68,7 @@ const Wallet = () => {
           justifyContent: "space-between",
           paddingTop: "8px",
         }}
-      >
-        <InfoBox value={String(userData?.WindBalance)} subtitle={t("TURX")} />
-      </Box>
+      ></Box>
       <BoxPayot>
         <Typography
           sx={{
