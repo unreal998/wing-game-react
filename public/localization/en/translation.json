@@ -41,11 +41,16 @@
   "Connect your wallet": "Connect your wallet",
   "telegram wallet": "telegram wallet",
   "Tonkeeper": "Tonkeeper",
-  "Connect wallet": "Connect wallet",
   " Your wallet: ": " Your wallet: ",
   "Push Power": "Push Power",
   "remain": "remain",
   "Buy wind speed": "Buy wind speed",
   "Your wind speed is zero. Please purchase to proceed.": "Your wind speed is zero. Please purchase in Market to proceed.",
-  "Close": "Close"
+  "Close": "Close",
+  "create wallet": "Create wallet",
+  "Withdraw funds": "Withdraw funds",
+  "Withdraw Request": "Withdraw Request",
+  "Amount": "Amount",
+  "Wallet Number": "Wallet Number",
+  "Send Request": "Send Request"
 }

@@ -1,8 +1,9 @@
-import { Box, Slider, Stack, Typography } from "@mui/material";
+import { Box, Slider, Stack, Typography, TextField } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
 import { TabContext, TabList } from "@mui/lab";
+import { Tab } from "@mui/material";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
 import { ButtonGame } from "../../shared/components/ButtonGame";
@@ -16,6 +17,7 @@ import { selectShopData } from "./selectors";
 import { getShopDataByArea } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
 import { selectModificatorsData } from "../Header/selectors";
+import { flag } from "./components/flag";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 1 },
@@ -75,7 +77,7 @@ const Shop = () => {
         ...shopMarksFromModificator,
       ]);
     }
-  }, [shopValues, dispatch, selectedCountry, setShopMarks]);
+  }, [shopValues, dispatch, selectedCountry]);
 
   const [playSound] = useSound(FooterButtonPress);
 
@@ -106,7 +108,7 @@ const Shop = () => {
           },
         }}
       >
-        {t("Market")}{" "}
+        {t("Market")}
       </NamedStyled>
       <Stack
         sx={{
@@ -128,14 +130,18 @@ const Shop = () => {
           <TextFieldStyled
             variant="outlined"
             disabled
-            sx={{ color: MAIN_COLORS.marketBox }}
+            sx={{ color: MAIN_COLORS.textColor }}
             placeholder={`${(selectedWindPowerIncome?.price || 0).toString()} TON`}
           ></TextFieldStyled>
+          <img
+            src={flag[selectedCountry.name]}
+            style={{ width: "60px", paddingLeft: "10px" }}
+          />
         </Stack>
         <Stack flexDirection="column" gap="10px">
           <Box>
             <Typography fontWeight="600">
-              {t("Wind speed")}: {`${windValue}`}
+              {t("Wind speed")} : {windValue}
             </Typography>
             <Slider
               aria-label="WindSpeed"
@@ -239,4 +245,5 @@ const Shop = () => {
     </MainBox>
   );
 };
+
 export default Shop;
