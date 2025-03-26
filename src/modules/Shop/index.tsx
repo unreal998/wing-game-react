@@ -14,9 +14,10 @@ import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectShopData } from "./selectors";
-import { getShopDataByArea } from "./slices";
+import { buyItemAction, getShopDataByArea } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
-import { selectModificatorsData } from "../Header/selectors";
+import { selectModificatorsData, selectUserData } from "../Header/selectors";
+import { ModalComponent } from "../../shared/components/ModalComponent";
 import { flag } from "./components/flag";
 
 const profitValues = [
@@ -33,10 +34,12 @@ const Shop = () => {
   const shopValues = useSelector(selectShopData());
   const selectedCountry = useSelector(selectSelectedCountry());
   const selectModificators = useSelector(selectModificatorsData());
+  const userData = useSelector(selectUserData());
   const dispatch = useDispatch();
   const [shopMarks, setShopMarks] = useState<
     { title: number; value: number; level: number }[]
   >([]);
+  const [lowBalanceModalOpen, setLowBalanceModalOpen] = useState(false);
 
   const selectedAreaMidificator = useMemo(() => {
     if (selectModificators?.length && selectedCountry) {
@@ -45,6 +48,12 @@ const Shop = () => {
       )?.windSpeed;
     }
   }, [selectModificators, selectedCountry]);
+
+  useEffect(() => {
+    if (selectedAreaMidificator) {
+      setWindValue(selectedAreaMidificator);
+    }
+  }, [selectedAreaMidificator]);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -95,6 +104,22 @@ const Shop = () => {
       );
     }
   };
+
+  const handleBuy = useCallback(() => {
+    if (userData) {
+      if (userData.TONBalance >= selectedWindPowerIncome?.price) {
+        dispatch(
+          buyItemAction({
+            windSpeed: selectedWindPowerIncome.speed,
+            selectedArea: selectedCountry.name,
+            uid: userData.id,
+          }),
+        );
+      } else {
+        setLowBalanceModalOpen(true);
+      }
+    }
+  }, [userData, selectedWindPowerIncome, dispatch, selectedCountry]);
 
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
@@ -229,7 +254,7 @@ const Shop = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <ButtonGame variant="contained" onClick={() => {}}>
+          <ButtonGame variant="contained" onClick={handleBuy}>
             <Typography
               sx={{
                 color: "rgb(0, 0, 0)",
@@ -242,6 +267,12 @@ const Shop = () => {
           </ButtonGame>
         </Box>
       </Stack>
+      <ModalComponent
+        openModal={lowBalanceModalOpen}
+        title="Low Balance"
+        subtitle="You have not anought TON balance, please fund your TON balance"
+        handleCloseModal={() => setLowBalanceModalOpen(false)}
+      />
     </MainBox>
   );
 };

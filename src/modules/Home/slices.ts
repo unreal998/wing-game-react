@@ -17,6 +17,8 @@ export const initialHomeState: HomeState = {
     available: false,
     lastButtonPress: 0,
     nextButtonPress: 0,
+    bought: false,
+    referalsToUnlock: 0,
   },
 };
 
