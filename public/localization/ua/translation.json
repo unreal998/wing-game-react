@@ -52,5 +52,6 @@
   "Withdraw Request": "Запит на виведення",
   "Amount": "Сума",
   "Wallet Number": "Номер гаманця",
-  "Send Request": "Надіслати запит"
+  "Send Request": "Надіслати запит",
+  "start": "старт"
 }

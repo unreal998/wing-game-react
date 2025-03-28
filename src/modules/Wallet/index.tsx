@@ -85,7 +85,6 @@ const Wallet = () => {
         }}
       ></Box>
 
-      {/* Кнопка для открытия модального окна вывода средств */}
       <ButtonStyled onClick={() => setIsWithdrawOpen(true)}>
         <ButtonStyledTypography>{t("Withdraw funds")}</ButtonStyledTypography>
       </ButtonStyled>

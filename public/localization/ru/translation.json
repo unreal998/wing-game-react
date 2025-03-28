@@ -53,5 +53,6 @@
   "Withdraw Request": "Запрос на вывод",
   "Amount": "Сумма",
   "Wallet Number": "Номер кошелька",
-  "Send Request": "Отправить запрос"
+  "Send Request": "Отправить запрос",
+  "start": "старт"
 }
