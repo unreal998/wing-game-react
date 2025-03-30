@@ -17,6 +17,7 @@ import { selectModificatorsData, selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
+import { modificatorsData } from "./components/modificatorsData";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 1 },
@@ -26,13 +27,6 @@ const profitValues = [
 ];
 
 const Shop = () => {
-  const modificatorsData = [
-    { windSpeed: 10, clicksRemain: 5, boughtDate: "03-30" },
-    { windSpeed: 20, clicksRemain: 3, boughtDate: "03-29" },
-    { windSpeed: 30, clicksRemain: 8, boughtDate: "03-28" },
-    { windSpeed: 40, clicksRemain: 6, boughtDate: "03-27" },
-    { windSpeed: 50, clicksRemain: 9, boughtDate: "03-26" },
-  ];
   const { t } = useTranslation();
   const [windValue, setWindValue] = useState<number>(0);
   const [tab, setTab] = useState(0);
@@ -217,7 +211,6 @@ const Shop = () => {
             />
           </TabList>
 
-          {/* Этот блок скрывается, если активна вкладка Modificators */}
           {tab !== 2 && (
             <Stack gap="10px">
               <Stack
@@ -248,7 +241,6 @@ const Shop = () => {
           )}
         </TabContext>
 
-        {/* Таблица модификаторов отображается только на вкладке "Modificators" */}
         {tab === 2 && <ModificatorsTable modificators={modificatorsData} />}
       </Stack>
       <ModalComponent
