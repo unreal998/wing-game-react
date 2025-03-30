@@ -3,22 +3,20 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
 import { TabContext, TabList } from "@mui/lab";
-import { Tab } from "@mui/material";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
-import { ButtonGame } from "../../shared/components/ButtonGame";
 import { TabStyles } from "./components/TabStyles";
 import { useTranslation } from "react-i18next";
-import { TextFieldStyled } from "./components/TextFieldStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectShopData } from "./selectors";
-import { buyItemAction, getShopDataByArea } from "./slices";
+import { getShopDataByArea } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
 import { selectModificatorsData, selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { flag } from "./components/flag";
+import ModificatorsTable from "./components/ModificatorsTable";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 1 },
@@ -28,6 +26,13 @@ const profitValues = [
 ];
 
 const Shop = () => {
+  const modificatorsData = [
+    { windSpeed: 10, clicksRemain: 5, boughtDate: "03-30" },
+    { windSpeed: 20, clicksRemain: 3, boughtDate: "03-29" },
+    { windSpeed: 30, clicksRemain: 8, boughtDate: "03-28" },
+    { windSpeed: 40, clicksRemain: 6, boughtDate: "03-27" },
+    { windSpeed: 50, clicksRemain: 9, boughtDate: "03-26" },
+  ];
   const { t } = useTranslation();
   const [windValue, setWindValue] = useState<number>(0);
   const [tab, setTab] = useState(0);
@@ -105,22 +110,6 @@ const Shop = () => {
     }
   };
 
-  const handleBuy = useCallback(() => {
-    if (userData) {
-      if (userData.TONBalance >= selectedWindPowerIncome?.price) {
-        dispatch(
-          buyItemAction({
-            windSpeed: selectedWindPowerIncome.speed,
-            selectedArea: selectedCountry.name,
-            uid: userData.id,
-          }),
-        );
-      } else {
-        setLowBalanceModalOpen(true);
-      }
-    }
-  }, [userData, selectedWindPowerIncome, dispatch, selectedCountry]);
-
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
 
@@ -152,12 +141,12 @@ const Shop = () => {
           justifyContent="space-between"
           width="80%"
         >
-          <TextFieldStyled
+          <TextField
             variant="outlined"
             disabled
             sx={{ color: MAIN_COLORS.textColor }}
-            placeholder={`${(selectedWindPowerIncome?.price || 0).toString()} TON`}
-          ></TextFieldStyled>
+            placeholder={`${(shopValues[0]?.price || 0).toString()} TON`}
+          />
           <img
             src={flag[selectedCountry.name]}
             style={{ width: "60px", paddingLeft: "10px" }}
@@ -220,57 +209,52 @@ const Shop = () => {
               key={1}
               onClick={handleSoundClick}
             />
+            <TabStyles
+              label="Modificators"
+              value={2}
+              key={2}
+              onClick={handleSoundClick}
+            />
           </TabList>
-          <Stack gap="10px">
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              flexWrap="wrap"
-              gap="8px"
-              sx={{
-                "@media (max-height: 732px)": {
-                  paddingTop: "0px",
-                  paddingBottom: "0px",
-                },
-              }}
-            >
-              {profitValues.map((row, rowIndex) => (
-                <ProfitBox
-                  key={rowIndex}
-                  value={formatValue(
-                    tab === 0
-                      ? +selectedWindPowerIncome.turxValue * row.multiplier
-                      : +selectedWindPowerIncome.tonValue * row.multiplier,
-                  )}
-                  subtitle={row.label}
-                />
-              ))}
+
+          {/* Этот блок скрывается, если активна вкладка Modificators */}
+          {tab !== 2 && (
+            <Stack gap="10px">
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                flexWrap="wrap"
+                gap="8px"
+                sx={{
+                  "@media (max-height: 732px)": {
+                    paddingTop: "0px",
+                    paddingBottom: "0px",
+                  },
+                }}
+              >
+                {profitValues.map((row, rowIndex) => (
+                  <ProfitBox
+                    key={rowIndex}
+                    value={formatValue(
+                      tab === 0
+                        ? +selectedWindPowerIncome.turxValue * row.multiplier
+                        : +selectedWindPowerIncome.tonValue * row.multiplier,
+                    )}
+                    subtitle={row.label}
+                  />
+                ))}
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </TabContext>
-        <Box
-          display="flex"
-          width="100%"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <ButtonGame variant="contained" onClick={handleBuy}>
-            <Typography
-              sx={{
-                color: "rgb(0, 0, 0)",
-                fontSize: "20px",
-                fontWeight: 600,
-              }}
-            >
-              {t("Buy")}
-            </Typography>
-          </ButtonGame>
-        </Box>
+
+        {/* Таблица модификаторов отображается только на вкладке "Modificators" */}
+        {tab === 2 && <ModificatorsTable modificators={modificatorsData} />}
       </Stack>
       <ModalComponent
         openModal={lowBalanceModalOpen}
         title="Low Balance"
-        subtitle="You have not anought TON balance, please fund your TON balance"
+        subtitle="You have not enough TON balance, please fund your TON balance"
         handleCloseModal={() => setLowBalanceModalOpen(false)}
       />
     </MainBox>
