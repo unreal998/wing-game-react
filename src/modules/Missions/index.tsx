@@ -19,7 +19,6 @@ import { getMissionsDataAction } from "./slices";
 import { selectUserData } from "../Header/selectors";
 
 const Missions = () => {
-  const [checked, setChecked] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslation();
   const missions = useSelector(selectMissionsData());
@@ -70,8 +69,6 @@ const Missions = () => {
         }}
       >
         <NamedStyled>{t("Missions")}</NamedStyled>
-
-        <InfoBox value={"234"} subtitle={t("TURX")} />
       </Box>
 
       <TabContext value={activeTab.toString()}>
@@ -113,10 +110,10 @@ const Missions = () => {
               {missions &&
                 missions.map((mission, idx) => (
                   <StyledBoxMission key={idx}>
-                    <Checkbox
-                      checked={checked}
-                      onChange={(event) => setChecked(event.target.checked)}
-                      style={{ padding: "10px", color: "#fff" }}
+                    <img
+                      src={mission.img !== null ? mission.img : ""}
+                      style={{ width: "26px", height: "26px" }}
+                      alt="mission image"
                     />
                     <Box sx={{ padding: "10px 0px 10px 0px" }}>
                       <StyledSubscrible>{mission.title}</StyledSubscrible>

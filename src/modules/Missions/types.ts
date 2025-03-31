@@ -1,9 +1,12 @@
 export type MissionsData = {
-  title: string;
-  description: number;
-  reward: number;
-  isCompleated: boolean;
   coin: string;
+  created_at: string;
+  description: number;
+  id: number;
+  img: string | null;
+  isSuccess: boolean;
+  reward: number;
+  title: string;
 };
 
 export type MissionByTypeRequestType = {
