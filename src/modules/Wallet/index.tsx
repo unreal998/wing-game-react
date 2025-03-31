@@ -1,8 +1,17 @@
-import { Box, Switch, Typography } from "@mui/material";
+import {
+  Box,
+  Modal,
+  TextField,
+  Button,
+  IconButton,
+  Typography,
+  Switch,
+  Checkbox,
+} from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledBasicBox } from "./components/StyledBasicBox";
-import Mask from "../../assets/Mask.svg";
+import TON from "../../assets/ton.png";
 import { ButtonStyled } from "./components/ButtonStyled";
 import { StyledTableBox } from "./components/StyledTableBox";
 import { InfoBox } from "../../shared/components/InfoBox";
@@ -17,12 +26,12 @@ import { ButtonStyledTypography } from "./components/ButtonStyledTypography";
 import { TabPanelBoxStyled } from "./components/TabPanelBoxStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
-import { BoxPayot } from "./components/BoxPayot";
 import { useDispatch, useSelector } from "react-redux";
 import { createWalletAction } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import { selectWalletNumber } from "./selectors";
 import Copy from "../../assets/copy.svg";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Wallet = () => {
   const { t } = useTranslation();
@@ -30,6 +39,7 @@ const Wallet = () => {
   const userData = useSelector(selectUserData());
   const walletNumber = useSelector(selectWalletNumber());
   const dispatch = useDispatch();
+
   const handleCopyClick = useCallback(() => {
     if (walletNumber) {
       navigator.clipboard
@@ -43,25 +53,30 @@ const Wallet = () => {
     playSound();
   }, [playSound]);
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number>(0);
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
+  const [withdrawWallet, setWithdrawWallet] = useState("");
+  const [amount, setAmount] = useState("");
+  const [checked, setChecked] = useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  const tabs = [
-    { label: t("Wallet"), value: 0 },
-    { label: t("History"), value: 1 },
-  ];
 
-  const handleAddWalletClick = useCallback(() => {
+  const handleAddWalletClick = () => {
     if (userData) {
       dispatch(createWalletAction(userData.id));
     }
-  }, [dispatch, userData]);
+  };
+
+  const handleWithdrawRequest = () => {
+    console.log("Запрос на вывод:", { withdrawWallet, amount, checked });
+    setIsWithdrawOpen(false);
+  };
 
   return (
     <MainBox>
-      <NamedStyled>{t("Wallet")} </NamedStyled>
+      <NamedStyled>{t("Wallet")}</NamedStyled>
       <Box
         sx={{
           display: "flex",
@@ -69,30 +84,69 @@ const Wallet = () => {
           paddingTop: "8px",
         }}
       ></Box>
-      <BoxPayot>
-        <Typography
+
+      <ButtonStyled onClick={() => setIsWithdrawOpen(true)}>
+        <ButtonStyledTypography>{t("Withdraw funds")}</ButtonStyledTypography>
+      </ButtonStyled>
+
+      {/* Модальное окно вывода средств */}
+      <Modal open={isWithdrawOpen} onClose={() => setIsWithdrawOpen(false)}>
+        <Box
           sx={{
-            color: MAIN_COLORS.textColor,
-            fontSize: "12px",
-            fontWeight: 700,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 300,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
           }}
         >
-          {t("Auto payout")}
-        </Typography>
-        <Switch
-          sx={{
-            alignItems: "center",
-            display: "flex",
-            "& .MuiSwitch-switchBase.Mui-checked": {
-              color: MAIN_COLORS.activeTabColor,
-            },
-            "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-              backgroundColor: MAIN_COLORS.checkboxTrack,
-              height: "21px",
-            },
-          }}
-        />
-      </BoxPayot>
+          <IconButton
+            onClick={() => setIsWithdrawOpen(false)}
+            sx={{ position: "absolute", top: 8, right: 8 }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h6" mb={2}>
+            {t("Withdraw Request")}
+          </Typography>
+          <TextField
+            fullWidth
+            label={t("Wallet Number")}
+            variant="outlined"
+            value={withdrawWallet}
+            onChange={(e) => setWithdrawWallet(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            fullWidth
+            label={t("Amount")}
+            variant="outlined"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <Box display="flex" alignItems="center" mb={2}>
+            <Checkbox
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+            />
+          </Box>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={handleWithdrawRequest}
+          >
+            {t("Send Request")}
+          </Button>
+        </Box>
+      </Modal>
+
       <TabContext value={value}>
         <TabList
           sx={{
@@ -103,7 +157,10 @@ const Wallet = () => {
           }}
           onChange={handleTabChange}
         >
-          {tabs.map(({ label, value }) => (
+          {[
+            { label: t("Wallet"), value: 0 },
+            { label: t("History"), value: 1 },
+          ].map(({ label, value }) => (
             <TabStyles
               key={value}
               label={label}
@@ -112,24 +169,21 @@ const Wallet = () => {
             />
           ))}
         </TabList>
+
         <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
           <StyledBasicBox>
             <img
-              src={Mask}
-              alt="mask"
+              src={TON}
+              alt="ton"
               style={{ paddingTop: "15px", width: "88px" }}
             />
             {walletNumber ? (
               <WalletTypography>
-                {t(" Your wallet: ")} <br /> <br />
+                {t("Your wallet: ")} <br />
                 <b style={{ fontSize: "10px" }}>{walletNumber}</b>
               </WalletTypography>
             ) : (
-              <WalletTypography
-                sx={{
-                  fontSize: "12px",
-                }}
-              >
+              <WalletTypography sx={{ fontSize: "12px" }}>
                 {t("Connect")}
               </WalletTypography>
             )}
@@ -147,14 +201,15 @@ const Wallet = () => {
             )}
 
             {!walletNumber && (
-              <ButtonStyled onClick={() => handleAddWalletClick()}>
+              <ButtonStyled onClick={handleAddWalletClick}>
                 <ButtonStyledTypography>
-                  {t("Connect wallet")}
+                  {t("Create wallet")}
                 </ButtonStyledTypography>
               </ButtonStyled>
             )}
           </StyledBasicBox>
         </TabPanel>
+
         <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
           <StyledTableBox sx={{ marginTop: "5px" }}>
             <TabPanelBoxStyled>
@@ -177,4 +232,5 @@ const Wallet = () => {
     </MainBox>
   );
 };
+
 export default Wallet;
