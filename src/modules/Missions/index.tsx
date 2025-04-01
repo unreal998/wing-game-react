@@ -1,4 +1,4 @@
-import { Box, Checkbox, Modal, Button } from "@mui/material";
+import { Box, Checkbox, Modal, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -161,42 +161,44 @@ const Missions = () => {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Box
-          sx={{
-            position: "relative",
-            width: "70%",
-            maxWidth: "500px",
-            maxHeight: "70vh",
-            overflowY: "auto",
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: "10px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {selectedMission && (
-            <>
-              <h2>{selectedMission.title}</h2>
-              <p>{selectedMission.description}</p>
-              <p>
-                <strong>{selectedMission.type}</strong>
-              </p>
-              <Button variant="contained" onClick={() => setOpen(false)}>
-                {t("start")}
-              </Button>
-            </>
-          )}
-        </Box>
+        <>
+          <Box
+            sx={{
+              position: "relative",
+              width: "70%",
+              maxWidth: "500px",
+              maxHeight: "70vh",
+              overflowY: "auto",
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 4,
+              borderRadius: "10px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {selectedMission && (
+              <>
+                <Typography variant="h5" component="h2" gutterBottom>
+                  {selectedMission.title}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {selectedMission.description}
+                </Typography>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  {selectedMission.type}
+                </Typography>
+                <Button variant="contained" onClick={() => setOpen(false)}>
+                  {t("start")}
+                </Button>
+              </>
+            )}
+          </Box>
+        </>
       </Modal>
     </Box>
   );
