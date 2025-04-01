@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import WebApp from "@twa-dev/sdk";
 import { MAIN_COLORS } from "./shared/colors";
 import Referal from "./modules/Referal_temp";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Footer from "./modules/Footer";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
@@ -35,22 +35,48 @@ function convertToUserData(
 
 const App = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    try {
-      if (WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop") {
-        WebApp.requestFullscreen();
-        WebApp.disableVerticalSwipes();
+    const fetchData = async () => {
+      try {
+        if (WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop") {
+          WebApp.requestFullscreen();
+          WebApp.disableVerticalSwipes();
+        }
+        WebApp.lockOrientation();
+
+        const userTelegramData = WebApp.initDataUnsafe?.user;
+        const userInitData = convertToUserData(userTelegramData);
+
+        if (userInitData) {
+          await dispatch(initAction(userInitData));
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
       }
-      WebApp.lockOrientation();
-      const userTelegramData = WebApp.initDataUnsafe?.user;
-      const userInitData = convertToUserData(userTelegramData);
-      if (userInitData) {
-        dispatch(initAction(userInitData));
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    };
+
+    fetchData();
   }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: MAIN_COLORS.mainBG,
+        }}
+      >
+        <CircularProgress color="primary" />
+      </Box>
+    );
+  }
 
   return (
     <Box
