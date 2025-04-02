@@ -14,8 +14,12 @@ import { StyledTabMission } from "./components/StyledTabMission";
 
 import { useTranslation } from "react-i18next";
 import { NamedStyled } from "../../shared/components/NameStyled";
+import { selectMissionsLoading } from "./slices";
+import { useSelector } from "react-redux";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const Missions = () => {
+  const loading = useSelector(selectMissionsLoading);
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
 
@@ -43,6 +47,8 @@ const Missions = () => {
         gap: "15px",
       }}
     >
+      {" "}
+      <LoaderComponent loading={loading} />
       <Box
         sx={{
           display: "flex",
@@ -54,7 +60,6 @@ const Missions = () => {
 
         <InfoBox value={"234"} subtitle={t("TURX")} />
       </Box>
-
       <TabContext value={value.toString()}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList

@@ -27,3 +27,21 @@ export type UserData = UserInitData & {
   lvl: number;
   exp: number;
 };
+export type Mission = {
+  id: string;
+  title: string;
+  description: string;
+  status: "pending" | "completed" | "failed";
+  reward: number;
+  createdAt: number;
+  updatedAt: number;
+};
+
+export type MissionDetails = {
+  missionId: string;
+  detailedDescription: string;
+  requirements: string[];
+  objectives: string[];
+  rewardDetails: string;
+  estimatedTime: number;
+};
