@@ -20,10 +20,14 @@ import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
+import { selectReferalsLoading } from "./slice";
+import { useSelector } from "react-redux";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
 const Referal = () => {
+  const loading = useSelector(selectReferalsLoading);
   const { t } = useTranslation();
   const [inviteText, setInviteText] = useState(t("Invite a friend"));
 
@@ -42,6 +46,7 @@ const Referal = () => {
 
   return (
     <MainBox height={heightProportion}>
+      <LoaderComponent loading={loading} />
       <Box>
         <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>

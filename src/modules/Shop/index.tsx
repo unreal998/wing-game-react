@@ -12,8 +12,12 @@ import { ButtonShopStyled } from "./components/ButtonShopStyled";
 import { TextFieldStyled } from "./components/TextFieldStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
+import { useSelector } from "react-redux";
+import { selectReferalsLoading } from "../Referal_temp/slice";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const Shop = () => {
+  const loading = useSelector(selectReferalsLoading);
   const { t } = useTranslation();
   const [generatorValue, setGeneratorValue] = useState<number>(30);
   const [value, setValue] = useState(0);
@@ -48,6 +52,7 @@ const Shop = () => {
 
   return (
     <MainBox>
+      <LoaderComponent loading={loading} />
       <NamedStyled
         sx={{
           "@media (max-height: 670px)": {

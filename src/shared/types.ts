@@ -45,3 +45,14 @@ export type MissionDetails = {
   rewardDetails: string;
   estimatedTime: number;
 };
+export type BuyItemType = {
+  id: string;
+  name: string;
+  price: number;
+};
+
+export type ShopValues = {
+  id: string;
+  title: string;
+  available: boolean;
+};
