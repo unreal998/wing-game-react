@@ -60,3 +60,6 @@ export const {
 } = shopSlice.actions;
 
 export type ShopStateType = typeof initialShopState;
+
+export const selectShopLoading = (state: { shopSlice: ShopState }) =>
+  state.shopSlice.loading;

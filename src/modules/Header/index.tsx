@@ -17,8 +17,11 @@ import { StyledCurencyBox } from "./components/StyledCurrencyBox";
 import { useSelector } from "react-redux";
 import { selectUserData } from "./selectors";
 import Earth from "../../assets/earth.png";
+import { selectHeaderLoading } from "./slices";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const Header = () => {
+  const loading = useSelector(selectHeaderLoading);
   const location = useLocation();
   const navigate = useNavigate();
   const handleEarthClick = useCallback(() => {
@@ -50,6 +53,7 @@ const Header = () => {
         padding: "11px",
       }}
     >
+      <LoaderComponent loading={loading} />
       <StyledMain>
         <Box
           sx={{

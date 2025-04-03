@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { heightProportion } from "../../shared/utils";
 import Question from "../../assets/question.svg";
@@ -10,8 +10,12 @@ import { TabBoxSettings } from "./components/TableBoxSettings";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { SubMainBox } from "./components/SubMainBox";
+import { selectSettingsLoading } from "./slices";
+import { useSelector } from "react-redux";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const Settings = () => {
+  const loading = useSelector(selectSettingsLoading);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const { t, i18n } = useTranslation();
 
@@ -20,6 +24,8 @@ const Settings = () => {
   };
   return (
     <MainBox height={heightProportion}>
+      <LoaderComponent loading={loading} />
+
       <SubMainBox>
         <NamedStyled paddingBottom="8px">{t("Settings")}</NamedStyled>
         <img src={Question} alt="question" />

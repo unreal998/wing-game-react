@@ -11,13 +11,14 @@ import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectShopData } from "./selectors";
-import { getShopDataByArea } from "./slices";
+import { getShopDataByArea, selectShopLoading } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
 import { selectModificatorsData, selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
 import { modificatorsData } from "./components/modificatorsData";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 1 },
@@ -27,6 +28,7 @@ const profitValues = [
 ];
 
 const Shop = () => {
+  const loading = useSelector(selectShopLoading);
   const { t } = useTranslation();
   const [windValue, setWindValue] = useState<number>(0);
   const [tab, setTab] = useState(0);
@@ -109,6 +111,7 @@ const Shop = () => {
 
   return (
     <MainBox>
+      <LoaderComponent loading={loading} />
       <NamedStyled
         sx={{
           "@media (max-height: 670px)": {

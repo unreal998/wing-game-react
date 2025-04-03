@@ -6,6 +6,7 @@ type HomeState = {
   nextPressTimeDelay: number;
   disabledPowerButton: boolean;
   selectedCountry: AreaType;
+  loading: boolean;
 };
 
 export const initialHomeState: HomeState = {
@@ -20,6 +21,7 @@ export const initialHomeState: HomeState = {
     bought: false,
     referalsToUnlock: 0,
   },
+  loading: false,
 };
 
 export const homeSlice = createSlice({
@@ -29,7 +31,15 @@ export const homeSlice = createSlice({
     powerButtonPressed: (
       state,
       { payload }: { payload: PowerButtonPressType },
-    ) => {},
+    ) => {
+      state.loading = true;
+    },
+    powerButtonPressedSuccess: (state) => {
+      state.loading = false;
+    },
+    powerButtonPressedFailure: (state) => {
+      state.loading = false;
+    },
     setPressTimeDelay: (state, { payload }: { payload: number }) => {
       state.nextPressTimeDelay = payload > 0 ? payload : 0;
       if (payload <= 0) {
@@ -47,7 +57,17 @@ export const homeSlice = createSlice({
   },
 });
 
-export const { powerButtonPressed, setPressTimeDelay, setSelectedCountry } =
-  homeSlice.actions;
+export const {
+  powerButtonPressed,
+  powerButtonPressedSuccess,
+  powerButtonPressedFailure,
+  setPressTimeDelay,
+  setSelectedCountry,
+} = homeSlice.actions;
+
+export const selectHomeLoading = (state: { homeSlice: HomeState }) =>
+  state.homeSlice.loading;
 
 export type HomeStateType = typeof initialHomeState;
+
+export default homeSlice.reducer;
