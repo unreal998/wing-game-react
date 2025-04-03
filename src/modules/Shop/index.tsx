@@ -1,22 +1,23 @@
-import { Box, Slider, Stack, Typography } from "@mui/material";
+import { Box, Slider, Stack, Typography, TextField } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
 import { TabContext, TabList } from "@mui/lab";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
-import { ButtonGame } from "../../shared/components/ButtonGame";
 import { TabStyles } from "./components/TabStyles";
 import { useTranslation } from "react-i18next";
-import { TextFieldStyled } from "./components/TextFieldStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectShopData } from "./selectors";
-import { buyItemAction, getShopDataByArea } from "./slices";
+import { getShopDataByArea } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
 import { selectModificatorsData, selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
+import { flag } from "./components/flag";
+import ModificatorsTable from "./components/ModificatorsTable";
+import { modificatorsData } from "./components/modificatorsData";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 1 },
@@ -84,7 +85,7 @@ const Shop = () => {
         ...shopMarksFromModificator,
       ]);
     }
-  }, [shopValues, dispatch, selectedCountry, setShopMarks]);
+  }, [shopValues, dispatch, selectedCountry]);
 
   const [playSound] = useSound(FooterButtonPress);
 
@@ -103,22 +104,6 @@ const Shop = () => {
     }
   };
 
-  const handleBuy = useCallback(() => {
-    if (userData) {
-      if (userData.TONBalance >= selectedWindPowerIncome?.price) {
-        dispatch(
-          buyItemAction({
-            windSpeed: selectedWindPowerIncome.speed,
-            selectedArea: selectedCountry.name,
-            uid: userData.id,
-          }),
-        );
-      } else {
-        setLowBalanceModalOpen(true);
-      }
-    }
-  }, [userData, selectedWindPowerIncome, dispatch, selectedCountry]);
-
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
 
@@ -131,7 +116,7 @@ const Shop = () => {
           },
         }}
       >
-        {t("Market")}{" "}
+        {t("Market")}
       </NamedStyled>
       <Stack
         sx={{
@@ -150,17 +135,21 @@ const Shop = () => {
           justifyContent="space-between"
           width="80%"
         >
-          <TextFieldStyled
+          <TextField
             variant="outlined"
             disabled
-            sx={{ color: MAIN_COLORS.marketBox }}
-            placeholder={`${(selectedWindPowerIncome?.price || 0).toString()} TON`}
-          ></TextFieldStyled>
+            sx={{ color: MAIN_COLORS.textColor }}
+            placeholder={`${(shopValues[0]?.price || 0).toString()} TON`}
+          />
+          <img
+            src={flag[selectedCountry.name]}
+            style={{ width: "60px", paddingLeft: "10px" }}
+          />
         </Stack>
         <Stack flexDirection="column" gap="10px">
           <Box>
             <Typography fontWeight="600">
-              {t("Wind speed")}: {`${windValue}`}
+              {t("Wind speed")} : {windValue}
             </Typography>
             <Slider
               aria-label="WindSpeed"
@@ -214,60 +203,54 @@ const Shop = () => {
               key={1}
               onClick={handleSoundClick}
             />
+            <TabStyles
+              label="Modificators"
+              value={2}
+              key={2}
+              onClick={handleSoundClick}
+            />
           </TabList>
-          <Stack gap="10px">
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              flexWrap="wrap"
-              gap="8px"
-              sx={{
-                "@media (max-height: 732px)": {
-                  paddingTop: "0px",
-                  paddingBottom: "0px",
-                },
-              }}
-            >
-              {profitValues.map((row, rowIndex) => (
-                <ProfitBox
-                  key={rowIndex}
-                  value={formatValue(
-                    tab === 0
-                      ? +selectedWindPowerIncome.turxValue * row.multiplier
-                      : +selectedWindPowerIncome.tonValue * row.multiplier,
-                  )}
-                  subtitle={row.label}
-                />
-              ))}
+
+          {tab !== 2 && (
+            <Stack gap="10px">
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                flexWrap="wrap"
+                gap="8px"
+                sx={{
+                  "@media (max-height: 732px)": {
+                    paddingTop: "0px",
+                    paddingBottom: "0px",
+                  },
+                }}
+              >
+                {profitValues.map((row, rowIndex) => (
+                  <ProfitBox
+                    key={rowIndex}
+                    value={formatValue(
+                      tab === 0
+                        ? +selectedWindPowerIncome.turxValue * row.multiplier
+                        : +selectedWindPowerIncome.tonValue * row.multiplier,
+                    )}
+                    subtitle={row.label}
+                  />
+                ))}
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </TabContext>
-        <Box
-          display="flex"
-          width="100%"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <ButtonGame variant="contained" onClick={handleBuy}>
-            <Typography
-              sx={{
-                color: "rgb(0, 0, 0)",
-                fontSize: "20px",
-                fontWeight: 600,
-              }}
-            >
-              {t("Buy")}
-            </Typography>
-          </ButtonGame>
-        </Box>
+
+        {tab === 2 && <ModificatorsTable modificators={modificatorsData} />}
       </Stack>
       <ModalComponent
         openModal={lowBalanceModalOpen}
         title="Low Balance"
-        subtitle="You have not anought TON balance, please fund your TON balance"
+        subtitle="You have not enough TON balance, please fund your TON balance"
         handleCloseModal={() => setLowBalanceModalOpen(false)}
       />
     </MainBox>
   );
 };
+
 export default Shop;

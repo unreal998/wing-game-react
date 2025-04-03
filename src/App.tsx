@@ -17,6 +17,7 @@ import { initAction } from "./modules/Header/slices";
 import { UserInitData } from "./shared/types";
 import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
+import ErrorPopup from "./shared/components/ErrorPopup";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -66,6 +67,7 @@ const App = () => {
       }}
     >
       <Header />
+      <ErrorPopup />
       <Box sx={{ flexGrow: 1 }}>
         <Routes>
           <Route path="/home" element={<Home />} />

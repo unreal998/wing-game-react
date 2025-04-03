@@ -1,4 +1,4 @@
-import { Box, Checkbox } from "@mui/material";
+import { Box, Checkbox, Modal, Button } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -18,12 +18,30 @@ import { selectMissionsData } from "./selectors";
 import { getMissionsDataAction } from "./slices";
 import { selectUserData } from "../Header/selectors";
 
+type MissionType = {
+  title: string;
+  description: string;
+  type: string;
+  reward: string;
+  coin: string;
+};
+
 const Missions = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [selectedMission, setSelectedMission] = useState<MissionType | null>(
+    null,
+  );
+
   const { t } = useTranslation();
-  const missions = useSelector(selectMissionsData());
+
+  const missions = useSelector(
+    selectMissionsData(),
+  ) as unknown as MissionType[];
+
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
+
   const missionTitles = useMemo(
     () => [
       { text: t("Daily missions"), type: "daily" },
@@ -50,6 +68,11 @@ const Missions = () => {
   const wrapperHeight = useMemo(() => {
     return heightProportion - 100;
   }, []);
+
+  const handleOpen = (mission: MissionType) => {
+    setSelectedMission(mission);
+    setOpen(true);
+  };
 
   return (
     <Box
@@ -109,7 +132,7 @@ const Missions = () => {
             >
               {missions &&
                 missions.map((mission, idx) => (
-                  <StyledBoxMission key={idx}>
+                  <StyledBoxMission key={idx} onClick={() => handleOpen(mission)}>
                     <img
                       src={mission.img !== null ? mission.img : ""}
                       style={{ width: "26px", height: "26px" }}
@@ -127,7 +150,49 @@ const Missions = () => {
           </TabPanel>
         ))}
       </TabContext>
+
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            position: "relative",
+            width: "70%",
+            maxWidth: "500px",
+            maxHeight: "70vh",
+            overflowY: "auto",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: "10px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {selectedMission && (
+            <>
+              <h2>{selectedMission.title}</h2>
+              <p>{selectedMission.description}</p>
+              <p>
+                <strong>{selectedMission.type}</strong>
+              </p>
+              <Button variant="contained" onClick={() => setOpen(false)}>
+                {t("start")}
+              </Button>
+            </>
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };
+
 export default Missions;

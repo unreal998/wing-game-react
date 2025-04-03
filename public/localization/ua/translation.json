@@ -41,11 +41,17 @@
   "Connect your wallet": "Підключи свій гаманець",
   "telegram wallet": "телеграм-гаманець",
   "Tonkeeper": "Tonkeeper",
-  "Connect wallet": "Підключити гаманець",
   " Your wallet: ": "Ваш гаманець: ",
   "Push Power": "Натисныть на кнопку",
   "remain": "залишилося",
   "Buy wind speed": "Купи швидкість вітру",
   "Your wind speed is zero. Please purchase to proceed.": "Ваша швидкість вітру дорівнює нулю. Будь ласка, купіть в Магазині, щоб продовжити.",
-  "Close": "Закрити"
+  "Close": "Закрити",
+  "create wallet": "Створити гаманець",
+  "Withdraw funds": "Вивести кошти",
+  "Withdraw Request": "Запит на виведення",
+  "Amount": "Сума",
+  "Wallet Number": "Номер гаманця",
+  "Send Request": "Надіслати запит",
+  "start": "старт"
 }
