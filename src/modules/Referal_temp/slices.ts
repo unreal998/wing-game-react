@@ -41,3 +41,8 @@ export const {
 } = referalSlice.actions;
 
 export type ReferalStateType = typeof initialReferalState;
+
+export const selectReferalLoading = (state: { referalSlice: ReferalState }) =>
+  state.referalSlice.loading;
+
+export default referalSlice.reducer;

@@ -27,13 +27,15 @@ import { TabPanelBoxStyled } from "./components/TabPanelBoxStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { createWalletAction } from "./slices";
+import { createWalletAction, selectWalletLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import { selectWalletNumber } from "./selectors";
 import Copy from "../../assets/copy.svg";
 import CloseIcon from "@mui/icons-material/Close";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const Wallet = () => {
+  const loading = useSelector(selectWalletLoading);
   const { t } = useTranslation();
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
@@ -76,7 +78,9 @@ const Wallet = () => {
 
   return (
     <MainBox>
+      <LoaderComponent loading={loading} />
       <NamedStyled>{t("Wallet")}</NamedStyled>
+      <LoaderComponent loading={loading} />
       <Box
         sx={{
           display: "flex",
