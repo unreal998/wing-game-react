@@ -24,6 +24,7 @@ type MissionType = {
   type: string;
   reward: string;
   coin: string;
+  img: string;
 };
 
 const Missions = () => {
@@ -132,7 +133,10 @@ const Missions = () => {
             >
               {missions &&
                 missions.map((mission, idx) => (
-                  <StyledBoxMission key={idx} onClick={() => handleOpen(mission)}>
+                  <StyledBoxMission
+                    key={idx}
+                    onClick={() => handleOpen(mission)}
+                  >
                     <img
                       src={mission.img !== null ? mission.img : ""}
                       style={{ width: "26px", height: "26px" }}
