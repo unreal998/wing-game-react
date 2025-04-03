@@ -27,7 +27,6 @@ type MissionType = {
 };
 
 const Missions = () => {
-  const [checked, setChecked] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
   const [selectedMission, setSelectedMission] = useState<MissionType | null>(
@@ -93,8 +92,6 @@ const Missions = () => {
         }}
       >
         <NamedStyled>{t("Missions")}</NamedStyled>
-
-        <InfoBox value={"234"} subtitle={t("TURX")} />
       </Box>
 
       <TabContext value={activeTab.toString()}>
@@ -135,15 +132,11 @@ const Missions = () => {
             >
               {missions &&
                 missions.map((mission, idx) => (
-                  <StyledBoxMission
-                    key={idx}
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => handleOpen(mission)}
-                  >
-                    <Checkbox
-                      checked={checked}
-                      onChange={(event) => setChecked(event.target.checked)}
-                      style={{ padding: "10px", color: "#fff" }}
+                  <StyledBoxMission key={idx} onClick={() => handleOpen(mission)}>
+                    <img
+                      src={mission.img !== null ? mission.img : ""}
+                      style={{ width: "26px", height: "26px" }}
+                      alt="mission image"
                     />
                     <Box sx={{ padding: "10px 0px 10px 0px" }}>
                       <StyledSubscrible>{mission.title}</StyledSubscrible>
