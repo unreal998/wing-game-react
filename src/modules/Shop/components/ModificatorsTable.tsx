@@ -18,8 +18,6 @@ type ModificatorsTableProps = {
 };
 
 const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
-  console.log(modifiers);
-
   return (
     <TableContainer
       component={Paper}
