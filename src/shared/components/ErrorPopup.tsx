@@ -19,7 +19,6 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
 
 const ErrorPopup = () => {
   const errors = useSelector(selectErrors);
-  errors.push("5.44.33");
   const [open, setOpen] = useState(true);
   const activeErrors = errors.filter(
     (error: string) => error[0] === "5" || error[0] === "4",
