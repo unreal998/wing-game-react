@@ -17,7 +17,6 @@ import { selectModificatorsData, selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
-import { modificatorsData } from "./components/modificatorsData";
 import { ButtonShopStyled } from "./components/ButtonShopStyled";
 
 const profitValues = [
@@ -45,22 +44,22 @@ const Shop = () => {
     if (selectModificators?.length && selectedCountry) {
       return selectModificators?.find(
         (modificator) => modificator.areaName === selectedCountry.name,
-      )?.boughtModifier.speed;
+      )?.boughtModifier?.speed;
     }
   }, [selectModificators, selectedCountry]);
 
   const buyModifier = () => {
-    console.log({
-      windSpeed: windValue,
-      selectedArea: selectedCountry.name,
-      uid: !!userData ? userData.id : "", // userId
-    });
-
+    const currentPrice = shopValues.find(
+      (value) => value.speed === windValue,
+    )?.price;
+    if (currentPrice === undefined) return;
+    if (userData === null) return;
+    if (userData.TONBalance <= currentPrice) return;
     dispatch(
       buyItemAction({
         windSpeed: windValue,
         selectedArea: selectedCountry.name,
-        uid: !!userData ? userData.id : "", // userId
+        uid: !!userData ? userData.id : "",
       }),
     );
   };
@@ -257,9 +256,7 @@ const Shop = () => {
             </Stack>
           )}
         </TabContext>
-        {tab === 2 && <ModificatorsTable modificators={modificatorsData} /> && (
-          <p>HERE DISPLAY userData.modificators</p>
-        )}
+        {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
 
         {tab !== 2 && (
           <ButtonShopStyled

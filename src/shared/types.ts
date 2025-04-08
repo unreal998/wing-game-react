@@ -18,7 +18,7 @@ export type AreaType = {
 
 export type UserModifiersType = {
   areaName: string;
-  boughtModifier: Modifier;
+  boughtModifier: Modifier | null;
 };
 
 export type Modifier = {

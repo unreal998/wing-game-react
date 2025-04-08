@@ -34,7 +34,6 @@ function* handleBuyItem(action: { type: string; payload: BuyItemType }) {
     }
   } catch (err: any) {
     yield put(getShopDataByAreaFailure(err.toString()));
-    console.log(err.response.data);
   }
 }
 
