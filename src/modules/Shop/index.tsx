@@ -17,7 +17,6 @@ import { selectModificatorsData, selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
-import { modificatorsData } from "./components/modificatorsData";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { ButtonShopStyled } from "./components/ButtonShopStyled";
 
