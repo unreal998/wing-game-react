@@ -18,8 +18,13 @@ export type AreaType = {
 
 export type UserModifiersType = {
   areaName: string;
-  windSpeed: number;
-  name: string;
+  boughtModifier: Modifier | null;
+};
+
+export type Modifier = {
+  boughtDate: number;
+  speed: number;
+  clicksRemaining: number;
 };
 
 export type UserData = UserInitData & {
