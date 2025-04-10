@@ -15,8 +15,9 @@ import { useTranslation } from "react-i18next";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMissionsData } from "./selectors";
-import { getMissionsDataAction } from "./slices";
+import { getMissionsDataAction, selectMissionsLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 type MissionType = {
   title: string;
@@ -28,6 +29,7 @@ type MissionType = {
 };
 
 const Missions = () => {
+  const loading = useSelector(selectMissionsLoading);
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
   const [selectedMission, setSelectedMission] = useState<MissionType | null>(
@@ -85,6 +87,7 @@ const Missions = () => {
         gap: "15px",
       }}
     >
+      <LoaderComponent loading={loading} />
       <Box
         sx={{
           display: "flex",

@@ -22,14 +22,16 @@ import { StyledBasicBox } from "./components/StyledBasicBox";
 import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "../Header/selectors";
-import { getReferalDataAction } from "./slices";
+import { getReferalDataAction, selectReferalLoading } from "./slices";
 import { selectReferalData } from "./selectors";
 import { selectSelectedCountry } from "../Home/selectors";
 import { AreaType } from "../../shared/types";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
 const Referal = () => {
+  const loading = useSelector(selectReferalLoading);
   const { t } = useTranslation();
   const userData = useSelector(selectUserData());
   const referalData = useSelector(selectReferalData());
@@ -79,6 +81,7 @@ const Referal = () => {
 
   return (
     <MainBox height={heightProportion}>
+      <LoaderComponent loading={loading} />
       <Box>
         <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>

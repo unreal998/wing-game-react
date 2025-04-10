@@ -41,3 +41,8 @@ export const {
 } = walletSlice.actions;
 
 export type WalletStateType = typeof initialWalletState;
+
+export const selectWalletLoading = (state: { walletSlice: WalletState }) =>
+  state.walletSlice.loading;
+
+export default walletSlice.reducer;

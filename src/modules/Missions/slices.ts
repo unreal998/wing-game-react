@@ -44,3 +44,9 @@ export const {
 } = missionsSlice.actions;
 
 export type MissionsStateType = typeof initialMissionsState;
+
+export const selectMissionsLoading = (state: {
+  missionsSlice: MissionsState;
+}) => state.missionsSlice.loading;
+
+export default missionsSlice.reducer;

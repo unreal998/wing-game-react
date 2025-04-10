@@ -5,6 +5,7 @@ import { walletSlice } from "../modules/Wallet/slices";
 import { shopSlice } from "../modules/Shop/slices";
 import { referalSlice } from "../modules/Referal_temp/slices";
 import { missionsSlice } from "../modules/Missions/slices";
+import { settingsSlice } from "../modules/Settings/slices";
 
 const slices: any[] = [
   homeSlice,
@@ -13,6 +14,7 @@ const slices: any[] = [
   shopSlice,
   referalSlice,
   missionsSlice,
+  settingsSlice,
 ];
 
 const toolkitReducers = Object.fromEntries(

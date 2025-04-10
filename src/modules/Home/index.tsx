@@ -9,6 +9,8 @@ import WindBlowing from "../../assets/sounds/windBlowing.mp3";
 import BGSound from "../../assets/sounds/bgSound.mp3";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AreaType } from "../../shared/types";
+import { selectHomeLoading } from "./slices";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const countriesMapping = (countryName: AreaType) => {
   switch (countryName.name) {
@@ -79,6 +81,7 @@ const Model = () => {
 };
 
 export const Home = () => {
+  const loading = useSelector(selectHomeLoading);
   const [cycleBGSound, setCycleBGSound] = useState(true);
   const navigate = useNavigate();
   const selectedCountry = useSelector(selectSelectedCountry());
@@ -101,21 +104,24 @@ export const Home = () => {
   }, [cycleBGSound, setCycleBGSound, playSound]);
 
   return (
-    <Box sx={{ width: "100%", height: "80vh" }}>
-      <Canvas
-        camera={{
-          position: [9, 2, 0],
-          rotation: [10, 45, 20],
-          scale: [1, 1, 1],
-        }}
-      >
-        <directionalLight intensity={2} position={[8, 5.5, 0]} />
-        <directionalLight intensity={2} position={[-8, 5.5, 0]} />
-        <directionalLight intensity={2} position={[0, 5.5, 8]} />
-        <directionalLight intensity={2} position={[0, 5.5, -8]} />
-        <Model />
-        <OrbitControls enableZoom={false} enablePan={false} />
-      </Canvas>
+    <Box>
+      <LoaderComponent loading={loading} />
+      <Box sx={{ width: "100%", height: "80vh" }}>
+        <Canvas
+          camera={{
+            position: [9, 2, 0],
+            rotation: [10, 45, 20],
+            scale: [1, 1, 1],
+          }}
+        >
+          <directionalLight intensity={2} position={[8, 5.5, 0]} />
+          <directionalLight intensity={2} position={[-8, 5.5, 0]} />
+          <directionalLight intensity={2} position={[0, 5.5, 8]} />
+          <directionalLight intensity={2} position={[0, 5.5, -8]} />
+          <Model />
+          <OrbitControls enableZoom={false} enablePan={false} />
+        </Canvas>
+      </Box>
     </Box>
   );
 };
