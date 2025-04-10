@@ -48,7 +48,7 @@ const Shop = () => {
     }
   }, [selectModificators, selectedCountry]);
 
-  const buyModifier = () => {
+  const buyModifier = useCallback(() => {
     const currentPrice = shopValues.find(
       (value) => value.speed === windValue,
     )?.price;
@@ -62,7 +62,7 @@ const Shop = () => {
         uid: !!userData ? userData.id : "",
       }),
     );
-  };
+  }, [dispatch, userData, shopValues, windValue, selectedCountry]);
 
   useEffect(() => {
     if (selectedAreaMidificator) {
