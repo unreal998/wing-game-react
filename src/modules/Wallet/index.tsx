@@ -1,20 +1,9 @@
-import {
-  Box,
-  Modal,
-  TextField,
-  Button,
-  IconButton,
-  Typography,
-  Switch,
-  Checkbox,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { MAIN_COLORS } from "../../shared/colors";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import TON from "../../assets/ton.png";
 import { ButtonStyled } from "./components/ButtonStyled";
 import { StyledTableBox } from "./components/StyledTableBox";
-import { InfoBox } from "../../shared/components/InfoBox";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
@@ -25,14 +14,13 @@ import { WalletTypography } from "./components/WalletTypography";
 import { ButtonStyledTypography } from "./components/ButtonStyledTypography";
 import { TabPanelBoxStyled } from "./components/TabPanelBoxStyled";
 import { MainBox } from "../../shared/components/MainBox";
-import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { createWalletAction, selectWalletLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import { selectWalletNumber } from "./selectors";
 import Copy from "../../assets/copy.svg";
-import CloseIcon from "@mui/icons-material/Close";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+import { WithdrawModal } from "../../shared/components/WithdrawModal";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -41,6 +29,28 @@ const Wallet = () => {
   const userData = useSelector(selectUserData());
   const walletNumber = useSelector(selectWalletNumber());
   const dispatch = useDispatch();
+
+  const [value, setValue] = useState<number>(0);
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  const handleAddWalletClick = () => {
+    if (userData) {
+      dispatch(createWalletAction(userData.id));
+    }
+  };
+
+  const handleWithdrawRequest = (
+    wallet: string,
+    amount: string,
+    tonMemo: string,
+  ) => {
+    console.log("Запрос на вывод:", { wallet, amount, tonMemo });
+    setIsWithdrawOpen(false);
+  };
 
   const handleCopyClick = useCallback(() => {
     if (walletNumber) {
@@ -55,32 +65,21 @@ const Wallet = () => {
     playSound();
   }, [playSound]);
 
-  const [value, setValue] = useState<number>(0);
-  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
-  const [withdrawWallet, setWithdrawWallet] = useState("");
-  const [amount, setAmount] = useState("");
-  const [checked, setChecked] = useState(false);
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  const handleAddWalletClick = () => {
-    if (userData) {
-      dispatch(createWalletAction(userData.id));
-    }
-  };
-
-  const handleWithdrawRequest = () => {
-    console.log("Запрос на вывод:", { withdrawWallet, amount, checked });
-    setIsWithdrawOpen(false);
-  };
-
   return (
     <MainBox>
       <LoaderComponent loading={loading} />
-      <NamedStyled>{t("Wallet")}</NamedStyled>
-      <LoaderComponent loading={loading} />
+      <Typography variant="h5">{t("Wallet")}</Typography>
+
+      <ButtonStyled onClick={() => setIsWithdrawOpen(true)}>
+        <ButtonStyledTypography>{t("Withdraw funds")}</ButtonStyledTypography>
+      </ButtonStyled>
+
+      <WithdrawModal
+        open={isWithdrawOpen}
+        onClose={() => setIsWithdrawOpen(false)}
+        onSubmit={handleWithdrawRequest}
+      />
+
       <Box
         sx={{
           display: "flex",
@@ -88,68 +87,6 @@ const Wallet = () => {
           paddingTop: "8px",
         }}
       ></Box>
-
-      <ButtonStyled onClick={() => setIsWithdrawOpen(true)}>
-        <ButtonStyledTypography>{t("Withdraw funds")}</ButtonStyledTypography>
-      </ButtonStyled>
-
-      {/* Модальное окно вывода средств */}
-      <Modal open={isWithdrawOpen} onClose={() => setIsWithdrawOpen(false)}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 300,
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 2,
-          }}
-        >
-          <IconButton
-            onClick={() => setIsWithdrawOpen(false)}
-            sx={{ position: "absolute", top: 8, right: 8 }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <Typography variant="h6" mb={2}>
-            {t("Withdraw Request")}
-          </Typography>
-          <TextField
-            fullWidth
-            label={t("Wallet Number")}
-            variant="outlined"
-            value={withdrawWallet}
-            onChange={(e) => setWithdrawWallet(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            fullWidth
-            label={t("Amount")}
-            variant="outlined"
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <Box display="flex" alignItems="center" mb={2}>
-            <Checkbox
-              checked={checked}
-              onChange={(e) => setChecked(e.target.checked)}
-            />
-          </Box>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleWithdrawRequest}
-          >
-            {t("Send Request")}
-          </Button>
-        </Box>
-      </Modal>
 
       <TabContext value={value}>
         <TabList
