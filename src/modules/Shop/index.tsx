@@ -11,7 +11,7 @@ import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectShopData } from "./selectors";
-import { getShopDataByArea, selectShopLoading } from "./slices";
+import { getShopDataByArea, buyItemAction, selectShopLoading } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
 import { selectModificatorsData, selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
@@ -19,6 +19,7 @@ import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
 import { modificatorsData } from "./components/modificatorsData";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+import { ButtonShopStyled } from "./components/ButtonShopStyled";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 1 },
@@ -46,9 +47,25 @@ const Shop = () => {
     if (selectModificators?.length && selectedCountry) {
       return selectModificators?.find(
         (modificator) => modificator.areaName === selectedCountry.name,
-      )?.windSpeed;
+      )?.boughtModifier?.speed;
     }
   }, [selectModificators, selectedCountry]);
+
+  const buyModifier = useCallback(() => {
+    const currentPrice = shopValues.find(
+      (value) => value.speed === windValue,
+    )?.price;
+    if (currentPrice === undefined) return;
+    if (userData === null) return;
+    if (userData.TONBalance <= currentPrice) return;
+    dispatch(
+      buyItemAction({
+        windSpeed: windValue,
+        selectedArea: selectedCountry.name,
+        uid: !!userData ? userData.id : "",
+      }),
+    );
+  }, [dispatch, userData, shopValues, windValue, selectedCountry]);
 
   useEffect(() => {
     if (selectedAreaMidificator) {
@@ -243,8 +260,16 @@ const Shop = () => {
             </Stack>
           )}
         </TabContext>
+        {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
 
-        {tab === 2 && <ModificatorsTable modificators={modificatorsData} />}
+        {tab !== 2 && (
+          <ButtonShopStyled
+            onClick={buyModifier}
+            sx={{ background: MAIN_COLORS.gold }}
+          >
+            {t("Buy wind speed")}
+          </ButtonShopStyled>
+        )}
       </Stack>
       <ModalComponent
         openModal={lowBalanceModalOpen}
