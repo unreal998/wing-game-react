@@ -37,43 +37,46 @@ const Shop = () => {
   const selectModificators = useSelector(selectModificatorsData());
   const userData = useSelector(selectUserData());
   const dispatch = useDispatch();
-  const [shopMarks, setShopMarks] = useState<
-    { title: number; value: number; level: number }[]
-  >([]);
   const [lowBalanceModalOpen, setLowBalanceModalOpen] = useState(false);
 
-  const selectedAreaMidificator = useMemo(() => {
-    if (selectModificators?.length && selectedCountry) {
-      return selectModificators?.find(
-        (modificator) => modificator.areaName === selectedCountry.name,
-      )?.boughtModifier?.speed;
-    }
-  }, [selectModificators, selectedCountry]);
+  const availableWindSpeeds = useMemo(() => {
+    return shopValues.map((item) => item.speed);
+  }, [shopValues]);
 
   const buyModifier = useCallback(() => {
     const currentPrice = shopValues.find(
       (value) => value.speed === windValue,
     )?.price;
-    if (currentPrice === undefined) return;
-    if (userData === null) return;
-    if (userData.TONBalance <= currentPrice) return;
+    if (
+      currentPrice === undefined ||
+      userData === null ||
+      userData.TONBalance <= currentPrice
+    )
+      return;
+
     dispatch(
       buyItemAction({
         windSpeed: windValue,
         selectedArea: selectedCountry.name,
-        uid: !!userData ? userData.id : "",
+        uid: userData.id,
       }),
     );
   }, [dispatch, userData, shopValues, windValue, selectedCountry]);
 
   useEffect(() => {
-    if (selectedAreaMidificator) {
-      setWindValue(selectedAreaMidificator);
+    if (!shopValues.length) {
+      dispatch(getShopDataByArea(selectedCountry.name));
     }
-  }, [selectedAreaMidificator]);
+  }, [shopValues, dispatch, selectedCountry]);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTab(newValue);
+  const [playSound] = useSound(FooterButtonPress);
+
+  const handleSoundClick = useCallback(() => {
+    playSound();
+  }, [playSound]);
+
+  const handleWindSlide = (event: Event, newValue: number | number[]) => {
+    setWindValue(newValue as number);
   };
 
   const selectedWindPowerIncome = useMemo(() => {
@@ -87,40 +90,13 @@ const Shop = () => {
     );
   }, [shopValues, windValue]);
 
-  useEffect(() => {
-    if (!shopValues?.length) {
-      dispatch(getShopDataByArea(selectedCountry.name));
-    } else {
-      const shopMarksFromModificator = shopValues.map((mark, index) => {
-        return {
-          title: mark.speed,
-          value: mark.speed,
-          level: index + 1,
-        };
-      });
-      setShopMarks([
-        { title: 0, value: 0, level: 0 },
-        ...shopMarksFromModificator,
-      ]);
-    }
-  }, [shopValues, dispatch, selectedCountry]);
-
-  const [playSound] = useSound(FooterButtonPress);
-
-  const handleSoundClick = useCallback(() => {
-    playSound();
-  }, [playSound]);
-
-  const handleWindSlide = (event: Event, newValue: number | number[]) => {
-    const newSlideValue = newValue as number;
-    if (selectedAreaMidificator !== undefined) {
-      setWindValue(
-        newSlideValue < selectedAreaMidificator
-          ? selectedAreaMidificator
-          : newSlideValue,
-      );
-    }
-  };
+  const shopMarks = useMemo(() => {
+    return shopValues.map((mark, index) => ({
+      title: mark.speed,
+      value: mark.speed,
+      level: index + 1,
+    }));
+  }, [shopValues]);
 
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
@@ -128,73 +104,49 @@ const Shop = () => {
   return (
     <MainBox>
       <LoaderComponent loading={loading} />
-      <NamedStyled
-        sx={{
-          "@media (max-height: 670px)": {
-            paddingTop: "0px",
-          },
-        }}
-      >
-        {t("Market")}
-      </NamedStyled>
-      <Stack
-        sx={{
-          justifyContent: "space-between",
-          paddingTop: "8px",
-          width: "100%",
-          gap: "10px",
-          "@media (max-height: 732px)": {
-            padding: "0px",
-          },
-        }}
-      >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          width="80%"
-        >
+      <NamedStyled>{t("Market")}</NamedStyled>
+      <Stack spacing={2}>
+        <Stack direction="row" alignItems="center" spacing={2}>
           <TextField
             variant="outlined"
             disabled
+            value={`${selectedWindPowerIncome.price} TON`}
             sx={{ color: MAIN_COLORS.textColor }}
-            placeholder={`${(shopValues[0]?.price || 0).toString()} TON`}
           />
           <img
             src={flag[selectedCountry.name]}
-            style={{ width: "60px", paddingLeft: "10px" }}
+            alt="flag"
+            style={{ width: "60px" }}
           />
         </Stack>
-        <Stack flexDirection="column" gap="10px">
-          <Box>
-            <Typography fontWeight="600">
-              {t("Wind speed")} : {windValue}
-            </Typography>
-            <Slider
-              aria-label="WindSpeed"
-              value={windValue}
-              marks={shopMarks}
-              defaultValue={selectedAreaMidificator || 0}
-              step={null}
-              sx={{
-                color: MAIN_COLORS.activeTabColor,
-                "& .MuiSlider-rail": {
-                  color: MAIN_COLORS.referalBox,
-                },
-                "& .Mui-active": {
-                  boxShadow: "0 0 0 9px black",
-                },
-                "@media (max-height: 732px)": {
-                  paddingTop: "0px",
-                  paddingBottom: "0px",
-                },
-              }}
-              onChange={handleWindSlide}
-            />
-          </Box>
-        </Stack>
+
+        <Box>
+          <Typography fontWeight="600">
+            {t("Wind speed")}: {windValue}
+          </Typography>
+          <Slider
+            aria-label="WindSpeed"
+            value={windValue}
+            step={null}
+            marks={shopMarks}
+            min={Math.min(...availableWindSpeeds)}
+            max={Math.max(...availableWindSpeeds)}
+            onChange={handleWindSlide}
+            sx={{
+              color: MAIN_COLORS.activeTabColor,
+              "& .MuiSlider-rail": {
+                color: MAIN_COLORS.referalBox,
+              },
+              "& .Mui-active": {
+                boxShadow: "0 0 0 9px black",
+              },
+            }}
+          />
+        </Box>
+
         <TabContext value={tab}>
           <TabList
+            onChange={(_, newValue) => setTab(newValue)}
             sx={{
               display: "flex",
               minHeight: "0px",
@@ -204,61 +156,53 @@ const Shop = () => {
               "& .MuiTabs-indicator": {
                 display: "none",
               },
-              "@media (max-height: 732px)": {
-                padding: "0px",
-              },
             }}
-            onChange={handleTabChange}
           >
             <TabStyles
               label={t("TURX profit")}
               value={0}
-              key={0}
               onClick={handleSoundClick}
             />
             <TabStyles
               label={`TON ${t("profit")}`}
               value={1}
-              key={1}
               onClick={handleSoundClick}
             />
             <TabStyles
               label="Modificators"
               value={2}
-              key={2}
               onClick={handleSoundClick}
             />
           </TabList>
 
           {tab !== 2 && (
-            <Stack gap="10px">
+            <Stack gap={2}>
               <Stack
                 direction="row"
-                justifyContent="space-between"
                 flexWrap="wrap"
-                gap="8px"
-                sx={{
-                  "@media (max-height: 732px)": {
-                    paddingTop: "0px",
-                    paddingBottom: "0px",
-                  },
-                }}
+                justifyContent="space-between"
+                gap={2}
               >
-                {profitValues.map((row, rowIndex) => (
-                  <ProfitBox
-                    key={rowIndex}
-                    value={formatValue(
-                      tab === 0
-                        ? +selectedWindPowerIncome.turxValue * row.multiplier
-                        : +selectedWindPowerIncome.tonValue * row.multiplier,
-                    )}
-                    subtitle={row.label}
-                  />
+                {profitValues.map((row, index) => (
+                  <Box
+                    key={index}
+                    sx={{ flex: "1 1 calc(50% - 8px)", minWidth: "130px" }}
+                  >
+                    <ProfitBox
+                      value={formatValue(
+                        tab === 0
+                          ? selectedWindPowerIncome.turxValue * row.multiplier
+                          : selectedWindPowerIncome.tonValue * row.multiplier,
+                      )}
+                      subtitle={row.label}
+                    />
+                  </Box>
                 ))}
               </Stack>
             </Stack>
           )}
         </TabContext>
+
         {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
 
         {tab !== 2 && (
