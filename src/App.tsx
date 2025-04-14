@@ -18,6 +18,7 @@ import { UserInitData } from "./shared/types";
 import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
 import ErrorPopup from "./shared/components/ErrorPopup";
+import AdPage from "./modules/AdPage";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -57,30 +58,43 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        backgroundColor: MAIN_COLORS.mainBG,
-        display: "flex",
-        flexDirection: "column",
-        color: "white",
-      }}
-    >
-      <Header />
-      <ErrorPopup />
-      <Box sx={{ flexGrow: 1 }}>
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Planet />} />
-          <Route path="/referal" element={<Referal />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/missions" element={<Missions />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
+    <>
+      <Box
+        sx={{
+          position: "fixed",
+          zIndex: 99999,
+          pointerEvents: "auto",
+        }}
+      >
+        <AdPage />
       </Box>
-      <Footer isDisabled={isFooterDisabled} />
-    </Box>
+
+      <Box
+        sx={{
+          height: "100vh",
+          backgroundColor: MAIN_COLORS.mainBG,
+          display: "flex",
+          flexDirection: "column",
+          color: "white",
+          position: "relative",
+        }}
+      >
+        <Header />
+        <ErrorPopup />
+        <Box sx={{ flexGrow: 1 }}>
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Planet />} />
+            <Route path="/referal" element={<Referal />} />
+            <Route path="/wallet" element={<Wallet />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/missions" element={<Missions />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </Box>
+        <Footer isDisabled={isFooterDisabled} />
+      </Box>
+    </>
   );
 };
 
