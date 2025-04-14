@@ -114,11 +114,8 @@ const Shop = () => {
   const handleWindSlide = (event: Event, newValue: number | number[]) => {
     const newSlideValue = newValue as number;
     if (selectedAreaMidificator !== undefined) {
-      setWindValue(
-        newSlideValue < selectedAreaMidificator
-          ? selectedAreaMidificator
-          : newSlideValue,
-      );
+      if (newSlideValue === 0) return;
+      setWindValue(newSlideValue);
     }
   };
 
