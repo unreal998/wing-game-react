@@ -17,13 +17,15 @@ type ModificatorsTableProps = {
 };
 
 const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
-  const formattedBoughtTime = (boughtDate: number) => {
-    const hh = String(Math.floor(boughtDate / 3600)).padStart(2, "0");
-    const mm = String(Math.floor((boughtDate % 3600) / 60)).padStart(2, "0");
-    const ss = String(boughtDate % 60).padStart(2, "0");
-
-    return `${hh}:${mm}:${ss}`;
-  };
+  function formatDateToMonthDay(timestamp: number) {
+    const date = new Date(timestamp * (timestamp < 1e12 ? 1000 : 1));
+    let month: string | number = date.getMonth() + 1;
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    const day = date.getDate();
+    return `${month}-${day}`;
+  }
   return (
     <TableContainer
       component={Paper}
@@ -56,7 +58,7 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
                   {mod.boughtModifier?.boughtDate
-                    ? formattedBoughtTime(mod.boughtModifier?.boughtDate)
+                    ? formatDateToMonthDay(mod.boughtModifier?.boughtDate)
                     : "not bought yet"}
                 </TableCell>
               </TableRow>
