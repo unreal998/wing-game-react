@@ -17,6 +17,13 @@ type ModificatorsTableProps = {
 };
 
 const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
+  const formattedBoughtTime = (boughtDate: number) => {
+    const hh = String(Math.floor(boughtDate / 3600)).padStart(2, "0");
+    const mm = String(Math.floor((boughtDate % 3600) / 60)).padStart(2, "0");
+    const ss = String(boughtDate % 60).padStart(2, "0");
+
+    return `${hh}:${mm}:${ss}`;
+  };
   return (
     <TableContainer
       component={Paper}
@@ -48,7 +55,9 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                   {mod.boughtModifier?.clicksRemaining ?? 0}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.boughtDate ?? "not bought yet"}
+                  {mod.boughtModifier?.boughtDate
+                    ? formattedBoughtTime(mod.boughtModifier?.boughtDate)
+                    : "not bought yet"}
                 </TableCell>
               </TableRow>
             );
