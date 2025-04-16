@@ -11,7 +11,6 @@ import {
 import { MAIN_COLORS } from "../../../shared/colors";
 import { TableCellShop } from "./TableCellShop";
 import { UserData } from "../../../shared/types";
-import { t } from "i18next";
 
 type ModificatorsTableProps = {
   modifiers: UserData["modifiers"] | undefined;
@@ -37,20 +36,19 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
         </TableHead>
         <TableBody>
           {modifiers?.map((mod, index) => {
-            if (mod.boughtModifier === null) return;
             return (
               <TableRow key={index}>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
                   {mod.areaName}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier.speed}
+                  {mod.boughtModifier?.speed ?? 0}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier.clicksRemaining}
+                  {mod.boughtModifier?.clicksRemaining ?? 0}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier.boughtDate}
+                  {mod.boughtModifier?.boughtDate ?? "not bought yet"}
                 </TableCell>
               </TableRow>
             );
