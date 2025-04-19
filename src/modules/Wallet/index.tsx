@@ -21,6 +21,7 @@ import { selectWalletNumber } from "./selectors";
 import Copy from "../../assets/copy.svg";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
+import { SERVER_URL } from "../../shared/constants";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -42,14 +43,39 @@ const Wallet = () => {
       dispatch(createWalletAction(userData.id));
     }
   };
-
-  const handleWithdrawRequest = (
+  console.log("userData", userData);
+  const handleWithdrawRequest = async (
     wallet: string,
     amount: string,
     tonMemo: string,
   ) => {
-    console.log("Запрос на вывод:", { wallet, amount, tonMemo });
-    setIsWithdrawOpen(false);
+    if (!userData) return;
+
+    try {
+      const response = await fetch(`${SERVER_URL}/withdraw`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: "new",
+          sum: amount,
+          wallet: wallet,
+          uid: userData.id,
+          tid: userData.telegramID,
+          MEMO: tonMemo || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit withdrawal request");
+      }
+
+      console.log("Withdrawal request submitted successfully");
+      setIsWithdrawOpen(false);
+    } catch (error) {
+      console.error("Error submitting withdrawal request:", error);
+    }
   };
 
   const handleCopyClick = useCallback(() => {
