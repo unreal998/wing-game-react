@@ -103,6 +103,4 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
   );
 };
 
-//?formatDateToMonthDay(mod.boughtModifier?.boughtDate)
-
 export default ModificatorsTable;
