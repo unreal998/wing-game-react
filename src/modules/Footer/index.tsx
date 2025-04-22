@@ -61,7 +61,9 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
       );
 
       const isWindSpeedZero = selectedCountryData
-        ? selectedCountryData.boughtModifier?.speed === 0
+        ? selectedCountryData.boughtModifier?.find(
+            (modifier) => modifier.speed !== 0,
+          )
         : false;
 
       if (isWindSpeedZero) {

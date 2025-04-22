@@ -44,11 +44,12 @@ const Shop = () => {
 
   const selectedAreaMidificator = useMemo(() => {
     if (selectModificators?.length && selectedCountry) {
-      return selectModificators?.find(
-        (modificator) => modificator.areaName === selectedCountry.name,
-      )?.boughtModifier?.speed;
+      return selectModificators
+        ?.find((modificator) => modificator.areaName === selectedCountry.name)
+        ?.boughtModifier?.find((modifier) => modifier.speed !== 0)?.speed;
     }
   }, [selectModificators, selectedCountry]);
+  console.log("selectedAreaMidificator ", selectedAreaMidificator);
 
   const buyModifier = useCallback(() => {
     const currentPrice = shopValues.find(

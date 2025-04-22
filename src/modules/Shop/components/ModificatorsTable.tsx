@@ -51,14 +51,47 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                   {mod.areaName}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.speed ?? 0}
+                  {mod.boughtModifier?.find((modifier) => modifier.speed !== 0)
+                    ? mod.boughtModifier?.map((modifier) => (
+                        <div>
+                          <span key={modifier.speed}>{modifier.speed}</span>
+                          <br></br>
+                        </div>
+                      ))
+                    : 0}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: MAIN_COLORS.textColor,
+                  }}
+                >
+                  {mod.boughtModifier?.find(
+                    (modifier) => modifier.clicksRemaining !== 0,
+                  )
+                    ? mod.boughtModifier?.map((modifier) => (
+                        <div>
+                          <span key={modifier.speed}>
+                            {formatDateToMonthDay(modifier.boughtDate)}
+                          </span>
+                          <br></br>
+                        </div>
+                      ))
+                    : 0}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.clicksRemaining ?? 0}
-                </TableCell>
-                <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.boughtDate
-                    ? formatDateToMonthDay(mod.boughtModifier?.boughtDate)
+                  {mod.boughtModifier?.find(
+                    (modifier) =>
+                      modifier.boughtDate !== null &&
+                      modifier.boughtDate !== undefined,
+                  )
+                    ? mod.boughtModifier?.map((modifier) => (
+                        <div>
+                          <span key={modifier.speed}>
+                            {formatDateToMonthDay(modifier.boughtDate)}
+                          </span>
+                          <br></br>
+                        </div>
+                      ))
                     : "not bought yet"}
                 </TableCell>
               </TableRow>
@@ -69,5 +102,7 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
     </TableContainer>
   );
 };
+
+//?formatDateToMonthDay(mod.boughtModifier?.boughtDate)
 
 export default ModificatorsTable;
