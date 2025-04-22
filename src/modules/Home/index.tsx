@@ -1,84 +1,14 @@
 import { Box } from "@mui/material";
-import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectSelectedCountry } from "./selectors";
 import useSound from "use-sound";
 import WindBlowing from "../../assets/sounds/windBlowing.mp3";
 import BGSound from "../../assets/sounds/bgSound.mp3";
-import { useLocation, useNavigate } from "react-router-dom";
-import { AreaType } from "../../shared/types";
+import { useNavigate } from "react-router-dom";
 import { selectHomeLoading } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-
-const countriesMapping = (countryName: AreaType) => {
-  switch (countryName.name) {
-    case "usa":
-      return "/usa.glb";
-    case "dk":
-      return "/dania.glb";
-    case "nr":
-      return "/nitherland.glb";
-    case "gr":
-      return "/germany.glb";
-    default:
-      return "";
-  }
-};
-
-const Model = () => {
-  const location = useLocation();
-  const selectedCountry = useSelector(selectSelectedCountry());
-  const selectedCountryModelName = countriesMapping(selectedCountry);
-
-  const { scene, animations } = useGLTF(selectedCountryModelName);
-  const { actions } = useAnimations(animations, scene);
-  const isAnimationPlaying = true;
-  scene.position.set(0, 0, 0);
-
-  const [cycleBGSound, setCycleBGSound] = useState(true);
-  const [playSound, { stop }] = useSound(WindBlowing, {
-    volume: 0.3,
-    onend: () => setCycleBGSound(false),
-  });
-
-  useEffect(() => {
-    if (!cycleBGSound && isAnimationPlaying && location.pathname === "/home") {
-      playSound();
-      setCycleBGSound(true);
-    } else {
-      stop();
-    }
-  }, [
-    cycleBGSound,
-    setCycleBGSound,
-    playSound,
-    isAnimationPlaying,
-    location,
-    stop,
-  ]);
-
-  useEffect(() => {
-    if (isAnimationPlaying && location.pathname === "/home") {
-      playSound();
-      if (actions && Object.keys(actions).length > 0) {
-        for (let key in actions) {
-          actions[key]?.play();
-        }
-      }
-    } else {
-      stop();
-      if (actions && Object.keys(actions).length > 0) {
-        for (let key in actions) {
-          actions[key]?.stop();
-        }
-      }
-    }
-  }, [isAnimationPlaying, actions, playSound, stop, location]);
-
-  return <primitive object={scene} />;
-};
+import Lottie from "lottie-react";
 
 export const Home = () => {
   const loading = useSelector(selectHomeLoading);
@@ -104,24 +34,33 @@ export const Home = () => {
   }, [cycleBGSound, setCycleBGSound, playSound]);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        height: "100vh",
+      }}
+    >
       <LoaderComponent loading={loading} />
-      <Box sx={{ width: "100%", height: "80vh" }}>
-        <Canvas
-          camera={{
-            position: [9, 2, 0],
-            rotation: [10, 45, 20],
-            scale: [1, 1, 1],
-          }}
-        >
-          <directionalLight intensity={2} position={[8, 5.5, 0]} />
-          <directionalLight intensity={2} position={[-8, 5.5, 0]} />
-          <directionalLight intensity={2} position={[0, 5.5, 8]} />
-          <directionalLight intensity={2} position={[0, 5.5, -8]} />
-          <Model />
-          <OrbitControls enableZoom={false} enablePan={false} />
-        </Canvas>
-      </Box>
+      <Box
+        sx={{
+          backgroundImage: `url(./windModel.png)`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
+        }}
+      ></Box>
+      <Lottie
+        animationData={require(
+          `../../assets/animations/${selectedCountry.name}Anim.json`,
+        )}
+        loop
+        style={{
+          top: "240px",
+          left: "0",
+          position: "absolute",
+          transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
+        }}
+      />
     </Box>
   );
 };

@@ -1,5 +1,9 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { powerButtonPressed, setSelectedCountry } from "./slices";
+import {
+  powerButtonPressed,
+  powerButtonPressedSuccess,
+  setSelectedCountry,
+} from "./slices";
 import { fetchPowerButtonPress, PowerButtonPressType } from "./api";
 import { UserData } from "../../shared/types";
 import { initActionFailure, initActionSuccess } from "../Header/slices";
@@ -20,6 +24,7 @@ function* handlePushButtonPress(action: {
     if (selectedCountry) {
       yield put(setSelectedCountry(selectedCountry));
     }
+    yield put(powerButtonPressedSuccess());
   } catch (err: any) {
     yield put(initActionFailure(err.toString()));
   }

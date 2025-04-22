@@ -51,6 +51,7 @@ const Header = () => {
         marginTop: isMobile ? "11vh" : "2vh",
         borderRadius: "12px",
         padding: "11px",
+        zIndex: 100,
       }}
     >
       <LoaderComponent loading={loading} />

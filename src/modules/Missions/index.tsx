@@ -18,6 +18,7 @@ import { selectMissionsData } from "./selectors";
 import { getMissionsDataAction, selectMissionsLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+import { MAIN_COLORS } from "../../shared/colors";
 
 type MissionType = {
   title: string;
@@ -99,7 +100,12 @@ const Missions = () => {
       </Box>
 
       <TabContext value={activeTab.toString()}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+          }}
+        >
           <TabList
             sx={{
               display: "flex",

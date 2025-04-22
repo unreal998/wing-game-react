@@ -1,21 +1,12 @@
 import { Box } from "@mui/material";
-import { OrbitControls, useGLTF } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
-import { StyledButtonGame } from "./components/StyledButtonGame";
+import { StyledPlanetButton } from "./components/StyledPlanetButton";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCountry } from "../Home/slices";
 import { selectAreasData } from "../Header/selectors";
 import { AreaType } from "../../shared/types";
-
-const Model = () => {
-  const { scene } = useGLTF("/earth.glb");
-  scene.position.set(0, 0, 0);
-
-  return <primitive object={scene} />;
-};
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -30,34 +21,46 @@ export const Planet = () => {
     [dispatch, navigate],
   );
 
-  return (
-    <Box sx={{ width: "100%", height: "80vh", marginTop: "-10px" }}>
-      <Canvas
-        camera={{
-          position: [9, 2, 20],
-          rotation: [10, 45, 20],
-          scale: [1, 1, 1],
-        }}
-      >
-        <directionalLight intensity={2} position={[8, 5.5, 0]} />
-        <directionalLight intensity={2} position={[-8, 5.5, 0]} />
-        <directionalLight intensity={2} position={[0, 5.5, 8]} />
-        <directionalLight intensity={2} position={[0, 5.5, -8]} />
-        <Model />
-        <OrbitControls />
-      </Canvas>
+  const getCoords = useCallback((index: number) => {
+    switch (index) {
+      case 0:
+        return { top: "100px", left: "180px" };
+      case 1:
+        return { top: "40px", left: "120px" };
+      case 2:
+        return { top: "180px", left: "90px" };
+      case 3:
+        return { top: "100px", left: "50px" };
+      default:
+        return { top: "0px", left: "0px" };
+    }
+  }, []);
 
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: "80vh",
+        marginTop: "-10px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <StyledPlanetBox>
         {areasData &&
           areasData?.length &&
           areasData.map((country, index) => (
-            <StyledButtonGame
+            <StyledPlanetButton
               key={country.name}
+              sx={{
+                ...getCoords(index),
+              }}
               disabled={!country.available}
               onClick={() => handleButtonPress(country)}
             >
               {country.title}
-            </StyledButtonGame>
+            </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
     </Box>

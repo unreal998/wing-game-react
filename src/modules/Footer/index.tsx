@@ -114,7 +114,11 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
           <StyledTime>
             {calculateTime} {t("remain")}
           </StyledTime>
-          <ButtonGame variant="contained" onClick={handlePushPower}>
+          <ButtonGame
+            disabled={isButtonDisabled}
+            variant="contained"
+            onClick={handlePushPower}
+          >
             {isButtonDisabled ? <PowerIcon /> : <PowerIconActive />}
             <StyledTypographyButton>{t("Push Power")}</StyledTypographyButton>
           </ButtonGame>

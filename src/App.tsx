@@ -12,12 +12,13 @@ import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
 import { Planet } from "./modules/Planet";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { initAction } from "./modules/Header/slices";
 import { UserInitData } from "./shared/types";
 import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
 import ErrorPopup from "./shared/components/ErrorPopup";
+import { selectSelectedCountry } from "./modules/Home/selectors";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -38,6 +39,7 @@ const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const isFooterDisabled = location.pathname === "/home";
+  const selectedCountry = useSelector(selectSelectedCountry());
 
   useEffect(() => {
     try {
@@ -61,9 +63,15 @@ const App = () => {
       sx={{
         height: "100vh",
         backgroundColor: MAIN_COLORS.mainBG,
+        backgroundImage: `${selectedCountry.name ? `url(./${selectedCountry.name}BG.png)` : "none"}`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         display: "flex",
         flexDirection: "column",
         color: "white",
+        overflow: "hidden",
+        position: "relative",
       }}
     >
       <Header />

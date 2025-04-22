@@ -1,14 +1,17 @@
 import { Box, styled } from "@mui/material";
 
 export const StyledPlanetBox = styled(Box)({
-  marginTop: "-150px",
   display: "flex",
+  width: "100%",
+  height: "100vw",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "contain",
   gap: "10px",
-  paddingLeft: "14px",
-  paddingRight: "14px",
   flexWrap: "wrap",
   flexDirection: "row",
-
+  backgroundImage: `url(./earth.png)`,
   alignItems: "center",
   justifyContent: "center",
+  backgroundPosition: "center",
+  position: "relative",
 });
