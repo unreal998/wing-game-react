@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -11,30 +11,31 @@ import {
 import { MAIN_COLORS } from "../../../shared/colors";
 import { TableCellShop } from "./TableCellShop";
 import { UserData } from "../../../shared/types";
+import { useSelector } from "react-redux";
+import { selectSelectedCountry } from "../../Home/selectors";
 
 type ModificatorsTableProps = {
   modifiers: UserData["modifiers"] | undefined;
 };
 
 const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
-  function formatDateToMonthDay(timestamp: number) {
-    const date = new Date(timestamp * (timestamp < 1e12 ? 1000 : 1));
-    let month: string | number = date.getMonth() + 1;
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    const day = date.getDate();
-    return `${month}-${day}`;
-  }
+  const selectedCountry = useSelector(selectSelectedCountry());
+
+  const selectedCountryModifiers = useMemo(
+    () => modifiers?.find((mod) => mod.areaName === selectedCountry.name),
+    [modifiers, selectedCountry],
+  );
+
   return (
     <TableContainer
       component={Paper}
       sx={{
         maxHeight: "250px",
         border: `1px solid ${MAIN_COLORS.activeTabColor}`,
+        backgroundColor: MAIN_COLORS.headerBG,
       }}
     >
-      <Table sx={{ backgroundColor: "black" }}>
+      <Table sx={{ backgroundColor: MAIN_COLORS.headerBG }}>
         <TableHead>
           <TableRow>
             <TableCellShop>#</TableCellShop>
@@ -44,22 +45,20 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {modifiers?.map((mod, index) => {
+          {[selectedCountryModifiers?.boughtModifier].map((mod, index) => {
             return (
               <TableRow key={index}>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.areaName}
+                  {index}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.speed ?? 0}
+                  {mod?.speed}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.clicksRemaining ?? 0}
+                  {mod?.clicksRemaining}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.boughtDate
-                    ? formatDateToMonthDay(mod.boughtModifier?.boughtDate)
-                    : "not bought yet"}
+                  {new Date(mod?.boughtDate || 0).toLocaleDateString()}
                 </TableCell>
               </TableRow>
             );

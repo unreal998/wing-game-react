@@ -21,10 +21,10 @@ import LoaderComponent from "../../shared/components/LoaderComponent";
 import { ButtonShopStyled } from "./components/ButtonShopStyled";
 
 const profitValues = [
-  { label: "Profit per click", multiplier: 1 },
-  { label: "Profit per day", multiplier: 2 },
-  { label: "Profit per week", multiplier: 14 },
-  { label: "Profit per month", multiplier: 60 },
+  { label: "Profit per click", multiplier: 42 },
+  { label: "Profit per day", multiplier: 21 },
+  { label: "Profit per week", multiplier: 3 },
+  { label: "Full profit", multiplier: 1 },
 ];
 
 const Shop = () => {
@@ -246,8 +246,8 @@ const Shop = () => {
                     key={rowIndex}
                     value={formatValue(
                       tab === 0
-                        ? +selectedWindPowerIncome.turxValue * row.multiplier
-                        : +selectedWindPowerIncome.tonValue * row.multiplier,
+                        ? +selectedWindPowerIncome.turxValue / row.multiplier
+                        : +selectedWindPowerIncome.tonValue / row.multiplier,
                     )}
                     subtitle={row.label}
                   />
@@ -258,14 +258,12 @@ const Shop = () => {
         </TabContext>
         {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
 
-        {tab !== 2 && (
-          <ButtonShopStyled
-            onClick={buyModifier}
-            sx={{ background: MAIN_COLORS.gold }}
-          >
-            {t("Buy wind speed")}
-          </ButtonShopStyled>
-        )}
+        <ButtonShopStyled
+          onClick={buyModifier}
+          sx={{ background: MAIN_COLORS.gold }}
+        >
+          {t("Buy wind speed")}
+        </ButtonShopStyled>
       </Stack>
       <ModalComponent
         openModal={lowBalanceModalOpen}
