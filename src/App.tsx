@@ -19,6 +19,7 @@ import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
 import ErrorPopup from "./shared/components/ErrorPopup";
 import { selectSelectedCountry } from "./modules/Home/selectors";
+import Lottie from "lottie-react";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -76,7 +77,7 @@ const App = () => {
     >
       <Header />
       <ErrorPopup />
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, zIndex: 100 }}>
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Planet />} />
@@ -88,6 +89,21 @@ const App = () => {
         </Routes>
       </Box>
       <Footer isDisabled={isFooterDisabled} />
+      {selectedCountry?.name && (
+        <Lottie
+          animationData={require(
+            `./assets/animations/${selectedCountry.name}Anim.json`,
+          )}
+          loop
+          style={{
+            top: "240px",
+            zIndex: 0,
+            left: "0",
+            position: "absolute",
+            transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
+          }}
+        />
+      )}
     </Box>
   );
 };

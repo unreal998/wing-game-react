@@ -50,9 +50,7 @@ export const Home = () => {
         }}
       ></Box>
       <Lottie
-        animationData={require(
-          `../../assets/animations/${selectedCountry.name}Anim.json`,
-        )}
+        animationData={require(`../../assets/animations/windAnimation.json`)}
         loop
         style={{
           top: "240px",
