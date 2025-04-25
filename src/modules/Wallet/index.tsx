@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import TON from "../../assets/ton.png";
 import { ButtonStyled } from "./components/ButtonStyled";
@@ -15,9 +15,13 @@ import { ButtonStyledTypography } from "./components/ButtonStyledTypography";
 import { TabPanelBoxStyled } from "./components/TabPanelBoxStyled";
 import { MainBox } from "../../shared/components/MainBox";
 import { useDispatch, useSelector } from "react-redux";
-import { createWalletAction, selectWalletLoading } from "./slices";
+import {
+  createWalletAction,
+  getWithdrawAction,
+  selectWalletLoading,
+} from "./slices";
 import { selectUserData } from "../Header/selectors";
-import { selectWalletNumber } from "./selectors";
+import { selectWalletNumber, selectWithdrawData } from "./selectors";
 import Copy from "../../assets/copy.svg";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
@@ -28,7 +32,12 @@ const Wallet = () => {
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
   const walletNumber = useSelector(selectWalletNumber());
+  const withdrawData = useSelector(selectWithdrawData());
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userData && !withdrawData) dispatch(getWithdrawAction(userData.id));
+  }, [dispatch, withdrawData, userData]);
 
   const [value, setValue] = useState<number>(0);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
@@ -60,6 +69,11 @@ const Wallet = () => {
         .catch((err) => console.error("Failed to copy: ", err));
     }
   }, [walletNumber]);
+
+  const formatMinutes = (dateVal: any) => {
+    const minutes = new Date(dateVal || 0).getMinutes();
+    return minutes < 10 ? `0${minutes}` : `${minutes}`;
+  };
 
   const handleSoundClick = useCallback(() => {
     playSound();
@@ -158,13 +172,13 @@ const Wallet = () => {
                 {t("History")}
               </Typography>
             </TabPanelBoxStyled>
-            {[...Array(3)].map((_, i) => (
+            {withdrawData.map((withdraw, i) => (
               <HistoryItem
                 key={i}
-                date="2025.03.12"
-                time="18:02"
-                amount="5,000"
-                label={t("BONUS")}
+                date={new Date(withdraw.created_at || 0).toLocaleDateString()}
+                time={`${new Date(withdraw.created_at || 0).getHours()}:${formatMinutes(withdraw.created_at)}`}
+                amount={`${withdraw.sum} TON`}
+                label={withdraw.status}
               />
             ))}
           </StyledTableBox>
@@ -173,5 +187,4 @@ const Wallet = () => {
     </MainBox>
   );
 };
-
 export default Wallet;

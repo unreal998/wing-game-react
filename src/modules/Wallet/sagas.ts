@@ -3,8 +3,12 @@ import {
   createWalletAction,
   createWalletActionFailure,
   createWalletActionSuccess,
+  getWithdrawAction,
+  getWithdrawActionFailure,
+  getWithdrawActionSuccess,
 } from "./slices";
-import { fetchCreateWallet } from "./api";
+import { fetchCreateWallet, fetchWithdrawData } from "./api";
+import { Withdraw } from "../../shared/types";
 
 function* handleCreateWallet(action: { type: string; payload: string }) {
   try {
@@ -15,6 +19,20 @@ function* handleCreateWallet(action: { type: string; payload: string }) {
   }
 }
 
+function* handleGetWithdrawData(action: { type: string; payload: string }) {
+  try {
+    console.log("handleGetWithdrawData ACTION:", action);
+    const withdrawData: Withdraw[] = yield call(
+      fetchWithdrawData,
+      action.payload,
+    );
+    yield put(getWithdrawActionSuccess(withdrawData));
+  } catch (err: any) {
+    yield put(getWithdrawActionFailure(err.toString()));
+  }
+}
+
 export function* watchWalletActions() {
   yield takeLatest(createWalletAction.type, handleCreateWallet);
+  yield takeLatest(getWithdrawAction.type, handleGetWithdrawData);
 }

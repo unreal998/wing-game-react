@@ -40,3 +40,14 @@ export type UserData = UserInitData & {
   lvl: number;
   exp: number;
 };
+
+export type Withdraw = {
+  created_at: string;
+  status: string;
+  sum: number;
+  wallet: string;
+  uid: string;
+  tid: string;
+  id: string;
+  MEMO: string;
+};
