@@ -9,5 +9,6 @@ export const StyledMainBox = styled(Box)({
   justifyContent: "center",
   flexDirection: "column",
   width: "100%",
+  zIndex: 100,
   backgroundColor: MAIN_COLORS.headerBG,
 });

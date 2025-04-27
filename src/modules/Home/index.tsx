@@ -1,20 +1,22 @@
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectSelectedCountry } from "./selectors";
+import { selectDisabledPowerButton, selectSelectedCountry } from "./selectors";
 import useSound from "use-sound";
 import WindBlowing from "../../assets/sounds/windBlowing.mp3";
 import BGSound from "../../assets/sounds/bgSound.mp3";
 import { useNavigate } from "react-router-dom";
 import { selectHomeLoading } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import Lottie from "lottie-react";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 export const Home = () => {
   const loading = useSelector(selectHomeLoading);
   const [cycleBGSound, setCycleBGSound] = useState(true);
   const navigate = useNavigate();
   const selectedCountry = useSelector(selectSelectedCountry());
+  const animationRef = useRef<LottieRefCurrentProps | null>(null);
+  const isButtonDisabled = useSelector(selectDisabledPowerButton());
   const [playSound] = useSound(BGSound, {
     volume: 0.7,
     onend: () => setCycleBGSound(false),
@@ -27,11 +29,18 @@ export const Home = () => {
   }, [navigate, selectedCountry]);
 
   useEffect(() => {
+    if (animationRef.current) {
+      if (!isButtonDisabled) {
+        animationRef.current.stop();
+      } else {
+        animationRef.current.play();
+      }
+    }
     if (!cycleBGSound) {
       playSound();
       setCycleBGSound(true);
     }
-  }, [cycleBGSound, setCycleBGSound, playSound]);
+  }, [cycleBGSound, setCycleBGSound, playSound, isButtonDisabled]);
 
   return (
     <Box
@@ -50,9 +59,8 @@ export const Home = () => {
         }}
       ></Box>
       <Lottie
-        animationData={require(
-          `../../assets/animations/${selectedCountry.name}Anim.json`,
-        )}
+        lottieRef={animationRef}
+        animationData={require(`../../assets/animations/windAnimation.json`)}
         loop
         style={{
           top: "240px",

@@ -8,3 +8,8 @@ export const selectWalletNumber =
   () =>
   ({ walletSlice }: WalletSliceStore) =>
     walletSlice.walletNumber;
+
+export const selectWithdrawData =
+  () =>
+  ({ walletSlice }: WalletSliceStore) =>
+    walletSlice.withdrawData;
