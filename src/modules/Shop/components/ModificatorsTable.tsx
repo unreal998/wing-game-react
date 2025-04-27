@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Typography,
 } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 import { TableCellShop } from "./TableCellShop";
@@ -53,10 +54,10 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
                   {mod.boughtModifier?.find((modifier) => modifier.speed !== 0)
                     ? mod.boughtModifier?.map((modifier) => (
-                        <div>
+                        <Typography>
                           <span key={modifier.speed}>{modifier.speed}</span>
                           <br></br>
-                        </div>
+                        </Typography>
                       ))
                     : 0}
                 </TableCell>
@@ -69,12 +70,12 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                     (modifier) => modifier.clicksRemaining !== 0,
                   )
                     ? mod.boughtModifier?.map((modifier) => (
-                        <div>
+                        <Typography>
                           <span key={modifier.speed}>
-                            {formatDateToMonthDay(modifier.boughtDate)}
+                            {modifier.clicksRemaining} clicks
                           </span>
                           <br></br>
-                        </div>
+                        </Typography>
                       ))
                     : 0}
                 </TableCell>
@@ -85,12 +86,14 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                       modifier.boughtDate !== undefined,
                   )
                     ? mod.boughtModifier?.map((modifier) => (
-                        <div>
+                        <Typography>
                           <span key={modifier.speed}>
-                            {formatDateToMonthDay(modifier.boughtDate)}
+                            {new Date(
+                              modifier.boughtDate || 0,
+                            ).toLocaleDateString()}
                           </span>
                           <br></br>
-                        </div>
+                        </Typography>
                       ))
                     : "not bought yet"}
                 </TableCell>
