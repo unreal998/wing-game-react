@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -12,30 +12,31 @@ import {
 import { MAIN_COLORS } from "../../../shared/colors";
 import { TableCellShop } from "./TableCellShop";
 import { UserData } from "../../../shared/types";
+import { useSelector } from "react-redux";
+import { selectSelectedCountry } from "../../Home/selectors";
 
 type ModificatorsTableProps = {
   modifiers: UserData["modifiers"] | undefined;
 };
 
 const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
-  function formatDateToMonthDay(timestamp: number) {
-    const date = new Date(timestamp * (timestamp < 1e12 ? 1000 : 1));
-    let month: string | number = date.getMonth() + 1;
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    const day = date.getDate();
-    return `${month}-${day}`;
-  }
+  const selectedCountry = useSelector(selectSelectedCountry());
+
+  const selectedCountryModifiers = useMemo(
+    () => modifiers?.find((mod) => mod.areaName === selectedCountry.name),
+    [modifiers, selectedCountry],
+  );
+
   return (
     <TableContainer
       component={Paper}
       sx={{
         maxHeight: "250px",
         border: `1px solid ${MAIN_COLORS.activeTabColor}`,
+        backgroundColor: MAIN_COLORS.headerBG,
       }}
     >
-      <Table sx={{ backgroundColor: "black" }}>
+      <Table sx={{ backgroundColor: MAIN_COLORS.headerBG }}>
         <TableHead>
           <TableRow>
             <TableCellShop>#</TableCellShop>
@@ -45,15 +46,15 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {modifiers?.map((mod, index) => {
+          {[selectedCountryModifiers?.boughtModifier].map((mod, index) => {
             return (
               <TableRow key={index}>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.areaName}
+                  {index}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.find((modifier) => modifier.speed !== 0)
-                    ? mod.boughtModifier?.map((modifier) => (
+                  {mod?.find((modifier) => modifier.speed !== 0)
+                    ? mod?.map((modifier) => (
                         <Typography>
                           <span key={modifier.speed}>{modifier.speed}</span>
                           <br></br>
@@ -66,10 +67,8 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                     color: MAIN_COLORS.textColor,
                   }}
                 >
-                  {mod.boughtModifier?.find(
-                    (modifier) => modifier.clicksRemaining !== 0,
-                  )
-                    ? mod.boughtModifier?.map((modifier) => (
+                  {mod?.find((modifier) => modifier.clicksRemaining !== 0)
+                    ? mod?.map((modifier) => (
                         <Typography>
                           <span key={modifier.speed}>
                             {modifier.clicksRemaining} clicks
@@ -80,12 +79,12 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                     : 0}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod.boughtModifier?.find(
+                  {mod?.find(
                     (modifier) =>
                       modifier.boughtDate !== null &&
                       modifier.boughtDate !== undefined,
                   )
-                    ? mod.boughtModifier?.map((modifier) => (
+                    ? mod?.map((modifier) => (
                         <Typography>
                           <span key={modifier.speed}>
                             {new Date(
