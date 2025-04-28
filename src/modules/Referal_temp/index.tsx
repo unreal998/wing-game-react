@@ -85,10 +85,10 @@ const Referal = () => {
       <Box>
         <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <InfoBox
+          {/* <InfoBox
             value={`${referalData.length}/${nextArea?.referalsToUnlock || 0}`}
             subtitle={`to unlock next country`.toUpperCase()}
-          />
+          /> */}
         </Box>
         <StyledBasicBox height={`${tableHeight}px`}>
           <TableBox>

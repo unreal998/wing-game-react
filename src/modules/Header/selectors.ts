@@ -18,3 +18,8 @@ export const selectModificatorsData =
   () =>
   ({ headerSlice }: HeaderSliceStore) =>
     headerSlice.userData?.modifiers;
+
+export const selectCountiresData =
+  () =>
+  ({ headerSlice }: HeaderSliceStore) =>
+    headerSlice.countriesData;

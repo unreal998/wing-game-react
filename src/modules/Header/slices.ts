@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserData, UserInitData } from "../../shared/types";
+import { County, UserData, UserInitData } from "../../shared/types";
 
 type HeaderState = {
   userData: null | UserData;
   userInitData: null | UserInitData;
   errMessage: string;
-  loading: boolean; // Добавлен флаг загрузки
+  loading: boolean;
+  countriesData: null | County[];
 };
 
 export const initialHeaderState: HeaderState = {
@@ -13,6 +14,7 @@ export const initialHeaderState: HeaderState = {
   errMessage: "",
   userInitData: null,
   loading: false,
+  countriesData: null,
 };
 
 export const headerSlice = createSlice({
@@ -31,11 +33,21 @@ export const headerSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    fetchCountriesActionSuccess: (
+      state,
+      { payload }: { payload: County[] },
+    ) => {
+      state.countriesData = payload;
+    },
   },
 });
 
-export const { initAction, initActionSuccess, initActionFailure } =
-  headerSlice.actions;
+export const {
+  initAction,
+  initActionSuccess,
+  initActionFailure,
+  fetchCountriesActionSuccess,
+} = headerSlice.actions;
 
 export type HeaderStateType = typeof initialHeaderState;
 
