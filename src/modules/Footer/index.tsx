@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Stack } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
@@ -24,11 +24,8 @@ import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
-import { selectModificatorsData } from "../Header/selectors";
-import { ModalComponent } from "../../shared/components/ModalComponent";
-import { StyledButtonGame } from "../Planet/components/StyledButtonGame";
 
-const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
+const Footer = () => {
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const location = useLocation();
@@ -37,10 +34,7 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
-  const modificatorsData = useSelector(selectModificatorsData());
   const { t } = useTranslation();
-
-  const [openModal, setOpenModal] = useState(false);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -56,33 +50,14 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
 
   const handlePushPower = useCallback(() => {
     if (userData) {
-      const selectedCountryData = modificatorsData?.find(
-        (modificator) => modificator?.areaName === selectedCountry?.name,
+      dispatch(
+        powerButtonPressed({
+          uid: userData?.id,
+          areaName: selectedCountry.name,
+        }),
       );
-
-      const isWindSpeedZero = selectedCountryData
-        ? selectedCountryData.boughtModifier?.find(
-            (modifier) => modifier.speed !== 0,
-          )
-        : false;
-
-      if (isWindSpeedZero) {
-        setOpenModal(true);
-      } else {
-        dispatch(
-          powerButtonPressed({
-            uid: userData?.id,
-            areaName: selectedCountry.name,
-          }),
-        );
-      }
     }
-  }, [dispatch, userData, selectedCountry, modificatorsData]);
-
-  const handleShopButton = useCallback(() => {
-    setOpenModal(false);
-    navigate("/shop");
-  }, [navigate]);
+  }, [dispatch, userData, selectedCountry]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -100,10 +75,6 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
       }, 1000);
     }
   }, [dispatch, nextPressButtonTimeDelay]);
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
 
   return (
     <StyledMainBox>
@@ -126,17 +97,6 @@ const Footer = ({ isDisabled }: { isDisabled: boolean }) => {
           </ButtonGame>
         </Stack>
       )}
-      <ModalComponent
-        title={t("Buy wind speed")}
-        subtitle={t("Your wind speed is zero. Please purchase to proceed.")}
-        handleCloseModal={handleCloseModal}
-        openModal={openModal}
-        additionalbutton={
-          <StyledButtonGame onClick={handleShopButton}>
-            To Shop
-          </StyledButtonGame>
-        }
-      />
       <StyledFooterBox>
         {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
           const isActive = location.pathname === path;
