@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 
-function ModuleBottomText() {
+function StepTwo() {
   return (
     <Typography
       sx={{
@@ -18,4 +18,4 @@ function ModuleBottomText() {
   );
 }
 
-export default ModuleBottomText;
+export default StepTwo;

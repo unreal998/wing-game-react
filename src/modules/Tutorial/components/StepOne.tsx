@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-function ModalBox({ onClick }: { onClick: () => void }) {
+function StepOne({ onClick }: { onClick: () => void }) {
   return (
     <Box
       onClick={onClick}
@@ -37,4 +37,4 @@ function ModalBox({ onClick }: { onClick: () => void }) {
   );
 }
 
-export default ModalBox;
+export default StepOne;

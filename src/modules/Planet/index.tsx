@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
@@ -8,9 +8,9 @@ import { setSelectedCountry } from "../Home/slices";
 import { selectAreasData, selectCountiresData } from "../Header/selectors";
 import { AreaType } from "../../shared/types";
 import { MAIN_COLORS } from "../../shared/colors";
-import ModuleTopText from "./components/ModuleTopText";
-import ModalBox from "./components/ModalBox";
-import ModuleBottomText from "./components/ModuleBottomText";
+import StepOne from "../Tutorial/components/StepOne";
+import StepTwo from "../Tutorial/components/StepTwo";
+import StepThree from "../Tutorial/components/StepThree";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -84,7 +84,7 @@ export const Planet = () => {
       onClick={handleModuleClick}
     >
       {(showModuleTwo || showModuleThree) && (
-        <ModuleTopText showModule={showModuleThree} />
+        <StepThree showModule={showModuleThree} />
       )}
 
       <StyledPlanetBox>
@@ -130,8 +130,8 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
-      {showModuleTwo && <ModuleBottomText />}
-      {showModuleOne && <ModalBox onClick={handleModuleClick} />}
+      {showModuleTwo && <StepTwo />}
+      {showModuleOne && <StepOne onClick={handleModuleClick} />}
     </Box>
   );
 };

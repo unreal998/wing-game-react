@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 
-function ModuleTopText({ showModule }: { showModule: boolean }) {
+function StepThree({ showModule }: { showModule: boolean }) {
   return (
     <Typography
       sx={{
@@ -19,4 +19,4 @@ function ModuleTopText({ showModule }: { showModule: boolean }) {
   );
 }
 
-export default ModuleTopText;
+export default StepThree;
