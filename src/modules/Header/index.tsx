@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
@@ -20,17 +20,23 @@ import Earth from "../../assets/earth.png";
 import { selectHeaderLoading } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 
+const windSpeedByAreaName: Record<string, string> = {
+  nr: "~5.5–6.0 m/s",
+  dk: "~6.0–6.5 m/s",
+  gr: "~6.5–7.0 m/s",
+  usa: "~7.0–7.5 m/s",
+};
+
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
   const location = useLocation();
   const navigate = useNavigate();
+  const [playSound] = useSound(FooterButtonPress);
+  const userData = useSelector(selectUserData());
+
   const handleEarthClick = useCallback(() => {
     navigate("/");
   }, [navigate]);
-
-  const [playSound] = useSound(FooterButtonPress);
-
-  const userData = useSelector(selectUserData());
 
   const handleSoundClick = useCallback(() => {
     playSound();
@@ -41,6 +47,14 @@ const Header = () => {
     WebApp.platform &&
     WebApp.platform !== "unknown" &&
     WebApp.platform !== "tdesktop";
+
+  // Находим активную страну пользователя
+  const activeArea = useMemo(() => {
+    return userData?.areas?.find((area) => area.available) || { name: "nr" };
+  }, [userData]);
+
+  const currentWindSpeed =
+    windSpeedByAreaName[activeArea.name] || windSpeedByAreaName["nr"];
 
   return (
     <Stack
@@ -95,6 +109,7 @@ const Header = () => {
           </Typography>
         </StyledCurencyBox>
       </StyledMain>
+
       {location.pathname === "/home" && (
         <StyledMain
           sx={{
@@ -113,10 +128,17 @@ const Header = () => {
               }}
             >
               <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
-                {userData?.WindBalance} TURX
+                {userData?.WindBalance} kW
               </Typography>
             </Box>
           </StyledFlashBox>
+
+          <Typography
+            sx={{ fontSize: "11px", fontWeight: 500, color: "white" }}
+          >
+            {currentWindSpeed}
+          </Typography>
+
           <img
             src={Earth}
             alt="earth"
@@ -128,4 +150,5 @@ const Header = () => {
     </Stack>
   );
 };
+
 export default Header;
