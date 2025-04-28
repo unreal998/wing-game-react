@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
@@ -140,7 +134,7 @@ const Footer = () => {
               {calculateTime} {t("remain")}
             </StyledTime>
             <ButtonGame
-              // disabled={isButtonDisabled}
+              disabled={isButtonDisabled}
               variant="contained"
               onClick={handlePushPower}
               sx={{
