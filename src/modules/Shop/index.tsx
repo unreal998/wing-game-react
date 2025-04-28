@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectShopData } from "./selectors";
 import { getShopDataByArea, buyItemAction, selectShopLoading } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
-import { selectModificatorsData, selectUserData } from "../Header/selectors";
+import { selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
@@ -34,21 +34,12 @@ const Shop = () => {
   const [tab, setTab] = useState(0);
   const shopValues = useSelector(selectShopData());
   const selectedCountry = useSelector(selectSelectedCountry());
-  const selectModificators = useSelector(selectModificatorsData());
   const userData = useSelector(selectUserData());
   const dispatch = useDispatch();
   const [shopMarks, setShopMarks] = useState<
     { title: number; value: number; level: number }[]
   >([]);
   const [lowBalanceModalOpen, setLowBalanceModalOpen] = useState(false);
-
-  const selectedAreaMidificator = useMemo(() => {
-    if (selectModificators?.length && selectedCountry) {
-      return selectModificators?.find(
-        (modificator) => modificator.areaName === selectedCountry.name,
-      )?.boughtModifier?.speed;
-    }
-  }, [selectModificators, selectedCountry]);
 
   const buyModifier = useCallback(() => {
     const currentPrice = shopValues.find(
@@ -65,12 +56,6 @@ const Shop = () => {
       }),
     );
   }, [dispatch, userData, shopValues, windValue, selectedCountry]);
-
-  useEffect(() => {
-    if (selectedAreaMidificator) {
-      setWindValue(selectedAreaMidificator);
-    }
-  }, [selectedAreaMidificator]);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -113,10 +98,7 @@ const Shop = () => {
 
   const handleWindSlide = (event: Event, newValue: number | number[]) => {
     const newSlideValue = newValue as number;
-    if (selectedAreaMidificator !== undefined) {
-      if (newSlideValue === 0) return;
-      setWindValue(newSlideValue);
-    }
+    setWindValue(newSlideValue);
   };
 
   const formatValue = (num: number) =>
@@ -158,6 +140,7 @@ const Shop = () => {
             placeholder={`${(shopValues[0]?.price || 0).toString()} TON`}
           />
           <img
+            alt="flag"
             src={flag[selectedCountry.name]}
             style={{ width: "60px", paddingLeft: "10px" }}
           />
@@ -171,7 +154,7 @@ const Shop = () => {
               aria-label="WindSpeed"
               value={windValue}
               marks={shopMarks}
-              defaultValue={selectedAreaMidificator || 0}
+              defaultValue={0}
               step={null}
               sx={{
                 color: MAIN_COLORS.activeTabColor,

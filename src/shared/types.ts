@@ -7,18 +7,16 @@ export type UserInitData = {
 };
 
 export type AreaType = {
-  title: string;
   name: string;
   available: boolean;
   lastButtonPress: number;
   nextButtonPress: number;
-  referalsToUnlock: number;
   bought: boolean;
 };
 
 export type UserModifiersType = {
   areaName: string;
-  boughtModifier: Modifier | null;
+  boughtModifier: Modifier[] | null;
 };
 
 export type Modifier = {
@@ -50,4 +48,11 @@ export type Withdraw = {
   tid: string;
   id: string;
   MEMO: string;
+};
+
+export type County = {
+  basicBonusPerClick: number;
+  referalsToUnlock: number;
+  shortName: string;
+  title: string;
 };

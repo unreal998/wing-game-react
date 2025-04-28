@@ -13,13 +13,11 @@ export const initialHomeState: HomeState = {
   nextPressTimeDelay: 0,
   disabledPowerButton: false,
   selectedCountry: {
-    title: "",
     name: "",
     available: false,
     lastButtonPress: 0,
     nextButtonPress: 0,
     bought: false,
-    referalsToUnlock: 0,
   },
   loading: false,
 };

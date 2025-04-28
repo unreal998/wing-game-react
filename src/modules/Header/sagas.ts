@@ -1,7 +1,12 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { initAction, initActionFailure, initActionSuccess } from "./slices";
-import { UserData, UserInitData } from "../../shared/types";
-import { fetchInitData } from "./api";
+import {
+  initAction,
+  initActionFailure,
+  initActionSuccess,
+  fetchCountriesActionSuccess,
+} from "./slices";
+import { County, UserData, UserInitData } from "../../shared/types";
+import { fetchCountries, fetchInitData } from "./api";
 import { createWalletActionSuccess } from "../Wallet/slices";
 
 function* handleInit(action: { type: string; payload: UserInitData }) {
@@ -11,6 +16,9 @@ function* handleInit(action: { type: string; payload: UserInitData }) {
     yield put(initActionSuccess(userData));
 
     yield put(createWalletActionSuccess(userData.wallet));
+
+    const countriesData: County[] = yield call(fetchCountries);
+    yield put(fetchCountriesActionSuccess(countriesData));
   } catch (err: any) {
     yield put(initActionFailure(err.toString()));
   }

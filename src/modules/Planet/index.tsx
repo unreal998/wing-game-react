@@ -2,16 +2,17 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCountry } from "../Home/slices";
-import { selectAreasData } from "../Header/selectors";
+import { selectAreasData, selectCountiresData } from "../Header/selectors";
 import { AreaType } from "../../shared/types";
 
 export const Planet = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const areasData = useSelector(selectAreasData());
+  const countries = useSelector(selectCountiresData());
 
   const handleButtonPress = useCallback(
     (selectedCountry: AreaType) => {
@@ -20,6 +21,15 @@ export const Planet = () => {
     },
     [dispatch, navigate],
   );
+
+  const userCountiresData = useMemo(() => {
+    if (!countries || !areasData) return [];
+    return areasData.map((area) => ({
+      ...area,
+      title: countries.find((country) => country.shortName === area.name)
+        ?.title,
+    }));
+  }, [countries, areasData]);
 
   const getCoords = useCallback((index: number) => {
     switch (index) {
@@ -48,9 +58,9 @@ export const Planet = () => {
       }}
     >
       <StyledPlanetBox>
-        {areasData &&
-          areasData?.length &&
-          areasData.map((country, index) => (
+        {userCountiresData &&
+          userCountiresData?.length &&
+          userCountiresData.map((country, index) => (
             <StyledPlanetButton
               key={country.name}
               sx={{
