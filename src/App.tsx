@@ -20,6 +20,7 @@ import ErrorPopup from "./shared/components/ErrorPopup";
 import { selectSelectedCountry } from "./modules/Home/selectors";
 import Lottie from "lottie-react";
 import Footer from "./modules/Footer";
+import { useMediaQuery } from "@mui/material";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -37,6 +38,7 @@ function convertToUserData(
 }
 
 const App = () => {
+  const isSmallScreen = useMediaQuery("(max-width: 375px)");
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
 
@@ -94,11 +96,13 @@ const App = () => {
           )}
           loop
           style={{
-            top: "240px",
+            top: isSmallScreen ? "140px" : "240px",
             zIndex: 0,
             left: "0",
             position: "absolute",
-            transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
+            transform: isSmallScreen
+              ? "matrix(2.2, 0, 0, 1.8, 0, 0)"
+              : "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
         />
       )}

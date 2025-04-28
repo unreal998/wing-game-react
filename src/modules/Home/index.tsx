@@ -9,8 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { selectHomeLoading } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import { useMediaQuery } from "@mui/material";
 
 export const Home = () => {
+  const isSmallScreen = useMediaQuery("(max-width: 375px)");
   const loading = useSelector(selectHomeLoading);
   const [cycleBGSound, setCycleBGSound] = useState(true);
   const navigate = useNavigate();
@@ -63,10 +65,12 @@ export const Home = () => {
         animationData={require(`../../assets/animations/windAnimation.json`)}
         loop
         style={{
-          top: "240px",
+          top: isSmallScreen ? "140px" : "240px",
           left: "0",
           position: "absolute",
-          transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
+          transform: isSmallScreen
+            ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
+            : "matrix(2.2, 0, 0, 2.2, 0, 0)",
         }}
       />
     </Box>
