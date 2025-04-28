@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Typography,
 } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 import { TableCellShop } from "./TableCellShop";
@@ -52,13 +53,48 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
                   {index}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod?.speed}
+                  {mod?.find((modifier) => modifier.speed !== 0)
+                    ? mod?.map((modifier) => (
+                        <Typography>
+                          <span key={modifier.speed}>{modifier.speed}</span>
+                          <br></br>
+                        </Typography>
+                      ))
+                    : 0}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: MAIN_COLORS.textColor,
+                  }}
+                >
+                  {mod?.find((modifier) => modifier.clicksRemaining !== 0)
+                    ? mod?.map((modifier) => (
+                        <Typography>
+                          <span key={modifier.speed}>
+                            {modifier.clicksRemaining} clicks
+                          </span>
+                          <br></br>
+                        </Typography>
+                      ))
+                    : 0}
                 </TableCell>
                 <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod?.clicksRemaining}
-                </TableCell>
-                <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {new Date(mod?.boughtDate || 0).toLocaleDateString()}
+                  {mod?.find(
+                    (modifier) =>
+                      modifier.boughtDate !== null &&
+                      modifier.boughtDate !== undefined,
+                  )
+                    ? mod?.map((modifier) => (
+                        <Typography>
+                          <span key={modifier.speed}>
+                            {new Date(
+                              modifier.boughtDate || 0,
+                            ).toLocaleDateString()}
+                          </span>
+                          <br></br>
+                        </Typography>
+                      ))
+                    : "not bought yet"}
                 </TableCell>
               </TableRow>
             );
