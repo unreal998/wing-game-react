@@ -42,6 +42,7 @@ const Footer = () => {
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
   const [showModuleFour, setShowModuleFour] = useState(false);
+  const [showModuleFive, setShowModuleFive] = useState(false);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -57,6 +58,7 @@ const Footer = () => {
 
   const handlePushPower = useCallback(() => {
     setShowModuleFour(false);
+    setShowModuleFive(true);
     if (userData) {
       dispatch(
         powerButtonPressed({
@@ -94,37 +96,38 @@ const Footer = () => {
 
   return (
     <>
-      <Typography
-        sx={{
-          padding: "10px",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          borderRadius: "10px",
-          position: "absolute",
-          width: "80%",
-          top: showModuleFour ? "60%" : "40%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 999,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: showModuleFour ? "24px" : "16px",
-          fontWeight: 700,
-          color: "white",
-          textAlign: showModuleFour ? "center" : "left",
-        }}
-      >
-        {showModuleFour ? (
-          "Эта кнопка - твой главный источник энергии!"
-        ) : (
-          <>
-            - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
-            "киловатты").
-            <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
-            клик!
-          </>
-        )}
-      </Typography>
+      {(showModuleFour || showModuleFive) && (
+        <Typography
+          sx={{
+            padding: "10px",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            borderRadius: "10px",
+            position: "absolute",
+            width: "80%",
+            top: showModuleFour ? "60%" : "50%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 999,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: showModuleFour ? "24px" : "16px",
+            fontWeight: 700,
+            color: "white",
+            textAlign: showModuleFour ? "center" : "left",
+          }}
+        >
+          {showModuleFour && "Эта кнопка - твой главный источник энергии!"}
+          {showModuleFive && (
+            <>
+              - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
+              "киловатты").
+              <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
+              клик!
+            </>
+          )}
+        </Typography>
+      )}
 
       <StyledMainBox>
         {location.pathname === "/home" && (
@@ -137,7 +140,7 @@ const Footer = () => {
               {calculateTime} {t("remain")}
             </StyledTime>
             <ButtonGame
-              disabled={isButtonDisabled}
+              // disabled={isButtonDisabled}
               variant="contained"
               onClick={handlePushPower}
               sx={{
