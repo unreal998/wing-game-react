@@ -30,6 +30,8 @@ const Missions = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
   const [missionLoading, setMissionLoading] = useState(false);
+  const [missionSetTimeoutID, setMissionSetTimeoutID] =
+    useState<NodeJS.Timeout | null>(null);
   const [selectedMission, setSelectedMission] = useState<MissionsData | null>(
     null,
   );
@@ -74,11 +76,13 @@ const Missions = () => {
   };
 
   const handleMission = useCallback(() => {
+    if (selectedMission?.isSuccess === true) return;
     if (selectedMission === null) return;
     if (!userData) return;
     setMissionLoading((prev) => !prev);
-    setTimeout(() => {
+    const completeMissionTimeout = setTimeout(() => {
       setMissionLoading((prev) => !prev);
+      setOpen((prev) => !prev);
       dispatch(
         completeMissionAction({
           uid: userData?.id,
@@ -86,7 +90,13 @@ const Missions = () => {
         }),
       );
     }, 3000);
+    setMissionSetTimeoutID(completeMissionTimeout);
   }, [selectedMission, userData, dispatch, setMissionLoading]);
+  const handleDisable = () => {
+    if (missionSetTimeoutID !== null) clearTimeout(missionSetTimeoutID);
+    setMissionSetTimeoutID(null);
+    setMissionLoading((prev) => !prev);
+  };
 
   return (
     <Box
@@ -205,15 +215,18 @@ const Missions = () => {
                 <Typography variant="body1" gutterBottom>
                   {selectedMission.description}
                 </Typography>
-                <Box>
-                  <LoaderComponent loading={missionLoading} />
-                  <Typography variant="subtitle1" fontWeight="bold">
-                    {selectedMission.type}
-                  </Typography>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  {selectedMission.type}
+                </Typography>
+                {missionLoading ? (
+                  <Button variant="contained" onClick={() => handleDisable()}>
+                    {t("disable")}
+                  </Button>
+                ) : (
                   <Button variant="contained" onClick={() => handleMission()}>
                     {t("start")}
                   </Button>
-                </Box>
+                )}
               </>
             )}
           </Box>

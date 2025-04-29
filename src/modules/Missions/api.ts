@@ -1,10 +1,6 @@
 import axios from "axios";
 import { SERVER_URL } from "../../shared/constants";
-import {
-  CompleteMissionRequestType,
-  MissionByTypeRequestType,
-  MissionsData,
-} from "./types";
+import { CompleteMissionRequestType, MissionByTypeRequestType } from "./types";
 
 export const fetchMissionsData = async (
   missionData: MissionByTypeRequestType,
