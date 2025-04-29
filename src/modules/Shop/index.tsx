@@ -65,7 +65,7 @@ const Shop = () => {
     return (
       shopValues.find((value) => value.speed === windValue) || {
         tonValue: 0,
-        turxValue: 0,
+        kWValue: 0,
         price: 0,
         speed: 0,
       }
@@ -191,7 +191,7 @@ const Shop = () => {
             onChange={handleTabChange}
           >
             <TabStyles
-              label={t("TURX profit")}
+              label={t("kW profit")}
               value={0}
               key={0}
               onClick={handleSoundClick}
@@ -229,7 +229,7 @@ const Shop = () => {
                     key={rowIndex}
                     value={formatValue(
                       tab === 0
-                        ? +selectedWindPowerIncome.turxValue / row.multiplier
+                        ? +selectedWindPowerIncome.kWValue / row.multiplier
                         : +selectedWindPowerIncome.tonValue / row.multiplier,
                     )}
                     subtitle={row.label}
