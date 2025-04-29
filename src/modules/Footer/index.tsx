@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Stack, Typography } from "@mui/material";
+import React, { useCallback, useEffect, useMemo } from "react";
+import { Stack } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -27,10 +27,33 @@ import { selectUserData } from "../Header/selectors";
 
 import {
   selectShowModuleFour,
+  selectShowModuleSix,
+  selectShowModuleEight,
+  selectShowModuleTen,
+  selectShowModuleTwelve,
+  selectShowModuleOne,
+  selectShowModuleTwo,
+  selectShowModuleThree,
   selectShowModuleFive,
+  selectShowModuleSeven,
+  selectShowModuleNine,
+  selectShowModuleEleven,
+  selectShowModuleThirteen,
+  selectShowModuleFourteen,
 } from "../Tutorial/selectors";
-import { setShowModuleFour, setShowModuleFive } from "../Tutorial/slices";
-import { ModuleFourFive } from "../Tutorial/components/ModuleFourFive";
+import {
+  setShowModuleFour,
+  setShowModuleFive,
+  setShowModuleSix,
+  setShowModuleSeven,
+  setShowModuleEight,
+  setShowModuleNine,
+  setShowModuleTen,
+  setShowModuleEleven,
+  setShowModuleTwelve,
+  setShowModuleThirteen,
+} from "../Tutorial/slices";
+import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -43,8 +66,20 @@ const Footer = () => {
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
 
+  const showModuleOne = useSelector(selectShowModuleOne());
+  const showModuleTwo = useSelector(selectShowModuleTwo());
+  const showModuleThree = useSelector(selectShowModuleThree());
   const showModuleFour = useSelector(selectShowModuleFour());
   const showModuleFive = useSelector(selectShowModuleFive());
+  const showModuleSix = useSelector(selectShowModuleSix());
+  const showModuleSeven = useSelector(selectShowModuleSeven());
+  const showModuleEight = useSelector(selectShowModuleEight());
+  const showModuleNine = useSelector(selectShowModuleNine());
+  const showModuleTen = useSelector(selectShowModuleTen());
+  const showModuleEleven = useSelector(selectShowModuleEleven());
+  const showModuleTwelve = useSelector(selectShowModuleTwelve());
+  const showModuleThirteen = useSelector(selectShowModuleThirteen());
+  const showModuleFourteen = useSelector(selectShowModuleFourteen());
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -96,10 +131,26 @@ const Footer = () => {
     }
   }, [dispatch, location.pathname]);
 
+  const areAllModulesFalse = !(
+    showModuleOne ||
+    showModuleTwo ||
+    showModuleThree ||
+    showModuleFour ||
+    showModuleFive ||
+    showModuleSix ||
+    showModuleSeven ||
+    showModuleEight ||
+    showModuleNine ||
+    showModuleTen ||
+    showModuleEleven ||
+    showModuleTwelve ||
+    showModuleThirteen ||
+    showModuleFourteen
+  );
+
   return (
     <>
-      <ModuleFourFive />
-
+      <ModuleFourFiveSix />
       <StyledMainBox>
         {location.pathname === "/home" && (
           <Stack
@@ -144,8 +195,25 @@ const Footer = () => {
           {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
             const isActive = location.pathname === path;
             const isDisabledOnHome = location.pathname === "/" && path !== "/";
+            const isMissionButton = path === "/missions";
+            const isReferalButton = path === "/referal";
+            const isShopButton = path === "/shop";
+            const isWalletButton = path === "/wallet";
+
+            const isSpecialActive =
+              (isMissionButton && showModuleSix) ||
+              (isReferalButton && showModuleEight) ||
+              (isShopButton && showModuleTen) ||
+              (isWalletButton && showModuleTwelve);
+
             const isDisabled =
-              isDisabledOnHome || showModuleFour || showModuleFive;
+              !areAllModulesFalse &&
+              !(
+                (showModuleSix && isMissionButton) ||
+                (showModuleEight && isReferalButton) ||
+                (showModuleTen && isShopButton) ||
+                (showModuleTwelve && isWalletButton)
+              );
 
             const Component = isCenter ? StyledCenterFooter : StyledFooterBoxes;
 
@@ -155,11 +223,49 @@ const Footer = () => {
                 onClick={() => {
                   if (!isDisabled) {
                     handleNavigationChange(path);
+                    if (isMissionButton && showModuleSix) {
+                      dispatch(setShowModuleSix(false));
+                      dispatch(setShowModuleSeven(true));
+                    }
+                    if (isReferalButton && showModuleEight) {
+                      dispatch(setShowModuleEight(false));
+                      dispatch(setShowModuleNine(true));
+                    }
+                    if (isShopButton && showModuleTen) {
+                      dispatch(setShowModuleTen(false));
+                      dispatch(setShowModuleEleven(true));
+                    }
+                    if (isWalletButton && showModuleTwelve) {
+                      dispatch(setShowModuleTwelve(false));
+                      dispatch(setShowModuleThirteen(true));
+                    }
                   }
                 }}
                 style={{
-                  opacity: isDisabledOnHome ? 0.5 : 1,
-                  pointerEvents: isDisabledOnHome ? "none" : "auto",
+                  opacity: isDisabled ? 0.5 : 1,
+                  pointerEvents: isDisabled ? "none" : "auto",
+                  borderRadius: isSpecialActive ? "50%" : undefined,
+                  ...(isSpecialActive
+                    ? {
+                        padding: "20px 0",
+                        boxShadow: `0 0 4px ${MAIN_COLORS.activeTabColor}`,
+                        animationName: "pulseShadow",
+                        animationDuration: "2s",
+                        animationTimingFunction: "ease-in-out",
+                        animationIterationCount: "infinite",
+                        "@keyframes pulseShadow": {
+                          "0%": {
+                            boxShadow: `0 0 5px ${MAIN_COLORS.activeTabColor}`,
+                          },
+                          "50%": {
+                            boxShadow: `0 0 15px ${MAIN_COLORS.activeTabColor}`,
+                          },
+                          "100%": {
+                            boxShadow: `0 0 5px ${MAIN_COLORS.activeTabColor}`,
+                          },
+                        },
+                      }
+                    : {}),
                 }}
               >
                 <img src={isActive ? activeIcon : icon} alt={label} />

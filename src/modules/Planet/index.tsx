@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCountry } from "../Home/slices";
 import { selectAreasData, selectCountiresData } from "../Header/selectors";
@@ -132,6 +132,7 @@ export const Planet = () => {
               disabled={!country.available}
               onClick={() => {
                 if (showModuleThree) {
+                  dispatch(setShowModuleThree(false));
                   handleButtonPress(country);
                 }
               }}

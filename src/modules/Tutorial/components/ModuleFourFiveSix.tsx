@@ -1,15 +1,33 @@
 import { Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectShowModuleFour,
   selectShowModuleFive,
-} from "../../Tutorial/selectors";
+  selectShowModuleSix,
+} from "../selectors";
+import { setShowModuleFive, setShowModuleSix } from "../slices";
+import { useEffect } from "react";
 
-export const ModuleFourFive = () => {
+export const ModuleFourFiveSix = () => {
+  const dispatch = useDispatch();
   const showModuleFour = useSelector(selectShowModuleFour());
   const showModuleFive = useSelector(selectShowModuleFive());
+  const showModuleSix = useSelector(selectShowModuleSix());
 
-  if (!showModuleFour && !showModuleFive) return null;
+  useEffect(() => {
+    if (showModuleFive) {
+      const timer = setTimeout(() => {
+        dispatch(setShowModuleFive(false));
+        dispatch(setShowModuleSix(true));
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showModuleFive, dispatch]);
+
+  if (!showModuleFour && !showModuleFive && !showModuleSix) {
+    return null;
+  }
 
   return (
     <Typography
@@ -41,6 +59,8 @@ export const ModuleFourFive = () => {
           клик!
         </>
       )}
+      {showModuleSix &&
+        "Зайди в 'Миссии' — тут куча заданий, за которые платят!"}
     </Typography>
   );
 };

@@ -19,6 +19,8 @@ import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { ButtonShopStyled } from "./components/ButtonShopStyled";
+import { ModuleElevenTwelve } from "../Tutorial/components/ModuleElevenTwelve";
+import { setShowModuleEleven, setShowModuleTwelve } from "../Tutorial/slices";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 42 },
@@ -105,7 +107,14 @@ const Shop = () => {
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
 
   return (
-    <MainBox>
+    <MainBox
+      position={"relative"}
+      onClick={() => {
+        dispatch(setShowModuleEleven(false));
+        dispatch(setShowModuleTwelve(true));
+      }}
+    >
+      <ModuleElevenTwelve />
       <LoaderComponent loading={loading} />
       <NamedStyled
         sx={{

@@ -25,6 +25,9 @@ import { selectWalletNumber, selectWithdrawData } from "./selectors";
 import Copy from "../../assets/copy.svg";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
+import { ModuleThirteen } from "../Tutorial/components/ModuleThirteen";
+import { selectShowModuleThirteen } from "../Tutorial/selectors";
+import { setShowModuleThirteen } from "../Tutorial/slices";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -34,6 +37,8 @@ const Wallet = () => {
   const walletNumber = useSelector(selectWalletNumber());
   const withdrawData = useSelector(selectWithdrawData());
   const dispatch = useDispatch();
+
+  const showModuleThirteen = useSelector(selectShowModuleThirteen());
 
   useEffect(() => {
     if (userData && !withdrawData) dispatch(getWithdrawAction(userData.id));
@@ -80,7 +85,11 @@ const Wallet = () => {
   }, [playSound]);
 
   return (
-    <MainBox>
+    <MainBox
+      position={"relative"}
+      onClick={() => dispatch(setShowModuleThirteen(false))}
+    >
+      {showModuleThirteen && <ModuleThirteen />}
       <LoaderComponent loading={loading} />
       <Typography variant="h5">{t("Wallet")}</Typography>
 

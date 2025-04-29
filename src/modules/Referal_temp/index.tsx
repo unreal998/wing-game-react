@@ -31,6 +31,8 @@ import { selectReferalData } from "./selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { AreaType } from "../../shared/types";
 import BuyCountryModal from "../../shared/components/BuyCountry";
+import { ModuleNineTen } from "../Tutorial/components/ModuleNineTen";
+import { setShowModuleNine, setShowModuleTen } from "../Tutorial/slices";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
@@ -110,7 +112,15 @@ const Referal = () => {
   const tableHeight = useMemo(() => heightProportion - 285, []);
 
   return (
-    <MainBox height={heightProportion}>
+    <MainBox
+      height={heightProportion}
+      position={"relative"}
+      onClick={() => {
+        dispatch(setShowModuleNine(false));
+        dispatch(setShowModuleTen(true));
+      }}
+    >
+      <ModuleNineTen />
       <LoaderComponent loading={loading} />
       <Box>
         <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>

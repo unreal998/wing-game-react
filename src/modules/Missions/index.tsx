@@ -1,4 +1,4 @@
-import { Box, Checkbox, Modal, Button, Typography } from "@mui/material";
+import { Box, Modal, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -8,7 +8,6 @@ import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
-import { InfoBox } from "../../shared/components/InfoBox";
 import { StyledTabMission } from "./components/StyledTabMission";
 
 import { useTranslation } from "react-i18next";
@@ -18,7 +17,8 @@ import { selectMissionsData } from "./selectors";
 import { getMissionsDataAction, selectMissionsLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { MAIN_COLORS } from "../../shared/colors";
+import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
+import { setShowModuleEight, setShowModuleSeven } from "../Tutorial/slices";
 
 type MissionType = {
   title: string;
@@ -80,14 +80,20 @@ const Missions = () => {
 
   return (
     <Box
+      onClick={() => {
+        dispatch(setShowModuleSeven(false));
+        dispatch(setShowModuleEight(true));
+      }}
       sx={{
         display: "flex",
         flexDirection: "column",
         padding: "5px 15px 0 15px",
         height: `${heightProportion}px`,
         gap: "15px",
+        position: "relative",
       }}
     >
+      <ModuleSevenEight />
       <LoaderComponent loading={loading} />
       <Box
         sx={{
