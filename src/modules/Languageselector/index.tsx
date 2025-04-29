@@ -36,7 +36,6 @@ const Languageselector = () => {
 
   const languages = [
     { code: "ru", label: "Русский", avatar: Orck, alt: "Русский" },
-    { code: "ua", label: "Українська", avatar: Ua, alt: "Українська" },
     { code: "en", label: "English", avatar: Uk, alt: "English" },
   ];
 
