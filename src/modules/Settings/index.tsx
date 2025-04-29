@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Modal, Button, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { heightProportion } from "../../shared/utils";
 import Question from "../../assets/question.svg";
@@ -13,15 +14,18 @@ import { SubMainBox } from "./components/SubMainBox";
 import { selectSettingsLoading } from "./slices";
 import { useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+import { roadmapText } from "./components/roadmapText";
 
 const Settings = () => {
   const loading = useSelector(selectSettingsLoading);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [roadmapOpen, setRoadmapOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
   };
+
   return (
     <MainBox height={heightProportion}>
       <LoaderComponent loading={loading} />
@@ -30,7 +34,8 @@ const Settings = () => {
         <NamedStyled paddingBottom="8px">{t("Settings")}</NamedStyled>
         <img src={Question} alt="question" />
       </SubMainBox>
-      <StyledBasicBox height={"160px"}>
+
+      <StyledBasicBox height={"200px"}>
         <TabBoxSettings>
           <Typography
             sx={{
@@ -53,7 +58,46 @@ const Settings = () => {
             onChange={() => setSoundEnabled(!soundEnabled)}
           />
         </TabBoxSettings>
+
+        <Box sx={{ padding: "20px 30px 0px 30px" }}>
+          <Button onClick={() => setRoadmapOpen(true)} variant="outlined">
+            Roadmap
+          </Button>
+        </Box>
       </StyledBasicBox>
+
+      <Modal open={roadmapOpen} onClose={() => setRoadmapOpen(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "10%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "90%",
+            maxHeight: "80vh",
+            overflowY: "auto",
+            bgcolor: "white",
+            p: 3,
+            borderRadius: 2,
+          }}
+        >
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="h6" gutterBottom>
+              Roadmap
+            </Typography>
+            <IconButton onClick={() => setRoadmapOpen(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Typography variant="body2" sx={{ whiteSpace: "pre-line" }}>
+            {roadmapText}
+          </Typography>
+        </Box>
+      </Modal>
     </MainBox>
   );
 };
