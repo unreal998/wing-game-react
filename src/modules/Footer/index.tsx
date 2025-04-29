@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { Stack } from "@mui/material";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -35,6 +35,8 @@ const Footer = () => {
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
+  const [showModuleFour, setShowModuleFour] = useState(false);
+  const [showModuleFive, setShowModuleFive] = useState(false);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -49,6 +51,8 @@ const Footer = () => {
   );
 
   const handlePushPower = useCallback(() => {
+    setShowModuleFour(false);
+    setShowModuleFive(true);
     if (userData) {
       dispatch(
         powerButtonPressed({
@@ -76,58 +80,123 @@ const Footer = () => {
     }
   }, [dispatch, nextPressButtonTimeDelay]);
 
+  useEffect(() => {
+    if (location.pathname === "/home") {
+      setShowModuleFour(true);
+    } else {
+      setShowModuleFour(false);
+    }
+  }, [location.pathname]);
+
   return (
-    <StyledMainBox>
-      {location.pathname === "/home" && (
-        <Stack
-          justifyContent={"center"}
-          alignItems={"center"}
-          marginBottom="10px"
+    <>
+      {(showModuleFour || showModuleFive) && (
+        <Typography
+          sx={{
+            padding: "10px",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            borderRadius: "10px",
+            position: "absolute",
+            width: "80%",
+            top: showModuleFour ? "60%" : "50%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 999,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: showModuleFour ? "24px" : "16px",
+            fontWeight: 700,
+            color: "white",
+            textAlign: showModuleFour ? "center" : "left",
+          }}
         >
-          <StyledTime>
-            {calculateTime} {t("remain")}
-          </StyledTime>
-          <ButtonGame
-            disabled={isButtonDisabled}
-            variant="contained"
-            onClick={handlePushPower}
-          >
-            {isButtonDisabled ? <PowerIcon /> : <PowerIconActive />}
-            <StyledTypographyButton>{t("Push Power")}</StyledTypographyButton>
-          </ButtonGame>
-        </Stack>
+          {showModuleFour && "Эта кнопка - твой главный источник энергии!"}
+          {showModuleFive && (
+            <>
+              - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
+              "киловатты").
+              <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
+              клик!
+            </>
+          )}
+        </Typography>
       )}
-      <StyledFooterBox>
-        {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
-          const isActive = location.pathname === path;
-          const isDisabledOnHome = location.pathname === "/" && path !== "/";
 
-          const Component = isCenter ? StyledCenterFooter : StyledFooterBoxes;
-
-          return (
-            <Component
-              key={path}
-              onClick={() => !isDisabledOnHome && handleNavigationChange(path)}
-              style={{
-                opacity: isDisabledOnHome ? 0.5 : 1,
-                pointerEvents: isDisabledOnHome ? "none" : "auto",
+      <StyledMainBox>
+        {location.pathname === "/home" && (
+          <Stack
+            justifyContent={"center"}
+            alignItems={"center"}
+            marginBottom="10px"
+          >
+            <StyledTime>
+              {calculateTime} {t("remain")}
+            </StyledTime>
+            <ButtonGame
+              disabled={isButtonDisabled}
+              variant="contained"
+              onClick={handlePushPower}
+              sx={{
+                ...(showModuleFour && {
+                  boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                  animationName: "pulseShadow",
+                  animationDuration: "2s",
+                  animationTimingFunction: "ease-in-out",
+                  animationIterationCount: "infinite",
+                  "@keyframes pulseShadow": {
+                    "0%": {
+                      boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                    },
+                    "50%": {
+                      boxShadow: `0 0 60px ${MAIN_COLORS.activeTabColor}`,
+                    },
+                    "100%": {
+                      boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                    },
+                  },
+                }),
               }}
             >
-              <img src={isActive ? activeIcon : icon} alt={label} />
-              <StyledFooterBoxesTypography
-                sx={{
-                  color: isActive
-                    ? MAIN_COLORS.activeTabColor
-                    : MAIN_COLORS.missionTable,
+              {isButtonDisabled ? <PowerIcon /> : <PowerIconActive />}
+              <StyledTypographyButton>{t("Push Power")}</StyledTypographyButton>
+            </ButtonGame>
+          </Stack>
+        )}
+        <StyledFooterBox>
+          {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
+            const isActive = location.pathname === path;
+            const isDisabledOnHome = location.pathname === "/" && path !== "/";
+
+            const Component = isCenter ? StyledCenterFooter : StyledFooterBoxes;
+
+            return (
+              <Component
+                key={path}
+                onClick={() =>
+                  !isDisabledOnHome && handleNavigationChange(path)
+                }
+                style={{
+                  opacity: isDisabledOnHome ? 0.5 : 1,
+                  pointerEvents: isDisabledOnHome ? "none" : "auto",
                 }}
               >
-                {t(label)}
-              </StyledFooterBoxesTypography>
-            </Component>
-          );
-        })}
-      </StyledFooterBox>
-    </StyledMainBox>
+                <img src={isActive ? activeIcon : icon} alt={label} />
+                <StyledFooterBoxesTypography
+                  sx={{
+                    color: isActive
+                      ? MAIN_COLORS.activeTabColor
+                      : MAIN_COLORS.missionTable,
+                  }}
+                >
+                  {t(label)}
+                </StyledFooterBoxesTypography>
+              </Component>
+            );
+          })}
+        </StyledFooterBox>
+      </StyledMainBox>
+    </>
   );
 };
 
