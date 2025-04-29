@@ -1,4 +1,4 @@
-import { Box, Checkbox, Modal, Button, Typography } from "@mui/material";
+import { Box, Modal, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -8,7 +8,6 @@ import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
-import { InfoBox } from "../../shared/components/InfoBox";
 import { StyledTabMission } from "./components/StyledTabMission";
 
 import { useTranslation } from "react-i18next";
@@ -22,7 +21,6 @@ import {
 } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { MAIN_COLORS } from "../../shared/colors";
 import { MissionsData } from "./types";
 
 const Missions = () => {
@@ -30,8 +28,6 @@ const Missions = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
   const [missionLoading, setMissionLoading] = useState(false);
-  const [missionSetTimeoutID, setMissionSetTimeoutID] =
-    useState<NodeJS.Timeout | null>(null);
   const [selectedMission, setSelectedMission] = useState<MissionsData | null>(
     null,
   );
@@ -80,7 +76,7 @@ const Missions = () => {
     if (selectedMission === null) return;
     if (!userData) return;
     setMissionLoading((prev) => !prev);
-    const completeMissionTimeout = setTimeout(() => {
+    setTimeout(() => {
       setMissionLoading((prev) => !prev);
       setOpen((prev) => !prev);
       dispatch(
@@ -90,13 +86,7 @@ const Missions = () => {
         }),
       );
     }, 3000);
-    setMissionSetTimeoutID(completeMissionTimeout);
   }, [selectedMission, userData, dispatch, setMissionLoading]);
-  const handleDisable = () => {
-    if (missionSetTimeoutID !== null) clearTimeout(missionSetTimeoutID);
-    setMissionSetTimeoutID(null);
-    setMissionLoading((prev) => !prev);
-  };
 
   return (
     <Box
@@ -166,11 +156,6 @@ const Missions = () => {
                     key={idx}
                     onClick={() => handleOpen(mission)}
                   >
-                    <img
-                      src={mission.img !== null ? mission.img : ""}
-                      style={{ width: "26px", height: "26px" }}
-                      alt="mission image"
-                    />
                     <Box sx={{ padding: "10px 0px 10px 0px" }}>
                       <StyledSubscrible>{mission.title}</StyledSubscrible>
                       <StyledSHIB>
@@ -218,11 +203,7 @@ const Missions = () => {
                 <Typography variant="subtitle1" fontWeight="bold">
                   {selectedMission.type}
                 </Typography>
-                {missionLoading ? (
-                  <Button variant="contained" onClick={() => handleDisable()}>
-                    {t("disable")}
-                  </Button>
-                ) : (
+                {!missionLoading && (
                   <Button variant="contained" onClick={() => handleMission()}>
                     {t("start")}
                   </Button>
