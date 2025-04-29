@@ -1,7 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 function StepOne({ onClick }: { onClick: () => void }) {
+  const { t } = useTranslation();
+
   return (
     <Box
       onClick={onClick}
@@ -29,9 +32,7 @@ function StepOne({ onClick }: { onClick: () => void }) {
           padding: "100px 20px",
         }}
       >
-        Привет, ветряной магнат! Ты только что попал в увлекательный мир
-        TurbineX, где твои клики превращаются в киловатты! Но сначала давай
-        разберёмся, как тут всё устроено.
+        {t("tutorial.step1")}
       </Typography>
     </Box>
   );

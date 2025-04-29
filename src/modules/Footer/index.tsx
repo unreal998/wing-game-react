@@ -111,14 +111,11 @@ const Footer = () => {
             textAlign: showModuleFour ? "center" : "left",
           }}
         >
-          {showModuleFour && "Эта кнопка - твой главный источник энергии!"}
+          {showModuleFour && t("tutorial.step4")}
           {showModuleFive && (
-            <>
-              - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
-              "киловатты").
-              <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
-              клик!
-            </>
+            <Typography sx={{ whiteSpace: "pre-line" }}>
+              {t("tutorial.step5")}
+            </Typography>
           )}
         </Typography>
       )}

@@ -53,5 +53,11 @@
   "Amount": "Amount",
   "Wallet Number": "Wallet Number",
   "Send Request": "Send Request",
-  "start": "start"
+  "start": "start",
+  "tutorial.step1": "Hello, wind tycoon! You've just entered the exciting world of TurbineX, where your clicks turn into kilowatts! But first, let's find out how it all works.",
+  "tutorial.step3a": "Click on the Netherlands and take a peek at your first power station!",
+  "tutorial.step3b": "You have 4 countries in front of you, but only the Netherlands is unlocked so far (the others are waiting for you to unlock them).",
+  "tutorial.step2": "To unlock other countries, you need to invite 3 friends, and buy them for a TON.",
+  "tutorial.step4": "This button is your main source of energy!",
+  "tutorial.step5": "Click once every 12 hours → you get Kw (it's an internal currency, `kilowatts`).\n- The more upgrades you buy in the shop → the more Kw you get!"
 }
