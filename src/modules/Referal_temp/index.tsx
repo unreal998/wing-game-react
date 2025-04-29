@@ -21,12 +21,16 @@ import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserData } from "../Header/selectors";
-import { getReferalDataAction, selectReferalLoading } from "./slices";
+import { selectCountiresData, selectUserData } from "../Header/selectors";
+import {
+  buyCountry,
+  getReferalDataAction,
+  selectReferalLoading,
+} from "./slices";
 import { selectReferalData } from "./selectors";
-import { selectSelectedCountry } from "../Home/selectors";
-import { AreaType } from "../../shared/types";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+import { AreaType } from "../../shared/types";
+import BuyCountryModal from "../../shared/components/BuyCountry";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
@@ -35,21 +39,39 @@ const Referal = () => {
   const { t } = useTranslation();
   const userData = useSelector(selectUserData());
   const referalData = useSelector(selectReferalData());
-  const selectedCountry = useSelector(selectSelectedCountry());
-  const [nextArea, setNextArea] = useState<null | AreaType>(null);
+  const countries = useSelector(selectCountiresData());
+  const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
 
-  useEffect(() => {
-    let nextAreaIndex = 0;
-    userData?.areas.forEach((area, index) => {
-      if (area.name === selectedCountry.name) {
-        nextAreaIndex = index + 1;
+  const nextArea = useMemo(() => {
+    if (!userData || !countries) return null;
+    let nextOpenedCountry: AreaType | null = null;
+    userData.areas.forEach((area, index) => {
+      if (area.bought && area.available) {
+        if (userData.areas[index + 1]) {
+          if (
+            !userData.areas[index + 1].bought ||
+            !userData.areas[index + 1].available
+          ) {
+            nextOpenedCountry = userData.areas[index + 1];
+          }
+        } else {
+          nextOpenedCountry = userData.areas[index];
+        }
       }
     });
-    const nextArea = userData?.areas[nextAreaIndex || 0];
-    if (nextArea) {
-      setNextArea(nextArea);
+    if (nextOpenedCountry !== null) {
+      return countries.find(
+        (country) => country.shortName === (nextOpenedCountry as AreaType).name,
+      );
     }
-  }, [userData, selectedCountry]);
+    return null;
+  }, [userData, countries]);
+
+  useEffect(() => {
+    if (nextArea && referalData.length >= nextArea.referalsToUnlock) {
+      setBuyCountrieModalOpen(true);
+    }
+  }, [nextArea, referalData.length, userData]);
 
   const dispatch = useDispatch();
   const referalLink = useMemo(() => {
@@ -65,6 +87,14 @@ const Referal = () => {
       dispatch(getReferalDataAction(userData.telegramID));
     }
   }, [dispatch, userData]);
+
+  const handleBuyCountry = useCallback(() => {
+    if (nextArea && userData) {
+      dispatch(
+        buyCountry({ uid: userData?.id, countryName: nextArea.shortName }),
+      );
+    }
+  }, [dispatch, userData, nextArea]);
 
   const copyToClipboard = useCallback(() => {
     navigator.clipboard
@@ -85,10 +115,10 @@ const Referal = () => {
       <Box>
         <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* <InfoBox
+          <InfoBox
             value={`${referalData.length}/${nextArea?.referalsToUnlock || 0}`}
             subtitle={`to unlock next country`.toUpperCase()}
-          /> */}
+          />
         </Box>
         <StyledBasicBox height={`${tableHeight}px`}>
           <TableBox>
@@ -153,6 +183,11 @@ const Referal = () => {
           </Box>
         </Box>
       </Box>
+      <BuyCountryModal
+        open={buyCountrieModalOpen}
+        onClose={() => setBuyCountrieModalOpen(false)}
+        onBuy={handleBuyCountry}
+      />
     </MainBox>
   );
 };

@@ -9,3 +9,19 @@ export const USER_MOCK_TELEGRAM_DATA = {
   userName: "john_doe",
   language: "en",
 };
+
+// export const USER_MOCK_TELEGRAM_DATA = {
+//   telegramID: 123456788,
+//   firstName: "John_1",
+//   lastName: "Doe_1",
+//   userName: "john_doe_1",
+//   language: "en",
+// };
+
+// export const USER_MOCK_TELEGRAM_DATA = {
+//   telegramID: 123456787,
+//   firstName: "John_2",
+//   lastName: "Doe_2",
+//   userName: "john_doe_2",
+//   language: "en",
+// };
