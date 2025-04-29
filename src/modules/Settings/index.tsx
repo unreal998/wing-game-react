@@ -59,7 +59,7 @@ const Settings = () => {
           />
         </TabBoxSettings>
 
-        <Box sx={{ padding: "20px 30px 0px 30px" }}>
+        <Box sx={{ padding: "20px 30px 0px 5px" }}>
           <Button onClick={() => setRoadmapOpen(true)} variant="outlined">
             Roadmap
           </Button>
