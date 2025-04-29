@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-function StepOne({ onClick }: { onClick: () => void }) {
+function ModuleOne({ onClick }: { onClick: () => void }) {
   return (
     <Box
       onClick={onClick}
@@ -37,4 +37,4 @@ function StepOne({ onClick }: { onClick: () => void }) {
   );
 }
 
-export default StepOne;
+export default ModuleOne;

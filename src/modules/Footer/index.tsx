@@ -25,6 +25,13 @@ import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
 
+import {
+  selectShowModuleFour,
+  selectShowModuleFive,
+} from "../Tutorial/selectors";
+import { setShowModuleFour, setShowModuleFive } from "../Tutorial/slices";
+import { ModuleFourFive } from "../Tutorial/components/ModuleFourFive";
+
 const Footer = () => {
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
@@ -35,8 +42,9 @@ const Footer = () => {
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
-  const [showModuleFour, setShowModuleFour] = useState(false);
-  const [showModuleFive, setShowModuleFive] = useState(false);
+
+  const showModuleFour = useSelector(selectShowModuleFour());
+  const showModuleFive = useSelector(selectShowModuleFive());
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -51,8 +59,8 @@ const Footer = () => {
   );
 
   const handlePushPower = useCallback(() => {
-    setShowModuleFour(false);
-    setShowModuleFive(true);
+    dispatch(setShowModuleFour(false));
+    dispatch(setShowModuleFive(true));
     if (userData) {
       dispatch(
         powerButtonPressed({
@@ -82,46 +90,15 @@ const Footer = () => {
 
   useEffect(() => {
     if (location.pathname === "/home") {
-      setShowModuleFour(true);
+      dispatch(setShowModuleFour(true));
     } else {
-      setShowModuleFour(false);
+      dispatch(setShowModuleFour(false));
     }
-  }, [location.pathname]);
+  }, [dispatch, location.pathname]);
 
   return (
     <>
-      {(showModuleFour || showModuleFive) && (
-        <Typography
-          sx={{
-            padding: "10px",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            borderRadius: "10px",
-            position: "absolute",
-            width: "80%",
-            top: showModuleFour ? "60%" : "50%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 999,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: showModuleFour ? "24px" : "16px",
-            fontWeight: 700,
-            color: "white",
-            textAlign: showModuleFour ? "center" : "left",
-          }}
-        >
-          {showModuleFour && "Эта кнопка - твой главный источник энергии!"}
-          {showModuleFive && (
-            <>
-              - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
-              "киловатты").
-              <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
-              клик!
-            </>
-          )}
-        </Typography>
-      )}
+      <ModuleFourFive />
 
       <StyledMainBox>
         {location.pathname === "/home" && (
@@ -167,15 +144,19 @@ const Footer = () => {
           {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
             const isActive = location.pathname === path;
             const isDisabledOnHome = location.pathname === "/" && path !== "/";
+            const isDisabled =
+              isDisabledOnHome || showModuleFour || showModuleFive;
 
             const Component = isCenter ? StyledCenterFooter : StyledFooterBoxes;
 
             return (
               <Component
                 key={path}
-                onClick={() =>
-                  !isDisabledOnHome && handleNavigationChange(path)
-                }
+                onClick={() => {
+                  if (!isDisabled) {
+                    handleNavigationChange(path);
+                  }
+                }}
                 style={{
                   opacity: isDisabledOnHome ? 0.5 : 1,
                   pointerEvents: isDisabledOnHome ? "none" : "auto",

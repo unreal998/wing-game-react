@@ -8,9 +8,19 @@ import { setSelectedCountry } from "../Home/slices";
 import { selectAreasData, selectCountiresData } from "../Header/selectors";
 import { AreaType } from "../../shared/types";
 import { MAIN_COLORS } from "../../shared/colors";
-import StepOne from "../Tutorial/components/StepOne";
-import StepTwo from "../Tutorial/components/StepTwo";
-import StepThree from "../Tutorial/components/StepThree";
+import ModuleOne from "../Tutorial/components/ModuleOne";
+import ModuleTwo from "../Tutorial/components/ModuleTwo";
+import ModuleThree from "../Tutorial/components/ModuleThree";
+import {
+  selectShowModuleOne,
+  selectShowModuleTwo,
+  selectShowModuleThree,
+} from "../Tutorial/selectors";
+import {
+  setShowModuleOne,
+  setShowModuleTwo,
+  setShowModuleThree,
+} from "../Tutorial/slices";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -18,9 +28,9 @@ export const Planet = () => {
   const areasData = useSelector(selectAreasData());
   const countries = useSelector(selectCountiresData());
 
-  const [showModuleOne, setShowModuleOne] = useState(true);
-  const [showModuleTwo, setShowModuleTwo] = useState(false);
-  const [showModuleThree, setShowModuleThree] = useState(false);
+  const showModuleOne = useSelector(selectShowModuleOne());
+  const showModuleTwo = useSelector(selectShowModuleTwo());
+  const showModuleThree = useSelector(selectShowModuleThree());
 
   const handleButtonPress = useCallback(
     (selectedCountry: AreaType) => {
@@ -32,13 +42,13 @@ export const Planet = () => {
 
   const handleModuleClick = useCallback(() => {
     if (showModuleOne) {
-      setShowModuleOne(false);
-      setShowModuleTwo(true);
+      dispatch(setShowModuleOne(false));
+      dispatch(setShowModuleTwo(true));
     } else if (showModuleTwo) {
-      setShowModuleTwo(false);
-      setShowModuleThree(true);
+      dispatch(setShowModuleTwo(false));
+      dispatch(setShowModuleThree(true));
     }
-  }, [showModuleOne, showModuleTwo]);
+  }, [dispatch, showModuleOne, showModuleTwo]);
 
   const userCountiresData = useMemo(() => {
     if (!countries || !areasData) return [];
@@ -84,7 +94,7 @@ export const Planet = () => {
       onClick={handleModuleClick}
     >
       {(showModuleTwo || showModuleThree) && (
-        <StepThree showModule={showModuleThree} />
+        <ModuleThree showModule={showModuleThree} />
       )}
 
       <StyledPlanetBox>
@@ -130,8 +140,8 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
-      {showModuleTwo && <StepTwo />}
-      {showModuleOne && <StepOne onClick={handleModuleClick} />}
+      {showModuleTwo && <ModuleTwo />}
+      {showModuleOne && <ModuleOne onClick={handleModuleClick} />}
     </Box>
   );
 };
