@@ -3,7 +3,6 @@ import { Box, Typography, Modal, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { heightProportion } from "../../shared/utils";
-import Question from "../../assets/question.svg";
 import { StyledBasicBox } from "../Referal_temp/components/StyledBasicBox";
 import { CustomSwitch } from "./components/CustomSwitch";
 import LanguageSelector from "../../shared/components/LanguageSelector";
@@ -32,7 +31,6 @@ const Settings = () => {
 
       <SubMainBox>
         <NamedStyled paddingBottom="8px">{t("Settings")}</NamedStyled>
-        <img src={Question} alt="question" />
       </SubMainBox>
 
       <StyledBasicBox height={"200px"}>

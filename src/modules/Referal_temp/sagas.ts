@@ -1,12 +1,16 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
   buyCountry,
+  buyCountryFailure,
+  buyCountrySuccess,
   getReferalDataAction,
   getReferalDataActionFailure,
   getReferalDataActionSuccess,
 } from "./slices";
 import { fetchBuyCountryData, fetchReferalsData } from "./api";
 import { ReferalData } from "./types";
+import { UserData } from "../../shared/types";
+import { initActionSuccess } from "../Header/slices";
 
 function* handleReferalData(action: { type: string; payload: string }) {
   try {
@@ -25,13 +29,15 @@ function* handleBuyCountryData(action: {
   payload: { uid: string; countryName: string };
 }) {
   try {
-    yield call(
+    const updatedUserData: UserData = yield call(
       fetchBuyCountryData,
       action.payload.uid,
       action.payload.countryName,
     );
+    yield put(initActionSuccess(updatedUserData));
+    yield put(buyCountrySuccess());
   } catch (err: any) {
-    yield put(getReferalDataActionFailure(err.toString()));
+    yield put(buyCountryFailure(err.toString()));
   }
 }
 

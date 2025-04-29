@@ -2,7 +2,7 @@ export type ShopValues = {
   price: number;
   speed: number;
   tonValue: number;
-  kWValue: number;
+  turxValue: number;
 };
 
 export type BuyItemType = {

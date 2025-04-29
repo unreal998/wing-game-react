@@ -134,7 +134,7 @@ const Wallet = () => {
             />
             {walletNumber ? (
               <WalletTypography>
-                {t("Your wallet: ")} <br />
+                {t("Your wallet:")} <br />
                 <b style={{ fontSize: "10px" }}>{walletNumber}</b>
               </WalletTypography>
             ) : (

@@ -37,6 +37,13 @@ export const referalSlice = createSlice({
     ) => {
       state.loading = true;
     },
+    buyCountrySuccess: (state) => {
+      state.loading = false;
+    },
+    buyCountryFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
   },
 });
 
@@ -45,6 +52,8 @@ export const {
   getReferalDataActionSuccess,
   getReferalDataActionFailure,
   buyCountry,
+  buyCountrySuccess,
+  buyCountryFailure,
 } = referalSlice.actions;
 
 export type ReferalStateType = typeof initialReferalState;

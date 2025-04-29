@@ -14,11 +14,12 @@ import { StyledSchedule } from "./components/StyledSchedule";
 import { StyledSubSchedule } from "./components/StyledSubSchedule";
 import { StyledFlashBox } from "./components/StyledFlashBox";
 import { StyledCurencyBox } from "./components/StyledCurrencyBox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "./selectors";
 import Earth from "../../assets/earth.png";
 import { selectHeaderLoading } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+import { clearSelectedCountry } from "../Home/slices";
 
 const windSpeedByAreaName: Record<string, string> = {
   nr: "~5.5–6.0 m/s",
@@ -29,6 +30,7 @@ const windSpeedByAreaName: Record<string, string> = {
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
@@ -36,7 +38,8 @@ const Header = () => {
 
   const handleEarthClick = useCallback(() => {
     navigate("/");
-  }, [navigate]);
+    dispatch(clearSelectedCountry());
+  }, [navigate, dispatch]);
 
   const handleSoundClick = useCallback(() => {
     playSound();
@@ -48,7 +51,6 @@ const Header = () => {
     WebApp.platform !== "unknown" &&
     WebApp.platform !== "tdesktop";
 
-  // Находим активную страну пользователя
   const activeArea = useMemo(() => {
     return userData?.areas?.find((area) => area.available) || { name: "nr" };
   }, [userData]);

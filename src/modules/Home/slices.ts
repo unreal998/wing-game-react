@@ -52,6 +52,17 @@ export const homeSlice = createSlice({
           : 0;
       state.disabledPowerButton = payload.nextButtonPress - Date.now() > 0;
     },
+    clearSelectedCountry: (state) => {
+      state.selectedCountry = {
+        name: "",
+        available: false,
+        lastButtonPress: 0,
+        nextButtonPress: 0,
+        bought: false,
+      };
+      state.nextPressTimeDelay = 0;
+      state.disabledPowerButton = false;
+    },
   },
 });
 
@@ -61,6 +72,7 @@ export const {
   powerButtonPressedFailure,
   setPressTimeDelay,
   setSelectedCountry,
+  clearSelectedCountry,
 } = homeSlice.actions;
 
 export const selectHomeLoading = (state: { homeSlice: HomeState }) =>

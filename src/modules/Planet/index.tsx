@@ -5,22 +5,33 @@ import { StyledPlanetButton } from "./components/StyledPlanetButton";
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCountry } from "../Home/slices";
-import { selectAreasData, selectCountiresData } from "../Header/selectors";
+import {
+  selectAreasData,
+  selectCountiresData,
+  selectUserData,
+} from "../Header/selectors";
 import { AreaType } from "../../shared/types";
 import { MAIN_COLORS } from "../../shared/colors";
 import StepOne from "../Tutorial/components/StepOne";
 import StepTwo from "../Tutorial/components/StepTwo";
 import StepThree from "../Tutorial/components/StepThree";
+import BuyCountryModal from "../../shared/components/BuyCountry";
+import { buyCountry } from "../Referal_temp/slices";
+import LoaderComponent from "../../shared/components/LoaderComponent";
+import { selectLoading } from "../Referal_temp/selectors";
 
 export const Planet = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const areasData = useSelector(selectAreasData());
   const countries = useSelector(selectCountiresData());
-
+  const loading = useSelector(selectLoading());
   const [showModuleOne, setShowModuleOne] = useState(true);
   const [showModuleTwo, setShowModuleTwo] = useState(false);
   const [showModuleThree, setShowModuleThree] = useState(false);
+  const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
+  const userData = useSelector(selectUserData());
+  const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
 
   const handleButtonPress = useCallback(
     (selectedCountry: AreaType) => {
@@ -29,6 +40,17 @@ export const Planet = () => {
     },
     [dispatch, navigate],
   );
+
+  const handleBuyCountry = useCallback(() => {
+    if (countryToBuy && userData) {
+      if (userData.TONBalance >= 1) {
+        dispatch(
+          buyCountry({ uid: userData?.id, countryName: countryToBuy.name }),
+          setBuyCountrieModalOpen(false),
+        );
+      }
+    }
+  }, [dispatch, userData, countryToBuy]);
 
   const handleModuleClick = useCallback(() => {
     if (showModuleOne) {
@@ -83,6 +105,7 @@ export const Planet = () => {
       }}
       onClick={handleModuleClick}
     >
+      <LoaderComponent loading={loading} />
       {(showModuleTwo || showModuleThree) && (
         <StepThree showModule={showModuleThree} />
       )}
@@ -93,6 +116,7 @@ export const Planet = () => {
           userCountiresData.map((country, index) => (
             <StyledPlanetButton
               key={country.name}
+              isBought={country.bought}
               sx={{
                 ...getCoords(index),
                 ...(showModuleThree && {
@@ -113,16 +137,15 @@ export const Planet = () => {
                     },
                   },
                 }),
-                "&.Mui-disabled": {
-                  backgroundColor: "rgb(134 134 134)",
-                  boxShadow: "none",
-                  animation: "none",
-                },
               }}
               disabled={!country.available}
               onClick={() => {
-                if (showModuleThree) {
+                if (showModuleThree && country.bought) {
                   handleButtonPress(country);
+                }
+                if (country.available && !country.bought) {
+                  setBuyCountrieModalOpen(true);
+                  setCountryToBuy(country);
                 }
               }}
             >
@@ -130,6 +153,11 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
+      <BuyCountryModal
+        open={buyCountrieModalOpen}
+        onClose={() => setBuyCountrieModalOpen(false)}
+        onBuy={handleBuyCountry}
+      />
       {showModuleTwo && <StepTwo />}
       {showModuleOne && <StepOne onClick={handleModuleClick} />}
     </Box>

@@ -31,12 +31,15 @@ import { selectReferalData } from "./selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { AreaType } from "../../shared/types";
 import BuyCountryModal from "../../shared/components/BuyCountry";
+import { useNavigate } from "react-router-dom";
+import { clearSelectedCountry } from "../Home/slices";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
 const Referal = () => {
   const loading = useSelector(selectReferalLoading);
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const userData = useSelector(selectUserData());
   const referalData = useSelector(selectReferalData());
   const countries = useSelector(selectCountiresData());
@@ -90,11 +93,16 @@ const Referal = () => {
 
   const handleBuyCountry = useCallback(() => {
     if (nextArea && userData) {
-      dispatch(
-        buyCountry({ uid: userData?.id, countryName: nextArea.shortName }),
-      );
+      if (userData.TONBalance >= 1) {
+        dispatch(
+          buyCountry({ uid: userData?.id, countryName: nextArea.shortName }),
+        );
+        setBuyCountrieModalOpen(false);
+        dispatch(clearSelectedCountry());
+        navigate("/");
+      }
     }
-  }, [dispatch, userData, nextArea]);
+  }, [nextArea, userData, dispatch, navigate]);
 
   const copyToClipboard = useCallback(() => {
     navigator.clipboard
