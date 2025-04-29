@@ -1,15 +1,23 @@
 export type MissionsData = {
-  coin: string;
-  created_at: string;
-  description: number;
   id: number;
-  img: string | null;
-  isSuccess: boolean;
-  reward: number;
+  created_at: string;
   title: string;
+  description: number;
+  reward: number;
+  type: "quest" | "daily";
+  coin: string;
+  img: string | null;
+  specType: string | null;
+  specValue: string | null;
+  isSuccess: boolean;
 };
 
 export type MissionByTypeRequestType = {
   type: string;
+  uid: string;
+};
+
+export type CompleteMissionRequestType = {
+  mission: MissionsData;
   uid: string;
 };
