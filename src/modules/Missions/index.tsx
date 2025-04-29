@@ -74,6 +74,7 @@ const Missions = () => {
   const handleMission = useCallback(() => {
     if (selectedMission?.isSuccess === true) return;
     if (selectedMission === null) return;
+    if (selectedMission.specType) return;
     if (!userData) return;
     setMissionLoading((prev) => !prev);
     setTimeout(() => {
