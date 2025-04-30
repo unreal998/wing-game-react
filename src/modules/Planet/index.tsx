@@ -2,17 +2,23 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedCountry } from "../Home/slices";
-import { selectAreasData, selectCountiresData } from "../Header/selectors";
+import { selectHomeLoading, setSelectedCountry } from "../Home/slices";
+import {
+  selectAreasData,
+  selectCountiresData,
+  selectUserData,
+} from "../Header/selectors";
 import { AreaType } from "../../shared/types";
 import { MAIN_COLORS } from "../../shared/colors";
+
 import ModuleOne from "../Tutorial/components/ModuleOne";
 import ModuleTwo from "../Tutorial/components/ModuleTwo";
 import ModuleThree from "../Tutorial/components/ModuleThree";
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
+import { buyCountry } from "../Referal_temp/slices";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -22,6 +28,10 @@ export const Planet = () => {
 
   const currentModule = useSelector(selectCurrentModule());
 
+  const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
+  const userData = useSelector(selectUserData());
+  const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
+
   const handleButtonPress = useCallback(
     (selectedCountry: AreaType) => {
       dispatch(setSelectedCountry(selectedCountry));
@@ -29,6 +39,17 @@ export const Planet = () => {
     },
     [dispatch, navigate],
   );
+
+  // const handleBuyCountry = useCallback(() => {
+  //   if (countryToBuy && userData) {
+  //     if (userData.TONBalance >= 1) {
+  //       dispatch(
+  //         buyCountry({ uid: userData?.id, countryName: countryToBuy.name }),
+  //         setBuyCountrieModalOpen(false)
+  //       );
+  //     }
+  //   }
+  // }, [dispatch, userData, countryToBuy]);
 
   const handleModuleClick = useCallback(() => {
     if (currentModule < 3) {
@@ -87,6 +108,7 @@ export const Planet = () => {
           userCountiresData.map((country, index) => (
             <StyledPlanetButton
               key={country.name}
+              isBought={country.bought}
               sx={{
                 ...getCoords(index),
                 ...(currentModule === 3 && {
@@ -107,17 +129,16 @@ export const Planet = () => {
                     },
                   },
                 }),
-                "&.Mui-disabled": {
-                  backgroundColor: "rgb(134 134 134)",
-                  boxShadow: "none",
-                  animation: "none",
-                },
               }}
               disabled={!country.available}
               onClick={() => {
                 if (currentModule === 3) {
                   dispatch(setCurrentModule(0));
                   handleButtonPress(country);
+                }
+                if (country.available && !country.bought) {
+                  setBuyCountrieModalOpen(true);
+                  setCountryToBuy(country);
                 }
               }}
             >

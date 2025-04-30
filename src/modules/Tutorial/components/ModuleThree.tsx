@@ -1,6 +1,8 @@
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 function ModuleThree({ showModule }: { showModule: boolean }) {
+  const { t } = useTranslation();
   return (
     <Typography
       sx={{
@@ -12,9 +14,7 @@ function ModuleThree({ showModule }: { showModule: boolean }) {
         zIndex: 2,
       }}
     >
-      {showModule
-        ? "Нажми на Netherlands и загляни на свою первую электростанцию!"
-        : "Перед тобой 4 страны, но пока открыта только Нидерланды (остальные ждут, когда ты их разблокируешь)."}
+      {showModule ? t("tutorial.step3a") : t("tutorial.step3b")}
     </Typography>
   );
 }

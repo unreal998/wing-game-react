@@ -7,7 +7,6 @@ import { MAIN_COLORS } from "../colors";
 const languages = {
   en: "English",
   ru: "Русский",
-  ua: "Українська",
 };
 
 type LanguageCode = keyof typeof languages;

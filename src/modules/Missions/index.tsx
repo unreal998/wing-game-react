@@ -2,7 +2,7 @@ import { Box, Modal, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { heightProportion } from "../../shared/utils";
 import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
@@ -14,36 +14,32 @@ import { useTranslation } from "react-i18next";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMissionsData } from "./selectors";
-import { getMissionsDataAction, selectMissionsLoading } from "./slices";
+import {
+  completeMissionAction,
+  getMissionsDataAction,
+  selectMissionsLoading,
+} from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+
 import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
 import { setCurrentModule } from "../Tutorial/slices";
 import { selectCurrentModule } from "../Tutorial/selectors";
-
-type MissionType = {
-  title: string;
-  description: string;
-  type: string;
-  reward: string;
-  coin: string;
-  img: string;
-};
+import { MissionsData } from "./types";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
   const currentModule = useSelector(selectCurrentModule());
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
-  const [selectedMission, setSelectedMission] = useState<MissionType | null>(
+  const [missionLoading, setMissionLoading] = useState(false);
+  const [selectedMission, setSelectedMission] = useState<MissionsData | null>(
     null,
   );
 
   const { t } = useTranslation();
 
-  const missions = useSelector(
-    selectMissionsData(),
-  ) as unknown as MissionType[];
+  const missions = useSelector(selectMissionsData());
 
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
@@ -75,10 +71,28 @@ const Missions = () => {
     return heightProportion - 100;
   }, []);
 
-  const handleOpen = (mission: MissionType) => {
+  const handleOpen = (mission: MissionsData) => {
     setSelectedMission(mission);
     setOpen(true);
   };
+
+  const handleMission = useCallback(() => {
+    if (selectedMission?.isSuccess === true) return;
+    if (selectedMission === null) return;
+    if (selectedMission.specType) return;
+    if (!userData) return;
+    setMissionLoading((prev) => !prev);
+    setTimeout(() => {
+      setMissionLoading((prev) => !prev);
+      setOpen((prev) => !prev);
+      dispatch(
+        completeMissionAction({
+          uid: userData?.id,
+          mission: selectedMission,
+        }),
+      );
+    }, 3000);
+  }, [selectedMission, userData, dispatch, setMissionLoading]);
 
   return (
     <Box
@@ -160,11 +174,6 @@ const Missions = () => {
                     key={idx}
                     onClick={() => handleOpen(mission)}
                   >
-                    <img
-                      src={mission.img !== null ? mission.img : ""}
-                      style={{ width: "26px", height: "26px" }}
-                      alt="mission image"
-                    />
                     <Box sx={{ padding: "10px 0px 10px 0px" }}>
                       <StyledSubscrible>{mission.title}</StyledSubscrible>
                       <StyledSHIB>
@@ -212,9 +221,11 @@ const Missions = () => {
                 <Typography variant="subtitle1" fontWeight="bold">
                   {selectedMission.type}
                 </Typography>
-                <Button variant="contained" onClick={() => setOpen(false)}>
-                  {t("start")}
-                </Button>
+                {!missionLoading && (
+                  <Button variant="contained" onClick={() => handleMission()}>
+                    {t("start")}
+                  </Button>
+                )}
               </>
             )}
           </Box>

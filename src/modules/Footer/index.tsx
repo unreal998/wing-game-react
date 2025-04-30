@@ -56,7 +56,10 @@ const Footer = () => {
   );
 
   const handlePushPower = useCallback(() => {
-    dispatch(setCurrentModule(5));
+    if (currentModule === 4) {
+      dispatch(setCurrentModule(5));
+    }
+
     if (userData) {
       dispatch(
         powerButtonPressed({
@@ -65,7 +68,7 @@ const Footer = () => {
         }),
       );
     }
-  }, [dispatch, userData, selectedCountry]);
+  }, [dispatch, userData, selectedCountry, currentModule]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);

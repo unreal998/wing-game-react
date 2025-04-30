@@ -8,3 +8,8 @@ export const selectReferalData =
   () =>
   ({ referalSlice }: ReferalSliceStore) =>
     referalSlice.referalData;
+
+export const selectLoading =
+  () =>
+  ({ referalSlice }: ReferalSliceStore) =>
+    referalSlice.loading;

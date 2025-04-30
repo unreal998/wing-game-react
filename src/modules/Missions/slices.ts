@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { MissionByTypeRequestType, MissionsData } from "./types";
+import {
+  CompleteMissionRequestType,
+  MissionByTypeRequestType,
+  MissionsData,
+} from "./types";
 
 type MissionsState = {
   missionsData: MissionsData[];
@@ -34,6 +38,23 @@ export const missionsSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    completeMissionAction: (
+      state,
+      { payload }: { payload: CompleteMissionRequestType },
+    ) => {
+      state.loading = true;
+    },
+    completeMissionActionSuccess: (
+      state,
+      { payload }: { payload: MissionsData[] },
+    ) => {
+      state.loading = false;
+      state.missionsData = payload;
+    },
+    completeMissionActionFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
   },
 });
 
@@ -41,6 +62,9 @@ export const {
   getMissionsDataAction,
   getMissionsDataActionSuccess,
   getMissionsDataActionFailure,
+  completeMissionAction,
+  completeMissionActionSuccess,
+  completeMissionActionFailure,
 } = missionsSlice.actions;
 
 export type MissionsStateType = typeof initialMissionsState;

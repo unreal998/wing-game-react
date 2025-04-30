@@ -1,6 +1,9 @@
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 function ModuleTwo() {
+  const { t } = useTranslation();
+
   return (
     <Typography
       sx={{
@@ -12,8 +15,7 @@ function ModuleTwo() {
         zIndex: 2,
       }}
     >
-      Чтобы открыть другие страны, нужно пригласить 3 друзей, и купить их за
-      TON.
+      {t("tutorial.step2")}
     </Typography>
   );
 }

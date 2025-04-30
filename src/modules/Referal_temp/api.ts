@@ -11,5 +11,6 @@ export const fetchBuyCountryData = async (uid: string, countryName: string) => {
     uid,
     countryName,
   });
-  return response.data;
+
+  return response.data.data;
 };
