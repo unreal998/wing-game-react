@@ -28,6 +28,7 @@ import { WithdrawModal } from "../../shared/components/WithdrawModal";
 import { ModuleThirteen } from "../Tutorial/components/ModuleThirteen";
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
+import Switch from "../../assets/sounds/switch.mp3";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -37,6 +38,7 @@ const Wallet = () => {
   const walletNumber = useSelector(selectWalletNumber());
   const withdrawData = useSelector(selectWithdrawData());
   const dispatch = useDispatch();
+  const [playTabSwitchSound] = useSound(Switch);
 
   const currentModule = useSelector(selectCurrentModule());
 
@@ -48,6 +50,7 @@ const Wallet = () => {
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    playTabSwitchSound();
     setValue(newValue);
   };
 
@@ -79,9 +82,6 @@ const Wallet = () => {
     const minutes = new Date(dateVal || 0).getMinutes();
     return minutes < 10 ? `0${minutes}` : `${minutes}`;
   };
-  const handleSoundClick = useCallback(() => {
-    playSound();
-  }, [playSound]);
 
   return (
     <MainBox
@@ -136,12 +136,7 @@ const Wallet = () => {
             { label: t("Wallet"), value: 0 },
             { label: t("History"), value: 1 },
           ].map(({ label, value }) => (
-            <TabStyles
-              key={value}
-              label={label}
-              value={value}
-              onClick={handleSoundClick}
-            />
+            <TabStyles key={value} label={label} value={value} />
           ))}
         </TabList>
 

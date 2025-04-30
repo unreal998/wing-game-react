@@ -24,6 +24,7 @@ import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
+import WindBlowing from "../../assets/sounds/windBlowing.mp3";
 
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
@@ -39,6 +40,7 @@ const Footer = () => {
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
+  const [playWindSound] = useSound(WindBlowing);
 
   const currentModule = useSelector(selectCurrentModule());
   const isAnyModuleActive = currentModule !== 0;
@@ -59,7 +61,7 @@ const Footer = () => {
     if (currentModule === 4) {
       dispatch(setCurrentModule(5));
     }
-
+    playWindSound();
     if (userData) {
       dispatch(
         powerButtonPressed({
@@ -68,7 +70,7 @@ const Footer = () => {
         }),
       );
     }
-  }, [dispatch, userData, selectedCountry, currentModule]);
+  }, [dispatch, userData, selectedCountry, currentModule, playWindSound]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
