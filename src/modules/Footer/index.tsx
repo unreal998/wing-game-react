@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Stack, Typography } from "@mui/material";
+import React, { useCallback, useEffect, useMemo } from "react";
+import { Stack } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -25,6 +25,10 @@ import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
 
+import { selectCurrentModule } from "../Tutorial/selectors";
+import { setCurrentModule } from "../Tutorial/slices";
+import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
+
 const Footer = () => {
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
@@ -35,8 +39,9 @@ const Footer = () => {
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
-  const [showModuleFour, setShowModuleFour] = useState(false);
-  const [showModuleFive, setShowModuleFive] = useState(false);
+
+  const currentModule = useSelector(selectCurrentModule());
+  const isAnyModuleActive = currentModule !== 0;
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -51,17 +56,19 @@ const Footer = () => {
   );
 
   const handlePushPower = useCallback(() => {
-    setShowModuleFour(false);
-    setShowModuleFive(true);
+    if (currentModule === 4) {
+      dispatch(setCurrentModule(5));
+    }
+
     if (userData) {
       dispatch(
         powerButtonPressed({
-          uid: userData?.id,
+          uid: userData.id,
           areaName: selectedCountry.name,
         }),
       );
     }
-  }, [dispatch, userData, selectedCountry]);
+  }, [dispatch, userData, selectedCountry, currentModule]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -82,44 +89,15 @@ const Footer = () => {
 
   useEffect(() => {
     if (location.pathname === "/home") {
-      setShowModuleFour(true);
-    } else {
-      setShowModuleFour(false);
+      dispatch(setCurrentModule(4));
+    } else if (currentModule === 4) {
+      dispatch(setCurrentModule(0));
     }
-  }, [location.pathname]);
+  }, [dispatch, location.pathname]);
 
   return (
     <>
-      {(showModuleFour || showModuleFive) && (
-        <Typography
-          sx={{
-            padding: "10px",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            borderRadius: "10px",
-            position: "absolute",
-            width: "80%",
-            top: showModuleFour ? "60%" : "50%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 999,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: showModuleFour ? "24px" : "16px",
-            fontWeight: 700,
-            color: "white",
-            textAlign: showModuleFour ? "center" : "left",
-          }}
-        >
-          {showModuleFour && t("tutorial.step4")}
-          {showModuleFive && (
-            <Typography sx={{ whiteSpace: "pre-line" }}>
-              {t("tutorial.step5")}
-            </Typography>
-          )}
-        </Typography>
-      )}
-
+      <ModuleFourFiveSix />
       <StyledMainBox>
         {location.pathname === "/home" && (
           <Stack
@@ -135,7 +113,7 @@ const Footer = () => {
               variant="contained"
               onClick={handlePushPower}
               sx={{
-                ...(showModuleFour && {
+                ...(currentModule === 4 && {
                   boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
                   animationName: "pulseShadow",
                   animationDuration: "2s",
@@ -163,19 +141,70 @@ const Footer = () => {
         <StyledFooterBox>
           {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
             const isActive = location.pathname === path;
-            const isDisabledOnHome = location.pathname === "/" && path !== "/";
+
+            const isSpecialActive =
+              (path === "/missions" && currentModule === 6) ||
+              (path === "/referal" && currentModule === 8) ||
+              (path === "/shop" && currentModule === 10) ||
+              (path === "/wallet" && currentModule === 12);
+
+            const isDisabled =
+              isAnyModuleActive &&
+              currentModule !== 14 &&
+              !(
+                (path === "/missions" && currentModule === 6) ||
+                (path === "/referal" && currentModule === 8) ||
+                (path === "/shop" && currentModule === 10) ||
+                (path === "/wallet" && currentModule === 12)
+              );
 
             const Component = isCenter ? StyledCenterFooter : StyledFooterBoxes;
 
             return (
               <Component
                 key={path}
-                onClick={() =>
-                  !isDisabledOnHome && handleNavigationChange(path)
-                }
+                onClick={() => {
+                  if (!isDisabled) {
+                    handleNavigationChange(path);
+                    if (path === "/missions" && currentModule === 6) {
+                      dispatch(setCurrentModule(7));
+                    }
+                    if (path === "/referal" && currentModule === 8) {
+                      dispatch(setCurrentModule(9));
+                    }
+                    if (path === "/shop" && currentModule === 10) {
+                      dispatch(setCurrentModule(11));
+                    }
+                    if (path === "/wallet" && currentModule === 12) {
+                      dispatch(setCurrentModule(13));
+                    }
+                  }
+                }}
                 style={{
-                  opacity: isDisabledOnHome ? 0.5 : 1,
-                  pointerEvents: isDisabledOnHome ? "none" : "auto",
+                  opacity: isDisabled ? 0.5 : 1,
+                  pointerEvents: isDisabled ? "none" : "auto",
+                  borderRadius: isSpecialActive ? "50%" : undefined,
+                  ...(isSpecialActive
+                    ? {
+                        padding: "20px 0",
+                        boxShadow: `0 0 4px ${MAIN_COLORS.activeTabColor}`,
+                        animationName: "pulseShadow",
+                        animationDuration: "2s",
+                        animationTimingFunction: "ease-in-out",
+                        animationIterationCount: "infinite",
+                        "@keyframes pulseShadow": {
+                          "0%": {
+                            boxShadow: `0 0 5px ${MAIN_COLORS.activeTabColor}`,
+                          },
+                          "50%": {
+                            boxShadow: `0 0 15px ${MAIN_COLORS.activeTabColor}`,
+                          },
+                          "100%": {
+                            boxShadow: `0 0 5px ${MAIN_COLORS.activeTabColor}`,
+                          },
+                        },
+                      }
+                    : {}),
                 }}
               >
                 <img src={isActive ? activeIcon : icon} alt={label} />

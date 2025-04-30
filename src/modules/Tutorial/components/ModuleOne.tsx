@@ -1,8 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
 import { useTranslation } from "react-i18next";
 
-function StepOne({ onClick }: { onClick: () => void }) {
+function ModuleOne({ onClick }: { onClick: () => void }) {
   const { t } = useTranslation();
 
   return (
@@ -38,4 +37,4 @@ function StepOne({ onClick }: { onClick: () => void }) {
   );
 }
 
-export default StepOne;
+export default ModuleOne;

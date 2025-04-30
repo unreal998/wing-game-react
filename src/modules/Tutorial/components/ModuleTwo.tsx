@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-function StepTwo() {
+function ModuleTwo() {
   const { t } = useTranslation();
 
   return (
@@ -20,4 +20,4 @@ function StepTwo() {
   );
 }
 
-export default StepTwo;
+export default ModuleTwo;

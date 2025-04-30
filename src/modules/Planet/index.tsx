@@ -4,7 +4,7 @@ import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedCountry } from "../Home/slices";
+import { selectHomeLoading, setSelectedCountry } from "../Home/slices";
 import {
   selectAreasData,
   selectCountiresData,
@@ -12,23 +12,22 @@ import {
 } from "../Header/selectors";
 import { AreaType } from "../../shared/types";
 import { MAIN_COLORS } from "../../shared/colors";
-import StepOne from "../Tutorial/components/StepOne";
-import StepTwo from "../Tutorial/components/StepTwo";
-import StepThree from "../Tutorial/components/StepThree";
-import BuyCountryModal from "../../shared/components/BuyCountry";
+
+import ModuleOne from "../Tutorial/components/ModuleOne";
+import ModuleTwo from "../Tutorial/components/ModuleTwo";
+import ModuleThree from "../Tutorial/components/ModuleThree";
+import { selectCurrentModule } from "../Tutorial/selectors";
+import { setCurrentModule } from "../Tutorial/slices";
 import { buyCountry } from "../Referal_temp/slices";
-import LoaderComponent from "../../shared/components/LoaderComponent";
-import { selectLoading } from "../Referal_temp/selectors";
 
 export const Planet = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const areasData = useSelector(selectAreasData());
   const countries = useSelector(selectCountiresData());
-  const loading = useSelector(selectLoading());
-  const [showModuleOne, setShowModuleOne] = useState(true);
-  const [showModuleTwo, setShowModuleTwo] = useState(false);
-  const [showModuleThree, setShowModuleThree] = useState(false);
+
+  const currentModule = useSelector(selectCurrentModule());
+
   const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
   const userData = useSelector(selectUserData());
   const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
@@ -53,14 +52,10 @@ export const Planet = () => {
   }, [dispatch, userData, countryToBuy]);
 
   const handleModuleClick = useCallback(() => {
-    if (showModuleOne) {
-      setShowModuleOne(false);
-      setShowModuleTwo(true);
-    } else if (showModuleTwo) {
-      setShowModuleTwo(false);
-      setShowModuleThree(true);
+    if (currentModule < 3) {
+      dispatch(setCurrentModule(currentModule + 1));
     }
-  }, [showModuleOne, showModuleTwo]);
+  }, [dispatch, currentModule]);
 
   const userCountiresData = useMemo(() => {
     if (!countries || !areasData) return [];
@@ -105,10 +100,7 @@ export const Planet = () => {
       }}
       onClick={handleModuleClick}
     >
-      <LoaderComponent loading={loading} />
-      {(showModuleTwo || showModuleThree) && (
-        <StepThree showModule={showModuleThree} />
-      )}
+      {currentModule >= 2 && <ModuleThree showModule={currentModule === 3} />}
 
       <StyledPlanetBox>
         {userCountiresData &&
@@ -119,7 +111,7 @@ export const Planet = () => {
               isBought={country.bought}
               sx={{
                 ...getCoords(index),
-                ...(showModuleThree && {
+                ...(currentModule === 3 && {
                   boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
                   animationName: "pulseShadow",
                   animationDuration: "2s",
@@ -140,7 +132,8 @@ export const Planet = () => {
               }}
               disabled={!country.available}
               onClick={() => {
-                if (showModuleThree && country.bought) {
+                if (currentModule === 3) {
+                  dispatch(setCurrentModule(0));
                   handleButtonPress(country);
                 }
                 if (country.available && !country.bought) {
@@ -153,13 +146,8 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
-      <BuyCountryModal
-        open={buyCountrieModalOpen}
-        onClose={() => setBuyCountrieModalOpen(false)}
-        onBuy={handleBuyCountry}
-      />
-      {showModuleTwo && <StepTwo />}
-      {showModuleOne && <StepOne onClick={handleModuleClick} />}
+      {currentModule === 2 && <ModuleTwo />}
+      {currentModule === 1 && <ModuleOne onClick={handleModuleClick} />}
     </Box>
   );
 };

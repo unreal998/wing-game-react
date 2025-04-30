@@ -19,6 +19,9 @@ import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { ButtonShopStyled } from "./components/ButtonShopStyled";
+import { ModuleElevenTwelve } from "../Tutorial/components/ModuleElevenTwelve";
+import { setCurrentModule } from "../Tutorial/slices";
+import { selectCurrentModule } from "../Tutorial/selectors";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 42 },
@@ -29,6 +32,7 @@ const profitValues = [
 
 const Shop = () => {
   const loading = useSelector(selectShopLoading);
+  const currentModule = useSelector(selectCurrentModule());
   const { t } = useTranslation();
   const [windValue, setWindValue] = useState<number>(0);
   const [tab, setTab] = useState(0);
@@ -105,7 +109,22 @@ const Shop = () => {
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
 
   return (
-    <MainBox>
+    <MainBox
+      position={"relative"}
+      onClick={(e) => {
+        if (currentModule !== 14) {
+          e.stopPropagation();
+          e.preventDefault();
+          dispatch(setCurrentModule(12));
+        }
+      }}
+      sx={{
+        "& *": {
+          pointerEvents: currentModule !== 14 ? "none" : "auto",
+        },
+      }}
+    >
+      <ModuleElevenTwelve />
       <LoaderComponent loading={loading} />
       <NamedStyled
         sx={{

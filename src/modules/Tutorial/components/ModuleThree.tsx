@@ -1,9 +1,8 @@
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-function StepThree({ showModule }: { showModule: boolean }) {
+function ModuleThree({ showModule }: { showModule: boolean }) {
   const { t } = useTranslation();
-
   return (
     <Typography
       sx={{
@@ -20,4 +19,4 @@ function StepThree({ showModule }: { showModule: boolean }) {
   );
 }
 
-export default StepThree;
+export default ModuleThree;
