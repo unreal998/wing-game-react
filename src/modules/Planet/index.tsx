@@ -40,16 +40,16 @@ export const Planet = () => {
     [dispatch, navigate],
   );
 
-  // const handleBuyCountry = useCallback(() => {
-  //   if (countryToBuy && userData) {
-  //     if (userData.TONBalance >= 1) {
-  //       dispatch(
-  //         buyCountry({ uid: userData?.id, countryName: countryToBuy.name }),
-  //         setBuyCountrieModalOpen(false)
-  //       );
-  //     }
-  //   }
-  // }, [dispatch, userData, countryToBuy]);
+  const handleBuyCountry = useCallback(() => {
+    if (countryToBuy && userData) {
+      if (userData.TONBalance >= 1) {
+        dispatch(
+          buyCountry({ uid: userData?.id, countryName: countryToBuy.name }),
+          setBuyCountrieModalOpen(false),
+        );
+      }
+    }
+  }, [dispatch, userData, countryToBuy]);
 
   const handleModuleClick = useCallback(() => {
     if (currentModule < 3) {
