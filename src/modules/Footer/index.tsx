@@ -128,7 +128,8 @@ const Footer = () => {
             marginBottom="10px"
           >
             <StyledTime>
-              {calculateTime} {t("remain")}
+              <Typography sx={{ fontSize: "20px" }}>TIME LEFT</Typography>
+              {calculateTime}
             </StyledTime>
             <ButtonGame
               disabled={isButtonDisabled}
@@ -141,17 +142,8 @@ const Footer = () => {
                   animationDuration: "2s",
                   animationTimingFunction: "ease-in-out",
                   animationIterationCount: "infinite",
-                  "@keyframes pulseShadow": {
-                    "0%": {
-                      boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
-                    },
-                    "50%": {
-                      boxShadow: `0 0 60px ${MAIN_COLORS.activeTabColor}`,
-                    },
-                    "100%": {
-                      boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
-                    },
-                  },
+                  width: "95vw",
+                  marginTop: "10px",
                 }),
               }}
             >

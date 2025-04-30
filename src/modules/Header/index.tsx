@@ -64,7 +64,6 @@ const Header = () => {
             width: "50vh",
           }}
         >
-          <img src={Gear} alt="gear" onClick={handleSoundClick} />
           <StyledBoxTable>
             <Box
               sx={{
@@ -74,55 +73,54 @@ const Header = () => {
                 width: "100%",
               }}
             >
-              <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+              <Typography sx={{ fontSize: "16px", fontWeight: 400 }}>
                 {userData?.userName}
               </Typography>
-              <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
-                LVL:{userData?.lvl}
-              </Typography>
             </Box>
-            <StyledSubSchedule>
-              <StyledSchedule sx={{ width: `${userData?.lvl}%` }} />
-            </StyledSubSchedule>
           </StyledBoxTable>
         </Box>
-        <StyledCurencyBox>
-          <img src={USDT} alt="usdt" />
-          <Typography
-            sx={{ fontSize: "12px", fontWeight: 500, color: "white" }}
-          >
-            TON: {userData?.TONBalance}
-          </Typography>
-        </StyledCurencyBox>
+        <img
+          src={Gear}
+          alt="gear"
+          onClick={handleSoundClick}
+          style={{ paddingRight: "10px" }}
+        />
       </StyledMain>
       {location.pathname === "/home" && (
         <StyledMain
           sx={{
             gap: "20px",
             alignItems: "center",
-            backgroundColor: MAIN_COLORS.electrisityBoxBG,
           }}
         >
           <StyledFlashBox>
-            <img src={Flash} alt="flash" />
+            <img src={Flash} alt="flash" style={{ margin: "-5px" }} />
             <Box
               sx={{
-                display: "flex",
                 color: MAIN_COLORS.textColor,
-                gap: "35px",
+                gap: "15px",
               }}
             >
               <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
                 {userData?.WindBalance} TURX
               </Typography>
+              <StyledSubSchedule>
+                <StyledSchedule sx={{ width: `${userData?.lvl}%` }} />
+              </StyledSubSchedule>
             </Box>
+
+            <Typography sx={{ fontSize: "16px", fontWeight: 400 }}>
+              LVL:{userData?.lvl}
+            </Typography>
           </StyledFlashBox>
-          <img
-            src={Earth}
-            alt="earth"
-            style={{ width: "26px", height: "26px", cursor: "pointer" }}
-            onClick={handleEarthClick}
-          />
+          <StyledFlashBox>
+            <img src={USDT} alt="usdt" style={{ width: "24px" }} />
+            <Typography
+              sx={{ fontSize: "16px", fontWeight: 700, color: "white" }}
+            >
+              {userData?.TONBalance}
+            </Typography>
+          </StyledFlashBox>
         </StyledMain>
       )}
     </Stack>

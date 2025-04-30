@@ -19,6 +19,8 @@ import { getMissionsDataAction, selectMissionsLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { MAIN_COLORS } from "../../shared/colors";
+import { ButtonGame } from "../../shared/components/ButtonGame";
+import { ButtonMissions } from "./components/ButtonMissions";
 
 type MissionType = {
   title: string;
@@ -89,20 +91,10 @@ const Missions = () => {
       }}
     >
       <LoaderComponent loading={loading} />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <NamedStyled>{t("Missions")}</NamedStyled>
-      </Box>
 
       <TabContext value={activeTab.toString()}>
         <Box
           sx={{
-            borderBottom: 1,
             borderColor: "divider",
           }}
         >
@@ -119,6 +111,15 @@ const Missions = () => {
             }}
             onChange={handleTabChange}
           >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <NamedStyled>{t("Missions")}</NamedStyled>
+            </Box>
             {missionTitles.map((mission, index) => (
               <StyledTabMission
                 label={mission.text}
@@ -131,7 +132,9 @@ const Missions = () => {
         {missionTitles.map((_, index) => (
           <TabPanel
             sx={{
-              padding: 0,
+              padding: "8px 20px 8px 8px",
+              backgroundColor: "rgba(8, 32, 47, 1)",
+              borderRadius: "12px",
             }}
             value={index.toString()}
             key={index}
@@ -146,17 +149,27 @@ const Missions = () => {
                     key={idx}
                     onClick={() => handleOpen(mission)}
                   >
-                    <img
-                      src={mission.img !== null ? mission.img : ""}
-                      style={{ width: "26px", height: "26px" }}
-                      alt="mission image"
-                    />
-                    <Box sx={{ padding: "10px 0px 10px 0px" }}>
-                      <StyledSubscrible>{mission.title}</StyledSubscrible>
-                      <StyledSHIB>
-                        {mission.reward} {mission.coin}
-                      </StyledSHIB>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        src={mission.img !== null ? mission.img : ""}
+                        style={{ width: "26px", height: "26px" }}
+                        alt="mission image"
+                      />
+                      <Box sx={{ padding: "10px 0px 10px 0px" }}>
+                        <StyledSubscrible>{mission.title}</StyledSubscrible>
+                        <StyledSHIB>
+                          {mission.reward} {mission.coin}
+                        </StyledSHIB>
+                      </Box>
                     </Box>
+
+                    <ButtonMissions>Go</ButtonMissions>
                   </StyledBoxMission>
                 ))}
             </StyledBox>

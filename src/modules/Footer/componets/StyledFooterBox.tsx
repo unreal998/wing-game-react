@@ -5,4 +5,7 @@ export const StyledFooterBox = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  backgroundColor: "rgba(1, 18, 29, 0.5)",
+  backdropFilter: "blur(8px)",
+  zIndex: 999,
 });

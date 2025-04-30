@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
@@ -39,6 +39,8 @@ function convertToUserData(
 const App = () => {
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
+  const location = useLocation(); // ⬅️ получаем текущий путь
+  const isMissionsPage = location.pathname === "/missions"; // ⬅️ флаг для затемнения
 
   useEffect(() => {
     try {
@@ -62,7 +64,9 @@ const App = () => {
       sx={{
         height: "100vh",
         backgroundColor: MAIN_COLORS.mainBG,
-        backgroundImage: `${selectedCountry.name ? `url(./${selectedCountry.name}BG.png)` : "none"}`,
+        backgroundImage: `${
+          selectedCountry.name ? `url(./${selectedCountry.name}BG.png)` : "none"
+        }`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -87,20 +91,42 @@ const App = () => {
         </Routes>
       </Box>
       <Footer />
+
+      {/* Lottie-анимация + затемнение при /missions */}
       {selectedCountry?.name && (
-        <Lottie
-          animationData={require(
-            `./assets/animations/${selectedCountry.name}Anim.json`,
-          )}
-          loop
-          style={{
-            top: "240px",
-            zIndex: 0,
-            left: "0",
+        <Box
+          sx={{
             position: "absolute",
+            top: "240px",
+            left: 0,
+            zIndex: 0,
             transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
-        />
+        >
+          {isMissionsPage && (
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                backgroundColor: "rgba(0, 0, 0, 0.8)", // ⬅️ можно поменять интенсивность затемнения
+                zIndex: 1,
+              }}
+            />
+          )}
+          <Lottie
+            animationData={require(
+              `./assets/animations/${selectedCountry.name}Anim.json`,
+            )}
+            loop
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+              zIndex: 0,
+              pointerEvents: "none",
+            }}
+          />
+        </Box>
       )}
     </Box>
   );

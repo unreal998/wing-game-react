@@ -8,5 +8,6 @@ export const StyledFlashBox = styled(Box)({
   borderRadius: "7px",
   width: "50%",
   alignItems: "center",
-  backgroundColor: MAIN_COLORS.electrisityBoxBG,
+  backgroundColor: " rgba(4, 53, 80, 1)",
+  justifyContent: "center",
 });

@@ -13,4 +13,5 @@ export const StyledCenterFooter = styled(Box)({
   borderBottom: "none",
   borderTopLeftRadius: "52%",
   borderTopRightRadius: "52%",
+  marginTop: "10px",
 });
