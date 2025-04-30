@@ -79,7 +79,6 @@ const Wallet = () => {
     const minutes = new Date(dateVal || 0).getMinutes();
     return minutes < 10 ? `0${minutes}` : `${minutes}`;
   };
-
   const handleSoundClick = useCallback(() => {
     playSound();
   }, [playSound]);
