@@ -1,10 +1,11 @@
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { selectShowModuleNine, selectShowModuleTen } from "../selectors";
+import { selectCurrentModule } from "../selectors";
 
 export const ModuleNineTen = () => {
-  const setShowModuleNine = useSelector(selectShowModuleNine());
-  const showModuleTen = useSelector(selectShowModuleTen());
+  const currentModule = useSelector(selectCurrentModule());
+
+  if (currentModule !== 9 && currentModule !== 10) return null;
 
   return (
     <Typography
@@ -27,15 +28,16 @@ export const ModuleNineTen = () => {
         textAlign: "center",
       }}
     >
-      {setShowModuleNine && (
+      {currentModule === 9 ? (
         <>
           1 - Копируешь ссылку-приглашение
           <br />
           2 - Кидаешь друзьям.
           <br />3 - Получаешь бонусы за каждого!
         </>
+      ) : (
+        "Вкладывайся в энергетику!"
       )}
-      {showModuleTen && "Вкладывайся в энергетику!"}
     </Typography>
   );
 };

@@ -1,33 +1,44 @@
 import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectShowModuleFour,
-  selectShowModuleFive,
-  selectShowModuleSix,
-} from "../selectors";
-import { setShowModuleFive, setShowModuleSix } from "../slices";
 import { useEffect } from "react";
+import { setCurrentModule } from "../slices";
+import { selectCurrentModule } from "../selectors";
 
 export const ModuleFourFiveSix = () => {
   const dispatch = useDispatch();
-  const showModuleFour = useSelector(selectShowModuleFour());
-  const showModuleFive = useSelector(selectShowModuleFive());
-  const showModuleSix = useSelector(selectShowModuleSix());
+  const currentModule = useSelector(selectCurrentModule());
 
   useEffect(() => {
-    if (showModuleFive) {
+    if (currentModule === 5) {
       const timer = setTimeout(() => {
-        dispatch(setShowModuleFive(false));
-        dispatch(setShowModuleSix(true));
+        dispatch(setCurrentModule(6));
       }, 3000);
 
       return () => clearTimeout(timer);
     }
-  }, [showModuleFive, dispatch]);
+  }, [currentModule, dispatch]);
 
-  if (!showModuleFour && !showModuleFive && !showModuleSix) {
-    return null;
-  }
+  if (currentModule < 4 || currentModule > 6) return null;
+
+  const getText = () => {
+    switch (currentModule) {
+      case 4:
+        return "Эта кнопка - твой главный источник энергии!";
+      case 5:
+        return (
+          <>
+            - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
+            "киловатты").
+            <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
+            клик!
+          </>
+        );
+      case 6:
+        return "Зайди в 'Миссии' — тут куча заданий, за которые платят!";
+      default:
+        return null;
+    }
+  };
 
   return (
     <Typography
@@ -37,30 +48,20 @@ export const ModuleFourFiveSix = () => {
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: showModuleFour ? "60%" : "50%",
+        top: currentModule === 4 ? "60%" : "50%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontSize: showModuleFour ? "24px" : "16px",
+        fontSize: currentModule === 4 ? "24px" : "16px",
         fontWeight: 700,
         color: "white",
-        textAlign: showModuleFour ? "center" : "left",
+        textAlign: currentModule === 4 ? "center" : "left",
       }}
     >
-      {showModuleFour && "Эта кнопка - твой главный источник энергии!"}
-      {showModuleFive && (
-        <>
-          - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
-          "киловатты").
-          <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
-          клик!
-        </>
-      )}
-      {showModuleSix &&
-        "Зайди в 'Миссии' — тут куча заданий, за которые платят!"}
+      {getText()}
     </Typography>
   );
 };

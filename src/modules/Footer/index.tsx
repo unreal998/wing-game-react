@@ -25,34 +25,8 @@ import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
 
-import {
-  selectShowModuleFour,
-  selectShowModuleSix,
-  selectShowModuleEight,
-  selectShowModuleTen,
-  selectShowModuleTwelve,
-  selectShowModuleOne,
-  selectShowModuleTwo,
-  selectShowModuleThree,
-  selectShowModuleFive,
-  selectShowModuleSeven,
-  selectShowModuleNine,
-  selectShowModuleEleven,
-  selectShowModuleThirteen,
-  selectShowModuleFourteen,
-} from "../Tutorial/selectors";
-import {
-  setShowModuleFour,
-  setShowModuleFive,
-  setShowModuleSix,
-  setShowModuleSeven,
-  setShowModuleEight,
-  setShowModuleNine,
-  setShowModuleTen,
-  setShowModuleEleven,
-  setShowModuleTwelve,
-  setShowModuleThirteen,
-} from "../Tutorial/slices";
+import { selectCurrentModule } from "../Tutorial/selectors";
+import { setCurrentModule } from "../Tutorial/slices";
 import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 
 const Footer = () => {
@@ -66,20 +40,8 @@ const Footer = () => {
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
 
-  const showModuleOne = useSelector(selectShowModuleOne());
-  const showModuleTwo = useSelector(selectShowModuleTwo());
-  const showModuleThree = useSelector(selectShowModuleThree());
-  const showModuleFour = useSelector(selectShowModuleFour());
-  const showModuleFive = useSelector(selectShowModuleFive());
-  const showModuleSix = useSelector(selectShowModuleSix());
-  const showModuleSeven = useSelector(selectShowModuleSeven());
-  const showModuleEight = useSelector(selectShowModuleEight());
-  const showModuleNine = useSelector(selectShowModuleNine());
-  const showModuleTen = useSelector(selectShowModuleTen());
-  const showModuleEleven = useSelector(selectShowModuleEleven());
-  const showModuleTwelve = useSelector(selectShowModuleTwelve());
-  const showModuleThirteen = useSelector(selectShowModuleThirteen());
-  const showModuleFourteen = useSelector(selectShowModuleFourteen());
+  const currentModule = useSelector(selectCurrentModule());
+  const isAnyModuleActive = currentModule !== 0;
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -94,12 +56,11 @@ const Footer = () => {
   );
 
   const handlePushPower = useCallback(() => {
-    dispatch(setShowModuleFour(false));
-    dispatch(setShowModuleFive(true));
+    dispatch(setCurrentModule(5));
     if (userData) {
       dispatch(
         powerButtonPressed({
-          uid: userData?.id,
+          uid: userData.id,
           areaName: selectedCountry.name,
         }),
       );
@@ -125,28 +86,11 @@ const Footer = () => {
 
   useEffect(() => {
     if (location.pathname === "/home") {
-      dispatch(setShowModuleFour(true));
-    } else {
-      dispatch(setShowModuleFour(false));
+      dispatch(setCurrentModule(4));
+    } else if (currentModule === 4) {
+      dispatch(setCurrentModule(0));
     }
   }, [dispatch, location.pathname]);
-
-  const areAllModulesFalse = !(
-    showModuleOne ||
-    showModuleTwo ||
-    showModuleThree ||
-    showModuleFour ||
-    showModuleFive ||
-    showModuleSix ||
-    showModuleSeven ||
-    showModuleEight ||
-    showModuleNine ||
-    showModuleTen ||
-    showModuleEleven ||
-    showModuleTwelve ||
-    showModuleThirteen ||
-    showModuleFourteen
-  );
 
   return (
     <>
@@ -166,7 +110,7 @@ const Footer = () => {
               variant="contained"
               onClick={handlePushPower}
               sx={{
-                ...(showModuleFour && {
+                ...(currentModule === 4 && {
                   boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
                   animationName: "pulseShadow",
                   animationDuration: "2s",
@@ -194,25 +138,21 @@ const Footer = () => {
         <StyledFooterBox>
           {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
             const isActive = location.pathname === path;
-            const isDisabledOnHome = location.pathname === "/" && path !== "/";
-            const isMissionButton = path === "/missions";
-            const isReferalButton = path === "/referal";
-            const isShopButton = path === "/shop";
-            const isWalletButton = path === "/wallet";
 
             const isSpecialActive =
-              (isMissionButton && showModuleSix) ||
-              (isReferalButton && showModuleEight) ||
-              (isShopButton && showModuleTen) ||
-              (isWalletButton && showModuleTwelve);
+              (path === "/missions" && currentModule === 6) ||
+              (path === "/referal" && currentModule === 8) ||
+              (path === "/shop" && currentModule === 10) ||
+              (path === "/wallet" && currentModule === 12);
 
             const isDisabled =
-              !areAllModulesFalse &&
+              isAnyModuleActive &&
+              currentModule !== 14 &&
               !(
-                (showModuleSix && isMissionButton) ||
-                (showModuleEight && isReferalButton) ||
-                (showModuleTen && isShopButton) ||
-                (showModuleTwelve && isWalletButton)
+                (path === "/missions" && currentModule === 6) ||
+                (path === "/referal" && currentModule === 8) ||
+                (path === "/shop" && currentModule === 10) ||
+                (path === "/wallet" && currentModule === 12)
               );
 
             const Component = isCenter ? StyledCenterFooter : StyledFooterBoxes;
@@ -223,21 +163,17 @@ const Footer = () => {
                 onClick={() => {
                   if (!isDisabled) {
                     handleNavigationChange(path);
-                    if (isMissionButton && showModuleSix) {
-                      dispatch(setShowModuleSix(false));
-                      dispatch(setShowModuleSeven(true));
+                    if (path === "/missions" && currentModule === 6) {
+                      dispatch(setCurrentModule(7));
                     }
-                    if (isReferalButton && showModuleEight) {
-                      dispatch(setShowModuleEight(false));
-                      dispatch(setShowModuleNine(true));
+                    if (path === "/referal" && currentModule === 8) {
+                      dispatch(setCurrentModule(9));
                     }
-                    if (isShopButton && showModuleTen) {
-                      dispatch(setShowModuleTen(false));
-                      dispatch(setShowModuleEleven(true));
+                    if (path === "/shop" && currentModule === 10) {
+                      dispatch(setCurrentModule(11));
                     }
-                    if (isWalletButton && showModuleTwelve) {
-                      dispatch(setShowModuleTwelve(false));
-                      dispatch(setShowModuleThirteen(true));
+                    if (path === "/wallet" && currentModule === 12) {
+                      dispatch(setCurrentModule(13));
                     }
                   }
                 }}

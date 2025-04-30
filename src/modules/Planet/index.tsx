@@ -11,16 +11,8 @@ import { MAIN_COLORS } from "../../shared/colors";
 import ModuleOne from "../Tutorial/components/ModuleOne";
 import ModuleTwo from "../Tutorial/components/ModuleTwo";
 import ModuleThree from "../Tutorial/components/ModuleThree";
-import {
-  selectShowModuleOne,
-  selectShowModuleTwo,
-  selectShowModuleThree,
-} from "../Tutorial/selectors";
-import {
-  setShowModuleOne,
-  setShowModuleTwo,
-  setShowModuleThree,
-} from "../Tutorial/slices";
+import { selectCurrentModule } from "../Tutorial/selectors";
+import { setCurrentModule } from "../Tutorial/slices";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -28,9 +20,7 @@ export const Planet = () => {
   const areasData = useSelector(selectAreasData());
   const countries = useSelector(selectCountiresData());
 
-  const showModuleOne = useSelector(selectShowModuleOne());
-  const showModuleTwo = useSelector(selectShowModuleTwo());
-  const showModuleThree = useSelector(selectShowModuleThree());
+  const currentModule = useSelector(selectCurrentModule());
 
   const handleButtonPress = useCallback(
     (selectedCountry: AreaType) => {
@@ -41,14 +31,10 @@ export const Planet = () => {
   );
 
   const handleModuleClick = useCallback(() => {
-    if (showModuleOne) {
-      dispatch(setShowModuleOne(false));
-      dispatch(setShowModuleTwo(true));
-    } else if (showModuleTwo) {
-      dispatch(setShowModuleTwo(false));
-      dispatch(setShowModuleThree(true));
+    if (currentModule < 3) {
+      dispatch(setCurrentModule(currentModule + 1));
     }
-  }, [dispatch, showModuleOne, showModuleTwo]);
+  }, [dispatch, currentModule]);
 
   const userCountiresData = useMemo(() => {
     if (!countries || !areasData) return [];
@@ -93,9 +79,7 @@ export const Planet = () => {
       }}
       onClick={handleModuleClick}
     >
-      {(showModuleTwo || showModuleThree) && (
-        <ModuleThree showModule={showModuleThree} />
-      )}
+      {currentModule >= 2 && <ModuleThree showModule={currentModule === 3} />}
 
       <StyledPlanetBox>
         {userCountiresData &&
@@ -105,7 +89,7 @@ export const Planet = () => {
               key={country.name}
               sx={{
                 ...getCoords(index),
-                ...(showModuleThree && {
+                ...(currentModule === 3 && {
                   boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
                   animationName: "pulseShadow",
                   animationDuration: "2s",
@@ -131,8 +115,8 @@ export const Planet = () => {
               }}
               disabled={!country.available}
               onClick={() => {
-                if (showModuleThree) {
-                  dispatch(setShowModuleThree(false));
+                if (currentModule === 3) {
+                  dispatch(setCurrentModule(0));
                   handleButtonPress(country);
                 }
               }}
@@ -141,8 +125,8 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
-      {showModuleTwo && <ModuleTwo />}
-      {showModuleOne && <ModuleOne onClick={handleModuleClick} />}
+      {currentModule === 2 && <ModuleTwo />}
+      {currentModule === 1 && <ModuleOne onClick={handleModuleClick} />}
     </Box>
   );
 };

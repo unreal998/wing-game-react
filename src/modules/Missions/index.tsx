@@ -18,7 +18,8 @@ import { getMissionsDataAction, selectMissionsLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
-import { setShowModuleEight, setShowModuleSeven } from "../Tutorial/slices";
+import { setCurrentModule } from "../Tutorial/slices";
+import { selectCurrentModule } from "../Tutorial/selectors";
 
 type MissionType = {
   title: string;
@@ -31,6 +32,7 @@ type MissionType = {
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
+  const currentModule = useSelector(selectCurrentModule());
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
   const [selectedMission, setSelectedMission] = useState<MissionType | null>(
@@ -80,9 +82,12 @@ const Missions = () => {
 
   return (
     <Box
-      onClick={() => {
-        dispatch(setShowModuleSeven(false));
-        dispatch(setShowModuleEight(true));
+      onClick={(e) => {
+        if (currentModule !== 14) {
+          e.stopPropagation();
+          e.preventDefault();
+          dispatch(setCurrentModule(8));
+        }
       }}
       sx={{
         display: "flex",
@@ -91,6 +96,9 @@ const Missions = () => {
         height: `${heightProportion}px`,
         gap: "15px",
         position: "relative",
+        "& *": {
+          pointerEvents: currentModule !== 14 ? "none" : "auto",
+        },
       }}
     >
       <ModuleSevenEight />

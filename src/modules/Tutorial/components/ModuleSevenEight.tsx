@@ -1,10 +1,16 @@
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { selectShowModuleSeven, selectShowModuleEight } from "../selectors";
+import { selectCurrentModule } from "../selectors";
 
 export const ModuleSevenEight = () => {
-  const showModuleSeven = useSelector(selectShowModuleSeven());
-  const showModuleEight = useSelector(selectShowModuleEight());
+  const currentModule = useSelector(selectCurrentModule());
+
+  if (currentModule !== 7 && currentModule !== 8) return null;
+
+  const text =
+    currentModule === 7
+      ? "Сначала выполняй простые задания — быстрый старт гарантирован!"
+      : "Друзья = деньги! ";
 
   return (
     <Typography
@@ -27,9 +33,7 @@ export const ModuleSevenEight = () => {
         textAlign: "center",
       }}
     >
-      {showModuleSeven &&
-        "Сначала выполняй простые задания — быстрый старт гарантирован!"}
-      {showModuleEight && "Друзья = деньги! "}
+      {text}
     </Typography>
   );
 };

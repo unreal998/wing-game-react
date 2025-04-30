@@ -1,10 +1,11 @@
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { selectShowModuleEleven, selectShowModuleTwelve } from "../selectors";
+import { selectCurrentModule } from "../selectors";
 
 export const ModuleElevenTwelve = () => {
-  const setShowModuleEleven = useSelector(selectShowModuleEleven());
-  const showModuleTwelve = useSelector(selectShowModuleTwelve());
+  const currentModule = useSelector(selectCurrentModule());
+
+  if (currentModule !== 11 && currentModule !== 12) return null;
 
   return (
     <Typography
@@ -14,7 +15,7 @@ export const ModuleElevenTwelve = () => {
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: setShowModuleEleven ? "100%" : "115%",
+        top: currentModule === 11 ? "100%" : "115%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,
@@ -27,20 +28,21 @@ export const ModuleElevenTwelve = () => {
         textAlign: "center",
       }}
     >
-      {setShowModuleEleven && (
+      {currentModule === 11 ? (
         <>
           Тут можно купить улучшения (за TON), которые увеличат доход
           <br />
           <br />
-          - Энергитический поток → больше Kw за клик.
+          - Энергетический поток → больше Kw за клик.
           <br />
-          - Моды → пассивный доход как и в Kw так и TON!
+          - Моды → пассивный доход как в Kw, так и в TON!
           <br />
           <br />
-          Через 21 день улучшения начинают приносить прибиль в TON!
+          Через 21 день улучшения начинают приносить прибыль в TON!
         </>
+      ) : (
+        "Где хранить и выводить TON"
       )}
-      {showModuleTwelve && "Где хранить и выводить TON"}
     </Typography>
   );
 };

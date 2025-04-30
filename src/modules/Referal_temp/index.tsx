@@ -32,12 +32,15 @@ import LoaderComponent from "../../shared/components/LoaderComponent";
 import { AreaType } from "../../shared/types";
 import BuyCountryModal from "../../shared/components/BuyCountry";
 import { ModuleNineTen } from "../Tutorial/components/ModuleNineTen";
-import { setShowModuleNine, setShowModuleTen } from "../Tutorial/slices";
+import { setCurrentModule } from "../Tutorial/slices";
+import { selectCurrentModule } from "../Tutorial/selectors";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
 const Referal = () => {
   const loading = useSelector(selectReferalLoading);
+  const currentModule = useSelector(selectCurrentModule());
+
   const { t } = useTranslation();
   const userData = useSelector(selectUserData());
   const referalData = useSelector(selectReferalData());
@@ -115,9 +118,17 @@ const Referal = () => {
     <MainBox
       height={heightProportion}
       position={"relative"}
-      onClick={() => {
-        dispatch(setShowModuleNine(false));
-        dispatch(setShowModuleTen(true));
+      onClick={(e) => {
+        if (currentModule !== 14) {
+          e.stopPropagation();
+          e.preventDefault();
+          dispatch(setCurrentModule(10));
+        }
+      }}
+      sx={{
+        "& *": {
+          pointerEvents: currentModule !== 14 ? "none" : "auto",
+        },
       }}
     >
       <ModuleNineTen />

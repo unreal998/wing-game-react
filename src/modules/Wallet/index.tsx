@@ -26,8 +26,8 @@ import Copy from "../../assets/copy.svg";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
 import { ModuleThirteen } from "../Tutorial/components/ModuleThirteen";
-import { selectShowModuleThirteen } from "../Tutorial/selectors";
-import { setShowModuleThirteen } from "../Tutorial/slices";
+import { selectCurrentModule } from "../Tutorial/selectors";
+import { setCurrentModule } from "../Tutorial/slices";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -38,7 +38,7 @@ const Wallet = () => {
   const withdrawData = useSelector(selectWithdrawData());
   const dispatch = useDispatch();
 
-  const showModuleThirteen = useSelector(selectShowModuleThirteen());
+  const currentModule = useSelector(selectCurrentModule());
 
   useEffect(() => {
     if (userData && !withdrawData) dispatch(getWithdrawAction(userData.id));
@@ -87,9 +87,21 @@ const Wallet = () => {
   return (
     <MainBox
       position={"relative"}
-      onClick={() => dispatch(setShowModuleThirteen(false))}
+      onClick={(e) => {
+        if (currentModule !== 14) {
+          e.stopPropagation();
+          e.preventDefault();
+          dispatch(setCurrentModule(14));
+        }
+      }}
+      sx={{
+        "& *": {
+          pointerEvents: currentModule !== 14 ? "none" : "auto",
+        },
+      }}
     >
-      {showModuleThirteen && <ModuleThirteen />}
+      {currentModule === 13 && <ModuleThirteen />}
+
       <LoaderComponent loading={loading} />
       <Typography variant="h5">{t("Wallet")}</Typography>
 
