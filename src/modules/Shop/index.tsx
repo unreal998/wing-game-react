@@ -81,7 +81,7 @@ const Shop = () => {
     if (userData !== null) {
       dispatch(updateBalanceAction(userData.id));
     }
-  }, []);
+  }, [dispatch, userData]);
 
   useEffect(() => {
     if (!shopValues?.length) {

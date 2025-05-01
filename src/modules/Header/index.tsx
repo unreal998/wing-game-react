@@ -32,7 +32,7 @@ const Header = () => {
     if (userData !== null) {
       dispatch(updateBalanceAction(userData.id));
     }
-  }, []);
+  }, [dispatch, userData]);
 
   const handleSoundClick = useCallback(() => {
     playSound();
