@@ -4,7 +4,7 @@ import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectHomeLoading, setSelectedCountry } from "../Home/slices";
+import { setSelectedCountry } from "../Home/slices";
 import {
   selectAreasData,
   selectCountiresData,
@@ -16,15 +16,20 @@ import { MAIN_COLORS } from "../../shared/colors";
 import ModuleOne from "../Tutorial/components/ModuleOne";
 import ModuleTwo from "../Tutorial/components/ModuleTwo";
 import ModuleThree from "../Tutorial/components/ModuleThree";
-import { selectCurrentModule } from "../Tutorial/selectors";
+import {
+  selectCurrentModule,
+  selectIsTutorialFinished,
+} from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import { buyCountry } from "../Referal_temp/slices";
+import BuyCountryModal from "../../shared/components/BuyCountry";
 
 export const Planet = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const areasData = useSelector(selectAreasData());
   const countries = useSelector(selectCountiresData());
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
 
   const currentModule = useSelector(selectCurrentModule());
 
@@ -52,10 +57,10 @@ export const Planet = () => {
   }, [dispatch, userData, countryToBuy]);
 
   const handleModuleClick = useCallback(() => {
-    if (currentModule < 3) {
+    if (!isTutorialFinished && currentModule < 3) {
       dispatch(setCurrentModule(currentModule + 1));
     }
-  }, [dispatch, currentModule]);
+  }, [isTutorialFinished, currentModule, dispatch]);
 
   const userCountiresData = useMemo(() => {
     if (!countries || !areasData) return [];
@@ -100,7 +105,9 @@ export const Planet = () => {
       }}
       onClick={handleModuleClick}
     >
-      {currentModule >= 2 && <ModuleThree showModule={currentModule === 3} />}
+      {!isTutorialFinished && currentModule >= 2 && (
+        <ModuleThree showModule={currentModule === 3} />
+      )}
 
       <StyledPlanetBox>
         {userCountiresData &&
@@ -111,29 +118,32 @@ export const Planet = () => {
               isBought={country.bought}
               sx={{
                 ...getCoords(index),
-                ...(currentModule === 3 && {
-                  boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
-                  animationName: "pulseShadow",
-                  animationDuration: "2s",
-                  animationTimingFunction: "ease-in-out",
-                  animationIterationCount: "infinite",
-                  "@keyframes pulseShadow": {
-                    "0%": {
-                      boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                ...(!isTutorialFinished &&
+                  currentModule === 3 && {
+                    boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                    animationName: "pulseShadow",
+                    animationDuration: "2s",
+                    animationTimingFunction: "ease-in-out",
+                    animationIterationCount: "infinite",
+                    "@keyframes pulseShadow": {
+                      "0%": {
+                        boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                      },
+                      "50%": {
+                        boxShadow: `0 0 60px ${MAIN_COLORS.activeTabColor}`,
+                      },
+                      "100%": {
+                        boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                      },
                     },
-                    "50%": {
-                      boxShadow: `0 0 60px ${MAIN_COLORS.activeTabColor}`,
-                    },
-                    "100%": {
-                      boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
-                    },
-                  },
-                }),
+                  }),
               }}
               disabled={!country.available}
               onClick={() => {
-                if (currentModule === 3) {
+                if (!isTutorialFinished && currentModule === 3) {
                   dispatch(setCurrentModule(0));
+                  handleButtonPress(country);
+                } else {
                   handleButtonPress(country);
                 }
                 if (country.available && !country.bought) {
@@ -146,8 +156,15 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
-      {currentModule === 2 && <ModuleTwo />}
-      {currentModule === 1 && <ModuleOne onClick={handleModuleClick} />}
+      <BuyCountryModal
+        open={buyCountrieModalOpen}
+        onClose={() => setBuyCountrieModalOpen(false)}
+        onBuy={handleBuyCountry}
+      />
+      {!isTutorialFinished && currentModule === 2 && <ModuleTwo />}
+      {!isTutorialFinished && currentModule === 1 && (
+        <ModuleOne onClick={handleModuleClick} />
+      )}
     </Box>
   );
 };

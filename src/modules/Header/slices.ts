@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { County, UserData, UserInitData } from "../../shared/types";
+import { UserBalanceResponse } from "./api";
 
 type HeaderState = {
   userData: null | UserData;
@@ -39,6 +40,21 @@ export const headerSlice = createSlice({
     ) => {
       state.countriesData = payload;
     },
+    updateBalanceAction: (state, { payload }: { payload: UserData["id"] }) => {
+      state.loading = true;
+    },
+    updateBalanceActionSuccess: (
+      state,
+      { payload }: { payload: UserBalanceResponse },
+    ) => {
+      state.loading = false;
+      state.userData!.TONBalance = payload.TONBalance;
+      state.userData!.WindBalance = payload.WindBalance;
+    },
+    updateBalanceActionFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
   },
 });
 
@@ -47,6 +63,9 @@ export const {
   initActionSuccess,
   initActionFailure,
   fetchCountriesActionSuccess,
+  updateBalanceAction,
+  updateBalanceActionFailure,
+  updateBalanceActionSuccess,
 } = headerSlice.actions;
 
 export type HeaderStateType = typeof initialHeaderState;

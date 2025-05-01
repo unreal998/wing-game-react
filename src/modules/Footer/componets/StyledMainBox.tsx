@@ -10,5 +10,5 @@ export const StyledMainBox = styled(Box)({
   flexDirection: "column",
   width: "100%",
   zIndex: 100,
-  backgroundColor: MAIN_COLORS.headerBG,
+  backgroundColor: MAIN_COLORS.blockBG,
 });

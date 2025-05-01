@@ -3,7 +3,8 @@ import { MAIN_COLORS } from "../../../shared/colors";
 
 export const TableBox = styled(Box)({
   display: "flex",
-  borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
-  marginLeft: "16px",
-  marginRight: "10px",
+  backgroundColor: MAIN_COLORS.sectionBG,
+  borderRadius: "8px",
+  padding: "8px 12px",
+  justifyContent: "space-between",
 });

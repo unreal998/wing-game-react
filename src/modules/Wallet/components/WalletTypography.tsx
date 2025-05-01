@@ -1,10 +1,9 @@
 import { styled, Typography } from "@mui/material";
+import { MAIN_COLORS } from "../../../shared/colors";
 
 export const WalletTypography = styled(Typography)({
-  fontSize: "16px",
+  fontSize: "13px",
   fontWeight: 400,
-  paddingLeft: "28px",
-  paddingRight: "28px",
-  paddingTop: "15px",
-  paddingBottom: "15px",
+  color: MAIN_COLORS.subTextColor,
+  fontFamily: "Roboto",
 });

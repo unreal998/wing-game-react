@@ -3,14 +3,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { TableBox } from "./components/TableBox";
 import Male from "../../assets/Male.svg";
-import { TableBoxHead } from "./components/TableBoxHead";
 import { StyledHeader } from "./components/StyledHeader";
-import { StyledMain } from "./components/StyledMain";
-import { StyledMainColumn } from "./components/StyledMainColumn";
-import { StyledMainTypography } from "./components/StyledMainTypography";
+import { StyledReferalTypography } from "./components/StyledReferalTypography";
 import { StyledMainJpg } from "./components/StyledMainJpg";
 import Copy from "../../assets/copy.svg";
-import { StyledCopy } from "./components/StyledCopy";
 import { StyledInputBox } from "./components/StyledInputBox";
 import { StyledInput } from "./components/StyledInput";
 import { heightProportion } from "../../shared/utils";
@@ -34,16 +30,16 @@ import BuyCountryModal from "../../shared/components/BuyCountry";
 
 import { ModuleNineTen } from "../Tutorial/components/ModuleNineTen";
 import { setCurrentModule } from "../Tutorial/slices";
-import { selectCurrentModule } from "../Tutorial/selectors";
+import { selectIsTutorialFinished } from "../Tutorial/selectors";
 
 import { useNavigate } from "react-router-dom";
 import { clearSelectedCountry } from "../Home/slices";
+import { updateBalanceAction } from "../Header/slices";
 
-const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
+const commonImgStyle = { width: "20px", height: "20px", borderRadius: "52px" };
 
 const Referal = () => {
   const loading = useSelector(selectReferalLoading);
-  const currentModule = useSelector(selectCurrentModule());
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -51,6 +47,7 @@ const Referal = () => {
   const referalData = useSelector(selectReferalData());
   const countries = useSelector(selectCountiresData());
   const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
 
   const nextArea = useMemo(() => {
     if (!userData || !countries) return null;
@@ -95,6 +92,7 @@ const Referal = () => {
   useEffect(() => {
     if (userData) {
       dispatch(getReferalDataAction(userData.telegramID));
+      dispatch(updateBalanceAction(userData.id));
     }
   }, [dispatch, userData]);
 
@@ -129,7 +127,7 @@ const Referal = () => {
       height={heightProportion}
       position={"relative"}
       onClick={(e) => {
-        if (currentModule !== 14) {
+        if (!isTutorialFinished) {
           e.stopPropagation();
           e.preventDefault();
           dispatch(setCurrentModule(10));
@@ -137,18 +135,19 @@ const Referal = () => {
       }}
       sx={{
         "& *": {
-          pointerEvents: currentModule !== 14 ? "none" : "auto",
+          pointerEvents: !isTutorialFinished ? "none" : "auto",
         },
       }}
     >
       <ModuleNineTen />
       <LoaderComponent loading={loading} />
-      <Box>
-        <NamedStyled paddingBottom="8px">{t("Referal")}</NamedStyled>
+      <Box sx={{ display: "flex", gap: "15px", flexDirection: "column" }}>
+        <NamedStyled>{t("Referal")}</NamedStyled>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <InfoBox value={`10%`} subtitle={`Income`} />
           <InfoBox
             value={`${referalData.length}/${nextArea?.referalsToUnlock || 0}`}
-            subtitle={`to unlock next country`.toUpperCase()}
+            subtitle={`Refferals`}
           />
         </Box>
         <StyledBasicBox height={`${tableHeight}px`}>
@@ -158,12 +157,9 @@ const Referal = () => {
                 key={index}
                 sx={{
                   flex: index === 0 ? 1.6 : 0.7,
-                  paddingLeft: index === 0 ? "5px" : "0",
                 }}
               >
-                <TableBoxHead>
-                  <Typography sx={{ fontSize: "12px" }}>{t(item)}</Typography>
-                </TableBoxHead>
+                <Typography sx={{ fontSize: "13px" }}>{t(item)}</Typography>
               </StyledHeader>
             ))}
           </TableBox>
@@ -171,23 +167,24 @@ const Referal = () => {
           {referalData && referalData.length > 0 ? (
             referalData.map((user, index) => (
               <TableBox key={index}>
-                <StyledMain>
-                  <StyledMainJpg>
-                    <img src={Male} alt="male" style={commonImgStyle} />
-                    <StyledMainTypography>
-                      {user.userName || user.firstName || user.lastName || " "}
-                    </StyledMainTypography>
-                  </StyledMainJpg>
-                </StyledMain>
+                <StyledMainJpg sx={{ flex: 1.6 }}>
+                  <img src={Male} alt="male" style={commonImgStyle} />
+                  <StyledReferalTypography>
+                    {user.userName || user.firstName || user.lastName || " "}
+                  </StyledReferalTypography>
+                </StyledMainJpg>
 
                 {[user.lvl, user.WindBalance].map((value, idx) => (
-                  <StyledMainColumn key={idx}>
-                    <StyledMainTypography
-                      sx={idx === 1 ? { color: MAIN_COLORS.gold } : {}}
-                    >
-                      {value}
-                    </StyledMainTypography>
-                  </StyledMainColumn>
+                  <StyledReferalTypography
+                    sx={
+                      idx === 1
+                        ? { color: MAIN_COLORS.mainGreen, fontWeight: "600" }
+                        : {}
+                    }
+                    flex={0.7}
+                  >
+                    {value.toFixed(2)}
+                  </StyledReferalTypography>
                 ))}
               </TableBox>
             ))
@@ -198,19 +195,18 @@ const Referal = () => {
           )}
         </StyledBasicBox>
 
-        <Box sx={{ paddingTop: "24px" }}>
+        <Box display="flex" flexDirection="column" gap="12px">
           <HeaderTypographyStyle>{t("Your Invite Link")}</HeaderTypographyStyle>
-          <Box sx={{ display: "flex", gap: "11px" }}>
+          <Box sx={{ display: "flex", gap: "15px", alignItems: "center" }}>
             <StyledInputBox>
               <StyledInput type="text" value={referalLink} readOnly />
             </StyledInputBox>
-            <StyledCopy onClick={copyToClipboard}>
-              <img
-                src={Copy}
-                alt="Copy"
-                style={{ width: "16px", height: "16px", cursor: "pointer" }}
-              />
-            </StyledCopy>
+            <img
+              onClick={copyToClipboard}
+              src={Copy}
+              alt="Copy"
+              style={{ width: "16px", height: "16px", cursor: "pointer" }}
+            />
           </Box>
         </Box>
       </Box>

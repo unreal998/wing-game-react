@@ -24,15 +24,16 @@ import LoaderComponent from "../../shared/components/LoaderComponent";
 
 import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
 import { setCurrentModule } from "../Tutorial/slices";
-import { selectCurrentModule } from "../Tutorial/selectors";
+import { selectIsTutorialFinished } from "../Tutorial/selectors";
 import { MissionsData } from "./types";
+import { updateBalanceAction } from "../Header/slices";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
-  const currentModule = useSelector(selectCurrentModule());
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
   const [missionLoading, setMissionLoading] = useState(false);
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const [selectedMission, setSelectedMission] = useState<MissionsData | null>(
     null,
   );
@@ -58,6 +59,7 @@ const Missions = () => {
 
   useEffect(() => {
     if (userData) {
+      dispatch(updateBalanceAction(userData.id));
       dispatch(
         getMissionsDataAction({
           type: missionTitles[activeTab].type,
@@ -97,7 +99,7 @@ const Missions = () => {
   return (
     <Box
       onClick={(e) => {
-        if (currentModule !== 14) {
+        if (!isTutorialFinished) {
           e.stopPropagation();
           e.preventDefault();
           dispatch(setCurrentModule(8));
@@ -111,7 +113,7 @@ const Missions = () => {
         gap: "15px",
         position: "relative",
         "& *": {
-          pointerEvents: currentModule !== 14 ? "none" : "auto",
+          pointerEvents: !isTutorialFinished ? "none" : "auto",
         },
       }}
     >

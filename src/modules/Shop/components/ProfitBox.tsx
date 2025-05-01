@@ -11,7 +11,7 @@ export const ProfitBox = ({
   return (
     <Box
       sx={{
-        backgroundColor: MAIN_COLORS.referalBox,
+        backgroundColor: MAIN_COLORS.sectionBG,
         display: "flex",
         flexDirection: "column",
         borderRadius: "9px",

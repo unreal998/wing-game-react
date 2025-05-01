@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectDisabledPowerButton, selectSelectedCountry } from "./selectors";
 import useSound from "use-sound";
-import WindBlowing from "../../assets/sounds/windBlowing.mp3";
 import BGSound from "../../assets/sounds/bgSound.mp3";
 import { useNavigate } from "react-router-dom";
 import { selectHomeLoading } from "./slices";
@@ -23,6 +22,11 @@ export const Home = () => {
     volume: 0.7,
     onend: () => setCycleBGSound(false),
   });
+
+  // const handleEarthClick = useCallback(() => {
+  //   navigate("/");
+  //   dispatch(clearSelectedCountry());
+  // }, [navigate, dispatch]);
 
   useEffect(() => {
     if (!selectedCountry.name) {
