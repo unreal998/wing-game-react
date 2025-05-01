@@ -1,7 +1,7 @@
 import { styled, Tab } from "@mui/material";
-import { MAIN_COLORS } from "../../../shared/colors";
+import { MAIN_COLORS } from "../colors";
 
-export const TabStyles = styled(Tab)({
+export const StyledTab = styled(Tab)({
   fontSize: "12px",
   fontWeight: 700,
   padding: "13px 16px",

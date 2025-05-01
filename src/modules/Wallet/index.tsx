@@ -7,7 +7,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import useSound from "use-sound";
 import { useTranslation } from "react-i18next";
 import HistoryItem from "./components/HistoryItem";
-import { TabStyles } from "./components/TabStyles";
+import { StyledTab } from "../../shared/components/StyledTab";
 import { WalletTypography } from "./components/WalletTypography";
 import { ButtonStyledTypography } from "./components/ButtonStyledTypography";
 import { TabPanelBoxStyled } from "./components/TabPanelBoxStyled";
@@ -126,7 +126,7 @@ const Wallet = () => {
               { label: t("Wallet"), value: 0 },
               { label: t("History"), value: 1 },
             ].map(({ label, value }) => (
-              <TabStyles key={value} label={label} value={value} />
+              <StyledTab key={value} label={label} value={value} />
             ))}
           </TabList>
         </Stack>
