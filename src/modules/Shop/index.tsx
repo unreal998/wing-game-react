@@ -178,7 +178,7 @@ const Shop = () => {
               sx={{
                 color: MAIN_COLORS.activeTabColor,
                 "& .MuiSlider-rail": {
-                  color: MAIN_COLORS.referalBox,
+                  color: "black",
                 },
                 "& .Mui-active": {
                   boxShadow: "0 0 0 9px black",

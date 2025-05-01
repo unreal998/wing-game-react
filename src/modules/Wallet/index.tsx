@@ -95,7 +95,7 @@ const Wallet = () => {
           </TabList>
         </Stack>
 
-        <TabPanel sx={{ padding: 0, marginTop: "16px" }} value={0}>
+        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
           <WalletComponent />
         </TabPanel>
 
