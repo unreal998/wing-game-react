@@ -34,7 +34,7 @@ import { selectIsTutorialFinished } from "../Tutorial/selectors";
 
 import { useNavigate } from "react-router-dom";
 import { clearSelectedCountry } from "../Home/slices";
-import { initAction, updateBalanceAction } from "../Header/slices";
+import { updateBalanceAction } from "../Header/slices";
 
 const commonImgStyle = { width: "20px", height: "20px", borderRadius: "52px" };
 

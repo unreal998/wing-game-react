@@ -11,4 +11,5 @@ export const MAIN_COLORS = {
   gold: "#FFDE00",
   marketBox: "rgba(255, 255, 255, 0.20)",
   modalBox: "rgba(165, 165, 165, 1)",
+  appBG: "#01121D",
 };

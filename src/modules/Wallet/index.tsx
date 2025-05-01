@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import useSound from "use-sound";
 import { useTranslation } from "react-i18next";
@@ -18,10 +18,10 @@ import {
 } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import Switch from "../../assets/sounds/switch.mp3";
-import { MAIN_COLORS } from "../../shared/colors";
 import { updateBalanceAction } from "../Header/slices";
 import { WalletComponent } from "./components/WalletComponent";
 import { HistoryComponent } from "./components/HistoryComponent";
+import { selectUserData } from "../Header/selectors";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -30,16 +30,15 @@ const Wallet = () => {
 
   const [playTabSwitchSound] = useSound(Switch);
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
-
+  const userData = useSelector(selectUserData());
   const currentModule = useSelector(selectCurrentModule());
 
-
   useEffect(() => {
-    if (userData && !withdrawData) {
-      dispatch(getWithdrawAction(userData.id));
+    if (userData) {
       dispatch(updateBalanceAction(userData.id));
     }
-  }, [dispatch, withdrawData, userData]);
+  }, [dispatch, userData]);
+
   const [value, setValue] = useState<number>(0);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
