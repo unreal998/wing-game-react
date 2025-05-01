@@ -21,6 +21,7 @@ import { MissionsData } from "./types";
 import { MAIN_COLORS } from "../../shared/colors";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { updateBalanceAction } from "../Header/slices";
+import Flash from "../../assets/flash.png";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -88,6 +89,7 @@ const Missions = () => {
             sx={{
               display: "flex",
               minHeight: "0px",
+
               "& .MuiTabs-list": { gap: "8px" },
               "& .MuiTabs-indicator": { display: "none" },
             }}
@@ -107,7 +109,7 @@ const Missions = () => {
             </Box>
             {missionTitles.map((mission, index) => (
               <StyledTab
-                sx={{ marginTop: "10px" }}
+                sx={{ marginTop: "10px", justifyContent: "space-between" }}
                 label={mission.text}
                 value={index.toString()}
                 key={index}
@@ -123,6 +125,21 @@ const Missions = () => {
               borderRadius: "12px",
               height: `${wrapperHeight - 30}px`,
               overflow: "auto",
+              "&::-webkit-scrollbar": {
+                width: "8px",
+              },
+              "&::-webkit-scrollbar-track": {
+                backgroundColor: "transparent",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: MAIN_COLORS.activeTabColor,
+                borderRadius: "8px",
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: MAIN_COLORS.activeTabColor,
+              },
+              scrollbarWidth: "thin", // Firefox
+              scrollbarColor: `${MAIN_COLORS.activeTabColor} transparent`, // Firefox
             }}
             value={index.toString()}
             key={index}
@@ -147,7 +164,14 @@ const Missions = () => {
                       <Box sx={{ padding: "10px 0px 10px 0px" }}>
                         <StyledSubscrible>{mission.title}</StyledSubscrible>
                         <StyledSHIB>
-                          {mission.reward} {mission.coin}
+                          {" "}
+                          <img
+                            height="20px"
+                            width="20px"
+                            src={Flash}
+                            alt="flash"
+                          />
+                          + {mission.reward} {mission.coin}
                         </StyledSHIB>
                       </Box>
                     </Box>
