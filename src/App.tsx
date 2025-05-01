@@ -80,7 +80,7 @@ const App = () => {
     <Box
       sx={{
         height: "100vh",
-        backgroundColor: MAIN_COLORS.mainBG,
+        backgroundColor: MAIN_COLORS.blockBG,
         backgroundImage: `${
           selectedCountry.name ? `url(./${selectedCountry.name}BG.png)` : "none"
         }`,
