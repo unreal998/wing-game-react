@@ -4,10 +4,13 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import useSound from "use-sound";
 import { useTranslation } from "react-i18next";
 import { StyledTab } from "../../shared/components/StyledTab";
-import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { MainBox } from "../../shared/components/MainBox";
 import { useDispatch, useSelector } from "react-redux";
-import { selectWalletLoading, sendWithdrawRequestAction } from "./slices";
+import {
+  selectWalletLoading,
+  sendWithdrawRequestAction,
+  setWithdrawModalOpen,
+} from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
@@ -21,6 +24,7 @@ import Switch from "../../assets/sounds/switch.mp3";
 import { updateBalanceAction } from "../Header/slices";
 import { WalletComponent } from "./components/WalletComponent";
 import { HistoryComponent } from "./components/HistoryComponent";
+import { selectIsWithdrawOpen } from "./selectors";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -31,6 +35,7 @@ const Wallet = () => {
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const userData = useSelector(selectUserData());
   const currentModule = useSelector(selectCurrentModule());
+  const isWithdrawModalOpen = useSelector(selectIsWithdrawOpen());
 
   useEffect(() => {
     if (userData) {
@@ -39,11 +44,14 @@ const Wallet = () => {
   }, [dispatch, userData]);
 
   const [value, setValue] = useState<number>(0);
-  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     playTabSwitchSound();
     setValue(newValue);
+  };
+
+  const handleWithdrawClose = () => {
+    dispatch(setWithdrawModalOpen(false));
   };
 
   const handleWithdrawRequest = (
@@ -60,7 +68,7 @@ const Wallet = () => {
           tonMemo,
         }),
       );
-      setIsWithdrawOpen(false);
+      dispatch(setWithdrawModalOpen(false));
     }
   };
 
@@ -119,12 +127,10 @@ const Wallet = () => {
           <HistoryComponent />
         </TabPanel>
       </TabContext>
-      <GameButtonComponent onClick={() => setIsWithdrawOpen(true)}>
-        {t("Withdraw funds")}
-      </GameButtonComponent>
+
       <WithdrawModal
-        open={isWithdrawOpen}
-        onClose={() => setIsWithdrawOpen(false)}
+        open={isWithdrawModalOpen}
+        onClose={handleWithdrawClose}
         onSubmit={handleWithdrawRequest}
       />
     </MainBox>

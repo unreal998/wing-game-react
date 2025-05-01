@@ -6,16 +6,12 @@ import Male from "../../assets/Male.svg";
 import { StyledHeader } from "./components/StyledHeader";
 import { StyledReferalTypography } from "./components/StyledReferalTypography";
 import { StyledMainJpg } from "./components/StyledMainJpg";
-import Copy from "../../assets/copy.svg";
-import { StyledInputBox } from "./components/StyledInputBox";
-import { StyledInput } from "./components/StyledInput";
 import { heightProportion } from "../../shared/utils";
 import { InfoBox } from "../../shared/components/InfoBox";
 import { useTranslation } from "react-i18next";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
-import { HeaderTypographyStyle } from "./components/HeaderTypographyStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCountiresData, selectUserData } from "../Header/selectors";
 import {
@@ -81,13 +77,6 @@ const Referal = () => {
   }, [nextArea, referalData.length, userData]);
 
   const dispatch = useDispatch();
-  const referalLink = useMemo(() => {
-    let urlString = `https://t.me/WindGameAppWrapperBot?start=r_`;
-    if (userData) {
-      return `${urlString}${userData.telegramID}`;
-    }
-    return urlString;
-  }, [userData]);
 
   useEffect(() => {
     if (userData) {
@@ -108,17 +97,6 @@ const Referal = () => {
       }
     }
   }, [nextArea, userData, dispatch, navigate]);
-
-  const copyToClipboard = useCallback(() => {
-    navigator.clipboard
-      .writeText(referalLink)
-      .then(() => {
-        console.log("Copied:", "");
-      })
-      .catch((err) => {
-        console.error("Error copying text: ", err);
-      });
-  }, [referalLink]);
 
   const tableHeight = useMemo(() => heightProportion - 285, []);
 
@@ -194,21 +172,6 @@ const Referal = () => {
             </Typography>
           )}
         </StyledBasicBox>
-
-        <Box display="flex" flexDirection="column" gap="12px">
-          <HeaderTypographyStyle>{t("Your Invite Link")}</HeaderTypographyStyle>
-          <Box sx={{ display: "flex", gap: "15px", alignItems: "center" }}>
-            <StyledInputBox>
-              <StyledInput type="text" value={referalLink} readOnly />
-            </StyledInputBox>
-            <img
-              onClick={copyToClipboard}
-              src={Copy}
-              alt="Copy"
-              style={{ width: "16px", height: "16px", cursor: "pointer" }}
-            />
-          </Box>
-        </Box>
       </Box>
       <BuyCountryModal
         open={buyCountrieModalOpen}

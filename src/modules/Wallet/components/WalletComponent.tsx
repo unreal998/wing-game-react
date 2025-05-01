@@ -50,24 +50,27 @@ export const WalletComponent = () => {
         />
         <Stack direction="row">
           {walletNumber ? (
-            <Stack width={"70%"} flexWrap={"wrap"}>
+            <Stack>
               <WalletTypography>{t("Your wallet:")}</WalletTypography>
-              <WalletTypography>{walletNumber}</WalletTypography>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                width="100%"
+                gap={"10px"}
+              >
+                <WalletTypography>{walletNumber}</WalletTypography>
+                <Box onClick={handleCopyClick}>
+                  <img
+                    src={Copy}
+                    alt="Copy"
+                    style={{ width: "16px", height: "16px" }}
+                  />
+                </Box>
+              </Stack>
             </Stack>
           ) : (
             <WalletTypography>{t("Connect")}</WalletTypography>
-          )}
-          {walletNumber && (
-            <Box
-              onClick={handleCopyClick}
-              sx={{ cursor: "pointer", paddingBottom: "10px" }}
-            >
-              <img
-                src={Copy}
-                alt="Copy"
-                style={{ width: "16px", height: "16px" }}
-              />
-            </Box>
           )}
         </Stack>
 

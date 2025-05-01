@@ -8,6 +8,7 @@ type WalletState = {
   withdrawData: Withdraw[];
   loading: boolean;
   errMessage: string;
+  isWithdrawOpen: boolean;
 };
 
 export const initialWalletState: WalletState = {
@@ -17,6 +18,7 @@ export const initialWalletState: WalletState = {
   withdrawData: [],
   loading: true,
   errMessage: "",
+  isWithdrawOpen: false,
 };
 
 export const walletSlice = createSlice({
@@ -67,6 +69,9 @@ export const walletSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    setWithdrawModalOpen: (state, { payload }: { payload: boolean }) => {
+      state.isWithdrawOpen = payload;
+    },
   },
 });
 
@@ -80,6 +85,7 @@ export const {
   sendWithdrawRequestAction,
   sendWithdrawRequestSuccess,
   sendWithdrawRequestFailure,
+  setWithdrawModalOpen,
 } = walletSlice.actions;
 
 export type WalletStateType = typeof initialWalletState;

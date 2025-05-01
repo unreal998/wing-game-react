@@ -13,3 +13,8 @@ export const selectWithdrawData =
   () =>
   ({ walletSlice }: WalletSliceStore) =>
     walletSlice.withdrawData;
+
+export const selectIsWithdrawOpen =
+  () =>
+  ({ walletSlice }: WalletSliceStore) =>
+    walletSlice.isWithdrawOpen;

@@ -21,7 +21,7 @@ import { MissionsData } from "./types";
 import { MAIN_COLORS } from "../../shared/colors";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { updateBalanceAction } from "../Header/slices";
-import Flash from "../../assets/flash.png";
+import Flash from "../../assets/flash.svg";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -132,14 +132,14 @@ const Missions = () => {
                 backgroundColor: "transparent",
               },
               "&::-webkit-scrollbar-thumb": {
-                backgroundColor: MAIN_COLORS.activeTabColor,
+                backgroundColor: MAIN_COLORS.mainGreen,
                 borderRadius: "8px",
               },
               "&::-webkit-scrollbar-thumb:hover": {
-                backgroundColor: MAIN_COLORS.activeTabColor,
+                backgroundColor: MAIN_COLORS.mainGreen,
               },
               scrollbarWidth: "thin",
-              scrollbarColor: `${MAIN_COLORS.activeTabColor} transparent`,
+              scrollbarColor: `${MAIN_COLORS.mainGreen} transparent`,
             }}
             value={index.toString()}
             key={index}

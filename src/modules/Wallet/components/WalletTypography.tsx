@@ -7,4 +7,5 @@ export const WalletTypography = styled(Typography)({
   color: MAIN_COLORS.subTextColor,
   fontFamily: "Roboto",
   textWrap: "wrap",
+  lineBreak: "anywhere",
 });

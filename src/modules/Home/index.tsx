@@ -23,11 +23,6 @@ export const Home = () => {
     onend: () => setCycleBGSound(false),
   });
 
-  // const handleEarthClick = useCallback(() => {
-  //   navigate("/");
-  //   dispatch(clearSelectedCountry());
-  // }, [navigate, dispatch]);
-
   useEffect(() => {
     if (!selectedCountry.name) {
       navigate("/");
@@ -69,7 +64,7 @@ export const Home = () => {
         animationData={require(`../../assets/animations/windAnimation.json`)}
         loop
         style={{
-          top: isSmallScreen ? "140px" : "240px",
+          top: isSmallScreen ? "140px" : "220px",
           left: "0",
           position: "absolute",
           transform: isSmallScreen

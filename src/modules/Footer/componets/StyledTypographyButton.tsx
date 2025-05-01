@@ -1,8 +1,9 @@
 import { styled, Typography } from "@mui/material";
+import { MAIN_COLORS } from "../../../shared/colors";
 
 export const StyledTypographyButton = styled(Typography)({
-  color: "rgb(0, 0, 0)",
-  fontSize: "20px",
+  color: MAIN_COLORS.appBG,
+  fontSize: "23px",
   fontWeight: 600,
-  fontStyle: "italic",
+  marginLeft: "5px",
 });

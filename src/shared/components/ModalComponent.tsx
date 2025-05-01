@@ -2,8 +2,8 @@ import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
 import { MAIN_COLORS } from "../colors";
-import { StyledButtonGame } from "../../modules/Planet/components/StyledButtonGame";
 import { ReactNode } from "react";
+import { GameButtonComponent } from "./GameButtonComponent";
 
 type ModalComponentPropsType = {
   openModal: boolean;
@@ -46,12 +46,12 @@ export const ModalComponent = ({
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
         {additionalbutton}
-        <StyledButtonGame
+        <GameButtonComponent
           onClick={handleCloseModal}
           sx={{ color: MAIN_COLORS.textColor }}
         >
           {t("Close")}
-        </StyledButtonGame>
+        </GameButtonComponent>
       </DialogActions>
     </ModalStyled>
   );

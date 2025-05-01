@@ -113,7 +113,7 @@ const App = () => {
         <Box
           sx={{
             position: "absolute",
-            top: "240px",
+            top: "220px",
             left: 0,
             zIndex: 0,
             transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
