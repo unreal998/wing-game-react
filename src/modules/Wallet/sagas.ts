@@ -6,8 +6,15 @@ import {
   getWithdrawAction,
   getWithdrawActionFailure,
   getWithdrawActionSuccess,
+  sendWithdrawRequestAction,
+  sendWithdrawRequestSuccess,
+  sendWithdrawRequestFailure,
 } from "./slices";
-import { fetchCreateWallet, fetchWithdrawData } from "./api";
+import {
+  fetchCreateWallet,
+  fetchWithdrawData,
+  sendWithdrawRequest,
+} from "./api";
 import { Withdraw } from "../../shared/types";
 
 function* handleCreateWallet(action: { type: string; payload: string }) {
@@ -32,7 +39,22 @@ function* handleGetWithdrawData(action: { type: string; payload: string }) {
   }
 }
 
+function* handleSendWithdrawRequest(action: {
+  type: string;
+  payload: { uid: string; wallet: string; amount: string; tonMemo: string };
+}) {
+  try {
+    const { uid, wallet, amount, tonMemo } = action.payload;
+    yield call(sendWithdrawRequest, uid, wallet, amount, tonMemo);
+    yield put(sendWithdrawRequestSuccess());
+    yield put(getWithdrawAction(uid));
+  } catch (err: any) {
+    yield put(sendWithdrawRequestFailure(err.toString()));
+  }
+}
+
 export function* watchWalletActions() {
   yield takeLatest(createWalletAction.type, handleCreateWallet);
   yield takeLatest(getWithdrawAction.type, handleGetWithdrawData);
+  yield takeLatest(sendWithdrawRequestAction.type, handleSendWithdrawRequest);
 }

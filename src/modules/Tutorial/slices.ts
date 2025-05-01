@@ -5,7 +5,7 @@ type TutorialState = {
 };
 
 const initialTutorialState: TutorialState = {
-  currentModule: 1,
+  currentModule: 14,
 };
 
 export const tutorialSlice = createSlice({

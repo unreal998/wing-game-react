@@ -19,6 +19,7 @@ import {
   createWalletAction,
   getWithdrawAction,
   selectWalletLoading,
+  sendWithdrawRequestAction,
 } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import { selectWalletNumber, selectWithdrawData } from "./selectors";
@@ -65,8 +66,17 @@ const Wallet = () => {
     amount: string,
     tonMemo: string,
   ) => {
-    console.log("Запрос на вывод:", { wallet, amount, tonMemo });
-    setIsWithdrawOpen(false);
+    if (userData) {
+      dispatch(
+        sendWithdrawRequestAction({
+          uid: userData.id,
+          wallet,
+          amount,
+          tonMemo,
+        }),
+      );
+      setIsWithdrawOpen(false);
+    }
   };
 
   const handleCopyClick = useCallback(() => {

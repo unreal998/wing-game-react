@@ -45,6 +45,28 @@ export const walletSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    sendWithdrawRequestAction: (
+      state,
+      {
+        payload,
+      }: {
+        payload: {
+          uid: string;
+          wallet: string;
+          amount: string;
+          tonMemo: string;
+        };
+      },
+    ) => {
+      state.loading = true;
+    },
+    sendWithdrawRequestSuccess: (state) => {
+      state.loading = false;
+    },
+    sendWithdrawRequestFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
   },
 });
 
@@ -55,6 +77,9 @@ export const {
   getWithdrawAction,
   getWithdrawActionSuccess,
   getWithdrawActionFailure,
+  sendWithdrawRequestAction,
+  sendWithdrawRequestSuccess,
+  sendWithdrawRequestFailure,
 } = walletSlice.actions;
 
 export type WalletStateType = typeof initialWalletState;
