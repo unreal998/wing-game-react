@@ -55,6 +55,7 @@ export const walletSlice = createSlice({
           wallet: string;
           amount: string;
           tonMemo: string;
+          tid: string;
         };
       },
     ) => {

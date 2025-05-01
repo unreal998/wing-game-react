@@ -65,6 +65,7 @@ const Wallet = () => {
           wallet,
           amount,
           tonMemo,
+          tid: userData.telegramID.toString(),
         }),
       );
       setIsWithdrawOpen(false);
