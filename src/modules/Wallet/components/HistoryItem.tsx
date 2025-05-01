@@ -5,57 +5,40 @@ interface HistoryItemProps {
   date: string;
   time: string;
   amount: string;
-  label: string;
+  status: string;
 }
 
 const HistoryItem: React.FC<HistoryItemProps> = ({
   date,
   time,
   amount,
-  label,
+  status,
 }) => (
   <Box
     sx={{
       width: "100hv",
-      marginRight: "15px",
-      paddingLeft: "18px",
-      paddingTop: "4px",
-      paddingBottom: "4px",
+      padding: "13px",
       display: "flex",
-      borderBottom: `1px solid ${MAIN_COLORS.mainGreyBG}`,
+      backgroundColor: MAIN_COLORS.sectionBG,
+      borderRadius: "8px",
+      justifyContent: "space-between",
+      color: MAIN_COLORS.subTextColor,
+      fontSize: "12px",
     }}
   >
-    <Box sx={{ flex: 1.2 }}>
-      <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>{date}</Typography>
-      <Typography sx={{ fontSize: "12px", fontWeight: 500 }}>{time}</Typography>
-    </Box>
-    <Box
+    <Typography sx={{ fontSize: "12px" }}>
+      {date} {time}
+    </Typography>
+    <Typography
       sx={{
-        flex: 0.8,
-        display: "flex",
-        alignItems: "center",
-        gap: "15px",
+        color: MAIN_COLORS.activeTabColor,
+        fontSize: "14px",
+        fontWeight: 600,
       }}
     >
-      <Typography
-        sx={{
-          color: MAIN_COLORS.activeTabColor,
-          fontSize: "14px",
-          fontWeight: 700,
-        }}
-      >
-        {amount}
-      </Typography>
-      <Typography
-        sx={{
-          color: MAIN_COLORS.textColor,
-          fontSize: "14px",
-          fontWeight: 500,
-        }}
-      >
-        {label}
-      </Typography>
-    </Box>
+      {amount}
+    </Typography>
+    <Typography>{status.toUpperCase()}</Typography>
   </Box>
 );
 

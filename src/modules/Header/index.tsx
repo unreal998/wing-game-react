@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
-import USDT from "../../assets/usdt.svg";
+import TON from "../../assets/ton.png";
 import Flash from "../../assets/flash.png";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
@@ -96,7 +96,7 @@ const Header = () => {
             {currentWindSpeed}
           </Typography> */}
         <StyledFlashBox sx={{ gap: "8px", width: "30%" }}>
-          <img src={USDT} alt="usdt" width="24px" height="24px" />
+          <img src={TON} alt="usdt" width="24px" height="24px" />
           <Typography sx={{ fontSize: "16px", fontWeight: 700 }}>
             {userData?.TONBalance}
           </Typography>

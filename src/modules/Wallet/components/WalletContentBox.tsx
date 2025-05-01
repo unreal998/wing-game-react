@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 
-export const StyledBasicBox = styled(Box)({
+export const WalletContentBox = styled(Box)({
   width: "100%",
   display: "flex",
   backgroundColor: MAIN_COLORS.sectionBG,
@@ -10,4 +10,5 @@ export const StyledBasicBox = styled(Box)({
   alignItems: "center",
   textAlign: "center",
   gap: "10px",
+  padding: "24px",
 });
