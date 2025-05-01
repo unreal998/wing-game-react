@@ -8,11 +8,11 @@ export const StyledBox = styled(Box)({
   overflowY: "scroll",
   scrollbarGutter: "stable",
   scrollbarWidth: "thin",
-  scrollbarColor: `${MAIN_COLORS.activeTabColor} #FFFFFF0F`,
+  scrollbarColor: `${MAIN_COLORS.mainGreen}`,
   "&::-webkit-scrollbar": { width: "4px" },
   "&::-webkit-scrollbar-thumb": {
-    backgroundColor: MAIN_COLORS.activeTabColor,
+    backgroundColor: MAIN_COLORS.mainGreen,
     borderRadius: "2px",
   },
-  "&::-webkit-scrollbar-track": { backgroundColor: MAIN_COLORS.textColor },
+  "&::-webkit-scrollbar-track": { backgroundColor: MAIN_COLORS.mainGreen },
 });

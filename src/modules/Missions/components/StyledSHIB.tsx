@@ -2,7 +2,10 @@ import { styled, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 
 export const StyledSHIB = styled(Typography)({
-  fontSize: "14px",
-  fontWeight: 500,
+  fontSize: "12px",
+  fontWeight: 600,
   color: MAIN_COLORS.textColor,
+  display: "flex",
+  alignItems: "center",
+  gap: "5px",
 });
