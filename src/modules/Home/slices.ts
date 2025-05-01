@@ -39,7 +39,7 @@ export const homeSlice = createSlice({
       state.loading = false;
     },
     setPressTimeDelay: (state, { payload }: { payload: number }) => {
-      state.nextPressTimeDelay = payload > 0 ? 0 : 0;
+      state.nextPressTimeDelay = payload > 0 ? payload : 0;
       if (payload <= 0) {
         state.disabledPowerButton = false;
       }
