@@ -82,9 +82,7 @@ const Header = () => {
           <Stack direction="row">
             <img height="22px" width="22px" src={Flash} alt="flash" />
             <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
-              {typeof userData?.WindBalance === "number"
-                ? userData.WindBalance.toFixed(4)
-                : "0.0000"}{" "}
+              {userData?.WindBalance?.toFixed(2) || 0}
               kW
             </Typography>
           </Stack>
@@ -101,7 +99,7 @@ const Header = () => {
         <StyledFlashBox sx={{ gap: "8px", width: "30%" }}>
           <img src={TON} alt="usdt" width="24px" height="24px" />
           <Typography sx={{ fontSize: "16px", fontWeight: 700 }}>
-            {(Number(userData?.TONBalance) || 0).toFixed(4)}
+            {userData?.TONBalance?.toFixed(2) || 0}
           </Typography>
         </StyledFlashBox>
       </Stack>

@@ -1,4 +1,4 @@
-import { Box, Checkbox, Modal, Button, Typography } from "@mui/material";
+import { Box, Modal, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -8,7 +8,6 @@ import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
-import { InfoBox } from "../../shared/components/InfoBox";
 import { useTranslation } from "react-i18next";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +39,7 @@ const Missions = () => {
 
   const missionTitles = useMemo(
     () => [
-      { text: t("Daily missions"), type: "daily" },
+      { text: t("Daily"), type: "daily" },
       { text: t("Quests"), type: "quest" },
     ],
     [t],
@@ -145,11 +144,6 @@ const Missions = () => {
                         alignItems: "center",
                       }}
                     >
-                      <img
-                        src={mission.img !== null ? mission.img : ""}
-                        style={{ width: "26px", height: "26px" }}
-                        alt="mission image"
-                      />
                       <Box sx={{ padding: "10px 0px 10px 0px" }}>
                         <StyledSubscrible>{mission.title}</StyledSubscrible>
                         <StyledSHIB>

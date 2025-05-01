@@ -8,5 +8,5 @@ export const StyledBoxMission = styled(Box)({
   margin: "5px",
   borderRadius: "5px",
   alignItems: "center",
-  backgroundColor: "rgba(4, 53, 80, 1)",
+  backgroundColor: MAIN_COLORS.sectionBG,
 });
