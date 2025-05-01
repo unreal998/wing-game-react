@@ -38,6 +38,7 @@ import { selectIsTutorialFinished } from "../Tutorial/selectors";
 
 import { useNavigate } from "react-router-dom";
 import { clearSelectedCountry } from "../Home/slices";
+import { initAction, updateBalanceAction } from "../Header/slices";
 
 const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
@@ -95,6 +96,7 @@ const Referal = () => {
   useEffect(() => {
     if (userData) {
       dispatch(getReferalDataAction(userData.telegramID));
+      dispatch(updateBalanceAction(userData.id));
     }
   }, [dispatch, userData]);
 

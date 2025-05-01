@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
@@ -9,9 +9,9 @@ import useSound from "use-sound";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import WebApp from "@twa-dev/sdk";
 import { StyledFlashBox } from "./components/StyledFlashBox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "./selectors";
-import { selectHeaderLoading } from "./slices";
+import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 
 // const windSpeedByAreaName: Record<string, string> = {
@@ -23,10 +23,16 @@ import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
+
+  useEffect(() => {
+    if (userData !== null) {
+      dispatch(updateBalanceAction(userData.id));
+    }
+  }, []);
 
   const handleSoundClick = useCallback(() => {
     playSound();

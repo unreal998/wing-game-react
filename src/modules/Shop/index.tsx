@@ -22,6 +22,7 @@ import { ButtonShopStyled } from "./components/ButtonShopStyled";
 import { ModuleElevenTwelve } from "../Tutorial/components/ModuleElevenTwelve";
 import { setCurrentModule } from "../Tutorial/slices";
 import { selectIsTutorialFinished } from "../Tutorial/selectors";
+import { updateBalanceAction } from "../Header/slices";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 42 },
@@ -75,6 +76,12 @@ const Shop = () => {
       }
     );
   }, [shopValues, windValue]);
+
+  useEffect(() => {
+    if (userData !== null) {
+      dispatch(updateBalanceAction(userData.id));
+    }
+  }, []);
 
   useEffect(() => {
     if (!shopValues?.length) {
