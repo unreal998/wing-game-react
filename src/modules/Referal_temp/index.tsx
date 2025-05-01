@@ -34,7 +34,7 @@ import BuyCountryModal from "../../shared/components/BuyCountry";
 
 import { ModuleNineTen } from "../Tutorial/components/ModuleNineTen";
 import { setCurrentModule } from "../Tutorial/slices";
-import { selectCurrentModule } from "../Tutorial/selectors";
+import { selectIsTutorialFinished } from "../Tutorial/selectors";
 
 import { useNavigate } from "react-router-dom";
 import { clearSelectedCountry } from "../Home/slices";
@@ -43,7 +43,6 @@ const commonImgStyle = { width: "33px", height: "33px", borderRadius: "52px" };
 
 const Referal = () => {
   const loading = useSelector(selectReferalLoading);
-  const currentModule = useSelector(selectCurrentModule());
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -51,6 +50,7 @@ const Referal = () => {
   const referalData = useSelector(selectReferalData());
   const countries = useSelector(selectCountiresData());
   const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
 
   const nextArea = useMemo(() => {
     if (!userData || !countries) return null;
@@ -129,7 +129,7 @@ const Referal = () => {
       height={heightProportion}
       position={"relative"}
       onClick={(e) => {
-        if (currentModule !== 14) {
+        if (!isTutorialFinished) {
           e.stopPropagation();
           e.preventDefault();
           dispatch(setCurrentModule(10));
@@ -137,7 +137,7 @@ const Referal = () => {
       }}
       sx={{
         "& *": {
-          pointerEvents: currentModule !== 14 ? "none" : "auto",
+          pointerEvents: !isTutorialFinished ? "none" : "auto",
         },
       }}
     >

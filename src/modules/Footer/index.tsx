@@ -26,7 +26,10 @@ import { footerTabs } from "../../shared/components/FooterTabs";
 import { selectUserData } from "../Header/selectors";
 import WindBlowing from "../../assets/sounds/windBlowing.mp3";
 
-import { selectCurrentModule } from "../Tutorial/selectors";
+import {
+  selectCurrentModule,
+  selectIsTutorialFinished,
+} from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 
@@ -41,6 +44,7 @@ const Footer = () => {
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
   const [playWindSound] = useSound(WindBlowing);
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
 
   const currentModule = useSelector(selectCurrentModule());
   const isAnyModuleActive = currentModule !== 0;
@@ -58,7 +62,7 @@ const Footer = () => {
   );
 
   const handlePushPower = useCallback(() => {
-    if (currentModule === 4) {
+    if (!isTutorialFinished && currentModule === 4) {
       dispatch(setCurrentModule(5));
     }
     playWindSound();
@@ -70,7 +74,14 @@ const Footer = () => {
         }),
       );
     }
-  }, [dispatch, userData, selectedCountry, currentModule, playWindSound]);
+  }, [
+    isTutorialFinished,
+    currentModule,
+    playWindSound,
+    userData,
+    dispatch,
+    selectedCountry.name,
+  ]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -90,12 +101,14 @@ const Footer = () => {
   }, [dispatch, nextPressButtonTimeDelay]);
 
   useEffect(() => {
-    if (location.pathname === "/home") {
+    if (
+      !isTutorialFinished &&
+      currentModule <= 4 &&
+      location.pathname === "/home"
+    ) {
       dispatch(setCurrentModule(4));
-    } else if (currentModule === 4) {
-      dispatch(setCurrentModule(0));
     }
-  }, [dispatch, location.pathname]);
+  }, [currentModule, dispatch, isTutorialFinished, location.pathname]);
 
   return (
     <>
@@ -145,14 +158,15 @@ const Footer = () => {
             const isActive = location.pathname === path;
 
             const isSpecialActive =
-              (path === "/missions" && currentModule === 6) ||
-              (path === "/referal" && currentModule === 8) ||
-              (path === "/shop" && currentModule === 10) ||
-              (path === "/wallet" && currentModule === 12);
+              !isTutorialFinished &&
+              ((path === "/missions" && currentModule === 6) ||
+                (path === "/referal" && currentModule === 8) ||
+                (path === "/shop" && currentModule === 10) ||
+                (path === "/wallet" && currentModule === 12));
 
             const isDisabled =
               isAnyModuleActive &&
-              currentModule !== 14 &&
+              !isTutorialFinished &&
               !(
                 (path === "/missions" && currentModule === 6) ||
                 (path === "/referal" && currentModule === 8) ||
@@ -168,17 +182,19 @@ const Footer = () => {
                 onClick={() => {
                   if (!isDisabled) {
                     handleNavigationChange(path);
-                    if (path === "/missions" && currentModule === 6) {
-                      dispatch(setCurrentModule(7));
-                    }
-                    if (path === "/referal" && currentModule === 8) {
-                      dispatch(setCurrentModule(9));
-                    }
-                    if (path === "/shop" && currentModule === 10) {
-                      dispatch(setCurrentModule(11));
-                    }
-                    if (path === "/wallet" && currentModule === 12) {
-                      dispatch(setCurrentModule(13));
+                    if (!isTutorialFinished) {
+                      if (path === "/missions" && currentModule === 6) {
+                        dispatch(setCurrentModule(7));
+                      }
+                      if (path === "/referal" && currentModule === 8) {
+                        dispatch(setCurrentModule(9));
+                      }
+                      if (path === "/shop" && currentModule === 10) {
+                        dispatch(setCurrentModule(11));
+                      }
+                      if (path === "/wallet" && currentModule === 12) {
+                        dispatch(setCurrentModule(13));
+                      }
                     }
                   }
                 }}

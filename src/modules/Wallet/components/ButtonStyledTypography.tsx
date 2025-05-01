@@ -1,9 +1,8 @@
 import { styled, Typography } from "@mui/material";
-import { MAIN_COLORS } from "../../../shared/colors";
 
 export const ButtonStyledTypography = styled(Typography)({
-  color: "inherit",
-  fontSize: "12px",
-  fontWeight: 400,
+  color: "black",
+  fontSize: "18px",
+  fontWeight: 800,
   textTransform: "uppercase",
 });

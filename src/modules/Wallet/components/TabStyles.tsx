@@ -4,12 +4,13 @@ import { MAIN_COLORS } from "../../../shared/colors";
 export const TabStyles = styled(Tab)({
   fontSize: "12px",
   fontWeight: 700,
-  padding: "0 10px",
+  padding: "13px 16px",
   color: MAIN_COLORS.textColor,
-  border: MAIN_COLORS.dailyBorder,
-  borderRadius: "5px",
+  border: `1px solid ${MAIN_COLORS.mainGreen}`,
+  borderRadius: "8px",
   minHeight: "35px",
   "&.Mui-selected": {
-    color: MAIN_COLORS.activeTabColor,
+    backgroundColor: MAIN_COLORS.mainGreen,
+    color: "black",
   },
 });
