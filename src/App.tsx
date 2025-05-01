@@ -20,6 +20,11 @@ import ErrorPopup from "./shared/components/ErrorPopup";
 import { selectSelectedCountry } from "./modules/Home/selectors";
 import Lottie from "lottie-react";
 import Footer from "./modules/Footer";
+import {
+  selectCurrentModule,
+  selectIsTutorialFinished,
+} from "./modules/Tutorial/selectors";
+import { setIsTutorialFinished } from "./modules/Tutorial/slices";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -37,10 +42,21 @@ function convertToUserData(
 }
 
 const App = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
-  const location = useLocation(); // ⬅️ получаем текущий путь
-  const isMissionsPage = location.pathname === "/missions";
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
+  const currentStep = useSelector(selectCurrentModule());
+
+  useEffect(() => {
+    if (localStorage.getItem("isTutorialFinished") === "true") {
+      dispatch(setIsTutorialFinished(true));
+    }
+    if (currentStep === 14) {
+      localStorage.setItem("isTutorialFinished", "true");
+      dispatch(setIsTutorialFinished(true));
+    }
+  }, [currentStep, dispatch, isTutorialFinished]);
 
   useEffect(() => {
     try {
@@ -102,12 +118,12 @@ const App = () => {
             transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
         >
-          {isMissionsPage && (
+          {location.pathname !== "/home" && location.pathname !== "/" && (
             <Box
               sx={{
                 position: "absolute",
                 inset: 0,
-                backgroundColor: "rgba(0, 0, 0, 0.8)",
+                backgroundColor: "#01121DD9",
                 zIndex: 1,
               }}
             />

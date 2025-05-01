@@ -24,6 +24,11 @@ export const Home = () => {
     onend: () => setCycleBGSound(false),
   });
 
+  // const handleEarthClick = useCallback(() => {
+  //   navigate("/");
+  //   dispatch(clearSelectedCountry());
+  // }, [navigate, dispatch]);
+
   useEffect(() => {
     if (!selectedCountry.name) {
       navigate("/");

@@ -22,20 +22,18 @@ import { MAIN_COLORS } from "../../shared/colors";
 import { ButtonGame } from "../../shared/components/ButtonGame";
 import { ButtonMissions } from "./components/ButtonMissions";
 
-type MissionType = {
-  title: string;
-  description: string;
-  type: string;
-  reward: string;
-  coin: string;
-  img: string;
-};
+import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
+import { setCurrentModule } from "../Tutorial/slices";
+import { selectIsTutorialFinished } from "../Tutorial/selectors";
+import { MissionsData } from "./types";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
-  const [selectedMission, setSelectedMission] = useState<MissionType | null>(
+  const [missionLoading, setMissionLoading] = useState(false);
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
+  const [selectedMission, setSelectedMission] = useState<MissionsData | null>(
     null,
   );
 
@@ -82,12 +80,23 @@ const Missions = () => {
 
   return (
     <Box
+      onClick={(e) => {
+        if (!isTutorialFinished) {
+          e.stopPropagation();
+          e.preventDefault();
+          dispatch(setCurrentModule(8));
+        }
+      }}
       sx={{
         display: "flex",
         flexDirection: "column",
         padding: "5px 15px 0 15px",
         height: `${heightProportion}px`,
         gap: "15px",
+        position: "relative",
+        "& *": {
+          pointerEvents: !isTutorialFinished ? "none" : "auto",
+        },
       }}
     >
       <LoaderComponent loading={loading} />

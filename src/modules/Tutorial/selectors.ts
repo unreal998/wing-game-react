@@ -8,3 +8,8 @@ export const selectCurrentModule =
   () =>
   ({ tutorialSlice }: { tutorialSlice: TutorialStateType }) =>
     tutorialSlice.currentModule;
+
+export const selectIsTutorialFinished =
+  () =>
+  ({ tutorialSlice }: { tutorialSlice: TutorialStateType }) =>
+    tutorialSlice.isFinished;

@@ -33,10 +33,10 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
       sx={{
         maxHeight: "250px",
         border: `1px solid ${MAIN_COLORS.activeTabColor}`,
-        backgroundColor: MAIN_COLORS.headerBG,
+        backgroundColor: MAIN_COLORS.blockBG,
       }}
     >
-      <Table sx={{ backgroundColor: MAIN_COLORS.headerBG }}>
+      <Table sx={{ backgroundColor: MAIN_COLORS.blockBG }}>
         <TableHead>
           <TableRow>
             <TableCellShop>#</TableCellShop>
