@@ -28,11 +28,6 @@ const Header = () => {
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
 
-  // const handleEarthClick = useCallback(() => {
-  //   navigate("/");
-  //   dispatch(clearSelectedCountry());
-  // }, [navigate, dispatch]);
-
   const handleSoundClick = useCallback(() => {
     playSound();
     navigate("/settings");
