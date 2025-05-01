@@ -22,6 +22,7 @@ import { ButtonShopStyled } from "./components/ButtonShopStyled";
 import { ModuleElevenTwelve } from "../Tutorial/components/ModuleElevenTwelve";
 import { setCurrentModule } from "../Tutorial/slices";
 import { selectIsTutorialFinished } from "../Tutorial/selectors";
+import { updateBalanceAction } from "../Header/slices";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 42 },
@@ -75,6 +76,12 @@ const Shop = () => {
       }
     );
   }, [shopValues, windValue]);
+
+  useEffect(() => {
+    if (userData !== null) {
+      dispatch(updateBalanceAction(userData.id));
+    }
+  }, [dispatch, userData]);
 
   useEffect(() => {
     if (!shopValues?.length) {
@@ -178,7 +185,7 @@ const Shop = () => {
               sx={{
                 color: MAIN_COLORS.activeTabColor,
                 "& .MuiSlider-rail": {
-                  color: MAIN_COLORS.referalBox,
+                  color: "black",
                 },
                 "& .Mui-active": {
                   boxShadow: "0 0 0 9px black",

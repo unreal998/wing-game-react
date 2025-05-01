@@ -11,19 +11,23 @@ export const InfoBox = ({
   return (
     <Box
       sx={{
-        backgroundColor: MAIN_COLORS.referalBox,
+        backgroundColor: MAIN_COLORS.sectionBG,
         border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
         display: "flex",
         flexDirection: "column",
         borderRadius: "9px",
         alignItems: "center",
+        padding: "12px",
+        minWidth: "85px",
+        minHeight: "55px",
+        fontFamily: "Roboto",
+        letterSpacing: "0.5px",
       }}
     >
       <Typography
         sx={{
-          fontSize: "24px",
+          fontSize: "20px",
           fontWeight: 700,
-          padding: "9px 45px 0px 45px",
         }}
       >
         {value}
@@ -31,8 +35,7 @@ export const InfoBox = ({
       <Typography
         sx={{
           fontSize: "12px",
-          fontWeight: 700,
-          padding: "0px 15px 9px 15px",
+          fontWeight: 400,
         }}
       >
         {subtitle}

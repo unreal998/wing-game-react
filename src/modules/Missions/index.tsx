@@ -21,6 +21,7 @@ import { StyledTab } from "../../shared/components/StyledTab";
 import { MissionsData } from "./types";
 import { MAIN_COLORS } from "../../shared/colors";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { updateBalanceAction } from "../Header/slices";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -51,6 +52,7 @@ const Missions = () => {
 
   useEffect(() => {
     if (userData) {
+      dispatch(updateBalanceAction(userData.id));
       dispatch(
         getMissionsDataAction({
           type: missionTitles[activeTab].type,

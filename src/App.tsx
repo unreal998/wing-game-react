@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import WebApp from "@twa-dev/sdk";
+import "./global.css";
 import { MAIN_COLORS } from "./shared/colors";
 import Referal from "./modules/Referal_temp";
 import { Box } from "@mui/material";
@@ -79,7 +80,7 @@ const App = () => {
     <Box
       sx={{
         height: "100vh",
-        backgroundColor: MAIN_COLORS.mainBG,
+        backgroundColor: MAIN_COLORS.appBG,
         backgroundImage: `${
           selectedCountry.name ? `url(./${selectedCountry.name}BG.png)` : "none"
         }`,

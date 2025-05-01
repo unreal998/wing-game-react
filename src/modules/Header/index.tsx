@@ -1,17 +1,17 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
-import USDT from "../../assets/usdt.svg";
+import TON from "../../assets/ton.png";
 import Flash from "../../assets/flash.png";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import WebApp from "@twa-dev/sdk";
 import { StyledFlashBox } from "./components/StyledFlashBox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "./selectors";
-import { selectHeaderLoading } from "./slices";
+import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 
 // const windSpeedByAreaName: Record<string, string> = {
@@ -23,10 +23,16 @@ import LoaderComponent from "../../shared/components/LoaderComponent";
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
+
+  useEffect(() => {
+    if (userData !== null) {
+      dispatch(updateBalanceAction(userData.id));
+    }
+  }, [dispatch, userData]);
 
   const handleSoundClick = useCallback(() => {
     playSound();
@@ -93,7 +99,7 @@ const Header = () => {
             {currentWindSpeed}
           </Typography> */}
         <StyledFlashBox sx={{ gap: "8px", width: "30%" }}>
-          <img src={USDT} alt="usdt" width="24px" height="24px" />
+          <img src={TON} alt="usdt" width="24px" height="24px" />
           <Typography sx={{ fontSize: "16px", fontWeight: 700 }}>
             {(Number(userData?.TONBalance) || 0).toFixed(4)}
           </Typography>
