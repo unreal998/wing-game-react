@@ -96,7 +96,7 @@ const App = () => {
     >
       <Header />
       <ErrorPopup />
-      <Box sx={{ flexGrow: 1, zIndex: 100 }}>
+      <Box sx={{ flexGrow: 1, zIndex: 99 }}>
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Planet />} />
@@ -108,6 +108,7 @@ const App = () => {
         </Routes>
       </Box>
       <Footer />
+
       {selectedCountry?.name && (
         <Box
           sx={{
