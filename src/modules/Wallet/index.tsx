@@ -28,7 +28,6 @@ import Switch from "../../assets/sounds/switch.mp3";
 import { updateBalanceAction } from "../Header/slices";
 import { WalletComponent } from "./components/WalletComponent";
 import { HistoryComponent } from "./components/HistoryComponent";
-import { selectUserData } from "../Header/selectors";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
