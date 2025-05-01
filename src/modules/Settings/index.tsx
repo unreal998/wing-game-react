@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, Typography, Modal, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
-import { heightProportion } from "../../shared/utils";
 import { StyledBasicBox } from "../Referal_temp/components/StyledBasicBox";
 import { CustomSwitch } from "./components/CustomSwitch";
 import LanguageSelector from "../../shared/components/LanguageSelector";
@@ -14,6 +13,7 @@ import { selectSettingsLoading } from "./slices";
 import { useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { roadmapText } from "./components/roadmapText";
+import { MAIN_COLORS } from "../../shared/colors";
 
 const Settings = () => {
   const loading = useSelector(selectSettingsLoading);
@@ -26,14 +26,14 @@ const Settings = () => {
   };
 
   return (
-    <MainBox height={heightProportion}>
+    <MainBox>
       <LoaderComponent loading={loading} />
 
       <SubMainBox>
         <NamedStyled paddingBottom="8px">{t("Settings")}</NamedStyled>
       </SubMainBox>
 
-      <StyledBasicBox height={"200px"}>
+      <StyledBasicBox>
         <TabBoxSettings>
           <Typography
             sx={{
@@ -57,8 +57,12 @@ const Settings = () => {
           />
         </TabBoxSettings>
 
-        <Box sx={{ padding: "20px 30px 0px 5px" }}>
-          <Button onClick={() => setRoadmapOpen(true)} variant="outlined">
+        <Box>
+          <Button
+            onClick={() => setRoadmapOpen(true)}
+            variant="text"
+            sx={{ color: MAIN_COLORS.mainGreen }}
+          >
             Roadmap
           </Button>
         </Box>

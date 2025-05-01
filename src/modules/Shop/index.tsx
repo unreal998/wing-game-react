@@ -1,11 +1,10 @@
-import { Box, Slider, Stack, Typography, TextField } from "@mui/material";
+import { Box, Slider, Stack, Typography } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
 import { TabContext, TabList } from "@mui/lab";
 import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
-import { TabStyles } from "./components/TabStyles";
 import { useTranslation } from "react-i18next";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
@@ -15,14 +14,15 @@ import { getShopDataByArea, buyItemAction, selectShopLoading } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
 import { selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
-import { flag } from "./components/flag";
 import ModificatorsTable from "./components/ModificatorsTable";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { ButtonShopStyled } from "./components/ButtonShopStyled";
 import { ModuleElevenTwelve } from "../Tutorial/components/ModuleElevenTwelve";
 import { setCurrentModule } from "../Tutorial/slices";
 import { selectIsTutorialFinished } from "../Tutorial/selectors";
 import { updateBalanceAction } from "../Header/slices";
+import { InfoBox } from "../../shared/components/InfoBox";
+import { StyledTab } from "../../shared/components/StyledTab";
+import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 42 },
@@ -35,6 +35,8 @@ const Shop = () => {
   const loading = useSelector(selectShopLoading);
   const { t } = useTranslation();
   const [windValue, setWindValue] = useState<number>(0);
+  const [selectedScruberPosition, setSelectedScruberPosition] =
+    useState<number>(0);
   const [tab, setTab] = useState(0);
   const shopValues = useSelector(selectShopData());
   const selectedCountry = useSelector(selectSelectedCountry());
@@ -52,7 +54,7 @@ const Shop = () => {
     )?.price;
     if (currentPrice === undefined) return;
     if (userData === null) return;
-    if (userData.TONBalance <= currentPrice) return;
+    if (userData.TONBalance <= currentPrice) setLowBalanceModalOpen(true);
     dispatch(
       buyItemAction({
         windSpeed: windValue,
@@ -110,6 +112,12 @@ const Shop = () => {
   const handleWindSlide = (event: Event, newValue: number | number[]) => {
     const newSlideValue = newValue as number;
     setWindValue(newSlideValue);
+    const currentShopIndex = shopMarks.find(
+      (mark) => mark.value === newSlideValue,
+    );
+    if (currentShopIndex) {
+      setSelectedScruberPosition(currentShopIndex.level - 1);
+    }
   };
 
   const formatValue = (num: number) =>
@@ -159,16 +167,9 @@ const Shop = () => {
           justifyContent="space-between"
           width="80%"
         >
-          <TextField
-            variant="outlined"
-            disabled
-            sx={{ color: MAIN_COLORS.textColor }}
-            placeholder={`${(shopValues[0]?.price || 0).toString()} TON`}
-          />
-          <img
-            alt="flag"
-            src={flag[selectedCountry.name]}
-            style={{ width: "60px", paddingLeft: "10px" }}
+          <InfoBox
+            value={`${(shopValues[selectedScruberPosition]?.price || 0).toString()}`}
+            subtitle={`TON`}
           />
         </Stack>
         <Stack flexDirection="column" gap="10px">
@@ -216,20 +217,20 @@ const Shop = () => {
             }}
             onChange={handleTabChange}
           >
-            <TabStyles
+            <StyledTab
               label={"kW profit"}
               value={0}
               key={0}
               onClick={handleSoundClick}
             />
-            <TabStyles
+            <StyledTab
               label={`TON ${t("profit")}`}
               value={1}
               key={1}
               onClick={handleSoundClick}
             />
-            <TabStyles
-              label="Modificators"
+            <StyledTab
+              label="History"
               value={2}
               key={2}
               onClick={handleSoundClick}
@@ -267,12 +268,9 @@ const Shop = () => {
         </TabContext>
         {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
 
-        <ButtonShopStyled
-          onClick={buyModifier}
-          sx={{ background: MAIN_COLORS.gold }}
-        >
+        <GameButtonComponent onClick={buyModifier}>
           {t("Buy wind speed")}
-        </ButtonShopStyled>
+        </GameButtonComponent>
       </Stack>
       <ModalComponent
         openModal={lowBalanceModalOpen}

@@ -3,7 +3,7 @@ import WebApp from "@twa-dev/sdk";
 import "./global.css";
 import { MAIN_COLORS } from "./shared/colors";
 import Referal from "./modules/Referal_temp";
-import { Box } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
@@ -48,6 +48,7 @@ const App = () => {
   const selectedCountry = useSelector(selectSelectedCountry());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const currentStep = useSelector(selectCurrentModule());
+  const isSmallScreen = useMediaQuery("(max-width: 376px)");
 
   useEffect(() => {
     if (localStorage.getItem("isTutorialFinished") === "true") {
@@ -109,6 +110,17 @@ const App = () => {
       </Box>
       <Footer />
 
+      {location.pathname !== "/home" && location.pathname !== "/" && (
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            backgroundColor: "#01121DD9",
+            zIndex: 1,
+          }}
+        />
+      )}
+
       {selectedCountry?.name && (
         <Box
           sx={{
@@ -116,19 +128,11 @@ const App = () => {
             top: "220px",
             left: 0,
             zIndex: 0,
-            transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
+            transform: isSmallScreen
+              ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
+              : "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
         >
-          {location.pathname !== "/home" && location.pathname !== "/" && (
-            <Box
-              sx={{
-                position: "absolute",
-                inset: 0,
-                backgroundColor: "#01121DD9",
-                zIndex: 1,
-              }}
-            />
-          )}
           <Lottie
             animationData={require(
               `./assets/animations/${selectedCountry.name}Anim.json`,

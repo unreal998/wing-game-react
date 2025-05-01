@@ -23,5 +23,4 @@ export const HistoryWrapperBox = styled(Box)({
     borderRadius: "2px",
   },
   "&::-webkit-scrollbar-track": { backgroundColor: MAIN_COLORS.mainGreen },
-  height: "240px",
 });

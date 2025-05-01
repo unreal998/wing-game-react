@@ -151,6 +151,11 @@ const Footer = () => {
               sx={{
                 padding: "15px",
                 width: "90%",
+                "&.Mui-disabled": {
+                  backgroundColor: MAIN_COLORS.subTextColor,
+                  boxShadow: "none",
+                  animation: "none",
+                },
                 ...(currentModule === 4 && {
                   boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
                   animationName: "pulseShadow",

@@ -18,12 +18,4 @@ export const StyledBasicBox = styled(Box)({
     borderRadius: "2px",
   },
   "&::-webkit-scrollbar-track": { backgroundColor: MAIN_COLORS.textColor },
-
-  "@media (max-height: 723px)": {
-    height: "170px",
-  },
-
-  "@media (min-height: 723px)": {
-    height: "277px",
-  },
 });

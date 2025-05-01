@@ -11,7 +11,7 @@ import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useMediaQuery } from "@mui/material";
 
 export const Home = () => {
-  const isSmallScreen = useMediaQuery("(max-width: 375px)");
+  const isSmallScreen = useMediaQuery("(max-width: 376px)");
   const loading = useSelector(selectHomeLoading);
   const [cycleBGSound, setCycleBGSound] = useState(true);
   const navigate = useNavigate();
@@ -56,7 +56,9 @@ export const Home = () => {
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
+          transform: isSmallScreen
+            ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
+            : "matrix(2.2, 0, 0, 2.2, 0, 0)",
         }}
       ></Box>
       <Lottie
@@ -64,7 +66,7 @@ export const Home = () => {
         animationData={require(`../../assets/animations/windAnimation.json`)}
         loop
         style={{
-          top: isSmallScreen ? "140px" : "220px",
+          top: "220px",
           left: "0",
           position: "absolute",
           transform: isSmallScreen

@@ -22,6 +22,7 @@ import { MAIN_COLORS } from "../../shared/colors";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { updateBalanceAction } from "../Header/slices";
 import Flash from "../../assets/flash.svg";
+import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -152,7 +153,11 @@ const Missions = () => {
                 missions.map((mission, idx) => (
                   <StyledBoxMission
                     key={idx}
-                    onClick={() => handleOpen(mission)}
+                    onClick={() => {
+                      if (!mission.isSuccess) {
+                        handleOpen(mission);
+                      }
+                    }}
                   >
                     <Box
                       sx={{
@@ -215,36 +220,65 @@ const Missions = () => {
           <Box
             sx={{
               position: "relative",
-              width: "70%",
+              width: "90%",
               maxWidth: "500px",
               maxHeight: "70vh",
+              overflowX: "hidden",
               overflowY: "auto",
-              bgcolor: "background.paper",
+              bgcolor: MAIN_COLORS.appBG,
               boxShadow: 24,
-              p: 4,
-              borderRadius: "10px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
+              p: "8px",
+              borderRadius: "12px",
             }}
           >
-            {selectedMission && (
-              <>
-                <Typography variant="h5" component="h2" gutterBottom>
-                  {selectedMission.title}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {selectedMission.description}
-                </Typography>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  {selectedMission.type}
-                </Typography>
-                <Button variant="contained" onClick={() => setOpen(false)}>
-                  {t("start")}
-                </Button>
-              </>
-            )}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                bgcolor: MAIN_COLORS.sectionBG,
+                padding: "24px 30px",
+                borderRadius: "12px",
+                gap: "10px",
+              }}
+            >
+              {selectedMission && (
+                <>
+                  <Typography
+                    textAlign="center"
+                    color="white"
+                    variant="h5"
+                    component="h2"
+                    gutterBottom
+                  >
+                    {selectedMission.title}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      textAlign: "center",
+                      lineBreak: "anywhere",
+                      color: "white",
+                    }}
+                    variant="body1"
+                    gutterBottom
+                  >
+                    {selectedMission.description}
+                  </Typography>
+                  <Button
+                    sx={{
+                      border: `1px solid ${MAIN_COLORS.mainGreen}`,
+                      color: "white",
+                      backgroundColor: `${MAIN_COLORS.blockBG}`,
+                      padding: "10px 20px",
+                    }}
+                    onClick={() => setOpen(false)}
+                  >
+                    {t("start")}
+                  </Button>
+                </>
+              )}
+            </Box>
           </Box>
         </>
       </Modal>

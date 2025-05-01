@@ -10,6 +10,7 @@ export const StyledPlanetButton = styled(Button)<{ isBought: boolean }>(
     fontWeight: 900,
     textTransform: "capitalize",
     color: MAIN_COLORS.textColor,
+    borderRadius: "8px",
     backgroundColor: isBought ? MAIN_COLORS.activeTabColor : MAIN_COLORS.gold,
     "&.Mui-disabled": {
       backgroundColor: "rgb(134 134 134)",

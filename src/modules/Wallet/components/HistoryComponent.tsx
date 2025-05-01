@@ -1,10 +1,11 @@
 import HistoryItem from "./HistoryItem";
 import { HistoryWrapperBox } from "./HistoryWrapperBox";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "../../Header/selectors";
 import { selectWithdrawData } from "../selectors";
 import { getWithdrawAction } from "../slices";
+import { heightProportion } from "../../../shared/utils";
 
 export const HistoryComponent = () => {
   const userData = useSelector(selectUserData());
@@ -19,8 +20,12 @@ export const HistoryComponent = () => {
     if (userData) dispatch(getWithdrawAction(userData.id));
   }, [dispatch, userData]);
 
+  const wrapperHeight = useMemo(() => {
+    return heightProportion - 200;
+  }, []);
+
   return (
-    <HistoryWrapperBox sx={{ marginTop: "5px" }}>
+    <HistoryWrapperBox sx={{ marginTop: "5px", height: `${wrapperHeight}px` }}>
       {withdrawData.map((withdraw, i) => (
         <HistoryItem
           key={i}
