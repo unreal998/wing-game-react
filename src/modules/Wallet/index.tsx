@@ -18,6 +18,8 @@ import {
 } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import Switch from "../../assets/sounds/switch.mp3";
+import { MAIN_COLORS } from "../../shared/colors";
+import { updateBalanceAction } from "../Header/slices";
 import { WalletComponent } from "./components/WalletComponent";
 import { HistoryComponent } from "./components/HistoryComponent";
 
@@ -31,6 +33,13 @@ const Wallet = () => {
 
   const currentModule = useSelector(selectCurrentModule());
 
+
+  useEffect(() => {
+    if (userData && !withdrawData) {
+      dispatch(getWithdrawAction(userData.id));
+      dispatch(updateBalanceAction(userData.id));
+    }
+  }, [dispatch, withdrawData, userData]);
   const [value, setValue] = useState<number>(0);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 

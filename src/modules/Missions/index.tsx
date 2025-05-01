@@ -26,6 +26,7 @@ import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
 import { setCurrentModule } from "../Tutorial/slices";
 import { selectIsTutorialFinished } from "../Tutorial/selectors";
 import { MissionsData } from "./types";
+import { updateBalanceAction } from "../Header/slices";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -58,6 +59,7 @@ const Missions = () => {
 
   useEffect(() => {
     if (userData) {
+      dispatch(updateBalanceAction(userData.id));
       dispatch(
         getMissionsDataAction({
           type: missionTitles[activeTab].type,
