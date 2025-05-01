@@ -1,45 +1,49 @@
-import { Box, Modal, Button, Typography } from "@mui/material";
+import { Box, Checkbox, Modal, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { heightProportion } from "../../shared/utils";
 import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
+import { InfoBox } from "../../shared/components/InfoBox";
 import { StyledTabMission } from "./components/StyledTabMission";
 
 import { useTranslation } from "react-i18next";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMissionsData } from "./selectors";
-import {
-  completeMissionAction,
-  getMissionsDataAction,
-  selectMissionsLoading,
-} from "./slices";
+import { getMissionsDataAction, selectMissionsLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+import { MAIN_COLORS } from "../../shared/colors";
+import { ButtonGame } from "../../shared/components/ButtonGame";
+import { ButtonMissions } from "./components/ButtonMissions";
 
-import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
-import { setCurrentModule } from "../Tutorial/slices";
-import { selectCurrentModule } from "../Tutorial/selectors";
-import { MissionsData } from "./types";
+type MissionType = {
+  title: string;
+  description: string;
+  type: string;
+  reward: string;
+  coin: string;
+  img: string;
+};
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
-  const currentModule = useSelector(selectCurrentModule());
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
-  const [missionLoading, setMissionLoading] = useState(false);
-  const [selectedMission, setSelectedMission] = useState<MissionsData | null>(
+  const [selectedMission, setSelectedMission] = useState<MissionType | null>(
     null,
   );
 
   const { t } = useTranslation();
 
-  const missions = useSelector(selectMissionsData());
+  const missions = useSelector(
+    selectMissionsData(),
+  ) as unknown as MissionType[];
 
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
@@ -71,66 +75,26 @@ const Missions = () => {
     return heightProportion - 100;
   }, []);
 
-  const handleOpen = (mission: MissionsData) => {
+  const handleOpen = (mission: MissionType) => {
     setSelectedMission(mission);
     setOpen(true);
   };
 
-  const handleMission = useCallback(() => {
-    if (selectedMission?.isSuccess === true) return;
-    if (selectedMission === null) return;
-    if (selectedMission.specType) return;
-    if (!userData) return;
-    setMissionLoading((prev) => !prev);
-    setTimeout(() => {
-      setMissionLoading((prev) => !prev);
-      setOpen((prev) => !prev);
-      dispatch(
-        completeMissionAction({
-          uid: userData?.id,
-          mission: selectedMission,
-        }),
-      );
-    }, 3000);
-  }, [selectedMission, userData, dispatch, setMissionLoading]);
-
   return (
     <Box
-      onClick={(e) => {
-        if (currentModule !== 14) {
-          e.stopPropagation();
-          e.preventDefault();
-          dispatch(setCurrentModule(8));
-        }
-      }}
       sx={{
         display: "flex",
         flexDirection: "column",
         padding: "5px 15px 0 15px",
         height: `${heightProportion}px`,
         gap: "15px",
-        position: "relative",
-        "& *": {
-          pointerEvents: currentModule !== 14 ? "none" : "auto",
-        },
       }}
     >
-      <ModuleSevenEight />
       <LoaderComponent loading={loading} />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <NamedStyled>{t("Missions")}</NamedStyled>
-      </Box>
 
       <TabContext value={activeTab.toString()}>
         <Box
           sx={{
-            borderBottom: 1,
             borderColor: "divider",
           }}
         >
@@ -139,7 +103,7 @@ const Missions = () => {
               display: "flex",
               minHeight: "0px",
               "& .MuiTabs-list": {
-                gap: "10px",
+                gap: "8px",
               },
               "& .MuiTabs-indicator": {
                 display: "none",
@@ -147,6 +111,17 @@ const Missions = () => {
             }}
             onChange={handleTabChange}
           >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingLeft: "20px",
+                paddingRight: "20px",
+              }}
+            >
+              <NamedStyled>{t("Missions")}</NamedStyled>
+            </Box>
             {missionTitles.map((mission, index) => (
               <StyledTabMission
                 label={mission.text}
@@ -159,7 +134,9 @@ const Missions = () => {
         {missionTitles.map((_, index) => (
           <TabPanel
             sx={{
-              padding: 0,
+              padding: "8px 20px 8px 8px",
+              backgroundColor: "rgba(8, 32, 47, 1)",
+              borderRadius: "12px",
             }}
             value={index.toString()}
             key={index}
@@ -174,12 +151,27 @@ const Missions = () => {
                     key={idx}
                     onClick={() => handleOpen(mission)}
                   >
-                    <Box sx={{ padding: "10px 0px 10px 0px" }}>
-                      <StyledSubscrible>{mission.title}</StyledSubscrible>
-                      <StyledSHIB>
-                        {mission.reward} {mission.coin}
-                      </StyledSHIB>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        src={mission.img !== null ? mission.img : ""}
+                        style={{ width: "26px", height: "26px" }}
+                        alt="mission image"
+                      />
+                      <Box sx={{ padding: "10px 0px 10px 0px" }}>
+                        <StyledSubscrible>{mission.title}</StyledSubscrible>
+                        <StyledSHIB>
+                          {mission.reward} {mission.coin}
+                        </StyledSHIB>
+                      </Box>
                     </Box>
+
+                    <ButtonMissions>Go</ButtonMissions>
                   </StyledBoxMission>
                 ))}
             </StyledBox>
@@ -221,11 +213,9 @@ const Missions = () => {
                 <Typography variant="subtitle1" fontWeight="bold">
                   {selectedMission.type}
                 </Typography>
-                {!missionLoading && (
-                  <Button variant="contained" onClick={() => handleMission()}>
-                    {t("start")}
-                  </Button>
-                )}
+                <Button variant="contained" onClick={() => setOpen(false)}>
+                  {t("start")}
+                </Button>
               </>
             )}
           </Box>

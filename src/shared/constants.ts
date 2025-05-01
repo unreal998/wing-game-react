@@ -2,21 +2,21 @@ export const SERVER_URL = "http://localhost:3003";
 // prod
 // export const SERVER_URL = "https://bf8e-130-0-235-28.ngrok-free.app";
 
+//export const USER_MOCK_TELEGRAM_DATA = {
+//telegramID: 123456789,
+//firstName: "John",
+//lastName: "Doe",
+//userName: "john_doe",
+//language: "en",
+//};
+
 export const USER_MOCK_TELEGRAM_DATA = {
-  telegramID: 123456789,
-  firstName: "John",
-  lastName: "Doe",
-  userName: "john_doe",
+  telegramID: 123456788,
+  firstName: "John_1",
+  lastName: "Doe_1",
+  userName: "john_doe_1",
   language: "en",
 };
-
-// export const USER_MOCK_TELEGRAM_DATA = {
-//   telegramID: 123456788,
-//   firstName: "John_1",
-//   lastName: "Doe_1",
-//   userName: "john_doe_1",
-//   language: "en",
-// };
 
 // export const USER_MOCK_TELEGRAM_DATA = {
 //   telegramID: 123456787,

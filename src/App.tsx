@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
@@ -20,7 +20,6 @@ import ErrorPopup from "./shared/components/ErrorPopup";
 import { selectSelectedCountry } from "./modules/Home/selectors";
 import Lottie from "lottie-react";
 import Footer from "./modules/Footer";
-import { useMediaQuery } from "@mui/material";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -38,9 +37,10 @@ function convertToUserData(
 }
 
 const App = () => {
-  const isSmallScreen = useMediaQuery("(max-width: 375px)");
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
+  const location = useLocation(); // ⬅️ получаем текущий путь
+  const isMissionsPage = location.pathname === "/missions";
 
   useEffect(() => {
     try {
@@ -64,7 +64,9 @@ const App = () => {
       sx={{
         height: "100vh",
         backgroundColor: MAIN_COLORS.mainBG,
-        backgroundImage: `${selectedCountry.name ? `url(./${selectedCountry.name}BG.png)` : "none"}`,
+        backgroundImage: `${
+          selectedCountry.name ? `url(./${selectedCountry.name}BG.png)` : "none"
+        }`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -89,22 +91,41 @@ const App = () => {
         </Routes>
       </Box>
       <Footer />
+
       {selectedCountry?.name && (
-        <Lottie
-          animationData={require(
-            `./assets/animations/${selectedCountry.name}Anim.json`,
-          )}
-          loop
-          style={{
-            top: isSmallScreen ? "140px" : "240px",
-            zIndex: 0,
-            left: "0",
+        <Box
+          sx={{
             position: "absolute",
-            transform: isSmallScreen
-              ? "matrix(2.2, 0, 0, 1.8, 0, 0)"
-              : "matrix(2.2, 0, 0, 2.2, 0, 0)",
+            top: "240px",
+            left: 0,
+            zIndex: 0,
+            transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
-        />
+        >
+          {isMissionsPage && (
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                backgroundColor: "rgba(0, 0, 0, 0.8)",
+                zIndex: 1,
+              }}
+            />
+          )}
+          <Lottie
+            animationData={require(
+              `./assets/animations/${selectedCountry.name}Anim.json`,
+            )}
+            loop
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+              zIndex: 0,
+              pointerEvents: "none",
+            }}
+          />
+        </Box>
       )}
     </Box>
   );

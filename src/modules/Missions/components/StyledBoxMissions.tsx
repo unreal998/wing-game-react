@@ -3,9 +3,10 @@ import { MAIN_COLORS } from "../../../shared/colors";
 
 export const StyledBoxMission = styled(Box)({
   display: "flex",
-  justifyContent: "start",
-  border: MAIN_COLORS.dailyBorder,
-  marginBottom: "5px",
+  justifyContent: "space-between",
+  paddingLeft: "10px",
+  margin: "5px",
   borderRadius: "5px",
   alignItems: "center",
+  backgroundColor: "rgba(4, 53, 80, 1)",
 });
