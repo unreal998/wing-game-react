@@ -9,8 +9,6 @@ import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
 import { InfoBox } from "../../shared/components/InfoBox";
-import { StyledTabMission } from "./components/StyledTabMission";
-
 import { useTranslation } from "react-i18next";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,30 +16,23 @@ import { selectMissionsData } from "./selectors";
 import { getMissionsDataAction, selectMissionsLoading } from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { MAIN_COLORS } from "../../shared/colors";
-import { ButtonGame } from "../../shared/components/ButtonGame";
 import { ButtonMissions } from "./components/ButtonMissions";
-
-import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
-import { setCurrentModule } from "../Tutorial/slices";
-import { selectIsTutorialFinished } from "../Tutorial/selectors";
+import { StyledTab } from "../../shared/components/StyledTab";
 import { MissionsData } from "./types";
+import { MAIN_COLORS } from "../../shared/colors";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(false);
-  const [missionLoading, setMissionLoading] = useState(false);
-  const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const [selectedMission, setSelectedMission] = useState<MissionsData | null>(
     null,
   );
 
   const { t } = useTranslation();
 
-  const missions = useSelector(
-    selectMissionsData(),
-  ) as unknown as MissionType[];
+  const missions = useSelector(selectMissionsData()) as MissionsData[];
 
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
@@ -73,50 +64,31 @@ const Missions = () => {
     return heightProportion - 100;
   }, []);
 
-  const handleOpen = (mission: MissionType) => {
+  const handleOpen = (mission: MissionsData) => {
     setSelectedMission(mission);
     setOpen(true);
   };
 
   return (
     <Box
-      onClick={(e) => {
-        if (!isTutorialFinished) {
-          e.stopPropagation();
-          e.preventDefault();
-          dispatch(setCurrentModule(8));
-        }
-      }}
       sx={{
         display: "flex",
         flexDirection: "column",
         padding: "5px 15px 0 15px",
         height: `${heightProportion}px`,
         gap: "15px",
-        position: "relative",
-        "& *": {
-          pointerEvents: !isTutorialFinished ? "none" : "auto",
-        },
       }}
     >
       <LoaderComponent loading={loading} />
 
       <TabContext value={activeTab.toString()}>
-        <Box
-          sx={{
-            borderColor: "divider",
-          }}
-        >
+        <Box sx={{ borderColor: "divider" }}>
           <TabList
             sx={{
               display: "flex",
               minHeight: "0px",
-              "& .MuiTabs-list": {
-                gap: "8px",
-              },
-              "& .MuiTabs-indicator": {
-                display: "none",
-              },
+              "& .MuiTabs-list": { gap: "8px" },
+              "& .MuiTabs-indicator": { display: "none" },
             }}
             onChange={handleTabChange}
           >
@@ -127,12 +99,14 @@ const Missions = () => {
                 alignItems: "center",
                 paddingLeft: "20px",
                 paddingRight: "20px",
+                paddingTop: "10px",
               }}
             >
               <NamedStyled>{t("Missions")}</NamedStyled>
             </Box>
             {missionTitles.map((mission, index) => (
-              <StyledTabMission
+              <StyledTab
+                sx={{ marginTop: "10px" }}
                 label={mission.text}
                 value={index.toString()}
                 key={index}
@@ -146,6 +120,8 @@ const Missions = () => {
               padding: "8px 20px 8px 8px",
               backgroundColor: "rgba(8, 32, 47, 1)",
               borderRadius: "12px",
+              height: `${wrapperHeight - 30}px`,
+              overflow: "auto",
             }}
             value={index.toString()}
             key={index}
@@ -180,7 +156,27 @@ const Missions = () => {
                       </Box>
                     </Box>
 
-                    <ButtonMissions>Go</ButtonMissions>
+                    {mission.isSuccess ? (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          paddingRight: "10px",
+                        }}
+                      >
+                        <Typography
+                          sx={{ color: MAIN_COLORS.textColor, fontWeight: 600 }}
+                        >
+                          Done
+                        </Typography>
+                        <CheckCircleOutlineIcon
+                          sx={{ color: MAIN_COLORS.activeTabColor }}
+                        />
+                      </Box>
+                    ) : (
+                      <ButtonMissions>Go</ButtonMissions>
+                    )}
                   </StyledBoxMission>
                 ))}
             </StyledBox>
