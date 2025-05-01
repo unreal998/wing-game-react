@@ -10,7 +10,7 @@ export type UserBalanceResponse = {
 
 export const fetchUserBalance = async (uid: string) => {
   const response = await axios.get(`${SERVER_URL}/user/balance?uid=${uid}`);
-  return response.data;
+  return response.data.data;
 };
 
 export const fetchInitData = async (userData: UserInitData) => {

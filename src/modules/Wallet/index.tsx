@@ -7,15 +7,8 @@ import { StyledTab } from "../../shared/components/StyledTab";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { MainBox } from "../../shared/components/MainBox";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createWalletAction,
-  getWithdrawAction,
-  selectWalletLoading,
-  sendWithdrawRequestAction,
-} from "./slices";
+import { selectWalletLoading, sendWithdrawRequestAction } from "./slices";
 import { selectUserData } from "../Header/selectors";
-import { selectWalletNumber, selectWithdrawData } from "./selectors";
-import Copy from "../../assets/copy.svg";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
 import { ModuleThirteen } from "../Tutorial/components/ModuleThirteen";

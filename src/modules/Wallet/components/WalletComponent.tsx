@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { WalletContentBox } from "./WalletContentBox";
 import { MAIN_COLORS } from "../../../shared/colors";
 import { WalletTypography } from "./WalletTypography";
@@ -48,26 +48,28 @@ export const WalletComponent = () => {
           alt="ton"
           style={{ paddingTop: "15px", width: "88px" }}
         />
-        {walletNumber ? (
-          <WalletTypography>
-            {t("Your wallet:")} <br />
-            {walletNumber}
-          </WalletTypography>
-        ) : (
-          <WalletTypography>{t("Connect")}</WalletTypography>
-        )}
-        {walletNumber && (
-          <Box
-            onClick={handleCopyClick}
-            sx={{ cursor: "pointer", paddingBottom: "10px" }}
-          >
-            <img
-              src={Copy}
-              alt="Copy"
-              style={{ width: "16px", height: "16px" }}
-            />
-          </Box>
-        )}
+        <Stack direction="row">
+          {walletNumber ? (
+            <Stack width={"70%"} flexWrap={"wrap"}>
+              <WalletTypography>{t("Your wallet:")}</WalletTypography>
+              <WalletTypography>{walletNumber}</WalletTypography>
+            </Stack>
+          ) : (
+            <WalletTypography>{t("Connect")}</WalletTypography>
+          )}
+          {walletNumber && (
+            <Box
+              onClick={handleCopyClick}
+              sx={{ cursor: "pointer", paddingBottom: "10px" }}
+            >
+              <img
+                src={Copy}
+                alt="Copy"
+                style={{ width: "16px", height: "16px" }}
+              />
+            </Box>
+          )}
+        </Stack>
 
         {!walletNumber && (
           <GameButtonComponent
