@@ -164,14 +164,16 @@ const Missions = () => {
                       <Box sx={{ padding: "10px 0px 10px 0px" }}>
                         <StyledSubscrible>{mission.title}</StyledSubscrible>
                         <StyledSHIB>
-                          {" "}
                           <img
                             height="20px"
                             width="20px"
                             src={Flash}
                             alt="flash"
                           />
-                          + {mission.reward} {mission.coin}
+                          + {mission.reward}{" "}
+                          <span style={{ color: "#C6C6C8" }}>
+                            {mission.coin}
+                          </span>
                         </StyledSHIB>
                       </Box>
                     </Box>
