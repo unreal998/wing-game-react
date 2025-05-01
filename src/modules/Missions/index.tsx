@@ -138,8 +138,8 @@ const Missions = () => {
               "&::-webkit-scrollbar-thumb:hover": {
                 backgroundColor: MAIN_COLORS.activeTabColor,
               },
-              scrollbarWidth: "thin", // Firefox
-              scrollbarColor: `${MAIN_COLORS.activeTabColor} transparent`, // Firefox
+              scrollbarWidth: "thin",
+              scrollbarColor: `${MAIN_COLORS.activeTabColor} transparent`,
             }}
             value={index.toString()}
             key={index}
