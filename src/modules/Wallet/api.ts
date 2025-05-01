@@ -10,3 +10,22 @@ export const fetchWithdrawData = async (uid: string) => {
   const response = await axios.get(`${SERVER_URL}/withdraw?uid=${uid}`);
   return response.data.data;
 };
+
+export const sendWithdrawRequest = async (
+  uid: string,
+  wallet: string,
+  amount: string,
+  tonMemo: string,
+) => {
+  const tid = "123456789";
+  const response = await axios.post(`${SERVER_URL}/withdraw`, {
+    uid,
+    wallet,
+    sum: parseFloat(amount),
+    MEMO: tonMemo,
+    status: "new",
+    tid,
+  });
+
+  return response.data;
+};

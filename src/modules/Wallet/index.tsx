@@ -7,8 +7,15 @@ import { StyledTab } from "../../shared/components/StyledTab";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { MainBox } from "../../shared/components/MainBox";
 import { useDispatch, useSelector } from "react-redux";
-import { selectWalletLoading } from "./slices";
-
+import {
+  createWalletAction,
+  getWithdrawAction,
+  selectWalletLoading,
+  sendWithdrawRequestAction,
+} from "./slices";
+import { selectUserData } from "../Header/selectors";
+import { selectWalletNumber, selectWithdrawData } from "./selectors";
+import Copy from "../../assets/copy.svg";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
 import { ModuleThirteen } from "../Tutorial/components/ModuleThirteen";
@@ -52,8 +59,17 @@ const Wallet = () => {
     amount: string,
     tonMemo: string,
   ) => {
-    console.log("Запрос на вывод:", { wallet, amount, tonMemo });
-    setIsWithdrawOpen(false);
+    if (userData) {
+      dispatch(
+        sendWithdrawRequestAction({
+          uid: userData.id,
+          wallet,
+          amount,
+          tonMemo,
+        }),
+      );
+      setIsWithdrawOpen(false);
+    }
   };
 
   return (
