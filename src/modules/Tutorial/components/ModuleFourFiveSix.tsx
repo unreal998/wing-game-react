@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setCurrentModule } from "../slices";
 import { selectCurrentModule } from "../selectors";
+import { useTranslation } from "react-i18next";
 
 export const ModuleFourFiveSix = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const currentModule = useSelector(selectCurrentModule());
 
@@ -23,18 +26,11 @@ export const ModuleFourFiveSix = () => {
   const getText = () => {
     switch (currentModule) {
       case 4:
-        return "Эта кнопка - твой главный источник энергии!";
+        return <>{t("tutorial.step4")}</>;
       case 5:
-        return (
-          <>
-            - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
-            "киловатты").
-            <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
-            клик!
-          </>
-        );
+        return <>{t("tutorial.step5")}</>;
       case 6:
-        return "Зайди в 'Миссии' — тут куча заданий, за которые платят!";
+        return <>{t("tutorial.step6")}</>;
       default:
         return null;
     }

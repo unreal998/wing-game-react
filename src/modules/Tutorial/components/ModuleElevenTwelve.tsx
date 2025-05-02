@@ -1,8 +1,10 @@
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
+import { useTranslation } from "react-i18next";
 
 export const ModuleElevenTwelve = () => {
+  const { t } = useTranslation();
   const currentModule = useSelector(selectCurrentModule());
 
   if (currentModule !== 11 && currentModule !== 12) return null;
@@ -29,19 +31,9 @@ export const ModuleElevenTwelve = () => {
       }}
     >
       {currentModule === 11 ? (
-        <>
-          Тут можно купить улучшения (за TON), которые увеличат доход
-          <br />
-          <br />
-          - Энергетический поток → больше Kw за клик.
-          <br />
-          - Моды → пассивный доход как в Kw, так и в TON!
-          <br />
-          <br />
-          Через 21 день улучшения начинают приносить прибыль в TON!
-        </>
+        <>{t("tutorial.step11")}</>
       ) : (
-        "Где хранить и выводить TON"
+        <> {t("tutorial.step12")}</>
       )}
     </Typography>
   );
