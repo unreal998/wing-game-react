@@ -29,6 +29,7 @@ import {
 } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
+import Hint from "../Tutorial/components/Hint";
 import { ReferalInputComponent } from "../Referal_temp/components/ReferalInputComponent";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { setWithdrawModalOpen } from "../Wallet/slices";
@@ -116,8 +117,14 @@ const Footer = () => {
 
   return (
     <>
-      <ModuleFourFiveSix />
-      <StyledMainBox>
+      <StyledMainBox
+        onClick={() => {
+          if (currentModule === 5) {
+            dispatch(setCurrentModule(6));
+          }
+        }}
+      >
+        {[1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) && <Hint />}
         {location.pathname === "/home" && (
           <Stack
             justifyContent={"center"}

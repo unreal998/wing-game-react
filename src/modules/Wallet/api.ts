@@ -24,24 +24,17 @@ export const sendWithdrawRequest = async (
   wallet: string,
   amount: string,
   tonMemo: string,
+  tid: string,
 ) => {
-  const tid = "123456789";
-  const response = await axios.post(
-    `${SERVER_URL}/withdraw`,
-    {
-      uid,
-      wallet,
-      sum: parseFloat(amount),
-      MEMO: tonMemo,
-      status: "new",
-      tid,
-    },
-    {
-      headers: {
-        "ngrok-skip-browser-warning": true,
-      },
-    },
-  );
+  const response = await axios.post(`${SERVER_URL}/withdraw`, {
+    uid,
+    wallet,
+    sum: parseFloat(amount),
+    MEMO: tonMemo,
+    status: "new",
+    tid,
+  });
+
 
   return response.data;
 };
