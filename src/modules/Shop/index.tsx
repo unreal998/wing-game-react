@@ -23,6 +23,8 @@ import { updateBalanceAction } from "../Header/slices";
 import { InfoBox } from "../../shared/components/InfoBox";
 import { StyledTab } from "../../shared/components/StyledTab";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
+import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
+import { StyledInput } from "../Referal_temp/components/StyledInput";
 
 const profitValues = [
   { label: "Profit per click", multiplier: 42 },
@@ -161,22 +163,28 @@ const Shop = () => {
           },
         }}
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          width="80%"
-        >
-          <InfoBox
-            value={`${(shopValues[selectedScruberPosition]?.price || 0).toString()}`}
-            subtitle={`TON`}
-          />
-        </Stack>
         <Stack flexDirection="column" gap="10px">
           <Box>
-            <Typography fontWeight="600">
-              {t("Wind speed")} : {windValue}
-            </Typography>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography fontWeight="600">
+                {t("Wind speed")} : {windValue}
+              </Typography>
+              <StyledInputBox
+                sx={{
+                  width: "20%",
+                }}
+              >
+                <StyledInput
+                  type="text"
+                  value={
+                    (
+                      shopValues[selectedScruberPosition]?.price || 0
+                    ).toString() + " TON"
+                  }
+                  readOnly
+                />
+              </StyledInputBox>
+            </Stack>
             <Slider
               aria-label="WindSpeed"
               value={windValue}
