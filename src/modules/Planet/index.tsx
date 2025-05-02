@@ -140,15 +140,15 @@ export const Planet = () => {
               }}
               disabled={!country.available}
               onClick={() => {
-                if (!isTutorialFinished && currentModule === 3) {
-                  dispatch(setCurrentModule(0));
+                if (currentModule === 3 || currentModule === 14) {
+                  if (!isTutorialFinished && currentModule === 3) {
+                    dispatch(setCurrentModule(0));
+                  }
                   handleButtonPress(country);
-                } else {
-                  handleButtonPress(country);
-                }
-                if (country.available && !country.bought) {
-                  setBuyCountrieModalOpen(true);
-                  setCountryToBuy(country);
+                  if (country.available && !country.bought) {
+                    setBuyCountrieModalOpen(true);
+                    setCountryToBuy(country);
+                  }
                 }
               }}
             >

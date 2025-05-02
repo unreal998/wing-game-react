@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import useSound from "use-sound";
@@ -28,6 +28,7 @@ import Switch from "../../assets/sounds/switch.mp3";
 import { updateBalanceAction } from "../Header/slices";
 import { WalletComponent } from "./components/WalletComponent";
 import { HistoryComponent } from "./components/HistoryComponent";
+import { Module } from "module";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -73,69 +74,78 @@ const Wallet = () => {
   };
 
   return (
-    <MainBox
-      position={"relative"}
-      onClick={(e) => {
-        if (!isTutorialFinished) {
-          e.stopPropagation();
-          e.preventDefault();
-          dispatch(setCurrentModule(14));
-        }
-      }}
-      sx={{
-        "& *": {
-          pointerEvents: !isTutorialFinished ? "none" : "auto",
-        },
-        marginTop: "20px",
-      }}
-    >
-      {currentModule === 13 && <ModuleThirteen />}
-      <LoaderComponent loading={loading} />
-
-      <TabContext value={value}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          gap={"8px"}
-          width={"100%"}
+    <>
+      {currentModule === 13 && (
+        <Box
+          onClick={() => {
+            dispatch(setCurrentModule(14));
+          }}
+          width={"100vw"}
+          height={"100vh"}
+          position={"absolute"}
+          zIndex={99999}
+          bgcolor={`rgba(0, 0, 0, 0.3)`}
+          top={"-1vh"}
+          sx={{
+            transition: "all 0.2s ease",
+          }}
         >
-          <Typography variant="h5">{t("Wallet")}</Typography>
-          <TabList
-            sx={{
-              display: "flex",
-              minHeight: "0px",
-              "& .MuiTabs-list": { gap: "10px" },
-              "& .MuiTabs-indicator": { display: "none" },
-            }}
-            onChange={handleTabChange}
+          <ModuleThirteen />
+        </Box>
+      )}
+      <MainBox
+        position={"relative"}
+        sx={{
+          marginTop: "20px",
+        }}
+      >
+        <LoaderComponent loading={loading} />
+
+        <TabContext value={value}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            gap={"8px"}
+            width={"100%"}
           >
-            {[
-              { label: t("Wallet"), value: 0 },
-              { label: t("History"), value: 1 },
-            ].map(({ label, value }) => (
-              <StyledTab key={value} label={label} value={value} />
-            ))}
-          </TabList>
-        </Stack>
+            <Typography variant="h5">{t("Wallet")}</Typography>
+            <TabList
+              sx={{
+                display: "flex",
+                minHeight: "0px",
+                "& .MuiTabs-list": { gap: "10px" },
+                "& .MuiTabs-indicator": { display: "none" },
+              }}
+              onChange={handleTabChange}
+            >
+              {[
+                { label: t("Wallet"), value: 0 },
+                { label: t("History"), value: 1 },
+              ].map(({ label, value }) => (
+                <StyledTab key={value} label={label} value={value} />
+              ))}
+            </TabList>
+          </Stack>
 
-        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
-          <WalletComponent />
-        </TabPanel>
+          <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={0}>
+            <WalletComponent />
+          </TabPanel>
 
-        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
-          <HistoryComponent />
-        </TabPanel>
-      </TabContext>
-      <GameButtonComponent onClick={() => setIsWithdrawOpen(true)}>
-        {t("Withdraw funds")}
-      </GameButtonComponent>
-      <WithdrawModal
-        open={isWithdrawOpen}
-        onClose={() => setIsWithdrawOpen(false)}
-        onSubmit={handleWithdrawRequest}
-      />
-    </MainBox>
+          <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
+            <HistoryComponent />
+          </TabPanel>
+        </TabContext>
+        <GameButtonComponent onClick={() => setIsWithdrawOpen(true)}>
+          {t("Withdraw funds")}
+        </GameButtonComponent>
+        <WithdrawModal
+          open={isWithdrawOpen}
+          onClose={() => setIsWithdrawOpen(false)}
+          onSubmit={handleWithdrawRequest}
+        />
+      </MainBox>
+    </>
   );
 };
 export default Wallet;

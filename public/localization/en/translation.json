@@ -56,8 +56,25 @@
   "start": "start",
   "tutorial.step1": "Hello, wind tycoon! You've just entered the exciting world of TurbineX, where your clicks turn into kilowatts! But first, let's find out how it all works.",
   "tutorial.step3a": "Click on the Netherlands and take a peek at your first power station!",
+  "tutorial.step3a.before": "Click on the",
+  "tutorial.step3a.after": "and take a peek at your first power station!",
   "tutorial.step3b": "You have 4 countries in front of you, but only the Netherlands is unlocked so far (the others are waiting for you to unlock them).",
-  "tutorial.step2": "To unlock other countries, you need to invite 3 friends, and buy them for a TON.",
+  "tutorial.step2": "To unlock other countries, you need to invite more friends, and buy them for a TON.",
   "tutorial.step4": "This button is your main source of energy!",
-  "tutorial.step5": "Click once every 12 hours → you get Kw (it's an internal currency, `kilowatts`).\n- The more upgrades you buy in the shop → the more Kw you get!"
+  "tutorial.step5": "Click once every 12 hours → you get Kw (it's an internal currency, `kilowatts`).\n- The more upgrades you buy in the shop → the more Kw you get!",
+  "tutorial.hint": "Tap anywhere to continue",
+  "module4": "This button is your main source of energy!",
+  "module5": {
+    "line1": "- Press once every 12 hours → receive Kw (the in-game currency, “kilowatts”).",
+    "line2": "- The more upgrades you buy in the store → the more Kw you get per click!"
+  },
+  "module6": "Go to 'Missions' — there are plenty of tasks you’ll get paid for!",
+  "tutorial.module7": "Починай із простих завдань — швидкий старт гарантовано!",
+  "tutorial.module8": "Друзі = гроші!",
+  "tutorial.module9": "1 - Copy the invitation link\n2 - Send it to your friends.\n3 - They register using it and get bonuses.\n4 - You get bonuses for their registration.",
+  "tutorial.module9.5": "Invite friends — unlock countries!",
+  "tutorial.module10": "Invest in energy!",
+  "tutorial.module11": "Here you can buy upgrades (for TON) that increase your income.\n\n- Energy Flow → more Kw per click.\n\n- Mods → passive income in both Kw and TON!\n\nAfter 21 days, upgrades start generating profit in TON!",
+  "tutorial.module12": "Where to store and withdraw TON",
+  "tutorial.module13": "Your personal TON wallet is already created!\n\nWhat can you do?\n- Top up → to buy upgrades.\n- Withdraw → to collect your hard-earned TON after profiting from mods."
 }

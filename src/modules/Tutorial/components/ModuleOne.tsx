@@ -16,6 +16,7 @@ function ModuleOne({ onClick }: { onClick: () => void }) {
         backdropFilter: "blur(10px)",
         backgroundColor: "rgba(0, 0, 0, 0.2)",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         zIndex: 2,

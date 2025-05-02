@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../colors";
+import { useSelector } from "react-redux";
+import { selectCurrentModule } from "../../modules/Tutorial/selectors";
 
 export const InfoBox = ({
   value,
@@ -8,6 +10,8 @@ export const InfoBox = ({
   value: string;
   subtitle: string;
 }) => {
+  const currentModule = useSelector(selectCurrentModule());
+
   return (
     <Box
       sx={{
@@ -22,6 +26,25 @@ export const InfoBox = ({
         minHeight: "55px",
         fontFamily: "Roboto",
         letterSpacing: "0.5px",
+        ...(currentModule === 9.5 &&
+          subtitle === "Refferals" && {
+            boxShadow: `0 0 1px ${MAIN_COLORS.activeTabColor}`,
+            animationName: "pulseShadow",
+            animationDuration: "2s",
+            animationTimingFunction: "ease-in-out",
+            animationIterationCount: "infinite",
+            "@keyframes pulseShadow": {
+              "0%": {
+                boxShadow: `0 0 8px ${MAIN_COLORS.activeTabColor}`,
+              },
+              "50%": {
+                boxShadow: `0 0 20px ${MAIN_COLORS.activeTabColor}`,
+              },
+              "100%": {
+                boxShadow: `0 0 8px ${MAIN_COLORS.activeTabColor}`,
+              },
+            },
+          }),
       }}
     >
       <Typography
