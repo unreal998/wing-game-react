@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -17,9 +17,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { powerButtonPressed, setPressTimeDelay } from "../Home/slices";
 import { useTranslation } from "react-i18next";
-import PowerIconActive from "./componets/PowerIconActive";
-import { ButtonGame } from "../../shared/components/ButtonGame";
-import { StyledTime } from "./componets/StyledTime";
 import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
@@ -33,6 +30,9 @@ import {
 import { setCurrentModule } from "../Tutorial/slices";
 import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 import Hint from "../Tutorial/components/Hint";
+import { ReferalInputComponent } from "../Referal_temp/components/ReferalInputComponent";
+import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
+import { setWithdrawModalOpen } from "../Wallet/slices";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -111,6 +111,10 @@ const Footer = () => {
     }
   }, [currentModule, dispatch, isTutorialFinished, location.pathname]);
 
+  const handleWithdrawOpen = () => {
+    dispatch(setWithdrawModalOpen(true));
+  };
+
   return (
     <>
       <StyledMainBox
@@ -126,15 +130,39 @@ const Footer = () => {
             justifyContent={"center"}
             alignItems={"center"}
             marginBottom="10px"
+            gap="8px"
           >
-            <StyledTime>
-              {calculateTime} {t("remain")}
-            </StyledTime>
-            <ButtonGame
+            <Stack
+              sx={{
+                fontSize: "20px",
+                fontWeight: 600,
+                backgroundColor: MAIN_COLORS.blockBG,
+                padding: "18px 24px",
+                borderRadius: "7px",
+                width: "78%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography>{t("remain")}</Typography>
+              <Typography fontSize="24px" fontWeight="700">
+                {calculateTime}
+              </Typography>
+            </Stack>
+
+            <GameButtonComponent
               disabled={isButtonDisabled}
               variant="contained"
               onClick={handlePushPower}
               sx={{
+                padding: "15px",
+                width: "90%",
+                "&.Mui-disabled": {
+                  backgroundColor: MAIN_COLORS.subTextColor,
+                  boxShadow: "none",
+                  animation: "none",
+                },
                 ...(currentModule === 4 && {
                   boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
                   animationName: "pulseShadow",
@@ -155,10 +183,22 @@ const Footer = () => {
                 }),
               }}
             >
-              {isButtonDisabled ? <PowerIcon /> : <PowerIconActive />}
+              <PowerIcon />
               <StyledTypographyButton>{t("Push Power")}</StyledTypographyButton>
-            </ButtonGame>
+            </GameButtonComponent>
           </Stack>
+        )}
+        {location.pathname === "/referal" && <ReferalInputComponent />}
+        {location.pathname === "/wallet" && (
+          <GameButtonComponent
+            sx={{
+              width: "93%",
+              margin: "15px",
+            }}
+            onClick={handleWithdrawOpen}
+          >
+            {t("Withdraw funds")}
+          </GameButtonComponent>
         )}
         <StyledFooterBox>
           {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {

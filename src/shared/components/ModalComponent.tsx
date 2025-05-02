@@ -1,9 +1,15 @@
-import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import {
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
 import { MAIN_COLORS } from "../colors";
-import { StyledButtonGame } from "../../modules/Planet/components/StyledButtonGame";
 import { ReactNode } from "react";
+import { GameButtonComponent } from "./GameButtonComponent";
 
 type ModalComponentPropsType = {
   openModal: boolean;
@@ -23,36 +29,43 @@ export const ModalComponent = ({
   const { t } = useTranslation();
   return (
     <ModalStyled open={openModal} onClose={handleCloseModal}>
-      <DialogTitle
+      <Stack
         sx={{
-          textAlign: "center",
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-          padding: "0px",
+          backgroundColor: MAIN_COLORS.sectionBG,
+          borderRadius: "8px",
+          padding: "12px",
         }}
       >
-        {title}
-      </DialogTitle>
-      <DialogContent>
-        <p
-          style={{
+        <DialogTitle
+          sx={{
             textAlign: "center",
-            fontSize: "1.2rem",
-            fontFamily: "sans-serif",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "white",
           }}
         >
-          {subtitle}
-        </p>
-      </DialogContent>
-      <DialogActions sx={{ justifyContent: "center" }}>
-        {additionalbutton}
-        <StyledButtonGame
-          onClick={handleCloseModal}
-          sx={{ color: MAIN_COLORS.textColor }}
-        >
-          {t("Close")}
-        </StyledButtonGame>
-      </DialogActions>
+          {title}
+        </DialogTitle>
+        <DialogContent>
+          <Typography
+            style={{
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            {subtitle}
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center" }}>
+          {additionalbutton}
+          <GameButtonComponent
+            onClick={handleCloseModal}
+            sx={{ color: "white" }}
+          >
+            {t("Close")}
+          </GameButtonComponent>
+        </DialogActions>
+      </Stack>
     </ModalStyled>
   );
 };

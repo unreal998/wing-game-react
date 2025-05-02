@@ -48,8 +48,10 @@ export const headerSlice = createSlice({
       { payload }: { payload: UserBalanceResponse },
     ) => {
       state.loading = false;
-      state.userData!.TONBalance = payload.TONBalance;
-      state.userData!.WindBalance = payload.WindBalance;
+      if (state.userData) {
+        state.userData.TONBalance = payload.TONBalance;
+        state.userData.WindBalance = payload.WindBalance;
+      }
     },
     updateBalanceActionFailure: (state, { payload }: { payload: string }) => {
       state.loading = false;

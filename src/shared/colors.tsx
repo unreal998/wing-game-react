@@ -3,7 +3,6 @@ export const MAIN_COLORS = {
   sectionBG: "#043550",
   subTextColor: "#C6C6C8",
   mainGreen: "#6ADA43",
-  dailyBorder: "1px solid #6ADA43",
   textColor: "#FFFFFF",
   activeTabColor: "#63EE6A",
   missionTable: "rgba(255, 255, 255, 0.69)",

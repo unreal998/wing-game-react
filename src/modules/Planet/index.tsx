@@ -90,8 +90,7 @@ export const Planet = () => {
     <Box
       sx={{
         width: "100%",
-        height: "80vh",
-        marginTop: "-10px",
+        height: "70vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

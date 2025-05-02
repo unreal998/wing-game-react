@@ -2,12 +2,20 @@ import axios from "axios";
 import { SERVER_URL } from "../../shared/constants";
 
 export const fetchCreateWallet = async (uid: string) => {
-  const response = await axios.post(`${SERVER_URL}/wallet/create?uid=${uid}`);
+  const response = await axios.post(`${SERVER_URL}/wallet/create?uid=${uid}`, {
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
+  });
   return response.data;
 };
 
 export const fetchWithdrawData = async (uid: string) => {
-  const response = await axios.get(`${SERVER_URL}/withdraw?uid=${uid}`);
+  const response = await axios.get(`${SERVER_URL}/withdraw?uid=${uid}`, {
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
+  });
   return response.data.data;
 };
 
@@ -26,6 +34,7 @@ export const sendWithdrawRequest = async (
     status: "new",
     tid,
   });
+
 
   return response.data;
 };

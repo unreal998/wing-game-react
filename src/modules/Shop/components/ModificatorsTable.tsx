@@ -1,14 +1,5 @@
 import React, { useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { TableRow, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 import { TableCellShop } from "./TableCellShop";
 import { UserData } from "../../../shared/types";
@@ -28,80 +19,48 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
   );
 
   return (
-    <TableContainer
-      component={Paper}
+    <Stack
       sx={{
-        maxHeight: "250px",
-        border: `1px solid ${MAIN_COLORS.activeTabColor}`,
         backgroundColor: MAIN_COLORS.blockBG,
+        padding: "8px",
+        borderRadius: "12px",
+        gap: "8px",
       }}
     >
-      <Table sx={{ backgroundColor: MAIN_COLORS.blockBG }}>
-        <TableHead>
-          <TableRow>
-            <TableCellShop>#</TableCellShop>
-            <TableCellShop>Wind Speed</TableCellShop>
-            <TableCellShop>Clicks Remain</TableCellShop>
-            <TableCellShop>Bought Date</TableCellShop>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {[selectedCountryModifiers?.boughtModifier].map((mod, index) => {
-            return (
-              <TableRow key={index}>
-                <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {index}
-                </TableCell>
-                <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod?.find((modifier) => modifier.speed !== 0)
-                    ? mod?.map((modifier) => (
-                        <Typography>
-                          <span key={modifier.speed}>{modifier.speed}</span>
-                          <br></br>
-                        </Typography>
-                      ))
-                    : 0}
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: MAIN_COLORS.textColor,
-                  }}
-                >
-                  {mod?.find((modifier) => modifier.clicksRemaining !== 0)
-                    ? mod?.map((modifier) => (
-                        <Typography>
-                          <span key={modifier.speed}>
-                            {modifier.clicksRemaining} clicks
-                          </span>
-                          <br></br>
-                        </Typography>
-                      ))
-                    : 0}
-                </TableCell>
-                <TableCell sx={{ color: MAIN_COLORS.textColor }}>
-                  {mod?.find(
-                    (modifier) =>
-                      modifier.boughtDate !== null &&
-                      modifier.boughtDate !== undefined,
-                  )
-                    ? mod?.map((modifier) => (
-                        <Typography>
-                          <span key={modifier.speed}>
-                            {new Date(
-                              modifier.boughtDate || 0,
-                            ).toLocaleDateString()}
-                          </span>
-                          <br></br>
-                        </Typography>
-                      ))
-                    : "not bought yet"}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+      <TableRow
+        sx={{
+          backgroundColor: MAIN_COLORS.sectionBG,
+          borderRadius: "8px",
+        }}
+      >
+        <TableCellShop>#</TableCellShop>
+        <TableCellShop>Energy Flow</TableCellShop>
+        <TableCellShop>Clicks Remain</TableCellShop>
+        <TableCellShop>Bought Date</TableCellShop>
+      </TableRow>
+      {selectedCountryModifiers?.boughtModifier &&
+        selectedCountryModifiers?.boughtModifier.map((mod, index) => {
+          return (
+            <TableRow
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                backgroundColor: MAIN_COLORS.sectionBG,
+                borderRadius: "8px",
+              }}
+            >
+              <TableCellShop>{index + 1}</TableCellShop>
+              <TableCellShop>{mod.speed}</TableCellShop>
+              <TableCellShop> {mod.clicksRemaining} clicks </TableCellShop>
+              <TableCellShop>
+                {new Date(mod.boughtDate || 0).toLocaleDateString()}
+              </TableCellShop>
+            </TableRow>
+          );
+        })}
+    </Stack>
   );
 };
 

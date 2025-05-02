@@ -17,7 +17,7 @@ import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 import { setCurrentModule } from "../Tutorial/slices";
 
 export const Home = () => {
-  const isSmallScreen = useMediaQuery("(max-width: 375px)");
+  const isSmallScreen = useMediaQuery("(max-width: 376px)");
   const loading = useSelector(selectHomeLoading);
   const [cycleBGSound, setCycleBGSound] = useState(true);
   const navigate = useNavigate();
@@ -30,11 +30,6 @@ export const Home = () => {
   });
   const dispatch = useDispatch();
   const currentModule = useSelector(selectCurrentModule());
-
-  // const handleEarthClick = useCallback(() => {
-  //   navigate("/");
-  //   dispatch(clearSelectedCountry());
-  // }, [navigate, dispatch]);
 
   useEffect(() => {
     if (!selectedCountry.name) {
@@ -79,33 +74,28 @@ export const Home = () => {
       <ModuleFourFiveSix />
       <Box
         sx={{
-          height: "100vh",
+          backgroundImage: `url(./windModel.png)`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          transform: isSmallScreen
+            ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
+            : "matrix(2.2, 0, 0, 2.2, 0, 0)",
         }}
-      >
-        <LoaderComponent loading={loading} />
-        <Box
-          sx={{
-            backgroundImage: `url(./windModel.png)`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            transform: "matrix(2.2, 0, 0, 2.2, 0, 0)",
-          }}
-        ></Box>
-        <Lottie
-          lottieRef={animationRef}
-          animationData={require(`../../assets/animations/windAnimation.json`)}
-          loop
-          style={{
-            top: isSmallScreen ? "140px" : "240px",
-            left: "0",
-            position: "absolute",
-            transform: isSmallScreen
-              ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
-              : "matrix(2.2, 0, 0, 2.2, 0, 0)",
-          }}
-        />
-      </Box>
-    </>
+      ></Box>
+      <Lottie
+        lottieRef={animationRef}
+        animationData={require(`../../assets/animations/windAnimation.json`)}
+        loop
+        style={{
+          top: "220px",
+          left: "0",
+          position: "absolute",
+          transform: isSmallScreen
+            ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
+            : "matrix(2.2, 0, 0, 2.2, 0, 0)",
+        }}
+      />
+    </Box>
   );
 };

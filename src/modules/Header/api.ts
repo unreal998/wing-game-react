@@ -9,16 +9,28 @@ export type UserBalanceResponse = {
 };
 
 export const fetchUserBalance = async (uid: string) => {
-  const response = await axios.get(`${SERVER_URL}/user/balance?uid=${uid}`);
-  return response.data;
+  const response = await axios.get(`${SERVER_URL}/user/balance?uid=${uid}`, {
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
+  });
+  return response.data.data;
 };
 
 export const fetchInitData = async (userData: UserInitData) => {
-  const response = await axios.post(`${SERVER_URL}/init`, userData);
+  const response = await axios.post(`${SERVER_URL}/init`, userData, {
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
+  });
   return response.data;
 };
 
 export const fetchCountries = async () => {
-  const response = await axios.get(`${SERVER_URL}/countries`);
+  const response = await axios.get(`${SERVER_URL}/countries`, {
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
+  });
   return response.data;
 };

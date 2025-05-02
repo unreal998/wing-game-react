@@ -7,6 +7,11 @@ export const fetchMissionsData = async (
 ) => {
   const response = await axios.get(
     `${SERVER_URL}/missions?type=${missionData.type}&uid=${missionData.uid}`,
+    {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    },
   );
   return response.data.missionsData;
 };
@@ -18,6 +23,11 @@ export const fetchCompleteMission = async ({
   const response = await axios.post(
     `${SERVER_URL}/missions/complete?uid=${uid}`,
     mission,
+    {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    },
   );
   return response.data;
 };

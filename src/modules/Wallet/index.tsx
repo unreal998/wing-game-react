@@ -4,18 +4,14 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import useSound from "use-sound";
 import { useTranslation } from "react-i18next";
 import { StyledTab } from "../../shared/components/StyledTab";
-import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { MainBox } from "../../shared/components/MainBox";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createWalletAction,
-  getWithdrawAction,
   selectWalletLoading,
   sendWithdrawRequestAction,
+  setWithdrawModalOpen,
 } from "./slices";
 import { selectUserData } from "../Header/selectors";
-import { selectWalletNumber, selectWithdrawData } from "./selectors";
-import Copy from "../../assets/copy.svg";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
 import { ModuleThirteen } from "../Tutorial/components/ModuleThirteen";
@@ -28,7 +24,7 @@ import Switch from "../../assets/sounds/switch.mp3";
 import { updateBalanceAction } from "../Header/slices";
 import { WalletComponent } from "./components/WalletComponent";
 import { HistoryComponent } from "./components/HistoryComponent";
-import { Module } from "module";
+import { selectIsWithdrawOpen } from "./selectors";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
@@ -39,6 +35,7 @@ const Wallet = () => {
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const userData = useSelector(selectUserData());
   const currentModule = useSelector(selectCurrentModule());
+  const isWithdrawModalOpen = useSelector(selectIsWithdrawOpen());
 
   useEffect(() => {
     if (userData) {
@@ -47,11 +44,14 @@ const Wallet = () => {
   }, [dispatch, userData]);
 
   const [value, setValue] = useState<number>(0);
-  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     playTabSwitchSound();
     setValue(newValue);
+  };
+
+  const handleWithdrawClose = () => {
+    dispatch(setWithdrawModalOpen(false));
   };
 
   const handleWithdrawRequest = (
@@ -69,7 +69,7 @@ const Wallet = () => {
           tid: userData.telegramID.toString(),
         }),
       );
-      setIsWithdrawOpen(false);
+      dispatch(setWithdrawModalOpen(false));
     }
   };
 
@@ -132,20 +132,17 @@ const Wallet = () => {
             <WalletComponent />
           </TabPanel>
 
-          <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
-            <HistoryComponent />
-          </TabPanel>
-        </TabContext>
-        <GameButtonComponent onClick={() => setIsWithdrawOpen(true)}>
-          {t("Withdraw funds")}
-        </GameButtonComponent>
-        <WithdrawModal
-          open={isWithdrawOpen}
-          onClose={() => setIsWithdrawOpen(false)}
-          onSubmit={handleWithdrawRequest}
-        />
-      </MainBox>
-    </>
+        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
+          <HistoryComponent />
+        </TabPanel>
+      </TabContext>
+
+      <WithdrawModal
+        open={isWithdrawModalOpen}
+        onClose={handleWithdrawClose}
+        onSubmit={handleWithdrawRequest}
+      />
+    </MainBox>
   );
 };
 export default Wallet;
