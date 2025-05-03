@@ -227,34 +227,35 @@ const Missions = () => {
                           />
                         </Box>
                       ) : (
-                      <ButtonMissions>Go</ButtonMissions>
-                    )}
-                  </StyledBoxMission>
-                ))}
-            </StyledBox>
-          </TabPanel>
-        ))}
-      </TabContext>
-      <ModalComponent
-        openModal={open}
-        handleCloseModal={() => setOpen(false)}
-        title={selectedMission?.title || ""}
-        subtitle={selectedMission?.description || ""}
-        additionalbutton={
-          <Button
-            sx={{
-              border: `1px solid ${MAIN_COLORS.mainGreen}`,
-              color: "white",
-              backgroundColor: `${MAIN_COLORS.mainGreen}`,
-              padding: "10px 20px",
-            }}
-            onClick={() => setOpen(false)}
-          >
-            {t("start")}
-          </Button>
-        }
-      />
-    </Box>
+                        <ButtonMissions>Go</ButtonMissions>
+                      )}
+                    </StyledBoxMission>
+                  ))}
+              </StyledBox>
+            </TabPanel>
+          ))}
+        </TabContext>
+        <ModalComponent
+          openModal={open}
+          handleCloseModal={() => setOpen(false)}
+          title={selectedMission?.title || ""}
+          subtitle={selectedMission?.description || ""}
+          additionalbutton={
+            <Button
+              sx={{
+                border: `1px solid ${MAIN_COLORS.mainGreen}`,
+                color: "white",
+                backgroundColor: `${MAIN_COLORS.mainGreen}`,
+                padding: "10px 20px",
+              }}
+              onClick={() => setOpen(false)}
+            >
+              {t("start")}
+            </Button>
+          }
+        />
+      </Box>
+    </>
   );
 };
 
