@@ -28,7 +28,6 @@ import {
   selectIsTutorialFinished,
 } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
-import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 import Hint from "../Tutorial/components/Hint";
 import { ReferalInputComponent } from "../Referal_temp/components/ReferalInputComponent";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";

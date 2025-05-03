@@ -15,10 +15,7 @@ import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { WithdrawModal } from "../../shared/components/WithdrawModal";
 import { ModuleThirteen } from "../Tutorial/components/ModuleThirteen";
-import {
-  selectCurrentModule,
-  selectIsTutorialFinished,
-} from "../Tutorial/selectors";
+import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import Switch from "../../assets/sounds/switch.mp3";
 import { updateBalanceAction } from "../Header/slices";
@@ -32,7 +29,6 @@ const Wallet = () => {
   const dispatch = useDispatch();
 
   const [playTabSwitchSound] = useSound(Switch);
-  const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const userData = useSelector(selectUserData());
   const currentModule = useSelector(selectCurrentModule());
   const isWithdrawModalOpen = useSelector(selectIsWithdrawOpen());

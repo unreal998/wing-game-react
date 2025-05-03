@@ -5,20 +5,14 @@ import { selectDisabledPowerButton, selectSelectedCountry } from "./selectors";
 import useSound from "use-sound";
 import BGSound from "../../assets/sounds/bgSound.mp3";
 import { useNavigate } from "react-router-dom";
-import { selectHomeLoading } from "./slices";
-import LoaderComponent from "../../shared/components/LoaderComponent";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useMediaQuery } from "@mui/material";
-import {
-  selectCurrentModule,
-  selectIsTutorialFinished,
-} from "../Tutorial/selectors";
+import { selectCurrentModule } from "../Tutorial/selectors";
 import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 import { setCurrentModule } from "../Tutorial/slices";
 
 export const Home = () => {
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
-  const loading = useSelector(selectHomeLoading);
   const [cycleBGSound, setCycleBGSound] = useState(true);
   const navigate = useNavigate();
   const selectedCountry = useSelector(selectSelectedCountry());

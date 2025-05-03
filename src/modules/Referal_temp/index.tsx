@@ -26,10 +26,7 @@ import BuyCountryModal from "../../shared/components/BuyCountry";
 
 import { ModuleNineHalfTen } from "../Tutorial/components/ModuleNineHalfTen";
 import { setCurrentModule } from "../Tutorial/slices";
-import {
-  selectIsTutorialFinished,
-  selectCurrentModule,
-} from "../Tutorial/selectors";
+import { selectCurrentModule } from "../Tutorial/selectors";
 
 import { useNavigate } from "react-router-dom";
 import { clearSelectedCountry } from "../Home/slices";
@@ -46,7 +43,6 @@ const Referal = () => {
   const referalData = useSelector(selectReferalData());
   const countries = useSelector(selectCountiresData());
   const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
-  const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const currentModule = useSelector(selectCurrentModule());
 
   const nextArea = useMemo(() => {

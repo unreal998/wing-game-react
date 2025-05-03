@@ -22,7 +22,6 @@ import { MAIN_COLORS } from "../../shared/colors";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { updateBalanceAction } from "../Header/slices";
 import Flash from "../../assets/flash.svg";
-import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
