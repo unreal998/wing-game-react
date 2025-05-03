@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
@@ -43,11 +43,27 @@ const Footer = () => {
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
-  const [playWindSound] = useSound(WindBlowing);
+  const [playWindSound, { sound: windSound }] = useSound(WindBlowing);
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
-
+  const [tutorialReady, setTutorialReady] = useState(false);
   const currentModule = useSelector(selectCurrentModule());
   const isAnyModuleActive = currentModule !== 0;
+
+  useEffect(() => {
+    if (location.pathname === "/home" && isButtonDisabled && windSound) {
+      const handleEnd = () => {
+        windSound.play();
+      };
+
+      windSound.play();
+      windSound.on("end", handleEnd);
+
+      return () => {
+        windSound.off("end", handleEnd);
+        windSound.stop();
+      };
+    }
+  }, [location.pathname, isButtonDisabled, windSound]);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -93,11 +109,13 @@ const Footer = () => {
   }, [nextPressButtonTimeDelay]);
 
   useEffect(() => {
-    if (nextPressButtonTimeDelay > 0) {
-      setTimeout(() => {
-        dispatch(setPressTimeDelay(nextPressButtonTimeDelay - 1000));
-      }, 1000);
-    }
+    if (nextPressButtonTimeDelay <= 0) return;
+
+    const timeout = setTimeout(() => {
+      dispatch(setPressTimeDelay(nextPressButtonTimeDelay - 1000));
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [dispatch, nextPressButtonTimeDelay]);
 
   useEffect(() => {
@@ -114,6 +132,12 @@ const Footer = () => {
     dispatch(setWithdrawModalOpen(true));
   };
 
+  useEffect(() => {
+    if (typeof isTutorialFinished === "boolean") {
+      setTutorialReady(true);
+    }
+  }, [isTutorialFinished]);
+
   return (
     <>
       <StyledMainBox
@@ -123,8 +147,9 @@ const Footer = () => {
           }
         }}
       >
-        {[1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) &&
-          !isTutorialFinished && <Hint />}
+        {tutorialReady &&
+          !isTutorialFinished &&
+          [1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) && <Hint />}
         {location.pathname === "/home" && (
           <Stack
             justifyContent={"center"}

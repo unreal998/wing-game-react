@@ -117,7 +117,7 @@ const Referal = () => {
           height={"120vh"}
           position={"absolute"}
           zIndex={9}
-          bgcolor={`rgba(0, 0, 0, 0.${currentModule === 9 ? "3" : "1"}3)`}
+          bgcolor={`rgba(0, 0, 0, 0.${currentModule === 9 ? "4" : "2"}3)`}
           top={"-1vh"}
           sx={{
             transition: "all 0.2s ease",
