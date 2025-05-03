@@ -77,7 +77,7 @@ const Missions = () => {
 
   return (
     <>
-      {currentModule === 7 && (
+      {(currentModule === 7 || currentModule === 8) && (
         <Box
           onClick={() => {
             dispatch(setCurrentModule(8));
@@ -85,7 +85,7 @@ const Missions = () => {
           width={"100vw"}
           height={"120vh"}
           position={"absolute"}
-          zIndex={9}
+          zIndex={99}
           bgcolor={`rgba(0, 0, 0, 0.3)`}
           top={"-1vh"}
           sx={{
