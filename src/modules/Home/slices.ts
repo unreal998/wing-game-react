@@ -38,9 +38,16 @@ export const homeSlice = createSlice({
     powerButtonPressedFailure: (state) => {
       state.loading = false;
     },
-    setPressTimeDelay: (state, { payload }: { payload: number }) => {
-      state.nextPressTimeDelay = payload > 0 ? payload : 0;
-      if (payload <= 0) {
+    setPressTimeDelay: (
+      state,
+      { payload }: { payload: number | ((prev: number) => number) },
+    ) => {
+      const newValue =
+        typeof payload === "function"
+          ? payload(state.nextPressTimeDelay)
+          : payload;
+      state.nextPressTimeDelay = newValue > 0 ? newValue : 0;
+      if (newValue <= 0) {
         state.disabledPowerButton = false;
       }
     },

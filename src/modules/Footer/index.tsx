@@ -108,13 +108,23 @@ const Footer = () => {
     return `${hh}:${mm}:${ss}`;
   }, [nextPressButtonTimeDelay]);
 
+  // useEffect(() => {
+  //   if (nextPressButtonTimeDelay > 0) {
+  //     setTimeout(() => {
+  //       dispatch(setPressTimeDelay(nextPressButtonTimeDelay - 1000));
+  //     }, 1000);
+  //   }
+  // }, [dispatch, nextPressButtonTimeDelay]);
+
   useEffect(() => {
-    if (nextPressButtonTimeDelay > 0) {
-      setTimeout(() => {
-        dispatch(setPressTimeDelay(nextPressButtonTimeDelay - 1000));
-      }, 1000);
-    }
-  }, [dispatch, nextPressButtonTimeDelay]);
+    if (nextPressButtonTimeDelay <= 0) return;
+
+    const interval = setInterval(() => {
+      dispatch(setPressTimeDelay((prev: number) => prev - 1000));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [dispatch, nextPressButtonTimeDelay > 0]);
 
   useEffect(() => {
     if (
