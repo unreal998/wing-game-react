@@ -37,7 +37,6 @@ const Missions = () => {
   const { t } = useTranslation();
   const currentModule = useSelector(selectCurrentModule());
   const missions = useSelector(selectMissionsData()) as MissionsData[];
-
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
 
@@ -74,6 +73,11 @@ const Missions = () => {
     setOpen(true);
   };
 
+  const extractUrl = (text: string): string | null => {
+    const match = text.match(/https?:\/\/[^"]+/);
+    return match ? match[0] : null;
+  };
+
   return (
     <>
       {(currentModule === 7 || currentModule === 8) && (
@@ -87,9 +91,7 @@ const Missions = () => {
           zIndex={99}
           bgcolor={`rgba(0, 0, 0, 0.3)`}
           top={"-1vh"}
-          sx={{
-            transition: "all 0.2s ease",
-          }}
+          sx={{ transition: "all 0.2s ease" }}
         >
           <ModuleSevenEight />
         </Box>
@@ -233,6 +235,7 @@ const Missions = () => {
             </TabPanel>
           ))}
         </TabContext>
+
         <ModalComponent
           openModal={open}
           handleCloseModal={() => setOpen(false)}
@@ -246,7 +249,13 @@ const Missions = () => {
                 backgroundColor: `${MAIN_COLORS.mainGreen}`,
                 padding: "10px 20px",
               }}
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                const url = extractUrl(selectedMission?.description || "");
+                if (url) {
+                  window.open(url, "_blank");
+                }
+                setOpen(false);
+              }}
             >
               {t("start")}
             </Button>
