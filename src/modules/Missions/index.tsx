@@ -1,4 +1,4 @@
-import { Box, Modal, Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -22,7 +22,7 @@ import { MAIN_COLORS } from "../../shared/colors";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { updateBalanceAction } from "../Header/slices";
 import Flash from "../../assets/flash.svg";
-import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
+import { ModalComponent } from "../../shared/components/ModalComponent";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -210,78 +210,25 @@ const Missions = () => {
           </TabPanel>
         ))}
       </TabContext>
-
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-      >
-        <>
-          <Box
+      <ModalComponent
+        openModal={open}
+        handleCloseModal={() => setOpen(false)}
+        title={selectedMission?.title || ""}
+        subtitle={selectedMission?.description || ""}
+        additionalbutton={
+          <Button
             sx={{
-              position: "relative",
-              width: "90%",
-              maxWidth: "500px",
-              maxHeight: "70vh",
-              overflowX: "hidden",
-              overflowY: "auto",
-              bgcolor: MAIN_COLORS.appBG,
-              boxShadow: 24,
-              p: "8px",
-              borderRadius: "12px",
+              border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              color: "white",
+              backgroundColor: `${MAIN_COLORS.mainGreen}`,
+              padding: "10px 20px",
             }}
+            onClick={() => setOpen(false)}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                bgcolor: MAIN_COLORS.sectionBG,
-                padding: "24px 30px",
-                borderRadius: "12px",
-                gap: "10px",
-              }}
-            >
-              {selectedMission && (
-                <>
-                  <Typography
-                    textAlign="center"
-                    color="white"
-                    variant="h5"
-                    component="h2"
-                    gutterBottom
-                  >
-                    {selectedMission.title}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      textAlign: "center",
-                      lineBreak: "anywhere",
-                      color: "white",
-                    }}
-                    variant="body1"
-                    gutterBottom
-                  >
-                    {selectedMission.description}
-                  </Typography>
-                  <Button
-                    sx={{
-                      border: `1px solid ${MAIN_COLORS.mainGreen}`,
-                      color: "white",
-                      backgroundColor: `${MAIN_COLORS.blockBG}`,
-                      padding: "10px 20px",
-                    }}
-                    onClick={() => setOpen(false)}
-                  >
-                    {t("start")}
-                  </Button>
-                </>
-              )}
-            </Box>
-          </Box>
-        </>
-      </Modal>
+            {t("start")}
+          </Button>
+        }
+      />
     </Box>
   );
 };

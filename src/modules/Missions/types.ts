@@ -2,7 +2,7 @@ export type MissionsData = {
   id: number;
   created_at: string;
   title: string;
-  description: number;
+  description: string;
   reward: number;
   type: "quest" | "daily";
   coin: string;
