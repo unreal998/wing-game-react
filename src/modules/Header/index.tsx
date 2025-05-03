@@ -10,17 +10,17 @@ import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import WebApp from "@twa-dev/sdk";
 import { StyledFlashBox } from "./components/StyledFlashBox";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserData } from "./selectors";
+import { selectIncomeData, selectUserData } from "./selectors";
 import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
 
-const windSpeedByAreaName: Record<string, string> = {
-  nl: "~5.5–6.0 m/s",
-  dk: "~6.0–6.5 m/s",
-  gr: "~6.5–7.0 m/s",
-  usa: "~7.0–7.5 m/s",
-};
+// const windSpeedByAreaName: Record<string, string> = {
+//   nl: "~5.5–6.0 m/s",
+//   dk: "~6.0–6.5 m/s",
+//   gr: "~6.5–7.0 m/s",
+//   usa: "~7.0–7.5 m/s",
+// };
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
@@ -29,6 +29,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
+  const incomeData = useSelector(selectIncomeData());
 
   useEffect(() => {
     if (userData !== null) {
@@ -54,12 +55,12 @@ const Header = () => {
     [],
   );
 
-  const activeArea = useMemo(() => {
-    return userData?.areas?.find((area) => area.available) || { name: "nl" };
-  }, [userData]);
+  // const activeArea = useMemo(() => {
+  //   return userData?.areas?.find((area) => area.available) || { name: "nl" };
+  // }, [userData]);
 
-  const currentWindSpeed =
-    windSpeedByAreaName[activeArea.name] || windSpeedByAreaName["nl"];
+  // const currentWindSpeed =
+  //   windSpeedByAreaName[activeArea.name] || windSpeedByAreaName["nl"];
 
   return (
     <Stack
@@ -162,7 +163,10 @@ const Header = () => {
               }}
             >
               <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
-                {currentWindSpeed} kW
+                + {incomeData.kwtIncome} kW
+              </Typography>
+              <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
+                + {incomeData.tonIncome} TON
               </Typography>
             </Box>
           </Box>

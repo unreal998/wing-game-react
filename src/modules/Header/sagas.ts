@@ -10,12 +10,20 @@ import {
   updateUserSettingsAction,
   updateUserSettingsActionSuccess,
   updateUserSettingsActionFailure,
+  updateIncomeDataActionSuccess,
+  getIncomeDataAction,
 } from "./slices";
-import { County, UserData, UserInitData } from "../../shared/types";
+import {
+  County,
+  IncomeDataType,
+  UserData,
+  UserInitData,
+} from "../../shared/types";
 import {
   fetchCountries,
   fetchInitData,
   fetchUserBalance,
+  fetchUserIncome,
   updateUserSettingsApi,
   UserBalanceResponse,
 } from "./api";
@@ -64,8 +72,23 @@ function* handleUpdateUserSettings(action: { type: string; payload: any }) {
   }
 }
 
+function* handleGetIncomeData(action: { type: string; payload: any }) {
+  try {
+    const incomeData: IncomeDataType = yield call(
+      fetchUserIncome,
+      action.payload.uid,
+      action.payload.country,
+    );
+
+    yield put(updateIncomeDataActionSuccess(incomeData));
+  } catch (err: any) {
+    yield put(initActionFailure(err.toString()));
+  }
+}
+
 export function* watchHeaderActions() {
   yield takeLatest(initAction.type, handleInit);
   yield takeLatest(updateBalanceAction.type, handleUpdateBalance);
   yield takeLatest(updateUserSettingsAction.type, handleUpdateUserSettings);
+  yield takeLatest(getIncomeDataAction.type, handleGetIncomeData);
 }
