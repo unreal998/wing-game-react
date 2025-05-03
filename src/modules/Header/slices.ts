@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  County,
-  UserData,
-  UserInitData,
-  UserSettingsData,
-} from "../../shared/types";
+import { County, UserData, UserInitData } from "../../shared/types";
 import { UserBalanceResponse } from "./api";
 
 type HeaderState = {

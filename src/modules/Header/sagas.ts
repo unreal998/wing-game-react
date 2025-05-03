@@ -11,12 +11,7 @@ import {
   updateUserSettingsActionSuccess,
   updateUserSettingsActionFailure,
 } from "./slices";
-import {
-  County,
-  UserData,
-  UserInitData,
-  UserSettingsData,
-} from "../../shared/types";
+import { County, UserData, UserInitData } from "../../shared/types";
 import {
   fetchCountries,
   fetchInitData,
