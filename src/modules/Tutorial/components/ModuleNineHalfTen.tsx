@@ -19,7 +19,7 @@ export const ModuleNineHalfTen = () => {
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: "35%",
+        top: currentModule === 9.5 || currentModule === 10 ? "40%" : "30%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,

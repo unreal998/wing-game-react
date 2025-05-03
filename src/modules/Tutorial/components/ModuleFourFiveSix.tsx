@@ -43,7 +43,7 @@ export const ModuleFourFiveSix = () => {
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: "45%",
+        top: "35%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,
