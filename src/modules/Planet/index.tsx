@@ -23,6 +23,7 @@ import {
 import { setCurrentModule } from "../Tutorial/slices";
 import { buyCountry } from "../Referal_temp/slices";
 import BuyCountryModal from "../../shared/components/BuyCountry";
+import { useTranslation } from "react-i18next";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ export const Planet = () => {
   const areasData = useSelector(selectAreasData());
   const countries = useSelector(selectCountiresData());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
+  const { t } = useTranslation();
 
   const currentModule = useSelector(selectCurrentModule());
 
@@ -157,7 +159,7 @@ export const Planet = () => {
                 }
               }}
             >
-              {country.title}
+              {t(`${country.title}`)}
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
