@@ -23,7 +23,6 @@ import {
   selectIsTutorialFinished,
 } from "../Tutorial/selectors";
 import { updateBalanceAction } from "../Header/slices";
-import { InfoBox } from "../../shared/components/InfoBox";
 import { StyledTab } from "../../shared/components/StyledTab";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";

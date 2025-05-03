@@ -1,4 +1,4 @@
-import { Box, Modal, Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -26,6 +26,7 @@ import { GameButtonComponent } from "../../shared/components/GameButtonComponent
 import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
+import { ModalComponent } from "../../shared/components/ModalComponent";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -204,7 +205,6 @@ const Missions = () => {
                           </StyledSHIB>
                         </Box>
                       </Box>
-
                       {mission.isSuccess ? (
                         <Box
                           sx={{
@@ -227,92 +227,34 @@ const Missions = () => {
                           />
                         </Box>
                       ) : (
-                        <ButtonMissions>Go</ButtonMissions>
-                      )}
-                    </StyledBoxMission>
-                  ))}
-              </StyledBox>
-            </TabPanel>
-          ))}
-        </TabContext>
-
-        <Modal
-          open={open}
-          onClose={() => setOpen(false)}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <>
-            <Box
-              sx={{
-                position: "relative",
-                width: "90%",
-                maxWidth: "500px",
-                maxHeight: "70vh",
-                overflowX: "hidden",
-                overflowY: "auto",
-                bgcolor: MAIN_COLORS.appBG,
-                boxShadow: 24,
-                p: "8px",
-                borderRadius: "12px",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  bgcolor: MAIN_COLORS.sectionBG,
-                  padding: "24px 30px",
-                  borderRadius: "12px",
-                  gap: "10px",
-                }}
-              >
-                {selectedMission && (
-                  <>
-                    <Typography
-                      textAlign="center"
-                      color="white"
-                      variant="h5"
-                      component="h2"
-                      gutterBottom
-                    >
-                      {selectedMission.title}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        textAlign: "center",
-                        lineBreak: "anywhere",
-                        color: "white",
-                      }}
-                      variant="body1"
-                      gutterBottom
-                    >
-                      {selectedMission.description}
-                    </Typography>
-                    <Button
-                      sx={{
-                        border: `1px solid ${MAIN_COLORS.mainGreen}`,
-                        color: "white",
-                        backgroundColor: `${MAIN_COLORS.blockBG}`,
-                        padding: "10px 20px",
-                      }}
-                      onClick={() => setOpen(false)}
-                    >
-                      {t("start")}
-                    </Button>
-                  </>
-                )}
-              </Box>
-            </Box>
-          </>
-        </Modal>
-      </Box>
-    </>
+                      <ButtonMissions>Go</ButtonMissions>
+                    )}
+                  </StyledBoxMission>
+                ))}
+            </StyledBox>
+          </TabPanel>
+        ))}
+      </TabContext>
+      <ModalComponent
+        openModal={open}
+        handleCloseModal={() => setOpen(false)}
+        title={selectedMission?.title || ""}
+        subtitle={selectedMission?.description || ""}
+        additionalbutton={
+          <Button
+            sx={{
+              border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              color: "white",
+              backgroundColor: `${MAIN_COLORS.mainGreen}`,
+              padding: "10px 20px",
+            }}
+            onClick={() => setOpen(false)}
+          >
+            {t("start")}
+          </Button>
+        }
+      />
+    </Box>
   );
 };
 

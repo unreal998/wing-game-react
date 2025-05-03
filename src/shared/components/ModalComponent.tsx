@@ -1,15 +1,14 @@
 import {
+  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
   Stack,
-  Typography,
 } from "@mui/material";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
 import { MAIN_COLORS } from "../colors";
 import { ReactNode } from "react";
-import { GameButtonComponent } from "./GameButtonComponent";
 
 type ModalComponentPropsType = {
   openModal: boolean;
@@ -33,37 +32,47 @@ export const ModalComponent = ({
         sx={{
           backgroundColor: MAIN_COLORS.sectionBG,
           borderRadius: "8px",
-          padding: "12px",
+          padding: "8px",
+          gap: "10px",
         }}
       >
         <DialogTitle
           sx={{
             textAlign: "center",
-            fontSize: "1.5rem",
+            fontSize: "24px",
             fontWeight: "bold",
             color: "white",
+            padding: "10px",
+            lineHeight: "1.3",
           }}
         >
           {title}
         </DialogTitle>
-        <DialogContent>
-          <Typography
-            style={{
-              color: "white",
-              textAlign: "center",
-            }}
-          >
-            {subtitle}
-          </Typography>
+        <DialogContent
+          sx={{
+            padding: "10px",
+            lineHeight: "1.3",
+            color: "white",
+            overflowX: "hidden",
+            width: "91%",
+            lineBreak: "anywhere",
+          }}
+        >
+          {subtitle}
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
           {additionalbutton}
-          <GameButtonComponent
+          <Button
+            sx={{
+              border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              color: "white",
+              backgroundColor: `${MAIN_COLORS.blockBG}`,
+              padding: "10px 20px",
+            }}
             onClick={handleCloseModal}
-            sx={{ color: "white" }}
           >
             {t("Close")}
-          </GameButtonComponent>
+          </Button>
         </DialogActions>
       </Stack>
     </ModalStyled>
