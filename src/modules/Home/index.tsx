@@ -7,7 +7,10 @@ import BGSound from "../../assets/sounds/bgSound.mp3";
 import { useNavigate } from "react-router-dom";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useMediaQuery } from "@mui/material";
-import { selectCurrentModule } from "../Tutorial/selectors";
+import {
+  selectCurrentModule,
+  selectIsTutorialFinished,
+} from "../Tutorial/selectors";
 import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 import { setCurrentModule } from "../Tutorial/slices";
 
@@ -24,6 +27,7 @@ export const Home = () => {
   });
   const dispatch = useDispatch();
   const currentModule = useSelector(selectCurrentModule());
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
 
   useEffect(() => {
     if (!selectedCountry.name) {
@@ -47,25 +51,28 @@ export const Home = () => {
 
   return (
     <>
-      {(currentModule === 4 || currentModule === 5 || currentModule === 6) && (
-        <Box
-          onClick={() => {
-            if (currentModule === 5) {
-              dispatch(setCurrentModule(6));
-            }
-          }}
-          sx={{
-            position: "absolute",
-            top: "0",
-            left: "0",
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-            zIndex: 9,
-          }}
-        />
-      )}
-      <ModuleFourFiveSix />
+      {(currentModule === 4 || currentModule === 5 || currentModule === 6) &&
+        !isTutorialFinished && (
+          <Box
+            onClick={() => {
+              if (currentModule === 5) {
+                dispatch(setCurrentModule(6));
+              }
+            }}
+            sx={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "rgba(0, 0, 0, 0.3)",
+              zIndex: 9,
+            }}
+          >
+            <ModuleFourFiveSix />
+          </Box>
+        )}
+
       <Box
         sx={{
           backgroundImage: `url(./windModel.png)`,
