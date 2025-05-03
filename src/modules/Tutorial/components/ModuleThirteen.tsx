@@ -10,7 +10,7 @@ export const ModuleThirteen = () => {
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        bottom: "20%",
+        bottom: "33%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,

@@ -132,17 +132,18 @@ const Wallet = () => {
             <WalletComponent />
           </TabPanel>
 
-        <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
-          <HistoryComponent />
-        </TabPanel>
-      </TabContext>
+          <TabPanel sx={{ padding: 0, marginTop: "15px" }} value={1}>
+            <HistoryComponent />
+          </TabPanel>
+        </TabContext>
 
-      <WithdrawModal
-        open={isWithdrawModalOpen}
-        onClose={handleWithdrawClose}
-        onSubmit={handleWithdrawRequest}
-      />
-    </MainBox>
+        <WithdrawModal
+          open={isWithdrawModalOpen}
+          onClose={handleWithdrawClose}
+          onSubmit={handleWithdrawRequest}
+        />
+      </MainBox>
+    </>
   );
 };
 export default Wallet;

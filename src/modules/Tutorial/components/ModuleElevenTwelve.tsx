@@ -13,7 +13,7 @@ export const ModuleElevenTwelve = () => {
     <Typography
       sx={{
         padding: "10px",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
         borderRadius: "10px",
         position: "absolute",
         width: "80%",

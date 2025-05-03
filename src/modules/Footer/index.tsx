@@ -124,7 +124,8 @@ const Footer = () => {
           }
         }}
       >
-        {[1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) && <Hint />}
+        {[1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) &&
+          !isTutorialFinished && <Hint />}
         {location.pathname === "/home" && (
           <Stack
             justifyContent={"center"}

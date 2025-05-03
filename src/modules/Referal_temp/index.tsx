@@ -128,58 +128,59 @@ const Referal = () => {
           }}
         >
           <ModuleNineHalfTen />
-        </Box>)}
-        <StyledBasicBox height={`${tableHeight}px`}>
-          <TableBox>
-            {["User", "Level", "Coin"].map((item, index) => (
-              <StyledHeader
-                key={index}
-                sx={{
-                  flex: index === 0 ? 1.6 : 0.7,
-                }}
-              >
-                <Typography sx={{ fontSize: "13px" }}>{t(item)}</Typography>
-              </StyledHeader>
-            ))}
-          </TableBox>
+        </Box>
+      )}
+      <StyledBasicBox height={`${tableHeight}px`}>
+        <TableBox>
+          {["User", "Level", "Coin"].map((item, index) => (
+            <StyledHeader
+              key={index}
+              sx={{
+                flex: index === 0 ? 1.6 : 0.7,
+              }}
+            >
+              <Typography sx={{ fontSize: "13px" }}>{t(item)}</Typography>
+            </StyledHeader>
+          ))}
+        </TableBox>
 
-          {referalData && referalData.length > 0 ? (
-            referalData.map((user, index) => (
-              <TableBox key={index}>
-                <StyledMainJpg sx={{ flex: 1.6 }}>
-                  <img src={Male} alt="male" style={commonImgStyle} />
-                  <StyledReferalTypography>
-                    {user.userName || user.firstName || user.lastName || " "}
-                  </StyledReferalTypography>
-                </StyledMainJpg>
+        {referalData && referalData.length > 0 ? (
+          referalData.map((user, index) => (
+            <TableBox key={index}>
+              <StyledMainJpg sx={{ flex: 1.6 }}>
+                <img src={Male} alt="male" style={commonImgStyle} />
+                <StyledReferalTypography>
+                  {user.userName || user.firstName || user.lastName || " "}
+                </StyledReferalTypography>
+              </StyledMainJpg>
 
-                {[user.lvl, user.WindBalance].map((value, idx) => (
-                  <StyledReferalTypography
-                    sx={
-                      idx === 1
-                        ? { color: MAIN_COLORS.mainGreen, fontWeight: "600" }
-                        : {}
-                    }
-                    flex={0.7}
-                  >
-                    {value.toFixed(2)}
-                  </StyledReferalTypography>
-                ))}
-              </TableBox>
-            ))
-          ) : (
-            <Typography sx={{ textAlign: "center", padding: "20px" }}>
-              {t("No referrals yet")}
-            </Typography>
-          )}
-        </StyledBasicBox>
-      </Box>
+              {[user.lvl, user.WindBalance].map((value, idx) => (
+                <StyledReferalTypography
+                  sx={
+                    idx === 1
+                      ? { color: MAIN_COLORS.mainGreen, fontWeight: "600" }
+                      : {}
+                  }
+                  flex={0.7}
+                >
+                  {value.toFixed(2)}
+                </StyledReferalTypography>
+              ))}
+            </TableBox>
+          ))
+        ) : (
+          <Typography sx={{ textAlign: "center", padding: "20px" }}>
+            {t("No referrals yet")}
+          </Typography>
+        )}
+      </StyledBasicBox>
+
       <BuyCountryModal
         open={buyCountrieModalOpen}
         onClose={() => setBuyCountrieModalOpen(false)}
         onBuy={handleBuyCountry}
       />
-    </MainBox>
+    </>
   );
 };
 

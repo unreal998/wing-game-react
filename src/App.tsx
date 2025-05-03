@@ -54,10 +54,10 @@ const App = () => {
     if (localStorage.getItem("isTutorialFinished") === "true") {
       dispatch(setIsTutorialFinished(true));
     }
-    // if (currentStep === 14) {
-    localStorage.setItem("isTutorialFinished", "true");
-    dispatch(setIsTutorialFinished(true));
-    // }
+    if (currentStep === 14) {
+      localStorage.setItem("isTutorialFinished", "true");
+      dispatch(setIsTutorialFinished(true));
+    }
   }, [currentStep, dispatch, isTutorialFinished]);
 
   useEffect(() => {
