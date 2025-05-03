@@ -90,7 +90,7 @@ export const Planet = () => {
     <Box
       sx={{
         width: "100%",
-        height: "80vh",
+        height: "70vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -139,15 +139,21 @@ export const Planet = () => {
               }}
               disabled={!country.available}
               onClick={() => {
-                if (!isTutorialFinished && currentModule === 3) {
-                  dispatch(setCurrentModule(0));
+                if (currentModule === 3 || currentModule === 14) {
+                  if (!isTutorialFinished && currentModule === 3) {
+                    dispatch(setCurrentModule(0));
+                  }
                   handleButtonPress(country);
-                } else {
+                  if (country.available && !country.bought) {
+                    setBuyCountrieModalOpen(true);
+                    setCountryToBuy(country);
+                  }
+                } else if (isTutorialFinished && country.available) {
                   handleButtonPress(country);
-                }
-                if (country.available && !country.bought) {
-                  setBuyCountrieModalOpen(true);
-                  setCountryToBuy(country);
+                  if (!country.bought) {
+                    setBuyCountrieModalOpen(true);
+                    setCountryToBuy(country);
+                  }
                 }
               }}
             >

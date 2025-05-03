@@ -1,4 +1,4 @@
-import { Box, Modal, Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -22,7 +22,10 @@ import { MAIN_COLORS } from "../../shared/colors";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { updateBalanceAction } from "../Header/slices";
 import Flash from "../../assets/flash.svg";
-import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
+import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
+import { selectCurrentModule } from "../Tutorial/selectors";
+import { setCurrentModule } from "../Tutorial/slices";
+import { ModalComponent } from "../../shared/components/ModalComponent";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -33,7 +36,7 @@ const Missions = () => {
   );
 
   const { t } = useTranslation();
-
+  const currentModule = useSelector(selectCurrentModule());
   const missions = useSelector(selectMissionsData()) as MissionsData[];
 
   const dispatch = useDispatch();
@@ -73,216 +76,185 @@ const Missions = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        padding: "5px 15px 0 15px",
-        height: `${heightProportion}px`,
-        gap: "15px",
-      }}
-    >
-      <LoaderComponent loading={loading} />
+    <>
+      {(currentModule === 7 || currentModule === 8) && (
+        <Box
+          onClick={() => {
+            dispatch(setCurrentModule(8));
+          }}
+          width={"100vw"}
+          height={"120vh"}
+          position={"absolute"}
+          zIndex={99}
+          bgcolor={`rgba(0, 0, 0, 0.3)`}
+          top={"-1vh"}
+          sx={{
+            transition: "all 0.2s ease",
+          }}
+        >
+          <ModuleSevenEight />
+        </Box>
+      )}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          padding: "5px 15px 0 15px",
+          height: `${heightProportion}px`,
+          gap: "15px",
+        }}
+      >
+        <LoaderComponent loading={loading} />
 
-      <TabContext value={activeTab.toString()}>
-        <Box sx={{ borderColor: "divider" }}>
-          <TabList
-            sx={{
-              display: "flex",
-              minHeight: "0px",
-
-              "& .MuiTabs-list": { gap: "8px" },
-              "& .MuiTabs-indicator": { display: "none" },
-            }}
-            onChange={handleTabChange}
-          >
-            <Box
+        <TabContext value={activeTab.toString()}>
+          <Box sx={{ borderColor: "divider" }}>
+            <TabList
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingLeft: "20px",
-                paddingRight: "20px",
-                paddingTop: "10px",
+                minHeight: "0px",
+
+                "& .MuiTabs-list": { gap: "8px" },
+                "& .MuiTabs-indicator": { display: "none" },
               }}
+              onChange={handleTabChange}
             >
-              <NamedStyled>{t("Missions")}</NamedStyled>
-            </Box>
-            {missionTitles.map((mission, index) => (
-              <StyledTab
-                sx={{ marginTop: "10px", justifyContent: "space-between" }}
-                label={mission.text}
-                value={index.toString()}
-                key={index}
-              />
-            ))}
-          </TabList>
-        </Box>
-        {missionTitles.map((_, index) => (
-          <TabPanel
-            sx={{
-              padding: "8px 20px 8px 8px",
-              backgroundColor: "rgba(8, 32, 47, 1)",
-              borderRadius: "12px",
-              height: `${wrapperHeight - 30}px`,
-              overflow: "auto",
-              "&::-webkit-scrollbar": {
-                width: "8px",
-              },
-              "&::-webkit-scrollbar-track": {
-                backgroundColor: "transparent",
-              },
-              "&::-webkit-scrollbar-thumb": {
-                backgroundColor: MAIN_COLORS.mainGreen,
-                borderRadius: "8px",
-              },
-              "&::-webkit-scrollbar-thumb:hover": {
-                backgroundColor: MAIN_COLORS.mainGreen,
-              },
-              scrollbarWidth: "thin",
-              scrollbarColor: `${MAIN_COLORS.mainGreen} transparent`,
-            }}
-            value={index.toString()}
-            key={index}
-          >
-            <StyledBox
-              height={`${wrapperHeight}px`}
-              sx={{ "@media (max-height: 670px)": { height: "325px" } }}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  paddingLeft: "20px",
+                  paddingRight: "20px",
+                  paddingTop: "10px",
+                }}
+              >
+                <NamedStyled>{t("Missions")}</NamedStyled>
+              </Box>
+              {missionTitles.map((mission, index) => (
+                <StyledTab
+                  sx={{ marginTop: "10px", justifyContent: "space-between" }}
+                  label={mission.text}
+                  value={index.toString()}
+                  key={index}
+                />
+              ))}
+            </TabList>
+          </Box>
+          {missionTitles.map((_, index) => (
+            <TabPanel
+              sx={{
+                padding: "8px 20px 8px 8px",
+                backgroundColor: "rgba(8, 32, 47, 1)",
+                borderRadius: "12px",
+                height: `${wrapperHeight - 30}px`,
+                overflow: "auto",
+                "&::-webkit-scrollbar": {
+                  width: "8px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  backgroundColor: "transparent",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: MAIN_COLORS.mainGreen,
+                  borderRadius: "8px",
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                  backgroundColor: MAIN_COLORS.mainGreen,
+                },
+                scrollbarWidth: "thin",
+                scrollbarColor: `${MAIN_COLORS.mainGreen} transparent`,
+              }}
+              value={index.toString()}
+              key={index}
             >
-              {missions &&
-                missions.map((mission, idx) => (
-                  <StyledBoxMission
-                    key={idx}
-                    onClick={() => {
-                      if (!mission.isSuccess) {
-                        handleOpen(mission);
-                      }
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "start",
-                        alignItems: "center",
+              <StyledBox
+                height={`${wrapperHeight}px`}
+                sx={{ "@media (max-height: 670px)": { height: "325px" } }}
+              >
+                {missions &&
+                  missions.map((mission, idx) => (
+                    <StyledBoxMission
+                      key={idx}
+                      onClick={() => {
+                        if (!mission.isSuccess) {
+                          handleOpen(mission);
+                        }
                       }}
                     >
-                      <Box sx={{ padding: "10px 0px 10px 0px" }}>
-                        <StyledSubscrible>{mission.title}</StyledSubscrible>
-                        <StyledSHIB>
-                          <img
-                            height="20px"
-                            width="20px"
-                            src={Flash}
-                            alt="flash"
-                          />
-                          + {mission.reward}{" "}
-                          <span style={{ color: "#C6C6C8" }}>
-                            {mission.coin}
-                          </span>
-                        </StyledSHIB>
-                      </Box>
-                    </Box>
-
-                    {mission.isSuccess ? (
                       <Box
                         sx={{
                           display: "flex",
+                          justifyContent: "start",
                           alignItems: "center",
-                          gap: "5px",
-                          paddingRight: "10px",
                         }}
                       >
-                        <Typography
-                          sx={{ color: MAIN_COLORS.textColor, fontWeight: 600 }}
-                        >
-                          Done
-                        </Typography>
-                        <CheckCircleOutlineIcon
-                          sx={{ color: MAIN_COLORS.activeTabColor }}
-                        />
+                        <Box sx={{ padding: "10px 0px 10px 0px" }}>
+                          <StyledSubscrible>{mission.title}</StyledSubscrible>
+                          <StyledSHIB>
+                            <img
+                              height="20px"
+                              width="20px"
+                              src={Flash}
+                              alt="flash"
+                            />
+                            + {mission.reward}{" "}
+                            <span style={{ color: "#C6C6C8" }}>
+                              {mission.coin}
+                            </span>
+                          </StyledSHIB>
+                        </Box>
                       </Box>
-                    ) : (
-                      <ButtonMissions>Go</ButtonMissions>
-                    )}
-                  </StyledBoxMission>
-                ))}
-            </StyledBox>
-          </TabPanel>
-        ))}
-      </TabContext>
-
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-      >
-        <>
-          <Box
-            sx={{
-              position: "relative",
-              width: "90%",
-              maxWidth: "500px",
-              maxHeight: "70vh",
-              overflowX: "hidden",
-              overflowY: "auto",
-              bgcolor: MAIN_COLORS.appBG,
-              boxShadow: 24,
-              p: "8px",
-              borderRadius: "12px",
-            }}
-          >
-            <Box
+                      {mission.isSuccess ? (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            paddingRight: "10px",
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              color: MAIN_COLORS.textColor,
+                              fontWeight: 600,
+                            }}
+                          >
+                            Done
+                          </Typography>
+                          <CheckCircleOutlineIcon
+                            sx={{ color: MAIN_COLORS.activeTabColor }}
+                          />
+                        </Box>
+                      ) : (
+                        <ButtonMissions>Go</ButtonMissions>
+                      )}
+                    </StyledBoxMission>
+                  ))}
+              </StyledBox>
+            </TabPanel>
+          ))}
+        </TabContext>
+        <ModalComponent
+          openModal={open}
+          handleCloseModal={() => setOpen(false)}
+          title={selectedMission?.title || ""}
+          subtitle={selectedMission?.description || ""}
+          additionalbutton={
+            <Button
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                bgcolor: MAIN_COLORS.sectionBG,
-                padding: "24px 30px",
-                borderRadius: "12px",
-                gap: "10px",
+                border: `1px solid ${MAIN_COLORS.mainGreen}`,
+                color: "white",
+                backgroundColor: `${MAIN_COLORS.mainGreen}`,
+                padding: "10px 20px",
               }}
+              onClick={() => setOpen(false)}
             >
-              {selectedMission && (
-                <>
-                  <Typography
-                    textAlign="center"
-                    color="white"
-                    variant="h5"
-                    component="h2"
-                    gutterBottom
-                  >
-                    {selectedMission.title}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      textAlign: "center",
-                      lineBreak: "anywhere",
-                      color: "white",
-                    }}
-                    variant="body1"
-                    gutterBottom
-                  >
-                    {selectedMission.description}
-                  </Typography>
-                  <Button
-                    sx={{
-                      border: `1px solid ${MAIN_COLORS.mainGreen}`,
-                      color: "white",
-                      backgroundColor: `${MAIN_COLORS.blockBG}`,
-                      padding: "10px 20px",
-                    }}
-                    onClick={() => setOpen(false)}
-                  >
-                    {t("start")}
-                  </Button>
-                </>
-              )}
-            </Box>
-          </Box>
-        </>
-      </Modal>
-    </Box>
+              {t("start")}
+            </Button>
+          }
+        />
+      </Box>
+    </>
   );
 };
 

@@ -41,11 +41,17 @@ function* handleGetWithdrawData(action: { type: string; payload: string }) {
 
 function* handleSendWithdrawRequest(action: {
   type: string;
-  payload: { uid: string; wallet: string; amount: string; tonMemo: string };
+  payload: {
+    uid: string;
+    wallet: string;
+    amount: string;
+    tonMemo: string;
+    tid: string;
+  };
 }) {
   try {
-    const { uid, wallet, amount, tonMemo } = action.payload;
-    yield call(sendWithdrawRequest, uid, wallet, amount, tonMemo);
+    const { uid, wallet, amount, tonMemo, tid } = action.payload;
+    yield call(sendWithdrawRequest, uid, wallet, amount, tonMemo, tid); // ⬅️ передаємо
     yield put(sendWithdrawRequestSuccess());
     yield put(getWithdrawAction(uid));
   } catch (err: any) {

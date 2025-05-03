@@ -1,5 +1,6 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { MAIN_COLORS } from "../../../shared/colors";
 
 function ModuleThree({ showModule }: { showModule: boolean }) {
   const { t } = useTranslation();
@@ -14,7 +15,17 @@ function ModuleThree({ showModule }: { showModule: boolean }) {
         zIndex: 2,
       }}
     >
-      {showModule ? t("tutorial.step3a") : t("tutorial.step3b")}
+      {showModule ? (
+        <>
+          {t("tutorial.step3a.before")}{" "}
+          <Box component="span" sx={{ color: MAIN_COLORS.mainGreen }}>
+            Netherlands
+          </Box>{" "}
+          {t("tutorial.step3a.after")}
+        </>
+      ) : (
+        t("tutorial.step3b")
+      )}
     </Typography>
   );
 }

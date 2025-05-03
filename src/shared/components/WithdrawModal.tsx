@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Modal,
-  TextField,
-  Button,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Box, TextField, Button, Typography, Stack } from "@mui/material";
+import { MAIN_COLORS } from "../colors";
+import { ModalStyled } from "./ModalStyled";
+import { useTranslation } from "react-i18next";
 
 type WithdrawModalProps = {
   open: boolean;
@@ -23,6 +18,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   const [withdrawWallet, setWithdrawWallet] = useState("");
   const [amount, setAmount] = useState("");
   const [tonMemo, setTonMemo] = useState("");
+  const { t } = useTranslation();
 
   const handleSubmit = () => {
     onSubmit(withdrawWallet, amount, tonMemo);
@@ -33,28 +29,27 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <ModalStyled
+      open={open}
+      onClose={onClose}
+      sx={{
+        backgroundColor: MAIN_COLORS.blockBG,
+        padding: "8px",
+        borderRadius: "8px",
+      }}
+    >
       <Box
         sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 300,
-          bgcolor: "background.paper",
-          boxShadow: 24,
-          p: 4,
-          borderRadius: 2,
+          backgroundColor: MAIN_COLORS.sectionBG,
+          padding: "8px",
+          borderRadius: "8px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
         }}
       >
-        <IconButton
-          onClick={onClose}
-          sx={{ position: "absolute", top: 8, right: 8 }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <Typography variant="h6" mb={2}>
-          Withdraw Request
+        <Typography variant="h6" color="white">
+          Withdraw
         </Typography>
         <TextField
           fullWidth
@@ -62,7 +57,6 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           variant="outlined"
           value={withdrawWallet}
           onChange={(e) => setWithdrawWallet(e.target.value)}
-          sx={{ mb: 2 }}
         />
         <TextField
           fullWidth
@@ -71,7 +65,6 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          sx={{ mb: 2 }}
         />
         <TextField
           fullWidth
@@ -79,17 +72,32 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           variant="outlined"
           value={tonMemo}
           onChange={(e) => setTonMemo(e.target.value)}
-          sx={{ mb: 2 }}
         />
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-        >
-          Send Request
-        </Button>
+        <Stack direction="row" justifyContent="center" gap="20px">
+          <Button
+            sx={{
+              border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              color: "white",
+              backgroundColor: `${MAIN_COLORS.mainGreen}`,
+              padding: "10px 20px",
+            }}
+            onClick={handleSubmit}
+          >
+            Send
+          </Button>
+          <Button
+            sx={{
+              border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              color: "white",
+              backgroundColor: `${MAIN_COLORS.blockBG}`,
+              padding: "10px 20px",
+            }}
+            onClick={onClose}
+          >
+            {t("Close")}
+          </Button>
+        </Stack>
       </Box>
-    </Modal>
+    </ModalStyled>
   );
 };

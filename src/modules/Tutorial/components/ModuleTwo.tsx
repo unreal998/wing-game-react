@@ -13,6 +13,7 @@ function ModuleTwo() {
         textAlign: "center",
         margin: "20px 20px 0",
         zIndex: 2,
+        mb: "20px",
       }}
     >
       {t("tutorial.step2")}

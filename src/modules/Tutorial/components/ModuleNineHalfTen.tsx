@@ -1,11 +1,15 @@
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
+import { useTranslation } from "react-i18next";
 
-export const ModuleNineTen = () => {
+export const ModuleNineHalfTen = () => {
   const currentModule = useSelector(selectCurrentModule());
+  const { t } = useTranslation();
 
-  if (currentModule !== 9 && currentModule !== 10) return null;
+  if (currentModule !== 9 && currentModule !== 9.5 && currentModule !== 10) {
+    return null;
+  }
 
   return (
     <Typography
@@ -15,7 +19,7 @@ export const ModuleNineTen = () => {
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: "75%",
+        top: currentModule === 9.5 || currentModule === 10 ? "40%" : "30%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,
@@ -26,18 +30,12 @@ export const ModuleNineTen = () => {
         fontWeight: 700,
         color: "white",
         textAlign: "center",
+        whiteSpace: "pre-line",
       }}
     >
-      {currentModule === 9 ? (
-        <>
-          1 - Копируешь ссылку-приглашение
-          <br />
-          2 - Кидаешь друзьям.
-          <br />3 - Получаешь бонусы за каждого!
-        </>
-      ) : (
-        "Вкладывайся в энергетику!"
-      )}
+      {currentModule === 9 && t("tutorial.module9")}
+      {currentModule === 9.5 && t("tutorial.module9.5")}
+      {currentModule === 10 && t("tutorial.module10")}
     </Typography>
   );
 };

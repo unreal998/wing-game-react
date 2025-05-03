@@ -7,5 +7,6 @@ export const ModalStyled = styled(Dialog)({
     textAlign: "center",
     padding: "8px",
     borderRadius: "12px",
+    margin: "10px",
   },
 });

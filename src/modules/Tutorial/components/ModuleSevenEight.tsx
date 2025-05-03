@@ -1,16 +1,16 @@
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
+import { useTranslation } from "react-i18next";
 
 export const ModuleSevenEight = () => {
+  const { t } = useTranslation();
   const currentModule = useSelector(selectCurrentModule());
 
   if (currentModule !== 7 && currentModule !== 8) return null;
 
   const text =
-    currentModule === 7
-      ? "Сначала выполняй простые задания — быстрый старт гарантирован!"
-      : "Друзья = деньги! ";
+    currentModule === 7 ? t("tutorial.module7") : t("tutorial.module8");
 
   return (
     <Typography
@@ -20,7 +20,7 @@ export const ModuleSevenEight = () => {
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: "66%",
+        top: "50%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,
