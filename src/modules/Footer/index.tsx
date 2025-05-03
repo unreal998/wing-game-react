@@ -109,11 +109,13 @@ const Footer = () => {
   }, [nextPressButtonTimeDelay]);
 
   useEffect(() => {
-    if (nextPressButtonTimeDelay > 0) {
-      setTimeout(() => {
-        dispatch(setPressTimeDelay(nextPressButtonTimeDelay - 1000));
-      }, 1000);
-    }
+    if (nextPressButtonTimeDelay <= 0) return;
+
+    const timeout = setTimeout(() => {
+      dispatch(setPressTimeDelay(nextPressButtonTimeDelay - 1000));
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [dispatch, nextPressButtonTimeDelay]);
 
   useEffect(() => {
