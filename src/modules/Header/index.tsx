@@ -14,22 +14,22 @@ import { selectUserData } from "./selectors";
 import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
-
-const windSpeedByAreaName: Record<string, string> = {
-  nl: "~5.5–6.0 m/s",
-  dk: "~6.0–6.5 m/s",
-  gr: "~6.5–7.0 m/s",
-  usa: "~7.0–7.5 m/s",
-};
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
+  const { t } = useTranslation();
   const loading = useSelector(selectHeaderLoading);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
-
+  const windSpeedByAreaName: Record<string, string> = {
+    nl: `~5.5–6.0 ${t("ms")}`,
+    dk: `~6.0–6.5 ${t("ms")}`,
+    gr: `~6.5–7.0 ${t("ms")}`,
+    usa: `~7.0–7.5 ${t("ms")}`,
+  };
   useEffect(() => {
     if (userData !== null) {
       dispatch(updateBalanceAction(userData.id));
@@ -162,7 +162,7 @@ const Header = () => {
               }}
             >
               <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
-                {currentWindSpeed} kW
+                {currentWindSpeed} {t("kW")}
               </Typography>
             </Box>
           </Box>

@@ -75,5 +75,6 @@
   "tutorial.module10": "Invest in energy!",
   "tutorial.module11": "Here you can buy upgrades (for TON) that increase your income.\n\n- Energy Flow → more Kw per click.\n\n- Mods → passive income in both Kw and TON!\n\nAfter 21 days, upgrades start generating profit in TON!",
   "tutorial.module12": "Where to store and withdraw TON",
-  "tutorial.module13": "Your personal TON wallet is already created!\n\nWhat can you do?\n- Top up → to buy upgrades.\n- Withdraw → to collect your hard-earned TON after profiting from mods."
+  "tutorial.module13": "Your personal TON wallet is already created!\n\nWhat can you do?\n- Top up → to buy upgrades.\n- Withdraw → to collect your hard-earned TON after profiting from mods.",
+  "ms": "m/s"
 }
