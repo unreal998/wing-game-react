@@ -12,6 +12,7 @@ export const ModuleNineTen = () => {
   return (
     <Typography
       sx={{
+        // Styles for the text overlay
         padding: "10px",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
         borderRadius: "10px",
