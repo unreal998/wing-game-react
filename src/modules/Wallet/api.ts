@@ -35,6 +35,5 @@ export const sendWithdrawRequest = async (
     tid,
   });
 
-
   return response.data;
 };

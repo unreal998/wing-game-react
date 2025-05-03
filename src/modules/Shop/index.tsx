@@ -266,71 +266,8 @@ const Shop = () => {
                 onClick={handleSoundClick}
               />
             </TabList>
-            <Stack flexDirection="column" gap="10px">
-              <Box>
-                <Typography fontWeight="600">
-                  {t("Wind speed")} : {windValue}
-                </Typography>
-                <Slider
-                  aria-label="WindSpeed"
-                  value={windValue}
-                  marks={shopMarks}
-                  defaultValue={0}
-                  step={null}
-                  sx={{
-                    color: MAIN_COLORS.activeTabColor,
-                    "& .MuiSlider-rail": {
-                      color: "black",
-                    },
-                    "& .Mui-active": {
-                      boxShadow: "0 0 0 9px black",
-                    },
-                    "@media (max-height: 732px)": {
-                      paddingTop: "0px",
-                      paddingBottom: "0px",
-                    },
-                  }}
-                  onChange={handleWindSlide}
-                />
-              </Box>
-            </Stack>
-            <TabContext value={tab}>
-              <TabList
-                sx={{
-                  display: "flex",
-                  minHeight: "0px",
-                  "& .MuiTabs-list": {
-                    gap: "10px",
-                  },
-                  "& .MuiTabs-indicator": {
-                    display: "none",
-                  },
-                  "@media (max-height: 732px)": {
-                    padding: "0px",
-                  },
-                }}
-                onChange={handleTabChange}
-              >
-                <StyledTab
-                  label={"kW profit"}
-                  value={0}
-                  key={0}
-                  onClick={handleSoundClick}
-                />
-                <StyledTab
-                  label={`TON ${t("profit")}`}
-                  value={1}
-                  key={1}
-                  onClick={handleSoundClick}
-                />
-                <StyledTab
-                  label="Modificators"
-                  value={2}
-                  key={2}
-                  onClick={handleSoundClick}
-                />
-              </TabList>
 
+            <TabContext value={tab}>
               {tab !== 2 && (
                 <Stack gap="10px">
                   <Stack
