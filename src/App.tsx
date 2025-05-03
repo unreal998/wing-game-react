@@ -19,7 +19,7 @@ import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
 import ErrorPopup from "./shared/components/ErrorPopup";
 import { selectSelectedCountry } from "./modules/Home/selectors";
-import Lottie from "lottie-react";
+// import Lottie from "lottie-react";
 import Footer from "./modules/Footer";
 import {
   selectCurrentModule,
@@ -141,7 +141,7 @@ const App = () => {
               : "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
         >
-          <Lottie
+          {/* <Lottie
             animationData={require(
               `./assets/animations/${selectedCountry.name}Anim.json`,
             )}
@@ -153,7 +153,7 @@ const App = () => {
               zIndex: 0,
               pointerEvents: "none",
             }}
-          />
+          /> */}
         </Box>
       )}
     </Box>

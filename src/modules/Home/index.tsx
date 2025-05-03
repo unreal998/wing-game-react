@@ -11,6 +11,8 @@ import {
 } from "../Tutorial/selectors";
 import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
 import { setCurrentModule } from "../Tutorial/slices";
+import { getIncomeDataAction } from "../Header/slices";
+import { selectUserId } from "../Header/selectors";
 
 export const Home = () => {
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
@@ -21,12 +23,21 @@ export const Home = () => {
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const dispatch = useDispatch();
   const currentModule = useSelector(selectCurrentModule());
+  const userId = useSelector(selectUserId());
 
   useEffect(() => {
     if (!selectedCountry.name) {
       navigate("/");
     }
-  }, [navigate, selectedCountry]);
+    if (userId) {
+      dispatch(
+        getIncomeDataAction({
+          uid: userId,
+          country: selectedCountry.name,
+        }),
+      );
+    }
+  }, [dispatch, navigate, selectedCountry, userId]);
 
   useEffect(() => {
     if (animationRef.current) {
