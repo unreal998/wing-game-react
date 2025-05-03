@@ -1,9 +1,7 @@
 import { Box } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDisabledPowerButton, selectSelectedCountry } from "./selectors";
-import useSound from "use-sound";
-import BGSound from "../../assets/sounds/bgSound.mp3";
 import { useNavigate } from "react-router-dom";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useMediaQuery } from "@mui/material";
@@ -16,15 +14,10 @@ import { setCurrentModule } from "../Tutorial/slices";
 
 export const Home = () => {
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
-  const [cycleBGSound, setCycleBGSound] = useState(true);
   const navigate = useNavigate();
   const selectedCountry = useSelector(selectSelectedCountry());
   const animationRef = useRef<LottieRefCurrentProps | null>(null);
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
-  const [playSound] = useSound(BGSound, {
-    volume: 0.7,
-    onend: () => setCycleBGSound(false),
-  });
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const dispatch = useDispatch();
   const currentModule = useSelector(selectCurrentModule());
@@ -43,11 +36,7 @@ export const Home = () => {
         animationRef.current.play();
       }
     }
-    if (!cycleBGSound) {
-      playSound();
-      setCycleBGSound(true);
-    }
-  }, [cycleBGSound, setCycleBGSound, playSound, isButtonDisabled]);
+  }, [isButtonDisabled]);
 
   return (
     <>
