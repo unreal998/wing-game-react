@@ -148,6 +148,12 @@ export const Planet = () => {
                     setBuyCountrieModalOpen(true);
                     setCountryToBuy(country);
                   }
+                } else if (isTutorialFinished && country.available) {
+                  handleButtonPress(country);
+                  if (!country.bought) {
+                    setBuyCountrieModalOpen(true);
+                    setCountryToBuy(country);
+                  }
                 }
               }}
             >

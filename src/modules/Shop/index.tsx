@@ -129,7 +129,6 @@ const Shop = () => {
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
 
   return (
-
     <>
       {(currentModule === 11 || currentModule === 12) && (
         <Box
@@ -140,7 +139,7 @@ const Shop = () => {
           height={"120vh"}
           position={"absolute"}
           zIndex={9}
-          bgcolor={`rgba(0, 0, 0, 0.3)`}
+          bgcolor={`rgba(0, 0, 0, 0.4)`}
           top={"-1vh"}
           sx={{
             transition: "all 0.2s ease",
@@ -149,130 +148,64 @@ const Shop = () => {
           <ModuleElevenTwelve />
         </Box>
       )}
-     
-    <MainBox
-      position={"relative"}
-      onClick={(e) => {
-        if (!isTutorialFinished) {
-          e.stopPropagation();
-          e.preventDefault();
-          dispatch(setCurrentModule(12));
-        }
-      }}
-      sx={{
-        "& *": {
-          pointerEvents: !isTutorialFinished ? "none" : "auto",
-        },
-      }}
-    >
-      <ModuleElevenTwelve />
-      <LoaderComponent loading={loading} />
-      <NamedStyled
+      <MainBox
+        position={"relative"}
+        onClick={(e) => {
+          if (!isTutorialFinished) {
+            e.stopPropagation();
+            e.preventDefault();
+            dispatch(setCurrentModule(12));
+          }
+        }}
         sx={{
-          "@media (max-height: 670px)": {
-            paddingTop: "0px",
+          "& *": {
+            pointerEvents: !isTutorialFinished ? "none" : "auto",
           },
         }}
       >
-        {t("Market")}
-      </NamedStyled>
-      <Stack
-        sx={{
-          justifyContent: "space-between",
-          paddingTop: "8px",
-          width: "100%",
-          gap: "10px",
-          "@media (max-height: 732px)": {
-            padding: "0px",
-          },
-        }}
-      >
-        <Stack flexDirection="column" gap="10px">
-          <Box>
-            <Stack direction="row" justifyContent="space-between">
-              <Typography fontWeight="600">
-                {t("Wind speed")} : {windValue}
-              </Typography>
-              <StyledInputBox
-                sx={{
-                  width: "20%",
-                }}
-              >
-                <StyledInput
-                  type="text"
-                  value={
-                    (
-                      shopValues[selectedScruberPosition]?.price || 0
-                    ).toString() + " TON"
-                  }
-                  readOnly
-                />
-              </StyledInputBox>
-            </Stack>
-            <Slider
-              aria-label="WindSpeed"
-              value={windValue}
-              marks={shopMarks}
-              defaultValue={0}
-              step={null}
-              sx={{
-                color: MAIN_COLORS.activeTabColor,
-                "& .MuiSlider-rail": {
-                  color: "black",
-                },
-                "& .Mui-active": {
-                  boxShadow: "0 0 0 9px black",
-                },
-                "@media (max-height: 732px)": {
-                  paddingTop: "0px",
-                  paddingBottom: "0px",
-                },
-              }}
-              onChange={handleWindSlide}
-            />
-          </Box>
-        </Stack>
-        <TabContext value={tab}>
-          <TabList
-            sx={{
-              display: "flex",
-              minHeight: "0px",
-              "& .MuiTabs-list": {
-                gap: "10px",
-              },
-              "& .MuiTabs-indicator": {
-                display: "none",
-              },
-              "@media (max-height: 732px)": {
-                padding: "0px",
-              },
-            }}
-            onChange={handleTabChange}
-          >
-            <StyledTab
-              label={"kW profit"}
-              value={0}
-              key={0}
-              onClick={handleSoundClick}
-            />
-            <StyledTab
-              label={`TON ${t("profit")}`}
-              value={1}
-              key={1}
-              onClick={handleSoundClick}
-            />
-            <StyledTab
-              label="History"
-              value={2}
-              key={2}
-              onClick={handleSoundClick}
-            />
-          </Stack>
+        <LoaderComponent loading={loading} />
+        <NamedStyled
+          sx={{
+            "@media (max-height: 670px)": {
+              paddingTop: "0px",
+            },
+          }}
+        >
+          {t("Market")}
+        </NamedStyled>
+        <Stack
+          sx={{
+            justifyContent: "space-between",
+            paddingTop: "8px",
+            width: "100%",
+            gap: "10px",
+            "@media (max-height: 732px)": {
+              padding: "0px",
+            },
+          }}
+        >
           <Stack flexDirection="column" gap="10px">
             <Box>
-              <Typography fontWeight="600">
-                {t("Wind speed")} : {windValue}
-              </Typography>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography fontWeight="600">
+                  {t("Wind speed")} : {windValue}
+                </Typography>
+                <StyledInputBox
+                  sx={{
+                    width: "20%",
+                  }}
+                >
+                  <StyledInput
+                    type="text"
+                    value={
+                      (
+                        shopValues[selectedScruberPosition]?.price || 0
+                      ).toString() + " TON"
+                    }
+                    readOnly
+                  />
+                </StyledInputBox>
+              </Stack>
               <Slider
                 aria-label="WindSpeed"
                 value={windValue}
@@ -313,69 +246,73 @@ const Shop = () => {
               }}
               onChange={handleTabChange}
             >
-              <TabStyles
+              <StyledTab
                 label={"kW profit"}
                 value={0}
                 key={0}
                 onClick={handleSoundClick}
               />
-              <TabStyles
+              <StyledTab
                 label={`TON ${t("profit")}`}
                 value={1}
                 key={1}
                 onClick={handleSoundClick}
               />
-              <TabStyles
-                label="Modificators"
+              <StyledTab
+                label="History"
                 value={2}
                 key={2}
                 onClick={handleSoundClick}
               />
             </TabList>
 
-            {tab !== 2 && (
-              <Stack gap="10px">
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  flexWrap="wrap"
-                  gap="8px"
-                  sx={{
-                    "@media (max-height: 732px)": {
-                      paddingTop: "0px",
-                      paddingBottom: "0px",
-                    },
-                  }}
-                >
-                  {profitValues.map((row, rowIndex) => (
-                    <ProfitBox
-                      key={rowIndex}
-                      value={formatValue(
-                        tab === 0
-                          ? +selectedWindPowerIncome.turxValue / row.multiplier
-                          : +selectedWindPowerIncome.tonValue / row.multiplier,
-                      )}
-                      subtitle={row.label}
-                    />
-                  ))}
+            <TabContext value={tab}>
+              {tab !== 2 && (
+                <Stack gap="10px">
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    flexWrap="wrap"
+                    gap="8px"
+                    sx={{
+                      "@media (max-height: 732px)": {
+                        paddingTop: "0px",
+                        paddingBottom: "0px",
+                      },
+                    }}
+                  >
+                    {profitValues.map((row, rowIndex) => (
+                      <ProfitBox
+                        key={rowIndex}
+                        value={formatValue(
+                          tab === 0
+                            ? +selectedWindPowerIncome.turxValue /
+                                row.multiplier
+                            : +selectedWindPowerIncome.tonValue /
+                                row.multiplier,
+                        )}
+                        subtitle={row.label}
+                      />
+                    ))}
+                  </Stack>
                 </Stack>
-              </Stack>
-            )}
-          </TabContext>
-          {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
+              )}
+            </TabContext>
+            {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
 
-        <GameButtonComponent onClick={buyModifier}>
-          {t("Buy wind speed")}
-        </GameButtonComponent>
-      </Stack>
-      <ModalComponent
-        openModal={lowBalanceModalOpen}
-        title="Low Balance"
-        subtitle="You have not enough TON balance, please fund your TON balance"
-        handleCloseModal={() => setLowBalanceModalOpen(false)}
-      />
-    </MainBox>
-      </>
+            <GameButtonComponent onClick={buyModifier}>
+              {t("Buy wind speed")}
+            </GameButtonComponent>
+          </TabContext>
+          <ModalComponent
+            openModal={lowBalanceModalOpen}
+            title="Low Balance"
+            subtitle="You have not enough TON balance, please fund your TON balance"
+            handleCloseModal={() => setLowBalanceModalOpen(false)}
+          />
+        </Stack>
+      </MainBox>
+    </>
   );
 };
 
