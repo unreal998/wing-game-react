@@ -1,54 +1,49 @@
 import { Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { setCurrentModule } from "../slices";
 import { selectCurrentModule } from "../selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { setCurrentModule } from "../slices";
 
 export const ModuleFourFiveSix = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentModule = useSelector(selectCurrentModule());
-
-  useEffect(() => {
-    if (currentModule === 5) {
-      const timer = setTimeout(() => {
-        dispatch(setCurrentModule(6));
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [currentModule, dispatch]);
 
   if (currentModule < 4 || currentModule > 6) return null;
 
   const getText = () => {
     switch (currentModule) {
       case 4:
-        return "Эта кнопка - твой главный источник энергии!";
+        return t("tutorial.module4");
       case 5:
         return (
           <>
-            - Жмёшь раз в 12 часов → получаешь Kw (это внутренняя валюта,
-            "киловатты").
-            <br />- Чем больше улучшений купишь в магазине → тем больше Kw за
-            клик!
+            {t("tutorial.module5.line1")}
+            <br />
+            {t("tutorial.module5.line2")}
           </>
         );
       case 6:
-        return "Зайди в 'Миссии' — тут куча заданий, за которые платят!";
+        return t("tutorial.module6");
       default:
         return null;
     }
   };
 
+  const handleChangeModule = () => {
+    if (currentModule === 5) dispatch(setCurrentModule(6));
+  };
+
   return (
     <Typography
+      onClick={handleChangeModule}
       sx={{
         padding: "10px",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: currentModule === 4 ? "60%" : "50%",
+        top: "45%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,

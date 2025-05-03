@@ -3,24 +3,22 @@ import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
 
-export const ModuleSevenEight = () => {
-  const { t } = useTranslation();
+export const ModuleNineTen = () => {
   const currentModule = useSelector(selectCurrentModule());
+  const { t } = useTranslation();
 
-  if (currentModule !== 7 && currentModule !== 8) return null;
-
-  const text =
-    currentModule === 7 ? t("tutorial.module7") : t("tutorial.module8");
+  if (currentModule !== 9 && currentModule !== 10) return null;
 
   return (
     <Typography
       sx={{
+        // Styles for the text overlay
         padding: "10px",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: "50%",
+        top: "35%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,
@@ -33,7 +31,7 @@ export const ModuleSevenEight = () => {
         textAlign: "center",
       }}
     >
-      {text}
+      {t("tutorial.module9")}
     </Typography>
   );
 };

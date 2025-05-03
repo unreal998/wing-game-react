@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { t } from "i18next";
 
 export const ModuleThirteen = () => {
   return (
@@ -9,7 +10,7 @@ export const ModuleThirteen = () => {
         borderRadius: "10px",
         position: "absolute",
         width: "80%",
-        top: "120%",
+        bottom: "20%",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 999,
@@ -20,15 +21,10 @@ export const ModuleThirteen = () => {
         fontWeight: 700,
         color: "white",
         textAlign: "center",
+        whiteSpace: "pre-line",
       }}
     >
-      Твой личный TON-кошелёк уже создан!
-      <br />
-      <br />
-      Что можно делать?
-      <br />
-      - Пополнять → чтобы покупать улучшения.
-      <br />- Выводить → после заработка на модах свои кровные TON.
+      {t("tutorial.module13")}
     </Typography>
   );
 };
