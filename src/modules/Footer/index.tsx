@@ -43,11 +43,27 @@ const Footer = () => {
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
-  const [playWindSound] = useSound(WindBlowing);
+  const [playWindSound, { sound: windSound }] = useSound(WindBlowing);
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
 
   const currentModule = useSelector(selectCurrentModule());
   const isAnyModuleActive = currentModule !== 0;
+
+  useEffect(() => {
+    if (location.pathname === "/home" && isButtonDisabled && windSound) {
+      const handleEnd = () => {
+        windSound.play();
+      };
+
+      windSound.play();
+      windSound.on("end", handleEnd);
+
+      return () => {
+        windSound.off("end", handleEnd);
+        windSound.stop();
+      };
+    }
+  }, [location.pathname, isButtonDisabled, windSound]);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
