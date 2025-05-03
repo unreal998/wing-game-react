@@ -54,14 +54,10 @@ const App = () => {
   const userId = useSelector(selectUserId());
 
   useEffect(() => {
-    if (
-      userSettings?.isTutorialFinished
-      // localStorage.getItem("isTutorialFinished") === "true"
-    ) {
+    if (userSettings?.isTutorialFinished) {
       dispatch(setIsTutorialFinished(true));
     }
     if (currentStep === 14) {
-      // localStorage.setItem("isTutorialFinished", "true");
       dispatch(setIsTutorialFinished(true));
       dispatch(
         updateUserSettingsAction({
@@ -145,7 +141,7 @@ const App = () => {
               : "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
         >
-          <Lottie
+          {/* <Lottie
             animationData={require(
               `./assets/animations/${selectedCountry.name}Anim.json`,
             )}
@@ -157,7 +153,7 @@ const App = () => {
               zIndex: 0,
               pointerEvents: "none",
             }}
-          />
+          /> */}
         </Box>
       )}
     </Box>
