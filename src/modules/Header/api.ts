@@ -34,3 +34,16 @@ export const fetchCountries = async () => {
   });
   return response.data;
 };
+
+export const updateUserSettingsApi = async (uid: any, userSettings: any) => {
+  const response = await axios.post(
+    `${SERVER_URL}/user/settings?uid=${uid}`,
+    userSettings,
+    {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    },
+  );
+  return response.data;
+};

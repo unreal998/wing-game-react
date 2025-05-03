@@ -13,7 +13,7 @@ import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
 import { Planet } from "./modules/Planet";
 import { useDispatch, useSelector } from "react-redux";
-import { initAction } from "./modules/Header/slices";
+import { initAction, updateUserSettingsAction } from "./modules/Header/slices";
 import { UserInitData } from "./shared/types";
 import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
@@ -26,6 +26,7 @@ import {
   selectIsTutorialFinished,
 } from "./modules/Tutorial/selectors";
 import { setIsTutorialFinished } from "./modules/Tutorial/slices";
+import { selectUserId, selectUserSettings } from "./modules/Header/selectors";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -49,16 +50,27 @@ const App = () => {
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const currentStep = useSelector(selectCurrentModule());
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
+  const userSettings = useSelector(selectUserSettings());
+  const userId = useSelector(selectUserId());
 
   useEffect(() => {
-    if (localStorage.getItem("isTutorialFinished") === "true") {
+    if (
+      userSettings?.isTutorialFinished &&
+      localStorage.getItem("isTutorialFinished") === "true"
+    ) {
       dispatch(setIsTutorialFinished(true));
     }
     if (currentStep === 14) {
       localStorage.setItem("isTutorialFinished", "true");
       dispatch(setIsTutorialFinished(true));
+      dispatch(
+        updateUserSettingsAction({
+          uid: userId,
+          settings: { isTutorialFinished: true },
+        }),
+      );
     }
-  }, [currentStep, dispatch, isTutorialFinished]);
+  }, [currentStep, dispatch, isTutorialFinished, userSettings, userId]);
 
   useEffect(() => {
     try {

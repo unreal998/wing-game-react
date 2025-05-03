@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { County, UserData, UserInitData } from "../../shared/types";
+import {
+  County,
+  UserData,
+  UserInitData,
+  UserSettingsData,
+} from "../../shared/types";
 import { UserBalanceResponse } from "./api";
 
 type HeaderState = {
@@ -57,6 +62,19 @@ export const headerSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    updateUserSettingsAction: (state, { payload }) => {
+      state.loading = true;
+    },
+    updateUserSettingsActionSuccess: (state) => {
+      state.loading = false;
+    },
+    updateUserSettingsActionFailure: (
+      state,
+      { payload }: { payload: string },
+    ) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
   },
 });
 
@@ -68,6 +86,9 @@ export const {
   updateBalanceAction,
   updateBalanceActionFailure,
   updateBalanceActionSuccess,
+  updateUserSettingsActionSuccess,
+  updateUserSettingsActionFailure,
+  updateUserSettingsAction,
 } = headerSlice.actions;
 
 export type HeaderStateType = typeof initialHeaderState;

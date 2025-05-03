@@ -6,6 +6,10 @@ export type UserInitData = {
   language: string;
 };
 
+export type UserSettingsData = {
+  isTutorialFinished?: boolean;
+};
+
 export type AreaType = {
   name: string;
   available: boolean;
@@ -36,7 +40,7 @@ export type UserData = UserInitData & {
   areas: AreaType[];
   modifiers: UserModifiersType[];
   lvl: number;
-  exp: number;
+  userSettings: UserSettingsData;
 };
 
 export type Withdraw = {
