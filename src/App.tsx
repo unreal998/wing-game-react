@@ -141,7 +141,7 @@ const App = () => {
               : "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
         >
-          <Lottie
+          {/* <Lottie
             animationData={require(
               `./assets/animations/${selectedCountry.name}Anim.json`,
             )}
@@ -153,7 +153,7 @@ const App = () => {
               zIndex: 0,
               pointerEvents: "none",
             }}
-          />
+          /> */}
         </Box>
       )}
     </Box>
