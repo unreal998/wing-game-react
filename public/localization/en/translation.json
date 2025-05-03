@@ -63,14 +63,13 @@
   "tutorial.step4": "This button is your main source of energy!",
   "tutorial.step5": "Click once every 12 hours → you get Kw (it's an internal currency, `kilowatts`).\n- The more upgrades you buy in the shop → the more Kw you get!",
   "tutorial.hint": "Tap anywhere to continue",
-  "module4": "This button is your main source of energy!",
-  "module5": {
+  "tutorial.module5": {
     "line1": "- Press once every 12 hours → receive Kw (the in-game currency, “kilowatts”).",
     "line2": "- The more upgrades you buy in the store → the more Kw you get per click!"
   },
-  "module6": "Go to 'Missions' — there are plenty of tasks you’ll get paid for!",
-  "tutorial.module7": "Починай із простих завдань — швидкий старт гарантовано!",
-  "tutorial.module8": "Друзі = гроші!",
+  "tutorial.module6": "Go to 'Missions' — there are plenty of tasks you’ll get paid for!",
+  "tutorial.module7": "Start with simple tasks - a quick start is guaranteed!",
+  "tutorial.module8": "Friends = money!",
   "tutorial.module9": "1 - Copy the invitation link\n2 - Send it to your friends.\n3 - They register using it and get bonuses.\n4 - You get bonuses for their registration.",
   "tutorial.module9.5": "Invite friends — unlock countries!",
   "tutorial.module10": "Invest in energy!",

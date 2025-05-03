@@ -35,7 +35,7 @@ export const ModuleNineHalfTen = () => {
     >
       {currentModule === 9 && t("tutorial.module9")}
       {currentModule === 9.5 && t("tutorial.module9.5")}
-      {currentModule === 10 && "Вкладывайся в энергетику!"}
+      {currentModule === 10 && t("tutorial.module10")}
     </Typography>
   );
 };

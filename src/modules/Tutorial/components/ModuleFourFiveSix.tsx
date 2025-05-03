@@ -14,7 +14,7 @@ export const ModuleFourFiveSix = () => {
   const getText = () => {
     switch (currentModule) {
       case 4:
-        return t("tutorial.module4");
+        return t("tutorial.step4");
       case 5:
         return (
           <>
