@@ -7,12 +7,16 @@ import {
   updateBalanceAction,
   updateBalanceActionSuccess,
   updateBalanceActionFailure,
+  updateUserSettingsAction,
+  updateUserSettingsActionSuccess,
+  updateUserSettingsActionFailure,
 } from "./slices";
 import { County, UserData, UserInitData } from "../../shared/types";
 import {
   fetchCountries,
   fetchInitData,
   fetchUserBalance,
+  updateUserSettingsApi,
   UserBalanceResponse,
 } from "./api";
 import { createWalletActionSuccess } from "../Wallet/slices";
@@ -47,7 +51,21 @@ function* handleUpdateBalance(action: {
   }
 }
 
+function* handleUpdateUserSettings(action: { type: string; payload: any }) {
+  try {
+    yield call(
+      updateUserSettingsApi,
+      action.payload.uid,
+      action.payload.settings,
+    );
+    yield put(updateUserSettingsActionSuccess());
+  } catch (err: any) {
+    yield put(updateUserSettingsActionFailure(err.toString()));
+  }
+}
+
 export function* watchHeaderActions() {
   yield takeLatest(initAction.type, handleInit);
   yield takeLatest(updateBalanceAction.type, handleUpdateBalance);
+  yield takeLatest(updateUserSettingsAction.type, handleUpdateUserSettings);
 }

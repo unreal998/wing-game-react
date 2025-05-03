@@ -12,7 +12,6 @@ import { SubMainBox } from "./components/SubMainBox";
 import { selectSettingsLoading } from "./slices";
 import { useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { roadmapText } from "./components/roadmapText";
 import { MAIN_COLORS } from "../../shared/colors";
 
 const Settings = () => {
@@ -96,7 +95,9 @@ const Settings = () => {
             </IconButton>
           </Box>
           <Typography variant="body2" sx={{ whiteSpace: "pre-line" }}>
-            {roadmapText}
+            {[0, 1, 2, 3, 4, 5, 6]
+              .map((i) => t(`roadmap.text${i === 0 ? "" : i}`))
+              .join("\n\n")}
           </Typography>
         </Box>
       </Modal>

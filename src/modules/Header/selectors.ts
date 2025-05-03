@@ -23,3 +23,13 @@ export const selectCountiresData =
   () =>
   ({ headerSlice }: HeaderSliceStore) =>
     headerSlice.countriesData;
+
+export const selectUserSettings =
+  () =>
+  ({ headerSlice }: HeaderSliceStore) =>
+    headerSlice.userData?.userSettings;
+
+export const selectUserId =
+  () =>
+  ({ headerSlice }: HeaderSliceStore) =>
+    headerSlice.userData?.id;
