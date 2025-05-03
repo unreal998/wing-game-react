@@ -55,13 +55,13 @@ const App = () => {
 
   useEffect(() => {
     if (
-      userSettings?.isTutorialFinished &&
-      localStorage.getItem("isTutorialFinished") === "true"
+      userSettings?.isTutorialFinished
+      // localStorage.getItem("isTutorialFinished") === "true"
     ) {
       dispatch(setIsTutorialFinished(true));
     }
     if (currentStep === 14) {
-      localStorage.setItem("isTutorialFinished", "true");
+      // localStorage.setItem("isTutorialFinished", "true");
       dispatch(setIsTutorialFinished(true));
       dispatch(
         updateUserSettingsAction({
