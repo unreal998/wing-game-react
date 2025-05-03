@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
@@ -45,7 +45,7 @@ const Footer = () => {
   const { t } = useTranslation();
   const [playWindSound, { sound: windSound }] = useSound(WindBlowing);
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
-
+  const [tutorialReady, setTutorialReady] = useState(false);
   const currentModule = useSelector(selectCurrentModule());
   const isAnyModuleActive = currentModule !== 0;
 
@@ -132,6 +132,12 @@ const Footer = () => {
     dispatch(setWithdrawModalOpen(true));
   };
 
+  useEffect(() => {
+    if (typeof isTutorialFinished === "boolean") {
+      setTutorialReady(true);
+    }
+  }, [isTutorialFinished]);
+
   return (
     <>
       <StyledMainBox
@@ -141,8 +147,9 @@ const Footer = () => {
           }
         }}
       >
-        {[1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) &&
-          !isTutorialFinished && <Hint />}
+        {tutorialReady &&
+          !isTutorialFinished &&
+          [1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) && <Hint />}
         {location.pathname === "/home" && (
           <Stack
             justifyContent={"center"}
