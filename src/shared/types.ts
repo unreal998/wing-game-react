@@ -43,6 +43,11 @@ export type UserData = UserInitData & {
   userSettings: UserSettingsData;
 };
 
+export type IncomeDataType = {
+  totalTurxGain: string;
+  totalTonGain: string;
+};
+
 export type Withdraw = {
   created_at: string;
   status: string;

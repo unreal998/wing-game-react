@@ -138,7 +138,24 @@ const Referal = () => {
             />
           </Box>
 
-          <StyledBasicBox height={`${tableHeight}px`}>
+          <StyledBasicBox
+            height={`${tableHeight}px`}
+            sx={{
+              overflowY: "auto",
+              scrollbarWidth: "thin",
+              scrollbarColor: `${MAIN_COLORS.mainGreen} transparent`,
+              "&::-webkit-scrollbar": {
+                width: "8px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: MAIN_COLORS.mainGreen,
+                borderRadius: "4px",
+              },
+              "&::-webkit-scrollbar-track": {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
             <TableBox>
               {["User", "Level", "Coin"].map((item, index) => (
                 <StyledHeader

@@ -33,3 +33,12 @@ export const selectUserId =
   () =>
   ({ headerSlice }: HeaderSliceStore) =>
     headerSlice.userData?.id;
+
+export const selectIncomeData =
+  () =>
+  ({ headerSlice }: HeaderSliceStore) => {
+    return {
+      kwtIncome: headerSlice.kwtIncome,
+      tonIncome: headerSlice.tonIncome,
+    };
+  };
