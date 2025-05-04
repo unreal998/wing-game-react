@@ -298,9 +298,24 @@ const Shop = () => {
                 </Stack>
               )}
             </TabContext>
-            {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
+            {tab === 2 &&
+              (userData?.modifiers?.length ? (
+                <ModificatorsTable modifiers={userData.modifiers} />
+              ) : (
+                <Typography textAlign="center" mt={2}>
+                  {t("No bought modifiers yet")}
+                </Typography>
+              ))}
 
-            <GameButtonComponent onClick={buyModifier}>
+            <GameButtonComponent
+              onClick={buyModifier}
+              disabled={windValue === 0}
+              sx={{
+                backgroundColor:
+                  windValue === 0 ? "#ccc" : MAIN_COLORS.mainGreen,
+                cursor: windValue === 0 ? "not-allowed" : "pointer",
+              }}
+            >
               {t("Buy wind speed")}
             </GameButtonComponent>
           </TabContext>
