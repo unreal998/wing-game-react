@@ -14,10 +14,8 @@ import { selectIncomeData, selectUserData } from "./selectors";
 import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
-import { useTranslation } from "react-i18next";
 
 const Header = () => {
-  const { t } = useTranslation();
   const loading = useSelector(selectHeaderLoading);
   const location = useLocation();
   const dispatch = useDispatch();
