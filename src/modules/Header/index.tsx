@@ -25,7 +25,7 @@ const Header = () => {
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
   const incomeData = useSelector(selectIncomeData());
-  
+
   useEffect(() => {
     if (userData !== null) {
       dispatch(updateBalanceAction(userData.id));
