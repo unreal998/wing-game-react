@@ -55,7 +55,9 @@ export const Home = () => {
         !isTutorialFinished && (
           <Box
             onClick={() => {
-              if (currentModule === 5) {
+              if (currentModule === 4) {
+                dispatch(setCurrentModule(5));
+              } else if (currentModule === 5) {
                 dispatch(setCurrentModule(6));
               }
             }}
