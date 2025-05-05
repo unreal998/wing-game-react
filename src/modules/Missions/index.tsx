@@ -2,7 +2,13 @@ import { Box, Button, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { heightProportion } from "../../shared/utils";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
@@ -11,7 +17,11 @@ import { useTranslation } from "react-i18next";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMissionsData } from "./selectors";
-import { getMissionsDataAction, selectMissionsLoading } from "./slices";
+import {
+  completeMissionAction,
+  getMissionsDataAction,
+  selectMissionsLoading,
+} from "./slices";
 import { selectUserData } from "../Header/selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { ButtonMissions } from "./components/ButtonMissions";
@@ -33,6 +43,7 @@ const Missions = () => {
   const [selectedMission, setSelectedMission] = useState<MissionsData | null>(
     null,
   );
+  const missionTimeoutRef = useRef<NodeJS.Timeout>(undefined);
 
   const { t } = useTranslation();
   const currentModule = useSelector(selectCurrentModule());
@@ -73,10 +84,26 @@ const Missions = () => {
     setOpen(true);
   };
 
-  const extractUrl = (text: string): string | null => {
-    const match = text.match(/https?:\/\/[^"]+/);
-    return match ? match[0] : null;
-  };
+  //const extractUrl = (text: string): string | null => {
+  //  const match = text.match(/https?:\/\/[^"]+/);
+  //  return match ? match[0] : null;
+  //};
+  //
+  const handleCompleteMission = useCallback(() => {
+    if (
+      !selectedMission ||
+      !userData ||
+      missionTimeoutRef.current !== undefined
+    )
+      return;
+    missionTimeoutRef.current = setTimeout(() => {
+      dispatch(
+        completeMissionAction({ mission: selectedMission, uid: userData.id }),
+      );
+      setOpen(false);
+      missionTimeoutRef.current = undefined;
+    }, 5000);
+  }, [selectedMission, userData, missionTimeoutRef]);
 
   return (
     <>
@@ -198,9 +225,9 @@ const Missions = () => {
                               src={Flash}
                               alt="flash"
                             />
-                            + {mission.reward}{" "}
+                            + {mission.reward}
                             <span style={{ color: "#C6C6C8" }}>
-                              {mission.coin}
+                              {mission.coin === "TURX" ? t("kw") : mission.coin}
                             </span>
                           </StyledSHIB>
                         </Box>
@@ -249,13 +276,7 @@ const Missions = () => {
                 backgroundColor: `${MAIN_COLORS.mainGreen}`,
                 padding: "10px 20px",
               }}
-              onClick={() => {
-                const url = extractUrl(selectedMission?.description || "");
-                if (url) {
-                  window.open(url, "_blank");
-                }
-                setOpen(false);
-              }}
+              onClick={handleCompleteMission}
             >
               {t("start")}
             </Button>
