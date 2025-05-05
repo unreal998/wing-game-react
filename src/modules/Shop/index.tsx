@@ -28,16 +28,17 @@ import { GameButtonComponent } from "../../shared/components/GameButtonComponent
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 
-const profitValues = [
-  { label: "Profit per click", multiplier: 42 },
-  { label: "Profit per day", multiplier: 21 },
-  { label: "Profit per week", multiplier: 3 },
-  { label: "Full profit", multiplier: 1 },
-];
+
 
 const Shop = () => {
+  const{t} = useTranslation();
+  const profitValues = useMemo(() => [
+    { label: t("Profit per click"), multiplier: 42 },
+    { label: t("Profit per day"), multiplier: 21 },
+    { label: t("Profit per week"), multiplier: 3 },
+    { label: t("Full profit"), multiplier: 1 },
+  ], [t]);
   const loading = useSelector(selectShopLoading);
-  const { t } = useTranslation();
   const [windValue, setWindValue] = useState<number>(0);
   const [selectedScruberPosition, setSelectedScruberPosition] =
     useState<number>(0);
