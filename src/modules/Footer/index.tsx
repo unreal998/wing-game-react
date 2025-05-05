@@ -203,10 +203,10 @@ const Footer = () => {
                 }}
               >
                 <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
-                  + {incomeData.kwtIncome} {t("kW")}
+                  + {(+incomeData.kwtIncome).toFixed(2)} {t("kW")}
                 </Typography>
                 <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
-                  + {incomeData.tonIncome} TON
+                  + {(+incomeData.tonIncome).toFixed(2)} TON
                 </Typography>
               </Box>
             </Stack>
