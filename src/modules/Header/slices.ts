@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { County, UserData, UserInitData } from "../../shared/types";
+import {
+  County,
+  IncomeDataType,
+  UserData,
+  UserInitData,
+} from "../../shared/types";
 import { UserBalanceResponse } from "./api";
 
 type HeaderState = {
@@ -8,6 +13,8 @@ type HeaderState = {
   errMessage: string;
   loading: boolean;
   countriesData: null | County[];
+  tonIncome: string;
+  kwtIncome: string;
 };
 
 export const initialHeaderState: HeaderState = {
@@ -16,6 +23,8 @@ export const initialHeaderState: HeaderState = {
   userInitData: null,
   loading: false,
   countriesData: null,
+  tonIncome: "0",
+  kwtIncome: "0",
 };
 
 export const headerSlice = createSlice({
@@ -57,6 +66,33 @@ export const headerSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    updateUserSettingsAction: (state, { payload }) => {
+      state.loading = true;
+    },
+    updateUserSettingsActionSuccess: (state) => {
+      state.loading = false;
+    },
+    updateUserSettingsActionFailure: (
+      state,
+      { payload }: { payload: string },
+    ) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
+    getIncomeDataAction: (state, { payload }) => {
+      state.loading = true;
+    },
+    updateIncomeDataActionSuccess: (
+      state,
+      { payload }: { payload: IncomeDataType },
+    ) => {
+      state.loading = false;
+      state.kwtIncome = payload.totalTurxGain;
+      state.tonIncome = payload.totalTonGain;
+    },
+    updateIncomeDataActionFailed: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+    },
   },
 });
 
@@ -68,6 +104,12 @@ export const {
   updateBalanceAction,
   updateBalanceActionFailure,
   updateBalanceActionSuccess,
+  updateUserSettingsActionSuccess,
+  updateUserSettingsActionFailure,
+  updateUserSettingsAction,
+  updateIncomeDataActionSuccess,
+  updateIncomeDataActionFailed,
+  getIncomeDataAction,
 } = headerSlice.actions;
 
 export type HeaderStateType = typeof initialHeaderState;

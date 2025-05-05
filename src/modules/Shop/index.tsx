@@ -28,16 +28,18 @@ import { GameButtonComponent } from "../../shared/components/GameButtonComponent
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 
-const profitValues = [
-  { label: "Profit per click", multiplier: 42 },
-  { label: "Profit per day", multiplier: 21 },
-  { label: "Profit per week", multiplier: 3 },
-  { label: "Full profit", multiplier: 1 },
-];
-
 const Shop = () => {
-  const loading = useSelector(selectShopLoading);
   const { t } = useTranslation();
+  const profitValues = useMemo(
+    () => [
+      { label: t("Profit per click"), multiplier: 42 },
+      { label: t("Profit per day"), multiplier: 21 },
+      { label: t("Profit per week"), multiplier: 3 },
+      { label: t("Full profit"), multiplier: 1 },
+    ],
+    [t],
+  );
+  const loading = useSelector(selectShopLoading);
   const [windValue, setWindValue] = useState<number>(0);
   const [selectedScruberPosition, setSelectedScruberPosition] =
     useState<number>(0);
@@ -127,6 +129,7 @@ const Shop = () => {
 
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
+  console.log("покажи", userData);
 
   return (
     <>
@@ -198,9 +201,10 @@ const Shop = () => {
                   <StyledInput
                     type="text"
                     value={
-                      (
-                        shopValues[selectedScruberPosition]?.price || 0
-                      ).toString() + " TON"
+                      (windValue === 0
+                        ? 0
+                        : shopValues[selectedScruberPosition]?.price || 0) +
+                      " TON"
                     }
                     readOnly
                   />
@@ -247,7 +251,7 @@ const Shop = () => {
               onChange={handleTabChange}
             >
               <StyledTab
-                label={"kW profit"}
+                label={t("kW profit")}
                 value={0}
                 key={0}
                 onClick={handleSoundClick}
@@ -259,7 +263,7 @@ const Shop = () => {
                 onClick={handleSoundClick}
               />
               <StyledTab
-                label="History"
+                label={t("History")}
                 value={2}
                 key={2}
                 onClick={handleSoundClick}
@@ -298,9 +302,24 @@ const Shop = () => {
                 </Stack>
               )}
             </TabContext>
-            {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
+            {tab === 2 &&
+              (userData?.modifiers?.length ? (
+                <ModificatorsTable modifiers={userData.modifiers} />
+              ) : (
+                <Typography textAlign="center" mt={2}>
+                  {t("No bought modifiers yet")}
+                </Typography>
+              ))}
 
-            <GameButtonComponent onClick={buyModifier}>
+            <GameButtonComponent
+              onClick={buyModifier}
+              disabled={windValue === 0}
+              sx={{
+                backgroundColor:
+                  windValue === 0 ? "#ccc" : MAIN_COLORS.mainGreen,
+                cursor: windValue === 0 ? "not-allowed" : "pointer",
+              }}
+            >
               {t("Buy wind speed")}
             </GameButtonComponent>
           </TabContext>

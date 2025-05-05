@@ -12,7 +12,6 @@ import { SubMainBox } from "./components/SubMainBox";
 import { selectSettingsLoading } from "./slices";
 import { useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { roadmapText } from "./components/roadmapText";
 import { MAIN_COLORS } from "../../shared/colors";
 
 const Settings = () => {
@@ -63,7 +62,7 @@ const Settings = () => {
             variant="text"
             sx={{ color: MAIN_COLORS.mainGreen }}
           >
-            Roadmap
+            {t("Roadmap")}
           </Button>
         </Box>
       </StyledBasicBox>

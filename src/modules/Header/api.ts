@@ -17,6 +17,18 @@ export const fetchUserBalance = async (uid: string) => {
   return response.data.data;
 };
 
+export const fetchUserIncome = async (uid: string, country: string) => {
+  const response = await axios.get(
+    `${SERVER_URL}/user/income?uid=${uid}&country=${country}`,
+    {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    },
+  );
+  return response.data;
+};
+
 export const fetchInitData = async (userData: UserInitData) => {
   const response = await axios.post(`${SERVER_URL}/init`, userData, {
     headers: {
@@ -32,5 +44,18 @@ export const fetchCountries = async () => {
       "ngrok-skip-browser-warning": true,
     },
   });
+  return response.data;
+};
+
+export const updateUserSettingsApi = async (uid: any, userSettings: any) => {
+  const response = await axios.post(
+    `${SERVER_URL}/user/settings?uid=${uid}`,
+    userSettings,
+    {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    },
+  );
   return response.data;
 };

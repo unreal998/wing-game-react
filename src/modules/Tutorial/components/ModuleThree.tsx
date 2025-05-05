@@ -19,7 +19,7 @@ function ModuleThree({ showModule }: { showModule: boolean }) {
         <>
           {t("tutorial.step3a.before")}{" "}
           <Box component="span" sx={{ color: MAIN_COLORS.mainGreen }}>
-            Netherlands
+            {t("Netherlands")}
           </Box>{" "}
           {t("tutorial.step3a.after")}
         </>

@@ -4,7 +4,6 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import React, { useEffect, useMemo, useState } from "react";
 import { heightProportion } from "../../shared/utils";
-import { StyledBox } from "./components/StyledBox";
 import { StyledSHIB } from "./components/StyledSHIB";
 import { StyledBoxMission } from "./components/StyledBoxMissions";
 import { StyledSubscrible } from "./components/StyledSubscrible";
@@ -38,7 +37,6 @@ const Missions = () => {
   const { t } = useTranslation();
   const currentModule = useSelector(selectCurrentModule());
   const missions = useSelector(selectMissionsData()) as MissionsData[];
-
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
 
@@ -75,6 +73,11 @@ const Missions = () => {
     setOpen(true);
   };
 
+  const extractUrl = (text: string): string | null => {
+    const match = text.match(/https?:\/\/[^"]+/);
+    return match ? match[0] : null;
+  };
+
   return (
     <>
       {(currentModule === 7 || currentModule === 8) && (
@@ -88,9 +91,7 @@ const Missions = () => {
           zIndex={99}
           bgcolor={`rgba(0, 0, 0, 0.3)`}
           top={"-1vh"}
-          sx={{
-            transition: "all 0.2s ease",
-          }}
+          sx={{ transition: "all 0.2s ease" }}
         >
           <ModuleSevenEight />
         </Box>
@@ -112,7 +113,6 @@ const Missions = () => {
               sx={{
                 display: "flex",
                 minHeight: "0px",
-
                 "& .MuiTabs-list": { gap: "8px" },
                 "& .MuiTabs-indicator": { display: "none" },
               }}
@@ -143,33 +143,34 @@ const Missions = () => {
           {missionTitles.map((_, index) => (
             <TabPanel
               sx={{
-                padding: "8px 20px 8px 8px",
+                marginBottom: "20px",
+                padding: "8px 8px 2px ",
                 backgroundColor: "rgba(8, 32, 47, 1)",
                 borderRadius: "12px",
-                height: `${wrapperHeight - 30}px`,
-                overflow: "auto",
-                "&::-webkit-scrollbar": {
-                  width: "8px",
-                },
-                "&::-webkit-scrollbar-track": {
-                  backgroundColor: "transparent",
-                },
-                "&::-webkit-scrollbar-thumb": {
-                  backgroundColor: MAIN_COLORS.mainGreen,
-                  borderRadius: "8px",
-                },
-                "&::-webkit-scrollbar-thumb:hover": {
-                  backgroundColor: MAIN_COLORS.mainGreen,
-                },
-                scrollbarWidth: "thin",
-                scrollbarColor: `${MAIN_COLORS.mainGreen} transparent`,
+                overflow: "hidden",
               }}
               value={index.toString()}
               key={index}
             >
-              <StyledBox
+              <Box
                 height={`${wrapperHeight}px`}
-                sx={{ "@media (max-height: 670px)": { height: "325px" } }}
+                sx={{
+                  "@media (max-height: 670px)": { height: "325px" },
+                  overflowY: "auto",
+                  scrollbarWidth: "thin",
+                  paddingBottom: "10px",
+                  scrollbarColor: `${MAIN_COLORS.mainGreen} transparent`,
+                  "&::-webkit-scrollbar": {
+                    width: "6px",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: MAIN_COLORS.mainGreen,
+                    borderRadius: "4px",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    backgroundColor: "transparent",
+                  },
+                }}
               >
                 {missions &&
                   missions.map((mission, idx) => (
@@ -230,10 +231,11 @@ const Missions = () => {
                       )}
                     </StyledBoxMission>
                   ))}
-              </StyledBox>
+              </Box>
             </TabPanel>
           ))}
         </TabContext>
+
         <ModalComponent
           openModal={open}
           handleCloseModal={() => setOpen(false)}
@@ -247,7 +249,13 @@ const Missions = () => {
                 backgroundColor: `${MAIN_COLORS.mainGreen}`,
                 padding: "10px 20px",
               }}
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                const url = extractUrl(selectedMission?.description || "");
+                if (url) {
+                  window.open(url, "_blank");
+                }
+                setOpen(false);
+              }}
             >
               {t("start")}
             </Button>

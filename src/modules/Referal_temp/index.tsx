@@ -131,14 +131,31 @@ const Referal = () => {
         <Box sx={{ display: "flex", gap: "15px", flexDirection: "column" }}>
           <NamedStyled>{t("Referal")}</NamedStyled>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <InfoBox value={`10%`} subtitle={`Income`} />
+            <InfoBox value={`10%`} subtitle={t("Income")} />
             <InfoBox
               value={`${referalData.length}/${nextArea?.referalsToUnlock || 0}`}
-              subtitle={`Refferals`}
+              subtitle={t("Referrals")}
             />
           </Box>
 
-          <StyledBasicBox height={`${tableHeight}px`}>
+          <StyledBasicBox
+            height={`${tableHeight}px`}
+            sx={{
+              overflowY: "auto",
+              scrollbarWidth: "thin",
+              scrollbarColor: `${MAIN_COLORS.mainGreen} transparent`,
+              "&::-webkit-scrollbar": {
+                width: "8px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: MAIN_COLORS.mainGreen,
+                borderRadius: "4px",
+              },
+              "&::-webkit-scrollbar-track": {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
             <TableBox>
               {["User", "Level", "Coin"].map((item, index) => (
                 <StyledHeader

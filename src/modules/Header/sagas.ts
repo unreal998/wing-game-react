@@ -7,15 +7,28 @@ import {
   updateBalanceAction,
   updateBalanceActionSuccess,
   updateBalanceActionFailure,
+  updateUserSettingsAction,
+  updateUserSettingsActionSuccess,
+  updateUserSettingsActionFailure,
+  updateIncomeDataActionSuccess,
+  getIncomeDataAction,
 } from "./slices";
-import { County, UserData, UserInitData } from "../../shared/types";
+import {
+  County,
+  IncomeDataType,
+  UserData,
+  UserInitData,
+} from "../../shared/types";
 import {
   fetchCountries,
   fetchInitData,
   fetchUserBalance,
+  fetchUserIncome,
+  updateUserSettingsApi,
   UserBalanceResponse,
 } from "./api";
 import { createWalletActionSuccess } from "../Wallet/slices";
+import { fetchCreateWallet } from "../Wallet/api";
 
 function* handleInit(action: { type: string; payload: UserInitData }) {
   try {
@@ -23,7 +36,12 @@ function* handleInit(action: { type: string; payload: UserInitData }) {
 
     yield put(initActionSuccess(userData));
 
-    yield put(createWalletActionSuccess(userData.wallet));
+    if (!userData.wallet) {
+      const walletNumber: string = yield call(fetchCreateWallet, userData.id);
+      yield put(createWalletActionSuccess(walletNumber));
+    } else {
+      yield put(createWalletActionSuccess(userData.wallet));
+    }
 
     const countriesData: County[] = yield call(fetchCountries);
     yield put(fetchCountriesActionSuccess(countriesData));
@@ -47,7 +65,36 @@ function* handleUpdateBalance(action: {
   }
 }
 
+function* handleUpdateUserSettings(action: { type: string; payload: any }) {
+  try {
+    yield call(
+      updateUserSettingsApi,
+      action.payload.uid,
+      action.payload.settings,
+    );
+    yield put(updateUserSettingsActionSuccess());
+  } catch (err: any) {
+    yield put(updateUserSettingsActionFailure(err.toString()));
+  }
+}
+
+function* handleGetIncomeData(action: { type: string; payload: any }) {
+  try {
+    const incomeData: IncomeDataType = yield call(
+      fetchUserIncome,
+      action.payload.uid,
+      action.payload.country,
+    );
+
+    yield put(updateIncomeDataActionSuccess(incomeData));
+  } catch (err: any) {
+    yield put(initActionFailure(err.toString()));
+  }
+}
+
 export function* watchHeaderActions() {
   yield takeLatest(initAction.type, handleInit);
   yield takeLatest(updateBalanceAction.type, handleUpdateBalance);
+  yield takeLatest(updateUserSettingsAction.type, handleUpdateUserSettings);
+  yield takeLatest(getIncomeDataAction.type, handleGetIncomeData);
 }

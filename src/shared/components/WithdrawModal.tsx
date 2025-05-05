@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, Typography, Stack } from "@mui/material";
+import { TextField, Button, Typography, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../colors";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
@@ -38,41 +38,79 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
         borderRadius: "8px",
       }}
     >
-      <Box
+      <Stack
         sx={{
           backgroundColor: MAIN_COLORS.sectionBG,
-          padding: "8px",
+          padding: "20px 15px",
           borderRadius: "8px",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
+          gap: "20px",
         }}
       >
         <Typography variant="h6" color="white">
-          Withdraw
+          {t("Withdraw")}
         </Typography>
-        <TextField
-          fullWidth
-          label="Wallet Number"
-          variant="outlined"
-          value={withdrawWallet}
-          onChange={(e) => setWithdrawWallet(e.target.value)}
-        />
-        <TextField
-          fullWidth
-          label="Amount"
-          variant="outlined"
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-        <TextField
-          fullWidth
-          label="TON MEMO"
-          variant="outlined"
-          value={tonMemo}
-          onChange={(e) => setTonMemo(e.target.value)}
-        />
+        <Stack alignItems="flex-start" gap="5px">
+          <Typography color="white">{t("Wallet Number")}</Typography>
+          <TextField
+            fullWidth
+            variant="outlined"
+            value={withdrawWallet}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                color: MAIN_COLORS.subTextColor,
+                border: `1px solid ${MAIN_COLORS.appBG}`,
+                outline: "none",
+              },
+              "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              },
+            }}
+            onChange={(e) => setWithdrawWallet(e.target.value)}
+          />
+        </Stack>
+        <Stack alignItems="flex-start" gap="5px">
+          <Typography color="white">TON {t("Amount")}</Typography>
+          <TextField
+            fullWidth
+            variant="outlined"
+            type="number"
+            value={amount}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                color: MAIN_COLORS.subTextColor,
+                border: `1px solid ${MAIN_COLORS.appBG}`,
+                outline: "none",
+              },
+              "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              },
+            }}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </Stack>
+
+        <Stack alignItems="flex-start" gap="5px">
+          <Typography color="white">TON {t("MEMO")}</Typography>
+          <TextField
+            fullWidth
+            variant="outlined"
+            value={tonMemo}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                color: MAIN_COLORS.subTextColor,
+                border: `1px solid ${MAIN_COLORS.appBG}`,
+                outline: "none",
+              },
+              "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              },
+            }}
+            onChange={(e) => setTonMemo(e.target.value)}
+          />
+        </Stack>
+
         <Stack direction="row" justifyContent="center" gap="20px">
           <Button
             sx={{
@@ -83,7 +121,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
             }}
             onClick={handleSubmit}
           >
-            Send
+            {t("Send")}
           </Button>
           <Button
             sx={{
@@ -97,7 +135,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
             {t("Close")}
           </Button>
         </Stack>
-      </Box>
+      </Stack>
     </ModalStyled>
   );
 };
