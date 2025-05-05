@@ -109,7 +109,6 @@ export const Planet = () => {
       {!isTutorialFinished && currentModule >= 2 && (
         <ModuleThree showModule={currentModule === 3} />
       )}
-      <Typography color="white">{t("selectYourCountry")}</Typography>
       <StyledPlanetBox>
         {userCountiresData &&
           userCountiresData?.length &&
@@ -146,15 +145,12 @@ export const Planet = () => {
                     dispatch(setCurrentModule(0));
                   }
                   handleButtonPress(country);
-                  if (country.available && !country.bought) {
-                    setBuyCountrieModalOpen(true);
-                    setCountryToBuy(country);
-                  }
                 } else if (isTutorialFinished && country.available) {
-                  handleButtonPress(country);
                   if (!country.bought) {
                     setBuyCountrieModalOpen(true);
                     setCountryToBuy(country);
+                  } else {
+                    handleButtonPress(country);
                   }
                 }
               }}
@@ -163,6 +159,7 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
+      <Typography color="white">{t("selectYourCountry")}</Typography>
       <BuyCountryModal
         open={buyCountrieModalOpen}
         onClose={() => setBuyCountrieModalOpen(false)}

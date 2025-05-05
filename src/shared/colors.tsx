@@ -7,7 +7,7 @@ export const MAIN_COLORS = {
   disabledButtonBGColor: "#9CA8CE",
   missionTable: "rgba(255, 255, 255, 0.69)",
   mainGreyBG: "rgba(255, 255, 255, 0.14)",
-  gold: "##FFEE00",
+  gold: "#FFEE00",
   marketBox: "rgba(255, 255, 255, 0.20)",
   appBG: "#01121D",
 };
