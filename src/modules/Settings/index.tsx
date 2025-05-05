@@ -62,7 +62,7 @@ const Settings = () => {
             variant="text"
             sx={{ color: MAIN_COLORS.mainGreen }}
           >
-            Roadmap
+            {t("Roadmap")}
           </Button>
         </Box>
       </StyledBasicBox>

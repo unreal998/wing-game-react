@@ -131,10 +131,10 @@ const Referal = () => {
         <Box sx={{ display: "flex", gap: "15px", flexDirection: "column" }}>
           <NamedStyled>{t("Referal")}</NamedStyled>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <InfoBox value={`10%`} subtitle={`Income`} />
+            <InfoBox value={`10%`} subtitle={t("Income")} />
             <InfoBox
               value={`${referalData.length}/${nextArea?.referalsToUnlock || 0}`}
-              subtitle={`Refferals`}
+              subtitle={t("Referrals")}
             />
           </Box>
 
