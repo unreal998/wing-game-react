@@ -10,4 +10,5 @@ export const MAIN_COLORS = {
   gold: "#FFDE00",
   marketBox: "rgba(255, 255, 255, 0.20)",
   appBG: "#01121D",
+  passiveButton: "#ccc",
 };
