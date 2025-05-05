@@ -94,6 +94,7 @@ const Settings = () => {
               <CloseIcon />
             </IconButton>
           </Box>
+
           <Typography variant="body2" sx={{ whiteSpace: "pre-line" }}>
             {[0, 1, 2, 3, 4, 5, 6]
               .map((i) => t(`roadmap.text${i === 0 ? "" : i}`))

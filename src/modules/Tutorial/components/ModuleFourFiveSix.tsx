@@ -16,15 +16,9 @@ export const ModuleFourFiveSix = () => {
       case 4:
         return t("tutorial.step4");
       case 5:
-        return (
-          <>
-            {t("tutorial.module5.line1")}
-            <br />
-            {t("tutorial.module5.line2")}
-          </>
-        );
+        return t("tutorial.step5");
       case 6:
-        return t("tutorial.module6");
+        return t("tutorial.step6");
       default:
         return null;
     }

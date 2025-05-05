@@ -28,16 +28,17 @@ import { GameButtonComponent } from "../../shared/components/GameButtonComponent
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 
-
-
 const Shop = () => {
-  const{t} = useTranslation();
-  const profitValues = useMemo(() => [
-    { label: t("Profit per click"), multiplier: 42 },
-    { label: t("Profit per day"), multiplier: 21 },
-    { label: t("Profit per week"), multiplier: 3 },
-    { label: t("Full profit"), multiplier: 1 },
-  ], [t]);
+  const { t } = useTranslation();
+  const profitValues = useMemo(
+    () => [
+      { label: t("Profit per click"), multiplier: 42 },
+      { label: t("Profit per day"), multiplier: 21 },
+      { label: t("Profit per week"), multiplier: 3 },
+      { label: t("Full profit"), multiplier: 1 },
+    ],
+    [t],
+  );
   const loading = useSelector(selectShopLoading);
   const [windValue, setWindValue] = useState<number>(0);
   const [selectedScruberPosition, setSelectedScruberPosition] =
@@ -199,7 +200,12 @@ const Shop = () => {
                 >
                   <StyledInput
                     type="text"
-                    value={(windValue === 0 ? 0 : shopValues[selectedScruberPosition]?.price || 0) + " TON"}
+                    value={
+                      (windValue === 0
+                        ? 0
+                        : shopValues[selectedScruberPosition]?.price || 0) +
+                      " TON"
+                    }
                     readOnly
                   />
                 </StyledInputBox>
@@ -304,7 +310,6 @@ const Shop = () => {
                   {t("No bought modifiers yet")}
                 </Typography>
               ))}
-              
 
             <GameButtonComponent
               onClick={buyModifier}

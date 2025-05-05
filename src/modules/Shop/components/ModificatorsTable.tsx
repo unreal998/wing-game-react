@@ -17,7 +17,7 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
 
   const selectedCountryModifiers = useMemo(
     () => modifiers?.find((mod) => mod.areaName === selectedCountry.name),
-    [modifiers, selectedCountry]
+    [modifiers, selectedCountry],
   );
 
   const bought = selectedCountryModifiers?.boughtModifier || [];
