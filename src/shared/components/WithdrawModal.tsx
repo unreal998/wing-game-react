@@ -49,10 +49,10 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
         }}
       >
         <Typography variant="h6" color="white">
-          Withdraw
+          {t("Withdraw")}
         </Typography>
         <Stack alignItems="flex-start" gap="5px">
-          <Typography color="white">Wallet Number</Typography>
+          <Typography color="white">{t("Wallet Number")}</Typography>
           <TextField
             fullWidth
             variant="outlined"
@@ -71,7 +71,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           />
         </Stack>
         <Stack alignItems="flex-start" gap="5px">
-          <Typography color="white">TON Amount</Typography>
+          <Typography color="white">TON {t("Amount")}</Typography>
           <TextField
             fullWidth
             variant="outlined"
@@ -92,7 +92,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
         </Stack>
 
         <Stack alignItems="flex-start" gap="5px">
-          <Typography color="white">TON MEMO</Typography>
+          <Typography color="white">TON {t("MEMO")}</Typography>
           <TextField
             fullWidth
             variant="outlined"
@@ -121,7 +121,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
             }}
             onClick={handleSubmit}
           >
-            Send
+            {t("Send")}
           </Button>
           <Button
             sx={{

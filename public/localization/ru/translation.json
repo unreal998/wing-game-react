@@ -44,7 +44,7 @@
   "Connect wallet": "Подключить кошелек",
   "Your wallet:": "Ваш кошелек:",
   "Push Power": "Нажмите на кнопку",
-  "remain": "Осталось",
+  "remain": "ОСТАЛОСЬ",
   "Buy wind speed": "Купи энергетический поток",
   "Your wind speed is zero. Please purchase to proceed.": "Ваш энергетический поток равен нулю. Пожалуйста, купите в Магазине, чтобы продолжить.",
   "Close": "Закрыть",
@@ -88,5 +88,17 @@
   "Netherlands": "Нидерланды",
   "Denmark": "Дания",
   "USA": "США",
-  "Germany": "Германия"
+  "Germany": "Германия",
+  "Profit per click": "Прибыль за клик",
+  "Profit per day": "Прибыль за день",
+  "Profit per week": "Прибыль за неделю",
+  "Full profit": "Полная прибыль",
+  "No referrals yet": "Пока нет рефералов",
+  "Income": "Доход",
+  "Referrals": "Рефералы",
+  "Daily": "Ежедневно",
+  "Withdraw": "Вывод",
+  "MEMO": "МЕМО",
+  "Send": "Отправить",
+  "Roadmap": "Дорожная карта"
 }

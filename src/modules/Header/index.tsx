@@ -14,8 +14,10 @@ import { selectIncomeData, selectUserData } from "./selectors";
 import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
+import {  useTranslation } from "react-i18next";
 
 const Header = () => {
+  const {t} = useTranslation()
   const loading = useSelector(selectHeaderLoading);
   const location = useLocation();
   const dispatch = useDispatch();
@@ -100,7 +102,7 @@ const Header = () => {
                   color: MAIN_COLORS.activeTabColor,
                 }}
               >
-                kW
+                {t("kW")}
               </Typography>
             </Stack>
             <Typography sx={{ fontSize: "16px", fontWeight: 600 }}>
@@ -156,7 +158,7 @@ const Header = () => {
               }}
             >
               <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
-                + {incomeData.kwtIncome} kW
+                + {incomeData.kwtIncome}  {t("kW")}
               </Typography>
               <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
                 + {incomeData.tonIncome} TON
