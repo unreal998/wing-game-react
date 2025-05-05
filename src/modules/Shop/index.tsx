@@ -129,7 +129,6 @@ const Shop = () => {
 
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
-  console.log("покажи", userData);
 
   return (
     <>
@@ -316,7 +315,9 @@ const Shop = () => {
               disabled={windValue === 0}
               sx={{
                 backgroundColor:
-                  windValue === 0 ? "#ccc" : MAIN_COLORS.mainGreen,
+                  windValue === 0
+                    ? MAIN_COLORS.passiveButton
+                    : MAIN_COLORS.mainGreen,
                 cursor: windValue === 0 ? "not-allowed" : "pointer",
               }}
             >

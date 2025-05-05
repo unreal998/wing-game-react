@@ -1,5 +1,4 @@
 import { Switch, styled } from "@mui/material";
-import { MAIN_COLORS } from "../../../shared/colors";
 
 export const CustomSwitch = styled(Switch)(() => ({
   width: 56,
@@ -12,9 +11,8 @@ export const CustomSwitch = styled(Switch)(() => ({
     padding: 4,
     "&.Mui-checked": {
       transform: "translateX(26px)",
-      color: MAIN_COLORS.activeTabColor,
-      "& + .MuiSwitch-track": {
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
+      "& .MuiSwitch-thumb": {
+        backgroundColor: "rgba(99, 238, 106, 1)",
       },
     },
   },
@@ -23,11 +21,12 @@ export const CustomSwitch = styled(Switch)(() => ({
     width: 20,
     height: 20,
     marginTop: "1px",
+    backgroundColor: "rgba(11, 88, 15, 1)",
   },
 
   "& .MuiSwitch-track": {
     borderRadius: 15,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: "rgba(8, 32, 47, 1) !important",
     opacity: 1,
   },
 }));
