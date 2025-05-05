@@ -1,19 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type SettingsState = {
+export type SettingsState = {
   loading: boolean;
   errorMessage: string;
+  isRoadMapOpen: boolean;
 };
 
 export const initialSettingsState: SettingsState = {
   loading: false,
   errorMessage: "",
+  isRoadMapOpen: false,
 };
 
 export const settingsSlice = createSlice({
   name: "settingsSlice",
   initialState: initialSettingsState,
   reducers: {
+    setRoadMapOpen: (state, { payload }: { payload: boolean }) => {
+      state.isRoadMapOpen = payload;
+    },
     updateSettings: (state) => {
       state.loading = true;
     },
@@ -27,16 +32,11 @@ export const settingsSlice = createSlice({
   },
 });
 
-export const { updateSettings, updateSettingsSuccess, updateSettingsFailure } =
-  settingsSlice.actions;
-
-export type SettingsStateType = typeof initialSettingsState;
-
-export const selectSettingsLoading = (state: {
-  settingsSlice: SettingsState;
-}) => state.settingsSlice.loading;
-
-export const selectSettingsError = (state: { settingsSlice: SettingsState }) =>
-  state.settingsSlice.errorMessage;
+export const {
+  updateSettings,
+  updateSettingsSuccess,
+  updateSettingsFailure,
+  setRoadMapOpen,
+} = settingsSlice.actions;
 
 export default settingsSlice.reducer;

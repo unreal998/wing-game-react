@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
@@ -109,7 +109,7 @@ export const Planet = () => {
       {!isTutorialFinished && currentModule >= 2 && (
         <ModuleThree showModule={currentModule === 3} />
       )}
-
+      <Typography color="white">{t("selectYourCountry")}</Typography>
       <StyledPlanetBox>
         {userCountiresData &&
           userCountiresData?.length &&
@@ -121,20 +121,20 @@ export const Planet = () => {
                 ...getCoords(index),
                 ...(!isTutorialFinished &&
                   currentModule === 3 && {
-                    boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                    boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
                     animationName: "pulseShadow",
                     animationDuration: "2s",
                     animationTimingFunction: "ease-in-out",
                     animationIterationCount: "infinite",
                     "@keyframes pulseShadow": {
                       "0%": {
-                        boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                        boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
                       },
                       "50%": {
-                        boxShadow: `0 0 60px ${MAIN_COLORS.activeTabColor}`,
+                        boxShadow: `0 0 60px ${MAIN_COLORS.mainGreen}`,
                       },
                       "100%": {
-                        boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                        boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
                       },
                     },
                   }),

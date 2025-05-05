@@ -9,7 +9,6 @@ export const StyledPlanetBox = styled(Box)({
   gap: "10px",
   flexWrap: "wrap",
   flexDirection: "row",
-  backgroundImage: `url(./earth.png)`,
   alignItems: "center",
   justifyContent: "center",
   backgroundPosition: "center",

@@ -108,7 +108,7 @@ const Missions = () => {
     if (url) {
       window.open(url, "_blank");
     }
-  }, [selectedMission, userData, missionTimeoutRef]);
+  }, [selectedMission, userData, missionTimeoutRef, dispatch]);
 
   return (
     <>
@@ -232,7 +232,7 @@ const Missions = () => {
                             />
                             + {mission.reward}
                             <span style={{ color: "#C6C6C8" }}>
-                              {mission.coin === "TURX" ? t("kw") : mission.coin}
+                              {mission.coin === "TURX" ? t("kW") : mission.coin}
                             </span>
                           </StyledSHIB>
                         </Box>
@@ -255,7 +255,7 @@ const Missions = () => {
                             Done
                           </Typography>
                           <CheckCircleOutlineIcon
-                            sx={{ color: MAIN_COLORS.activeTabColor }}
+                            sx={{ color: MAIN_COLORS.mainGreen }}
                           />
                         </Box>
                       ) : (

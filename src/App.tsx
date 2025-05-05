@@ -91,7 +91,9 @@ const App = () => {
         height: "100vh",
         backgroundColor: MAIN_COLORS.appBG,
         backgroundImage: `${
-          selectedCountry.name ? `url(./${selectedCountry.name}BG.png)` : "none"
+          selectedCountry.name
+            ? `url(./${selectedCountry.name}BG.png)`
+            : "url(./PlanetBG.jpg)"
         }`,
         backgroundSize: "cover",
         backgroundPosition: "center",

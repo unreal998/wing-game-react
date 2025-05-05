@@ -19,7 +19,7 @@
   "Rang": "Rang",
   "User": "User",
   "Level": "Level",
-  "Coin": "Coin",
+  "Coin": "kW",
   "Name User": "Name User",
   "Your Invite Link": "Your Invite Link",
   "Invite a friend": "Invite a friend",
@@ -108,5 +108,6 @@
   "Withdraw": "Withdraw",
   "MEMO": "MEMO",
   "Send": "Send",
-  "Roadmap": "Roadmap"
+  "Roadmap": "Roadmap",
+  "selectYourCountry": "Select your country to continue"
 }

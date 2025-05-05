@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -20,9 +20,9 @@ import { useTranslation } from "react-i18next";
 import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
-import { selectUserData } from "../Header/selectors";
+import { selectIncomeData, selectUserData } from "../Header/selectors";
 import WindBlowing from "../../assets/sounds/windBlowing.mp3";
-
+import RoadmapIcon from "../../assets/roadmap.svg";
 import {
   selectCurrentModule,
   selectIsTutorialFinished,
@@ -32,6 +32,7 @@ import Hint from "../Tutorial/components/Hint";
 import { ReferalInputComponent } from "../Referal_temp/components/ReferalInputComponent";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { setWithdrawModalOpen } from "../Wallet/slices";
+import { setRoadMapOpen } from "../Settings/slices";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const Footer = () => {
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const [tutorialReady, setTutorialReady] = useState(false);
   const currentModule = useSelector(selectCurrentModule());
+  const incomeData = useSelector(selectIncomeData());
   const isAnyModuleActive = currentModule !== 0;
 
   useEffect(() => {
@@ -64,6 +66,10 @@ const Footer = () => {
       };
     }
   }, [location.pathname, isButtonDisabled, windSound]);
+
+  const handleOpenRoadmap = useCallback(() => {
+    dispatch(setRoadMapOpen(true));
+  }, [dispatch]);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -159,25 +165,51 @@ const Footer = () => {
             marginBottom="10px"
             gap="8px"
           >
-            <Stack
-              sx={{
-                fontSize: "20px",
-                fontWeight: 600,
-                backgroundColor: MAIN_COLORS.blockBG,
-                padding: "18px 24px",
-                borderRadius: "7px",
-                width: "78%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography>{t("remain")}</Typography>
-              <Typography fontSize="24px" fontWeight="700">
-                {calculateTime}
-              </Typography>
+            <Stack direction="row" gap={"8px"} width={"90%"}>
+              <Stack
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  backgroundColor: MAIN_COLORS.blockBG,
+                  padding: "9px 24px",
+                  borderRadius: "12px",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  width: "60%",
+                  flex: "2",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  {t("remain")}
+                </Typography>
+                <Typography fontSize="24px" fontWeight="700">
+                  {calculateTime}
+                </Typography>
+              </Stack>
+              <Box
+                sx={{
+                  backgroundColor: MAIN_COLORS.sectionBG,
+                  padding: "12px",
+                  borderRadius: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  flex: "1",
+                }}
+              >
+                <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+                  + {incomeData.kwtIncome} {t("kW")}
+                </Typography>
+                <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+                  + {incomeData.tonIncome} TON
+                </Typography>
+              </Box>
             </Stack>
-
             <GameButtonComponent
               disabled={isButtonDisabled}
               variant="contained"
@@ -185,26 +217,21 @@ const Footer = () => {
               sx={{
                 padding: "15px",
                 width: "90%",
-                "&.Mui-disabled": {
-                  backgroundColor: MAIN_COLORS.subTextColor,
-                  boxShadow: "none",
-                  animation: "none",
-                },
                 ...(currentModule === 4 && {
-                  boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                  boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
                   animationName: "pulseShadow",
                   animationDuration: "2s",
                   animationTimingFunction: "ease-in-out",
                   animationIterationCount: "infinite",
                   "@keyframes pulseShadow": {
                     "0%": {
-                      boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                      boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
                     },
                     "50%": {
-                      boxShadow: `0 0 60px ${MAIN_COLORS.activeTabColor}`,
+                      boxShadow: `0 0 60px ${MAIN_COLORS.mainGreen}`,
                     },
                     "100%": {
-                      boxShadow: `0 0 10px ${MAIN_COLORS.activeTabColor}`,
+                      boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
                     },
                   },
                 }),
@@ -216,6 +243,22 @@ const Footer = () => {
           </Stack>
         )}
         {location.pathname === "/referal" && <ReferalInputComponent />}
+        {location.pathname === "/settings" && (
+          <GameButtonComponent
+            onClick={handleOpenRoadmap}
+            sx={{
+              margin: "15px",
+              width: "93%",
+            }}
+          >
+            <img
+              src={RoadmapIcon}
+              alt="RoadmapIcon"
+              style={{ width: "20px", height: "20px", marginRight: "5px" }}
+            />
+            {t("Roadmap")}
+          </GameButtonComponent>
+        )}
         {location.pathname === "/wallet" && (
           <GameButtonComponent
             sx={{
@@ -224,7 +267,10 @@ const Footer = () => {
             }}
             onClick={handleWithdrawOpen}
           >
-            {t("Withdraw funds")}
+            <PowerIcon />
+            <Typography fontSize="20px" fontWeight="800" marginLeft="6px">
+              {t("Withdraw funds")}
+            </Typography>
           </GameButtonComponent>
         )}
         <StyledFooterBox>
@@ -279,20 +325,20 @@ const Footer = () => {
                   ...(isSpecialActive
                     ? {
                         padding: "20px 0",
-                        boxShadow: `0 0 4px ${MAIN_COLORS.activeTabColor}`,
+                        boxShadow: `0 0 4px ${MAIN_COLORS.mainGreen}`,
                         animationName: "pulseShadow",
                         animationDuration: "2s",
                         animationTimingFunction: "ease-in-out",
                         animationIterationCount: "infinite",
                         "@keyframes pulseShadow": {
                           "0%": {
-                            boxShadow: `0 0 5px ${MAIN_COLORS.activeTabColor}`,
+                            boxShadow: `0 0 5px ${MAIN_COLORS.mainGreen}`,
                           },
                           "50%": {
-                            boxShadow: `0 0 15px ${MAIN_COLORS.activeTabColor}`,
+                            boxShadow: `0 0 15px ${MAIN_COLORS.mainGreen}`,
                           },
                           "100%": {
-                            boxShadow: `0 0 5px ${MAIN_COLORS.activeTabColor}`,
+                            boxShadow: `0 0 5px ${MAIN_COLORS.mainGreen}`,
                           },
                         },
                       }
@@ -303,7 +349,7 @@ const Footer = () => {
                 <StyledFooterBoxesTypography
                   sx={{
                     color: isActive
-                      ? MAIN_COLORS.activeTabColor
+                      ? MAIN_COLORS.mainGreen
                       : MAIN_COLORS.missionTable,
                   }}
                 >

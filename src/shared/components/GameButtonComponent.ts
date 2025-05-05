@@ -7,8 +7,14 @@ export const GameButtonComponent = styled(Button)(({ theme }) => ({
   backgroundColor: MAIN_COLORS.mainGreen,
   borderRadius: "12px",
   width: "100%",
-  fontSize: "18px",
+  fontSize: "20px",
   fontWeight: 800,
   textTransform: "uppercase",
   color: "black",
+  "&.Mui-disabled": {
+    backgroundColor: MAIN_COLORS.disabledButtonBGColor,
+    color: MAIN_COLORS.appBG,
+    boxShadow: "none",
+    animation: "none",
+  },
 }));

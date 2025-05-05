@@ -26,7 +26,7 @@ export const ProfitBox = ({
     >
       <Typography
         sx={{
-          color: MAIN_COLORS.activeTabColor,
+          color: MAIN_COLORS.mainGreen,
           fontSize: "24px",
           fontWeight: 700,
         }}

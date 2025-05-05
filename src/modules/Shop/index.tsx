@@ -216,7 +216,7 @@ const Shop = () => {
                 defaultValue={0}
                 step={null}
                 sx={{
-                  color: MAIN_COLORS.activeTabColor,
+                  color: MAIN_COLORS.mainGreen,
                   "& .MuiSlider-rail": {
                     color: "black",
                   },
@@ -314,10 +314,7 @@ const Shop = () => {
               onClick={buyModifier}
               disabled={windValue === 0}
               sx={{
-                backgroundColor:
-                  windValue === 0
-                    ? MAIN_COLORS.passiveButton
-                    : MAIN_COLORS.mainGreen,
+                backgroundColor: MAIN_COLORS.mainGreen,
                 cursor: windValue === 0 ? "not-allowed" : "pointer",
               }}
             >

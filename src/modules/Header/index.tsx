@@ -10,21 +10,18 @@ import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import WebApp from "@twa-dev/sdk";
 import { StyledFlashBox } from "./components/StyledFlashBox";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIncomeData, selectUserData } from "./selectors";
+import { selectUserData } from "./selectors";
 import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
-import { useTranslation } from "react-i18next";
 
 const Header = () => {
-  const { t } = useTranslation();
   const loading = useSelector(selectHeaderLoading);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
-  const incomeData = useSelector(selectIncomeData());
 
   useEffect(() => {
     if (userData !== null) {
@@ -49,13 +46,6 @@ const Header = () => {
       WebApp.platform !== "tdesktop",
     [],
   );
-
-  // const activeArea = useMemo(() => {
-  //   return userData?.areas?.find((area) => area.available) || { name: "nl" };
-  // }, [userData]);
-
-  // const currentWindSpeed =
-  //   windSpeedByAreaName[activeArea.name] || windSpeedByAreaName["nl"];
 
   return (
     <Stack
@@ -95,15 +85,6 @@ const Header = () => {
               <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
                 {userData?.WindBalance?.toFixed(2) || 0}
               </Typography>
-              <Typography
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  color: MAIN_COLORS.activeTabColor,
-                }}
-              >
-                {t("kW")}
-              </Typography>
             </Stack>
             <Typography sx={{ fontSize: "16px", fontWeight: 600 }}>
               lvl {userData?.lvl}
@@ -142,28 +123,6 @@ const Header = () => {
                 backgroundPosition: "center",
               }}
             ></Box>
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: MAIN_COLORS.blockBG,
-              padding: "8px",
-              borderRadius: "12px",
-            }}
-          >
-            <Box
-              sx={{
-                backgroundColor: MAIN_COLORS.sectionBG,
-                padding: "8px",
-                borderRadius: "8px",
-              }}
-            >
-              <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
-                + {incomeData.kwtIncome} {t("kW")}
-              </Typography>
-              <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
-                + {incomeData.tonIncome} TON
-              </Typography>
-            </Box>
           </Box>
         </Stack>
       )}

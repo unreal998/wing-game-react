@@ -8,10 +8,11 @@ export const ButtonMissions = styled(ButtonBase)({
   gap: "7px",
   padding: "12px",
   marginRight: "10px",
-  border: `1px solid ${MAIN_COLORS.activeTabColor}`,
+  border: `1px solid ${MAIN_COLORS.mainGreen}`,
   borderRadius: "8px",
   cursor: "pointer",
   "&.Mui-disabled": {
-    backgroundColor: "rgb(134 134 134)",
+    backgroundColor: MAIN_COLORS.disabledButtonBGColor,
+    color: MAIN_COLORS.appBG,
   },
 });

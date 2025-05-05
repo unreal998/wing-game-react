@@ -16,7 +16,7 @@ export const InfoBox = ({
     <Box
       sx={{
         backgroundColor: MAIN_COLORS.sectionBG,
-        border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
+        border: `1px solid  ${MAIN_COLORS.mainGreen}`,
         display: "flex",
         flexDirection: "column",
         borderRadius: "9px",
@@ -28,20 +28,20 @@ export const InfoBox = ({
         letterSpacing: "0.5px",
         ...(currentModule === 9.5 &&
           subtitle === "Refferals" && {
-            boxShadow: `0 0 1px ${MAIN_COLORS.activeTabColor}`,
+            boxShadow: `0 0 1px ${MAIN_COLORS.mainGreen}`,
             animationName: "pulseShadow",
             animationDuration: "2s",
             animationTimingFunction: "ease-in-out",
             animationIterationCount: "infinite",
             "@keyframes pulseShadow": {
               "0%": {
-                boxShadow: `0 0 8px ${MAIN_COLORS.activeTabColor}`,
+                boxShadow: `0 0 8px ${MAIN_COLORS.mainGreen}`,
               },
               "50%": {
-                boxShadow: `0 0 20px ${MAIN_COLORS.activeTabColor}`,
+                boxShadow: `0 0 20px ${MAIN_COLORS.mainGreen}`,
               },
               "100%": {
-                boxShadow: `0 0 8px ${MAIN_COLORS.activeTabColor}`,
+                boxShadow: `0 0 8px ${MAIN_COLORS.mainGreen}`,
               },
             },
           }),

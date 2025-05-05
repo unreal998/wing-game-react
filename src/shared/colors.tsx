@@ -4,11 +4,10 @@ export const MAIN_COLORS = {
   subTextColor: "#C6C6C8",
   mainGreen: "#6ADA43",
   textColor: "#FFFFFF",
-  activeTabColor: "#63EE6A",
+  disabledButtonBGColor: "#9CA8CE",
   missionTable: "rgba(255, 255, 255, 0.69)",
   mainGreyBG: "rgba(255, 255, 255, 0.14)",
-  gold: "#FFDE00",
+  gold: "##FFEE00",
   marketBox: "rgba(255, 255, 255, 0.20)",
   appBG: "#01121D",
-  passiveButton: "#ccc",
 };

@@ -31,7 +31,7 @@ const HistoryItem: React.FC<HistoryItemProps> = ({
     </Typography>
     <Typography
       sx={{
-        color: MAIN_COLORS.activeTabColor,
+        color: MAIN_COLORS.mainGreen,
         fontSize: "14px",
         fontWeight: 600,
       }}

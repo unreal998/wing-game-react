@@ -9,13 +9,14 @@ export const StyledPlanetButton = styled(Button)<{ isBought: boolean }>(
     fontSize: "16px",
     fontWeight: 900,
     textTransform: "capitalize",
-    color: MAIN_COLORS.textColor,
+    color: "black",
     borderRadius: "8px",
-    backgroundColor: isBought ? MAIN_COLORS.activeTabColor : MAIN_COLORS.gold,
+    backgroundColor: isBought ? MAIN_COLORS.mainGreen : MAIN_COLORS.gold,
     "&.Mui-disabled": {
-      backgroundColor: "rgb(134 134 134)",
+      backgroundColor: "#9CA8CE",
       boxShadow: "none",
       animation: "none",
+      color: MAIN_COLORS.appBG,
     },
   }),
 );

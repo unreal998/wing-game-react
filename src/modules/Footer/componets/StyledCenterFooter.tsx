@@ -9,7 +9,7 @@ export const StyledCenterFooter = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   flex: 1,
-  border: `1px solid  ${MAIN_COLORS.activeTabColor}`,
+  border: `1px solid  ${MAIN_COLORS.mainGreen}`,
   borderBottom: "none",
   borderTopLeftRadius: "52%",
   borderTopRightRadius: "52%",

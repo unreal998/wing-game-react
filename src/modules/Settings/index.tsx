@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Typography, Modal, Button, IconButton } from "@mui/material";
+import React, { useCallback, useState } from "react";
+import { Box, Typography, Modal, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { StyledBasicBox } from "../Referal_temp/components/StyledBasicBox";
@@ -9,16 +9,21 @@ import { TabBoxSettings } from "./components/TableBoxSettings";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { SubMainBox } from "./components/SubMainBox";
-import { selectSettingsLoading } from "./slices";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { MAIN_COLORS } from "../../shared/colors";
+import { selectIsRoadmapOpen, selectSettingsLoading } from "./selectors";
+import { setRoadMapOpen } from "./slices";
 
 const Settings = () => {
-  const loading = useSelector(selectSettingsLoading);
+  const loading = useSelector(selectSettingsLoading());
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [roadmapOpen, setRoadmapOpen] = useState(false);
+  const isRoadMapOpen = useSelector(selectIsRoadmapOpen());
   const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
+
+  const closeRoadmapModal = useCallback(() => {
+    dispatch(setRoadMapOpen(false));
+  }, [dispatch]);
 
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
@@ -55,19 +60,9 @@ const Settings = () => {
             onChange={() => setSoundEnabled(!soundEnabled)}
           />
         </TabBoxSettings>
-
-        <Box>
-          <Button
-            onClick={() => setRoadmapOpen(true)}
-            variant="text"
-            sx={{ color: MAIN_COLORS.mainGreen }}
-          >
-            {t("Roadmap")}
-          </Button>
-        </Box>
       </StyledBasicBox>
 
-      <Modal open={roadmapOpen} onClose={() => setRoadmapOpen(false)}>
+      <Modal open={isRoadMapOpen} onClose={closeRoadmapModal}>
         <Box
           sx={{
             position: "absolute",
@@ -88,9 +83,9 @@ const Settings = () => {
             alignItems="center"
           >
             <Typography variant="h6" gutterBottom>
-              Roadmap
+              {t("Roadmap")}
             </Typography>
-            <IconButton onClick={() => setRoadmapOpen(false)}>
+            <IconButton onClick={closeRoadmapModal}>
               <CloseIcon />
             </IconButton>
           </Box>

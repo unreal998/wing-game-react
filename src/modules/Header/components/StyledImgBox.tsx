@@ -6,7 +6,7 @@ export const StyledImgBox = styled(Box)({
   justifyContent: "center",
   width: "80px",
   backgroundColor: "rgba(217, 217, 217, 0.17)",
-  border: `1px solid ${MAIN_COLORS.activeTabColor}`,
+  border: `1px solid ${MAIN_COLORS.mainGreen}`,
   flexDirection: "row",
   borderRadius: "9px",
   alignItems: "center",
