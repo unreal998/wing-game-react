@@ -84,11 +84,11 @@ const Missions = () => {
     setOpen(true);
   };
 
-  //const extractUrl = (text: string): string | null => {
-  //  const match = text.match(/https?:\/\/[^"]+/);
-  //  return match ? match[0] : null;
-  //};
-  //
+  const extractUrl = (text: string): string | null => {
+    const match = text.match(/https?:\/\/[^"]+/);
+    return match ? match[0] : null;
+  };
+
   const handleCompleteMission = useCallback(() => {
     if (
       !selectedMission ||
@@ -103,6 +103,11 @@ const Missions = () => {
       setOpen(false);
       missionTimeoutRef.current = undefined;
     }, 5000);
+
+    const url = extractUrl(selectedMission?.description || "");
+    if (url) {
+      window.open(url, "_blank");
+    }
   }, [selectedMission, userData, missionTimeoutRef]);
 
   return (
