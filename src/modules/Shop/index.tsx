@@ -32,9 +32,9 @@ const Shop = () => {
   const { t } = useTranslation();
   const profitValues = useMemo(
     () => [
-      { label: t("Profit per click"), multiplier: 42 },
+      { label: t("Profit per click"), multiplier: 126 },
       { label: t("Profit per day"), multiplier: 21 },
-      { label: t("Profit per week"), multiplier: 3 },
+      { label: t("Profit per week"), multiplier: 7 },
       { label: t("Full profit"), multiplier: 1 },
     ],
     [t],
