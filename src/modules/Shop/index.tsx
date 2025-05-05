@@ -128,6 +128,7 @@ const Shop = () => {
 
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
+  console.log("покажи", userData);
 
   return (
     <>
@@ -198,11 +199,7 @@ const Shop = () => {
                 >
                   <StyledInput
                     type="text"
-                    value={
-                      (
-                        shopValues[selectedScruberPosition]?.price || 0
-                      ).toString() + " TON"
-                    }
+                    value={(windValue === 0 ? 0 : shopValues[selectedScruberPosition]?.price || 0) + " TON"}
                     readOnly
                   />
                 </StyledInputBox>
@@ -248,7 +245,7 @@ const Shop = () => {
               onChange={handleTabChange}
             >
               <StyledTab
-                label={"kW profit"}
+                label={t("kW profit")}
                 value={0}
                 key={0}
                 onClick={handleSoundClick}
@@ -260,7 +257,7 @@ const Shop = () => {
                 onClick={handleSoundClick}
               />
               <StyledTab
-                label="History"
+                label={t("History")}
                 value={2}
                 key={2}
                 onClick={handleSoundClick}
@@ -299,9 +296,25 @@ const Shop = () => {
                 </Stack>
               )}
             </TabContext>
-            {tab === 2 && <ModificatorsTable modifiers={userData?.modifiers} />}
+            {tab === 2 &&
+              (userData?.modifiers?.length ? (
+                <ModificatorsTable modifiers={userData.modifiers} />
+              ) : (
+                <Typography textAlign="center" mt={2}>
+                  {t("No bought modifiers yet")}
+                </Typography>
+              ))}
+              
 
-            <GameButtonComponent onClick={buyModifier}>
+            <GameButtonComponent
+              onClick={buyModifier}
+              disabled={windValue === 0}
+              sx={{
+                backgroundColor:
+                  windValue === 0 ? "#ccc" : MAIN_COLORS.mainGreen,
+                cursor: windValue === 0 ? "not-allowed" : "pointer",
+              }}
+            >
               {t("Buy wind speed")}
             </GameButtonComponent>
           </TabContext>

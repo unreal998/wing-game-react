@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
-import { TableRow, Stack } from "@mui/material";
+import { TableRow, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 import { TableCellShop } from "./TableCellShop";
 import { UserData } from "../../../shared/types";
 import { useSelector } from "react-redux";
 import { selectSelectedCountry } from "../../Home/selectors";
+import { useTranslation } from "react-i18next";
 
 type ModificatorsTableProps = {
   modifiers: UserData["modifiers"] | undefined;
@@ -12,11 +13,14 @@ type ModificatorsTableProps = {
 
 const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
   const selectedCountry = useSelector(selectSelectedCountry());
+  const { t } = useTranslation();
 
   const selectedCountryModifiers = useMemo(
     () => modifiers?.find((mod) => mod.areaName === selectedCountry.name),
-    [modifiers, selectedCountry],
+    [modifiers, selectedCountry]
   );
+
+  const bought = selectedCountryModifiers?.boughtModifier || [];
 
   return (
     <Stack
@@ -34,32 +38,36 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
         }}
       >
         <TableCellShop>#</TableCellShop>
-        <TableCellShop>Energy Flow</TableCellShop>
-        <TableCellShop>Clicks Remain</TableCellShop>
-        <TableCellShop>Bought Date</TableCellShop>
+        <TableCellShop>{t("Energy Flow")}</TableCellShop>
+        <TableCellShop>{t("Clicks Remain")}</TableCellShop>
+        <TableCellShop>{t("Bought Date")}</TableCellShop>
       </TableRow>
-      {selectedCountryModifiers?.boughtModifier &&
-        selectedCountryModifiers?.boughtModifier.map((mod, index) => {
-          return (
-            <TableRow
-              key={index}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                backgroundColor: MAIN_COLORS.sectionBG,
-                borderRadius: "8px",
-              }}
-            >
-              <TableCellShop>{index + 1}</TableCellShop>
-              <TableCellShop>{mod.speed}</TableCellShop>
-              <TableCellShop> {mod.clicksRemaining} clicks </TableCellShop>
-              <TableCellShop>
-                {new Date(mod.boughtDate || 0).toLocaleDateString()}
-              </TableCellShop>
-            </TableRow>
-          );
-        })}
+
+      {bought.length > 0 ? (
+        bought.map((mod, index) => (
+          <TableRow
+            key={index}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              backgroundColor: MAIN_COLORS.sectionBG,
+              borderRadius: "8px",
+            }}
+          >
+            <TableCellShop>{index + 1}</TableCellShop>
+            <TableCellShop>{mod.speed}</TableCellShop>
+            <TableCellShop>{mod.clicksRemaining} clicks</TableCellShop>
+            <TableCellShop>
+              {new Date(mod.boughtDate || 0).toLocaleDateString()}
+            </TableCellShop>
+          </TableRow>
+        ))
+      ) : (
+        <Typography textAlign="center" mt={2} width="100%">
+          {t("No bought modifiers yet")}
+        </Typography>
+      )}
     </Stack>
   );
 };
