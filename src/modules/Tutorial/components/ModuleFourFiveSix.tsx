@@ -14,11 +14,11 @@ export const ModuleFourFiveSix = () => {
   const getText = () => {
     switch (currentModule) {
       case 4:
-        return <>{t("tutorial.step4")}</>;
+        return t("tutorial.step4");
       case 5:
-        return <>{t("tutorial.step5")}</>;
+        return t("tutorial.step5");
       case 6:
-        return <>{t("tutorial.step6")}</>;
+        return t("tutorial.step6");
       default:
         return null;
     }
