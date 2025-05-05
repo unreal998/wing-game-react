@@ -109,5 +109,9 @@
   "MEMO": "MEMO",
   "Send": "Send",
   "Roadmap": "Roadmap",
-  "selectYourCountry": "Select your country to continue"
+  "selectYourCountry": "Select your country to continue",
+  "doYouWhantToBuy": "Do you want to buy that area?",
+  "newOpportunities": "That area will gain you the new opportunities",
+  "No": "No",
+  "buy": "Buy"
 }

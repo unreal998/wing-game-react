@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Modal, Button, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   open: boolean;
@@ -9,13 +10,14 @@ type Props = {
 };
 
 const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
+  const { t } = useTranslation();
   return (
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
           width: "80vw",
           maxWidth: "400px",
-          bgcolor: MAIN_COLORS.missionTable,
+          bgcolor: MAIN_COLORS.appBG,
           color: "white",
           p: 4,
           borderRadius: 4,
@@ -27,11 +29,9 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
         }}
       >
         <Typography variant="h6" fontWeight="bold" mb={2}>
-          Do you want to buy that area?
+          {t("doYouWhantToBuy")}
         </Typography>
-        <Typography mb={4}>
-          That area will gain you the new opportunities
-        </Typography>
+        <Typography mb={4}>{t("newOpportunities")}</Typography>
         <Stack direction="row" spacing={2} justifyContent="flex-end">
           <Button
             onClick={onClose}
@@ -44,7 +44,7 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
               },
             }}
           >
-            No
+            {t("No")}
           </Button>
           <Button
             onClick={onBuy}
@@ -57,7 +57,7 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
               },
             }}
           >
-            Buy (1$)
+            {t("buy")} (1$)
           </Button>
         </Stack>
       </Box>
