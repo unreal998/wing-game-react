@@ -57,7 +57,7 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
               },
             }}
           >
-            {t("buy")} (1$)
+            {t("buy")} (1 TON)
           </Button>
         </Stack>
       </Box>
