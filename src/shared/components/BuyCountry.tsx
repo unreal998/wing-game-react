@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, Modal, Button, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { useTranslation } from "react-i18next";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 
 type Props = {
   open: boolean;
@@ -34,7 +35,10 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
         <Typography mb={4}>{t("newOpportunities")}</Typography>
         <Stack direction="row" spacing={2} justifyContent="flex-end">
           <Button
-            onClick={onClose}
+            onClick={() => {
+              new Audio(footerButtonSound).play();
+              onClose();
+            }}
             variant="outlined"
             sx={{
               color: "white",
@@ -46,8 +50,12 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
           >
             {t("No")}
           </Button>
+
           <Button
-            onClick={onBuy}
+            onClick={() => {
+              new Audio(footerButtonSound).play();
+              onBuy();
+            }}
             variant="contained"
             sx={{
               backgroundColor: "#4caf50",

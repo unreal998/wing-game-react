@@ -9,6 +9,7 @@ import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
 import { MAIN_COLORS } from "../colors";
 import { ReactNode } from "react";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 
 type ModalComponentPropsType = {
   openModal: boolean;
@@ -69,7 +70,10 @@ export const ModalComponent = ({
               backgroundColor: `${MAIN_COLORS.blockBG}`,
               padding: "10px 20px",
             }}
-            onClick={handleCloseModal}
+            onClick={() => {
+              new Audio(footerButtonSound).play();
+              handleCloseModal();
+            }}
           >
             {t("Close")}
           </Button>

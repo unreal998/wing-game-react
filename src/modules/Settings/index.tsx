@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { selectIsRoadmapOpen, selectSettingsLoading } from "./selectors";
 import { setRoadMapOpen } from "./slices";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 
 const Settings = () => {
   const loading = useSelector(selectSettingsLoading());
@@ -57,7 +58,10 @@ const Settings = () => {
           </Typography>
           <CustomSwitch
             checked={soundEnabled}
-            onChange={() => setSoundEnabled(!soundEnabled)}
+            onChange={() => {
+              new Audio(footerButtonSound).play();
+              setSoundEnabled(!soundEnabled);
+            }}
           />
         </TabBoxSettings>
       </StyledBasicBox>
