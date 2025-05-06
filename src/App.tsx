@@ -7,7 +7,7 @@ import { Box, useMediaQuery } from "@mui/material";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom"; // добавлен useNavigate
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
