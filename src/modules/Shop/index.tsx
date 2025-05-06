@@ -27,6 +27,7 @@ import { StyledTab } from "../../shared/components/StyledTab";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -311,7 +312,11 @@ const Shop = () => {
               ))}
 
             <GameButtonComponent
-              onClick={buyModifier}
+              onClick={() => {
+                const audio = new Audio(footerButtonSound);
+                audio.play();
+                buyModifier();
+              }}
               disabled={windValue === 0}
               sx={{
                 backgroundColor: MAIN_COLORS.mainGreen,

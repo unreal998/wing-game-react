@@ -24,6 +24,7 @@ import { setCurrentModule } from "../Tutorial/slices";
 import { buyCountry } from "../Referal_temp/slices";
 import BuyCountryModal from "../../shared/components/BuyCountry";
 import { useTranslation } from "react-i18next";
+import footerButton from "../../assets/sounds/footerButton.mp3";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -140,6 +141,9 @@ export const Planet = () => {
               }}
               disabled={!country.available}
               onClick={() => {
+                const audio = new Audio(footerButton);
+                audio.play();
+
                 if (currentModule === 3 || currentModule === 14) {
                   if (!isTutorialFinished && currentModule === 3) {
                     dispatch(setCurrentModule(0));

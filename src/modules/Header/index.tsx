@@ -14,6 +14,7 @@ import { selectUserData } from "./selectors";
 import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
+import switchSound from "../../assets/sounds/switch.mp3";
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
@@ -111,7 +112,11 @@ const Header = () => {
               backgroundColor: MAIN_COLORS.sectionBG,
               borderRadius: "12px",
             }}
-            onClick={handleEarthClick}
+            onClick={() => {
+              const audio = new Audio(switchSound);
+              audio.play();
+              handleEarthClick();
+            }}
           >
             <Box
               sx={{

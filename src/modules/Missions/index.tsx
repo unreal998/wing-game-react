@@ -35,6 +35,7 @@ import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import { ModalComponent } from "../../shared/components/ModalComponent";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -168,6 +169,10 @@ const Missions = () => {
                   label={mission.text}
                   value={index.toString()}
                   key={index}
+                  onClick={() => {
+                    const audio = new Audio(footerButtonSound);
+                    audio.play();
+                  }}
                 />
               ))}
             </TabList>
@@ -259,7 +264,14 @@ const Missions = () => {
                           />
                         </Box>
                       ) : (
-                        <ButtonMissions>Go</ButtonMissions>
+                        <ButtonMissions
+                          onClick={() => {
+                            const audio = new Audio(footerButtonSound);
+                            audio.play();
+                          }}
+                        >
+                          Go
+                        </ButtonMissions>
                       )}
                     </StyledBoxMission>
                   ))}
@@ -281,7 +293,11 @@ const Missions = () => {
                 backgroundColor: `${MAIN_COLORS.mainGreen}`,
                 padding: "10px 20px",
               }}
-              onClick={handleCompleteMission}
+              onClick={() => {
+                const audio = new Audio(footerButtonSound);
+                audio.play();
+                handleCompleteMission();
+              }}
             >
               {t("start")}
             </Button>

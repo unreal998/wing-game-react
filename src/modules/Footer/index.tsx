@@ -33,6 +33,7 @@ import { ReferalInputComponent } from "../Referal_temp/components/ReferalInputCo
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { setWithdrawModalOpen } from "../Wallet/slices";
 import { setRoadMapOpen } from "../Settings/slices";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -213,7 +214,11 @@ const Footer = () => {
             <GameButtonComponent
               disabled={isButtonDisabled}
               variant="contained"
-              onClick={handlePushPower}
+              onClick={() => {
+                const audio = new Audio(footerButtonSound);
+                audio.play();
+                handlePushPower();
+              }}
               sx={{
                 padding: "15px",
                 width: "90%",
@@ -245,7 +250,11 @@ const Footer = () => {
         {location.pathname === "/referal" && <ReferalInputComponent />}
         {location.pathname === "/settings" && (
           <GameButtonComponent
-            onClick={handleOpenRoadmap}
+            onClick={() => {
+              const audio = new Audio(footerButtonSound);
+              audio.play();
+              handleOpenRoadmap();
+            }}
             sx={{
               margin: "15px",
               width: "93%",
@@ -265,7 +274,11 @@ const Footer = () => {
               width: "93%",
               margin: "15px",
             }}
-            onClick={handleWithdrawOpen}
+            onClick={() => {
+              const audio = new Audio(footerButtonSound);
+              audio.play();
+              handleWithdrawOpen();
+            }}
           >
             <PowerIcon />
             <Typography fontSize="20px" fontWeight="800" marginLeft="6px">

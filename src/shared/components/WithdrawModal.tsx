@@ -3,6 +3,7 @@ import { TextField, Button, Typography, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../colors";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 
 type WithdrawModalProps = {
   open: boolean;
@@ -131,10 +132,14 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
                 backgroundColor: `${MAIN_COLORS.mainGreen}`,
                 padding: "10px 20px",
               }}
-              onClick={handleSubmit}
+              onClick={() => {
+                new Audio(footerButtonSound).play();
+                handleSubmit();
+              }}
             >
               {t("Send")}
             </Button>
+
             <Button
               sx={{
                 border: `1px solid ${MAIN_COLORS.mainGreen}`,
@@ -142,7 +147,10 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
                 backgroundColor: `${MAIN_COLORS.blockBG}`,
                 padding: "10px 20px",
               }}
-              onClick={onClose}
+              onClick={() => {
+                new Audio(footerButtonSound).play();
+                onClose();
+              }}
             >
               {t("Close")}
             </Button>
@@ -176,7 +184,24 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
             {t("Your TON balance is too low to proceed with this withdrawal.")}
           </Typography>
           <Button
-            onClick={() => setLowBalanceOpen(false)}
+            onClick={() => {
+              new Audio(footerButtonSound).play();
+              setLowBalanceOpen(false);
+            }}
+            sx={{
+              border: `1px solid ${MAIN_COLORS.mainGreen}`,
+              color: "white",
+              backgroundColor: MAIN_COLORS.mainGreen,
+              padding: "8px 16px",
+            }}
+          >
+            OK
+          </Button>
+          <Button
+            onClick={() => {
+              new Audio(footerButtonSound).play();
+              setLowBalanceOpen(false);
+            }}
             sx={{
               border: `1px solid ${MAIN_COLORS.mainGreen}`,
               color: "white",
