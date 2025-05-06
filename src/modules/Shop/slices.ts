@@ -6,6 +6,7 @@ type ShopState = {
   values: ShopValues[];
   message: string;
   windValue: number;
+  lowBalanceModalOpen: boolean;
 };
 
 export const initialShopState: ShopState = {
@@ -13,6 +14,7 @@ export const initialShopState: ShopState = {
   values: [],
   message: "",
   windValue: 0,
+  lowBalanceModalOpen: false,
 };
 
 export const shopSlice = createSlice({
@@ -46,6 +48,9 @@ export const shopSlice = createSlice({
       state.loading = false;
       state.message = payload;
     },
+    setLowBalanceModalOpen: (state, { payload }: { payload: boolean }) => {
+      state.lowBalanceModalOpen = payload;
+    },
   },
 });
 
@@ -57,6 +62,7 @@ export const {
   buyItemAction,
   buyItemActionSuccess,
   buyItemActionFailure,
+  setLowBalanceModalOpen,
 } = shopSlice.actions;
 
 export type ShopStateType = typeof initialShopState;

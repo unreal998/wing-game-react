@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { TableBox } from "./components/TableBox";
 import Male from "../../assets/Male.svg";
@@ -14,22 +14,14 @@ import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCountiresData, selectUserData } from "../Header/selectors";
-import {
-  buyCountry,
-  getReferalDataAction,
-  selectReferalLoading,
-} from "./slices";
+import { getReferalDataAction, selectReferalLoading } from "./slices";
 import { selectReferalData } from "./selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { AreaType } from "../../shared/types";
-import BuyCountryModal from "../../shared/components/BuyCountry";
 
 import { ModuleNineHalfTen } from "../Tutorial/components/ModuleNineHalfTen";
 import { setCurrentModule } from "../Tutorial/slices";
 import { selectCurrentModule } from "../Tutorial/selectors";
-
-import { useNavigate } from "react-router-dom";
-import { clearSelectedCountry } from "../Home/slices";
 import { updateBalanceAction } from "../Header/slices";
 
 const commonImgStyle = { width: "20px", height: "20px", borderRadius: "52px" };
@@ -38,11 +30,9 @@ const Referal = () => {
   const loading = useSelector(selectReferalLoading);
 
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const userData = useSelector(selectUserData());
   const referalData = useSelector(selectReferalData());
   const countries = useSelector(selectCountiresData());
-  const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
   const currentModule = useSelector(selectCurrentModule());
 
   const nextArea = useMemo(() => {
@@ -70,12 +60,6 @@ const Referal = () => {
     return null;
   }, [userData, countries]);
 
-  useEffect(() => {
-    if (nextArea && referalData.length >= nextArea.referalsToUnlock) {
-      setBuyCountrieModalOpen(true);
-    }
-  }, [nextArea, referalData.length, userData]);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -84,19 +68,6 @@ const Referal = () => {
       dispatch(updateBalanceAction(userData.id));
     }
   }, [dispatch, userData]);
-
-  const handleBuyCountry = useCallback(() => {
-    if (nextArea && userData) {
-      if (userData.TONBalance >= 1) {
-        dispatch(
-          buyCountry({ uid: userData?.id, countryName: nextArea.shortName }),
-        );
-        setBuyCountrieModalOpen(false);
-        dispatch(clearSelectedCountry());
-        navigate("/");
-      }
-    }
-  }, [nextArea, userData, dispatch, navigate]);
 
   const tableHeight = useMemo(() => heightProportion - 285, []);
 
@@ -200,11 +171,6 @@ const Referal = () => {
             )}
           </StyledBasicBox>
         </Box>
-        <BuyCountryModal
-          open={buyCountrieModalOpen}
-          onClose={() => setBuyCountrieModalOpen(false)}
-          onBuy={handleBuyCountry}
-        />
       </MainBox>
     </>
   );

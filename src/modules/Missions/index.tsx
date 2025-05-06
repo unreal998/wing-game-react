@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -35,6 +35,7 @@ import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import { ModalComponent } from "../../shared/components/ModalComponent";
+import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -274,17 +275,9 @@ const Missions = () => {
           title={selectedMission?.title || ""}
           subtitle={selectedMission?.description || ""}
           additionalbutton={
-            <Button
-              sx={{
-                border: `1px solid ${MAIN_COLORS.mainGreen}`,
-                color: "white",
-                backgroundColor: `${MAIN_COLORS.mainGreen}`,
-                padding: "10px 20px",
-              }}
-              onClick={handleCompleteMission}
-            >
+            <PopUpMainButton onClick={handleCompleteMission}>
               {t("start")}
-            </Button>
+            </PopUpMainButton>
           }
         />
       </Box>

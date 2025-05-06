@@ -33,6 +33,8 @@ import { ReferalInputComponent } from "../Referal_temp/components/ReferalInputCo
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { setWithdrawModalOpen } from "../Wallet/slices";
 import { setRoadMapOpen } from "../Settings/slices";
+import { buyItemAction, setLowBalanceModalOpen } from "../Shop/slices";
+import { selectShopData, selectWindValue } from "../Shop/selectors";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -50,6 +52,8 @@ const Footer = () => {
   const currentModule = useSelector(selectCurrentModule());
   const incomeData = useSelector(selectIncomeData());
   const isAnyModuleActive = currentModule !== 0;
+  const windValue = useSelector(selectWindValue());
+  const shopValues = useSelector(selectShopData());
 
   useEffect(() => {
     if (location.pathname === "/home" && isButtonDisabled && windSound) {
@@ -104,6 +108,23 @@ const Footer = () => {
     dispatch,
     selectedCountry.name,
   ]);
+
+  const buyModifier = useCallback(() => {
+    const currentPrice = shopValues.find(
+      (value) => value.speed === windValue,
+    )?.price;
+    if (currentPrice === undefined) return;
+    if (userData === null) return;
+    if (userData.TONBalance <= currentPrice)
+      dispatch(setLowBalanceModalOpen(true));
+    dispatch(
+      buyItemAction({
+        windSpeed: windValue,
+        selectedArea: selectedCountry.name,
+        uid: !!userData ? userData.id : "",
+      }),
+    );
+  }, [dispatch, userData, shopValues, windValue, selectedCountry]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -271,6 +292,20 @@ const Footer = () => {
             <Typography fontSize="20px" fontWeight="800" marginLeft="6px">
               {t("Withdraw funds")}
             </Typography>
+          </GameButtonComponent>
+        )}
+        {location.pathname === "/shop" && (
+          <GameButtonComponent
+            onClick={buyModifier}
+            disabled={windValue === 0}
+            sx={{
+              backgroundColor: MAIN_COLORS.mainGreen,
+              cursor: windValue === 0 ? "not-allowed" : "pointer",
+              margin: "15px",
+              width: "93%",
+            }}
+          >
+            {t("Buy wind speed")}
           </GameButtonComponent>
         )}
         <StyledFooterBox>

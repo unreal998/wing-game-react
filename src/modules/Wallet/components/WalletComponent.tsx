@@ -11,6 +11,8 @@ import { createWalletAction } from "../slices";
 import { selectUserData } from "../../Header/selectors";
 import { selectWalletNumber } from "../selectors";
 import { useCallback } from "react";
+import { StyledInputBox } from "../../Referal_temp/components/StyledInputBox";
+import { StyledInput } from "../../Referal_temp/components/StyledInput";
 
 export const WalletComponent = () => {
   const { t } = useTranslation();
@@ -50,7 +52,7 @@ export const WalletComponent = () => {
         />
         <Stack direction="row">
           {walletNumber ? (
-            <Stack>
+            <Stack gap="12px">
               <WalletTypography>{t("Your wallet:")}</WalletTypography>
               <Stack
                 direction="row"
@@ -59,12 +61,24 @@ export const WalletComponent = () => {
                 width="100%"
                 gap={"10px"}
               >
-                <WalletTypography>{walletNumber}</WalletTypography>
-                <Box onClick={handleCopyClick}>
+                <Box
+                  sx={{ display: "flex", gap: "15px", alignItems: "center" }}
+                >
+                  <StyledInputBox>
+                    <StyledInput
+                      type="text"
+                      sx={{
+                        textOverflow: "ellipsis",
+                      }}
+                      value={walletNumber}
+                      readOnly
+                    />
+                  </StyledInputBox>
                   <img
+                    onClick={handleCopyClick}
                     src={Copy}
                     alt="Copy"
-                    style={{ width: "16px", height: "16px" }}
+                    style={{ width: "16px", height: "16px", cursor: "pointer" }}
                   />
                 </Box>
               </Stack>

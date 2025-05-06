@@ -9,8 +9,17 @@ import { useTranslation } from "react-i18next";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { selectShopData } from "./selectors";
-import { getShopDataByArea, buyItemAction, selectShopLoading } from "./slices";
+import {
+  selectLowBalanceModalOpen,
+  selectShopData,
+  selectWindValue,
+} from "./selectors";
+import {
+  getShopDataByArea,
+  selectShopLoading,
+  setLowBalanceModalOpen,
+  setWindValue,
+} from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
 import { selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
@@ -24,7 +33,6 @@ import {
 } from "../Tutorial/selectors";
 import { updateBalanceAction } from "../Header/slices";
 import { StyledTab } from "../../shared/components/StyledTab";
-import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 
@@ -40,7 +48,7 @@ const Shop = () => {
     [t],
   );
   const loading = useSelector(selectShopLoading);
-  const [windValue, setWindValue] = useState<number>(0);
+  const windValue = useSelector(selectWindValue());
   const [selectedScruberPosition, setSelectedScruberPosition] =
     useState<number>(0);
   const [tab, setTab] = useState(0);
@@ -52,24 +60,12 @@ const Shop = () => {
   const [shopMarks, setShopMarks] = useState<
     { title: number; value: number; level: number }[]
   >([]);
-  const [lowBalanceModalOpen, setLowBalanceModalOpen] = useState(false);
+  const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
   const currentModule = useSelector(selectCurrentModule());
 
-  const buyModifier = useCallback(() => {
-    const currentPrice = shopValues.find(
-      (value) => value.speed === windValue,
-    )?.price;
-    if (currentPrice === undefined) return;
-    if (userData === null) return;
-    if (userData.TONBalance <= currentPrice) setLowBalanceModalOpen(true);
-    dispatch(
-      buyItemAction({
-        windSpeed: windValue,
-        selectedArea: selectedCountry.name,
-        uid: !!userData ? userData.id : "",
-      }),
-    );
-  }, [dispatch, userData, shopValues, windValue, selectedCountry]);
+  const handleModalClose = useCallback(() => {
+    dispatch(setLowBalanceModalOpen(false));
+  }, [dispatch]);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -116,16 +112,19 @@ const Shop = () => {
     playSound();
   }, [playSound]);
 
-  const handleWindSlide = (event: Event, newValue: number | number[]) => {
-    const newSlideValue = newValue as number;
-    setWindValue(newSlideValue);
-    const currentShopIndex = shopMarks.find(
-      (mark) => mark.value === newSlideValue,
-    );
-    if (currentShopIndex) {
-      setSelectedScruberPosition(currentShopIndex.level - 1);
-    }
-  };
+  const handleWindSlide = useCallback(
+    (event: Event, newValue: number | number[]) => {
+      const newSlideValue = newValue as number;
+      dispatch(setWindValue(newSlideValue));
+      const currentShopIndex = shopMarks.find(
+        (mark) => mark.value === newSlideValue,
+      );
+      if (currentShopIndex) {
+        setSelectedScruberPosition(currentShopIndex.level - 1);
+      }
+    },
+    [dispatch, shopMarks],
+  );
 
   const formatValue = (num: number) =>
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
@@ -309,23 +308,12 @@ const Shop = () => {
                   {t("No bought modifiers yet")}
                 </Typography>
               ))}
-
-            <GameButtonComponent
-              onClick={buyModifier}
-              disabled={windValue === 0}
-              sx={{
-                backgroundColor: MAIN_COLORS.mainGreen,
-                cursor: windValue === 0 ? "not-allowed" : "pointer",
-              }}
-            >
-              {t("Buy wind speed")}
-            </GameButtonComponent>
           </TabContext>
           <ModalComponent
             openModal={lowBalanceModalOpen}
-            title="Low Balance"
-            subtitle="You have not enough TON balance, please fund your TON balance"
-            handleCloseModal={() => setLowBalanceModalOpen(false)}
+            title={t("lowBalance")}
+            subtitle={t("lowBalanceContent")}
+            handleCloseModal={handleModalClose}
           />
         </Stack>
       </MainBox>
