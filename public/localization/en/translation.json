@@ -113,5 +113,7 @@
   "doYouWhantToBuy": "Do you want to buy that area?",
   "newOpportunities": "That area will gain you the new opportunities",
   "No": "No",
-  "buy": "Buy"
+  "buy": "Buy",
+  "Low Balance": "Low Balance",
+  "Your TON balance is too low to proceed with this withdrawal.": "Your TON balance is too low to proceed with this withdrawal."
 }

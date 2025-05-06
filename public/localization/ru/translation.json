@@ -113,5 +113,7 @@
   "doYouWhantToBuy": "Вы хотите купить эту область ?",
   "newOpportunities": "Эта область принесет вам новые возможности !",
   "No": "Нет",
-  "buy": "Купить"
+  "buy": "Купить",
+  "Low Balance": "Недостаточно средств",
+  "Your TON balance is too low to proceed with this withdrawal.": "Ваш баланс TON слишком низок, чтобы продолжить этот вывод."
 }
