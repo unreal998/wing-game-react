@@ -96,7 +96,7 @@ export const Home = () => {
           position: "absolute",
           transform: isSmallScreen
             ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
-            : "matrix(1.8, 0, 0, 1.8, 0, 0)",
+            : "matrix(2, 0, 0, 2, 0, 0)",
         }}
       />
     </>
