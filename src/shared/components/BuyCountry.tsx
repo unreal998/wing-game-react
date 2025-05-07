@@ -3,6 +3,7 @@ import { Box, Typography, Modal, Button, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { useTranslation } from "react-i18next";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 
 type Props = {
   open: boolean;
@@ -12,6 +13,7 @@ type Props = {
 
 const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
   const { t } = useTranslation();
+  const [playFooterSound] = useSound(footerButtonSound);
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -36,7 +38,7 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
         <Stack direction="row" spacing={2} justifyContent="flex-end">
           <Button
             onClick={() => {
-              new Audio(footerButtonSound).play();
+              playFooterSound();
               onClose();
             }}
             variant="outlined"
@@ -53,7 +55,7 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy }) => {
 
           <Button
             onClick={() => {
-              new Audio(footerButtonSound).play();
+              playFooterSound();
               onBuy();
             }}
             variant="contained"

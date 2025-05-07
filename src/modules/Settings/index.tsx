@@ -14,6 +14,7 @@ import LoaderComponent from "../../shared/components/LoaderComponent";
 import { selectIsRoadmapOpen, selectSettingsLoading } from "./selectors";
 import { setRoadMapOpen } from "./slices";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 
 const Settings = () => {
   const loading = useSelector(selectSettingsLoading());
@@ -21,6 +22,7 @@ const Settings = () => {
   const isRoadMapOpen = useSelector(selectIsRoadmapOpen());
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const [playFooterSound] = useSound(footerButtonSound);
 
   const closeRoadmapModal = useCallback(() => {
     dispatch(setRoadMapOpen(false));
@@ -59,7 +61,7 @@ const Settings = () => {
           <CustomSwitch
             checked={soundEnabled}
             onChange={() => {
-              new Audio(footerButtonSound).play();
+              playFooterSound();
               setSoundEnabled(!soundEnabled);
             }}
           />

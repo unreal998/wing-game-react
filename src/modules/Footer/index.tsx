@@ -51,6 +51,7 @@ const Footer = () => {
   const currentModule = useSelector(selectCurrentModule());
   const incomeData = useSelector(selectIncomeData());
   const isAnyModuleActive = currentModule !== 0;
+  const [playFooterButtonSound] = useSound(footerButtonSound);
 
   useEffect(() => {
     if (location.pathname === "/home" && isButtonDisabled && windSound) {
@@ -215,8 +216,7 @@ const Footer = () => {
               disabled={isButtonDisabled}
               variant="contained"
               onClick={() => {
-                const audio = new Audio(footerButtonSound);
-                audio.play();
+                playFooterButtonSound();
                 handlePushPower();
               }}
               sx={{
@@ -251,8 +251,7 @@ const Footer = () => {
         {location.pathname === "/settings" && (
           <GameButtonComponent
             onClick={() => {
-              const audio = new Audio(footerButtonSound);
-              audio.play();
+              playFooterButtonSound();
               handleOpenRoadmap();
             }}
             sx={{
@@ -275,8 +274,7 @@ const Footer = () => {
               margin: "15px",
             }}
             onClick={() => {
-              const audio = new Audio(footerButtonSound);
-              audio.play();
+              playFooterButtonSound();
               handleWithdrawOpen();
             }}
           >
@@ -314,7 +312,10 @@ const Footer = () => {
                 key={path}
                 onClick={() => {
                   if (!isDisabled) {
+                    playFooterButtonSound();
+
                     handleNavigationChange(path);
+
                     if (!isTutorialFinished) {
                       if (path === "/missions" && currentModule === 6) {
                         dispatch(setCurrentModule(7));

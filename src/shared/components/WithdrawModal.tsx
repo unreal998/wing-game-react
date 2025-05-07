@@ -4,6 +4,7 @@ import { MAIN_COLORS } from "../colors";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 
 type WithdrawModalProps = {
   open: boolean;
@@ -37,7 +38,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
     setTonMemo("");
     onClose();
   };
-
+  const [playFooterSound] = useSound(footerButtonSound);
   return (
     <>
       <ModalStyled
@@ -133,7 +134,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
                 padding: "10px 20px",
               }}
               onClick={() => {
-                new Audio(footerButtonSound).play();
+                playFooterSound();
                 handleSubmit();
               }}
             >
@@ -148,7 +149,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
                 padding: "10px 20px",
               }}
               onClick={() => {
-                new Audio(footerButtonSound).play();
+                playFooterSound();
                 onClose();
               }}
             >
@@ -185,7 +186,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           </Typography>
           <Button
             onClick={() => {
-              new Audio(footerButtonSound).play();
+              playFooterSound();
               setLowBalanceOpen(false);
             }}
             sx={{
@@ -199,7 +200,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           </Button>
           <Button
             onClick={() => {
-              new Audio(footerButtonSound).play();
+              playFooterSound();
               setLowBalanceOpen(false);
             }}
             sx={{

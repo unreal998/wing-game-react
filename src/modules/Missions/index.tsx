@@ -36,6 +36,7 @@ import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -110,12 +111,14 @@ const Missions = () => {
       window.open(url, "_blank");
     }
   }, [selectedMission, userData, missionTimeoutRef, dispatch]);
+  const [playFooterSound] = useSound(footerButtonSound);
 
   return (
     <>
       {(currentModule === 7 || currentModule === 8) && (
         <Box
           onClick={() => {
+            playFooterSound();
             dispatch(setCurrentModule(8));
           }}
           width={"100vw"}
@@ -170,8 +173,7 @@ const Missions = () => {
                   value={index.toString()}
                   key={index}
                   onClick={() => {
-                    const audio = new Audio(footerButtonSound);
-                    audio.play();
+                    playFooterSound();
                   }}
                 />
               ))}
@@ -214,6 +216,7 @@ const Missions = () => {
                     <StyledBoxMission
                       key={idx}
                       onClick={() => {
+                        playFooterSound();
                         if (!mission.isSuccess) {
                           handleOpen(mission);
                         }
@@ -266,8 +269,7 @@ const Missions = () => {
                       ) : (
                         <ButtonMissions
                           onClick={() => {
-                            const audio = new Audio(footerButtonSound);
-                            audio.play();
+                            playFooterSound();
                           }}
                         >
                           Go
@@ -294,8 +296,7 @@ const Missions = () => {
                 padding: "10px 20px",
               }}
               onClick={() => {
-                const audio = new Audio(footerButtonSound);
-                audio.play();
+                playFooterSound();
                 handleCompleteMission();
               }}
             >

@@ -24,7 +24,8 @@ import { setCurrentModule } from "../Tutorial/slices";
 import { buyCountry } from "../Referal_temp/slices";
 import BuyCountryModal from "../../shared/components/BuyCountry";
 import { useTranslation } from "react-i18next";
-import footerButton from "../../assets/sounds/footerButton.mp3";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -88,6 +89,7 @@ export const Planet = () => {
         return { top: "0px", left: "0px" };
     }
   }, []);
+  const [playFooterSound] = useSound(footerButtonSound);
 
   return (
     <Box
@@ -141,8 +143,7 @@ export const Planet = () => {
               }}
               disabled={!country.available}
               onClick={() => {
-                const audio = new Audio(footerButton);
-                audio.play();
+                playFooterSound();
 
                 if (currentModule === 3 || currentModule === 14) {
                   if (!isTutorialFinished && currentModule === 3) {

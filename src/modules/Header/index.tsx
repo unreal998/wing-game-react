@@ -23,6 +23,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
+  const [playSwitchSound] = useSound(switchSound);
 
   useEffect(() => {
     if (userData !== null) {
@@ -113,8 +114,7 @@ const Header = () => {
               borderRadius: "12px",
             }}
             onClick={() => {
-              const audio = new Audio(switchSound);
-              audio.play();
+              playSwitchSound();
               handleEarthClick();
             }}
           >

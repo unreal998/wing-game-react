@@ -40,6 +40,7 @@ const Shop = () => {
     ],
     [t],
   );
+  const [playFooterSound] = useSound(footerButtonSound);
   const loading = useSelector(selectShopLoading);
   const [windValue, setWindValue] = useState<number>(0);
   const [selectedScruberPosition, setSelectedScruberPosition] =
@@ -313,8 +314,7 @@ const Shop = () => {
 
             <GameButtonComponent
               onClick={() => {
-                const audio = new Audio(footerButtonSound);
-                audio.play();
+                playFooterSound();
                 buyModifier();
               }}
               disabled={windValue === 0}

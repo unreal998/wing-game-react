@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { MAIN_COLORS } from "../colors";
 import { ReactNode } from "react";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 
 type ModalComponentPropsType = {
   openModal: boolean;
@@ -27,6 +28,7 @@ export const ModalComponent = ({
   additionalbutton,
 }: ModalComponentPropsType) => {
   const { t } = useTranslation();
+  const [playFooterSound] = useSound(footerButtonSound);
   return (
     <ModalStyled open={openModal} onClose={handleCloseModal}>
       <Stack
@@ -71,7 +73,7 @@ export const ModalComponent = ({
               padding: "10px 20px",
             }}
             onClick={() => {
-              new Audio(footerButtonSound).play();
+              playFooterSound();
               handleCloseModal();
             }}
           >
