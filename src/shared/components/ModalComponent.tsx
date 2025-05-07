@@ -1,16 +1,11 @@
-import {
-  Button,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Stack,
-} from "@mui/material";
+import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
-import { MAIN_COLORS } from "../colors";
 import { ReactNode } from "react";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
+import { PopUpSeccondaryButton } from "./PopUpSeccondaryButton";
+import { MAIN_COLORS } from "../colors";
 
 type ModalComponentPropsType = {
   openModal: boolean;
@@ -30,57 +25,51 @@ export const ModalComponent = ({
   const { t } = useTranslation();
   const [playFooterSound] = useSound(footerButtonSound);
   return (
-    <ModalStyled open={openModal} onClose={handleCloseModal}>
-      <Stack
-        sx={{
+    <ModalStyled
+      open={openModal}
+      onClose={handleCloseModal}
+      sx={{
+        "& .MuiPaper-root": {
           backgroundColor: MAIN_COLORS.sectionBG,
+          padding: "24px 12px",
           borderRadius: "8px",
-          padding: "8px",
-          gap: "10px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px",
+          width: "85%",
+          alignItems: "center",
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          textAlign: "center",
+          fontSize: "24px",
+          fontWeight: "700",
+          color: "white",
+          padding: "0",
         }}
       >
-        <DialogTitle
-          sx={{
-            textAlign: "center",
-            fontSize: "24px",
-            fontWeight: "bold",
-            color: "white",
-            padding: "10px",
-            lineHeight: "1.3",
-          }}
-        >
-          {title}
-        </DialogTitle>
-        <DialogContent
-          sx={{
-            padding: "10px",
-            lineHeight: "1.3",
-            color: "white",
-            overflowX: "hidden",
-            width: "91%",
-            lineBreak: "anywhere",
-          }}
-        >
-          {subtitle}
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: "center" }}>
-          {additionalbutton}
-          <Button
-            sx={{
-              border: `1px solid ${MAIN_COLORS.mainGreen}`,
-              color: "white",
-              backgroundColor: `${MAIN_COLORS.blockBG}`,
-              padding: "10px 20px",
-            }}
-            onClick={() => {
-              playFooterSound();
-              handleCloseModal();
-            }}
-          >
-            {t("Close")}
-          </Button>
-        </DialogActions>
-      </Stack>
+        {title}
+      </DialogTitle>
+      <DialogContent
+        sx={{
+          padding: 0,
+          lineHeight: "1.3",
+          color: "white",
+          overflowX: "hidden",
+          width: "91%",
+          lineBreak: "normal",
+        }}
+      >
+        {subtitle}
+      </DialogContent>
+      <DialogActions sx={{ justifyContent: "center" }}>
+        <PopUpSeccondaryButton onClick={handleCloseModal}>
+          {t("Close")}
+        </PopUpSeccondaryButton>
+        {additionalbutton}
+      </DialogActions>
     </ModalStyled>
   );
 };

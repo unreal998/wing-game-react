@@ -7,7 +7,7 @@ import { Box, useMediaQuery } from "@mui/material";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Missions from "./modules/Missions";
 import Wallet from "./modules/Wallet";
 import Shop from "./modules/Shop";
@@ -19,7 +19,6 @@ import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
 import ErrorPopup from "./shared/components/ErrorPopup";
 import { selectSelectedCountry } from "./modules/Home/selectors";
-// import Lottie from "lottie-react";
 import Footer from "./modules/Footer";
 import {
   selectCurrentModule,
@@ -27,6 +26,7 @@ import {
 } from "./modules/Tutorial/selectors";
 import { setIsTutorialFinished } from "./modules/Tutorial/slices";
 import { selectUserId, selectUserSettings } from "./modules/Header/selectors";
+// import Lottie from "lottie-react";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -45,6 +45,7 @@ function convertToUserData(
 
 const App = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
@@ -52,6 +53,12 @@ const App = () => {
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
   const userSettings = useSelector(selectUserSettings());
   const userId = useSelector(selectUserId());
+
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     if (userSettings?.isTutorialFinished) {

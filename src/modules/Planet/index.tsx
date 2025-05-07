@@ -26,6 +26,7 @@ import BuyCountryModal from "../../shared/components/BuyCountry";
 import { useTranslation } from "react-i18next";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
+import WebApp from "@twa-dev/sdk";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -76,17 +77,32 @@ export const Planet = () => {
   }, [countries, areasData]);
 
   const getCoords = useCallback((index: number) => {
-    switch (index) {
-      case 0:
-        return { top: "100px", left: "180px" };
-      case 1:
-        return { top: "40px", left: "120px" };
-      case 2:
-        return { top: "180px", left: "90px" };
-      case 3:
-        return { top: "100px", left: "50px" };
-      default:
-        return { top: "0px", left: "0px" };
+    if (WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop") {
+      switch (index) {
+        case 0:
+          return { top: "50px", left: "180px" };
+        case 1:
+          return { top: "0px", left: "120px" };
+        case 2:
+          return { top: "100px", left: "90px" };
+        case 3:
+          return { top: "50px", left: "50px" };
+        default:
+          return { top: "0px", left: "0px" };
+      }
+    } else {
+      switch (index) {
+        case 0:
+          return { top: "100px", left: "180px" };
+        case 1:
+          return { top: "40px", left: "120px" };
+        case 2:
+          return { top: "180px", left: "90px" };
+        case 3:
+          return { top: "100px", left: "50px" };
+        default:
+          return { top: "0px", left: "0px" };
+      }
     }
   }, []);
   const [playFooterSound] = useSound(footerButtonSound);
@@ -163,8 +179,16 @@ export const Planet = () => {
               {t(`${country.title}`)}
             </StyledPlanetButton>
           ))}
+        <Typography
+          color="white"
+          sx={{
+            position: "absolute",
+            top: "320px",
+          }}
+        >
+          {t("selectYourCountry")}
+        </Typography>
       </StyledPlanetBox>
-      <Typography color="white">{t("selectYourCountry")}</Typography>
       <BuyCountryModal
         open={buyCountrieModalOpen}
         onClose={() => setBuyCountrieModalOpen(false)}
