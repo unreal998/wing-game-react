@@ -180,7 +180,7 @@ export const Planet = () => {
             position: "absolute",
             top:
               WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop"
-                ? "260px"
+                ? "290px"
                 : "320px",
           }}
         >
