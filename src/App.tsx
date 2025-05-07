@@ -26,7 +26,7 @@ import {
 } from "./modules/Tutorial/selectors";
 import { setIsTutorialFinished } from "./modules/Tutorial/slices";
 import { selectUserId, selectUserSettings } from "./modules/Header/selectors";
-import Lottie from "lottie-react";
+// import Lottie from "lottie-react";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -150,7 +150,7 @@ const App = () => {
               : "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
         >
-          <Lottie
+          {/* <Lottie
             animationData={require(
               `./assets/animations/${selectedCountry.name}Anim.json`,
             )}
@@ -162,7 +162,7 @@ const App = () => {
               zIndex: 0,
               pointerEvents: "none",
             }}
-          />
+          /> */}
         </Box>
       )}
     </Box>
