@@ -62,7 +62,7 @@
   "tutorial.step3b": "You have 4 countries in front of you, but only the Netherlands is unlocked so far (the others are waiting for you to unlock them).",
   "tutorial.step2": "To unlock other countries, you need to invite more friends, and buy them for a TON.",
   "tutorial.step4": "This button is your main source of energy!",
-  "tutorial.step5": "Click once every 12 hours → you get Kw (it's an internal currency, `kilowatts`).\n- The more upgrades you buy in the shop → the more Kw you get!",
+  "tutorial.step5": "Click once every 4 hours → you get Kw (it's an internal currency, `kilowatts`).\n- The more upgrades you buy in the shop → the more Kw you get!",
   "tutorial.step6": "Go to ‘Missions’ - there's loads of assignments that pay!",
   "tutorial.step11": "Here you can buy improvements (for TON), which will increase your income \n \n - Energy Flow → more Kw per click. \n- Mods → passive income in both Kw and TON! \n\n\n\n after 21 days improvements start to bring profit in TON!",
   "tutorial.step12": "Where to store and output TON",
@@ -75,7 +75,7 @@
   "roadmap.text6": "📅 November 2025 – Community interaction and partnerships\n✅ Preparation for listing on major centralized exchanges.\n✅ Hosting TurbineX Global Summit with industry leaders.\n✅ Integration of new AI algorithms for reward optimization.\n\n📅 December 2025 – Listing on first centralized exchanges (CEX)\n✅ Listing on smaller exchanges – initial $TURX launch to increase liquidity.\n✅ Active marketing campaign – exchange partnerships, AMA sessions.\n✅ Liquidity support – market makers to stabilize trading.\n✅ Trading pair launches – BTC, ETH, USDT for user convenience.\n✅ Trade volume analysis – monitoring and evaluation of launch efficiency.\n\n📅 Q1 2026 – Scaling to major exchanges\n✅ Listing on major exchanges.\n✅ Public announcements, press events, and social media campaigns.\n✅ Unique partner offers – bonuses, discounts, incentives for new users.\n✅ Influencer marketing – top bloggers to promote the token.\n✅ Global event synchronization – participation in major crypto conferences.\n✅ Listing expansion – more global exchanges onboarded.\n✅ Liquidity support – market making and stability.\n✅ New trading pairs with fiat currencies (USD, EUR).\n✅ Region-specific campaigns – Europe, Asia, America.\n✅ Community engagement – contests, trading challenges.\n✅ Fiat gateways – easy token purchase for non-crypto users.\n✅ Marketing campaigns with exchange listings.\n✅ Long-term partnerships with exchanges.\n✅ Constant liquidity updates.\n✅ Long-term retention strategies – loyalty programs, reinvestment tools.\n\n🚀 TurbineX is not just a crypto project – it's the future of wind energy in Web3! Ready to rise? Let's go! 💨💰",
   "tutorial.hint": "Tap anywhere to continue",
   "tutorial.module5": {
-    "line1": "- Press once every 12 hours → receive Kw (the in-game currency, “kilowatts”).",
+    "line1": "- Press once every 4 hours → receive Kw (the in-game currency, “kilowatts”).",
     "line2": "- The more upgrades you buy in the store → the more Kw you get per click!"
   },
   "tutorial.module6": "Go to 'Missions' — there are plenty of tasks you’ll get paid for!",
