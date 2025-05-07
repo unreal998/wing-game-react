@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Typography, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../colors";
 import { ModalStyled } from "./ModalStyled";
@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import { WithdrawModalInput } from "./WithdrawModalInput";
 import { PopUpMainButton } from "./PopUpMainButton";
 import { PopUpSeccondaryButton } from "./PopUpSeccondaryButton";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../modules/Header/selectors";
 
 type WithdrawModalProps = {
   open: boolean;
@@ -22,6 +24,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   const [amount, setAmount] = useState("");
   const [tonMemo, setTonMemo] = useState("");
   const { t } = useTranslation();
+  const userData = useSelector(selectUserData());
 
   const handleSubmit = () => {
     onSubmit(withdrawWallet, amount, tonMemo);
@@ -30,6 +33,12 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
     setTonMemo("");
     onClose();
   };
+
+  const handleMAX = useCallback(() => {
+    if (userData) {
+      setAmount(userData.TONBalance.toString());
+    }
+  }, [userData]);
 
   return (
     <ModalStyled
@@ -78,7 +87,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
-          <PopUpMainButton onClick={handleSubmit}>{"MAX"}</PopUpMainButton>
+          <PopUpMainButton onClick={handleMAX}>{"MAX"}</PopUpMainButton>
         </Stack>
       </Stack>
 
