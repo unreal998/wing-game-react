@@ -42,11 +42,11 @@ const Settings = () => {
     dispatch(restartTutorialRequest(userId));
   };
 
-  // useEffect(() => {
-  //   if (isTutorialRestarted) {
-  //     window.location.href = "/";
-  //   }
-  // }, [isTutorialRestarted]);
+  useEffect(() => {
+    if (isTutorialRestarted) {
+      window.location.href = "/";
+    }
+  }, [isTutorialRestarted]);
 
   return (
     <MainBox>
