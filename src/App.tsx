@@ -26,6 +26,7 @@ import {
 } from "./modules/Tutorial/selectors";
 import { setIsTutorialFinished } from "./modules/Tutorial/slices";
 import { selectUserId, selectUserSettings } from "./modules/Header/selectors";
+import Lottie from "lottie-react";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -44,7 +45,7 @@ function convertToUserData(
 
 const App = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // добавили хук
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedCountry = useSelector(selectSelectedCountry());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
@@ -148,7 +149,21 @@ const App = () => {
               ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
               : "matrix(2.2, 0, 0, 2.2, 0, 0)",
           }}
-        />
+        >
+          <Lottie
+            animationData={require(
+              `./assets/animations/${selectedCountry.name}Anim.json`,
+            )}
+            loop
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+              zIndex: 0,
+              pointerEvents: "none",
+            }}
+          />
+        </Box>
       )}
     </Box>
   );
