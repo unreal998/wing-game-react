@@ -78,7 +78,7 @@ const Settings = () => {
             width: "90%",
             maxHeight: "80vh",
             overflowY: "auto",
-            bgcolor: "white",
+            bgcolor: "rgba(4, 53, 80, 1)",
             p: 3,
             borderRadius: 2,
           }}
@@ -88,15 +88,25 @@ const Settings = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h6" gutterBottom>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: "rgba(106, 218, 67, 1)" }}
+            >
               {t("Roadmap")}
             </Typography>
             <IconButton onClick={closeRoadmapModal}>
-              <CloseIcon />
+              <CloseIcon sx={{ color: "rgba(106, 218, 67, 1)" }} />
             </IconButton>
           </Box>
 
-          <Typography variant="body2" sx={{ whiteSpace: "pre-line" }}>
+          <Typography
+            variant="body2"
+            sx={{
+              whiteSpace: "pre-line",
+              color: "#fff", // белый текст для читаемости на тёмном фоне
+            }}
+          >
             {[0, 1, 2, 3, 4, 5, 6]
               .map((i) => t(`roadmap.text${i === 0 ? "" : i}`))
               .join("\n\n")}
