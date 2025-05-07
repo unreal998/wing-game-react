@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, Typography, Modal, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
@@ -11,8 +11,14 @@ import { NamedStyled } from "../../shared/components/NameStyled";
 import { SubMainBox } from "./components/SubMainBox";
 import { useDispatch, useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { selectIsRoadmapOpen, selectSettingsLoading } from "./selectors";
-import { setRoadMapOpen } from "./slices";
+import {
+  selectIsRoadmapOpen,
+  selectIsTutorialRestarted,
+  selectSettingsLoading,
+} from "./selectors";
+import { restartTutorialRequest, setRoadMapOpen } from "./slices";
+import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
+import { selectUserId } from "../Header/selectors";
 
 const Settings = () => {
   const loading = useSelector(selectSettingsLoading());
@@ -20,6 +26,8 @@ const Settings = () => {
   const isRoadMapOpen = useSelector(selectIsRoadmapOpen());
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const userId = useSelector(selectUserId());
+  const isTutorialRestarted = useSelector(selectIsTutorialRestarted());
 
   const closeRoadmapModal = useCallback(() => {
     dispatch(setRoadMapOpen(false));
@@ -28,6 +36,17 @@ const Settings = () => {
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
   };
+
+  const handleRestartTutorial = () => {
+    if (!userId) return;
+    dispatch(restartTutorialRequest(userId));
+  };
+
+  // useEffect(() => {
+  //   if (isTutorialRestarted) {
+  //     window.location.href = "/";
+  //   }
+  // }, [isTutorialRestarted]);
 
   return (
     <MainBox>
@@ -60,6 +79,21 @@ const Settings = () => {
             onChange={() => setSoundEnabled(!soundEnabled)}
           />
         </TabBoxSettings>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+          }}
+        >
+          <PopUpMainButton
+            onClick={handleRestartTutorial}
+            sx={{
+              width: "60%",
+            }}
+          >
+            {t("repeatTutorial")}
+          </PopUpMainButton>
+        </Box>
       </StyledBasicBox>
 
       <Modal open={isRoadMapOpen} onClose={closeRoadmapModal}>
