@@ -178,10 +178,7 @@ export const Planet = () => {
           color="white"
           sx={{
             position: "absolute",
-            top:
-              WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop"
-                ? "290px"
-                : "320px",
+            top: "320px",
           }}
         >
           {t("selectYourCountry")}
