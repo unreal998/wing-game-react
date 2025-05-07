@@ -93,6 +93,17 @@ export const headerSlice = createSlice({
     updateIncomeDataActionFailed: (state, { payload }: { payload: string }) => {
       state.loading = false;
     },
+    resetTutorialAction: (state, { payload }: { payload: UserData["id"] }) => {
+      state.loading = true;
+    },
+    resetTutorialActionSuccess: (state) => {
+      state.loading = false;
+      state.userData!.userSettings.isTutorialFinished = false;
+    },
+    resetTutorialActionFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
   },
 });
 
@@ -110,6 +121,9 @@ export const {
   updateIncomeDataActionSuccess,
   updateIncomeDataActionFailed,
   getIncomeDataAction,
+  resetTutorialAction,
+  resetTutorialActionFailure,
+  resetTutorialActionSuccess,
 } = headerSlice.actions;
 
 export type HeaderStateType = typeof initialHeaderState;

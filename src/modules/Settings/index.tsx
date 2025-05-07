@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Box, Typography, Modal, IconButton } from "@mui/material";
+import { Box, Typography, Modal, IconButton, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { StyledBasicBox } from "../Referal_temp/components/StyledBasicBox";
@@ -13,6 +13,11 @@ import { useDispatch, useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { selectIsRoadmapOpen, selectSettingsLoading } from "./selectors";
 import { setRoadMapOpen } from "./slices";
+import { MAIN_COLORS } from "../../shared/colors";
+import { redirect, useNavigate } from "react-router-dom";
+import { resetTutorialAction } from "../Header/slices";
+import { selectUserId } from "../Header/selectors";
+import { setCurrentModule, setIsTutorialFinished } from "../Tutorial/slices";
 
 const Settings = () => {
   const loading = useSelector(selectSettingsLoading());
@@ -20,6 +25,8 @@ const Settings = () => {
   const isRoadMapOpen = useSelector(selectIsRoadmapOpen());
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userId = useSelector(selectUserId());
 
   const closeRoadmapModal = useCallback(() => {
     dispatch(setRoadMapOpen(false));
@@ -27,6 +34,12 @@ const Settings = () => {
 
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
+  };
+
+  const handleTutorialRedirect = async () => {
+    if (userId === undefined) return;
+    dispatch(resetTutorialAction(userId));
+    navigate("/");
   };
 
   return (
@@ -59,6 +72,17 @@ const Settings = () => {
             checked={soundEnabled}
             onChange={() => setSoundEnabled(!soundEnabled)}
           />
+        </TabBoxSettings>
+        <TabBoxSettings justifyContent="space-between">
+          <Typography sx={{ paddingTop: "10px", paddingBottom: "10px" }}>
+            {t("Tutorial")}
+          </Typography>
+          <Button
+            sx={{ background: MAIN_COLORS.mainGreen }}
+            onClick={handleTutorialRedirect}
+          >
+            {t("Start")}
+          </Button>
         </TabBoxSettings>
       </StyledBasicBox>
 
