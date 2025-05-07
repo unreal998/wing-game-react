@@ -91,7 +91,7 @@ export const Home = () => {
         animationData={require(`../../assets/animations/windAnimation.json`)}
         loop
         style={{
-          top: "280px",
+          top: isSmallScreen ? "220px" : "280px",
           left: "0",
           position: "absolute",
           transform: isSmallScreen
