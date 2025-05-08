@@ -18,3 +18,13 @@ export const selectSettingsError =
   () =>
   ({ settingsSlice }: SettingsSliceStore) =>
     settingsSlice.errorMessage;
+
+export const selectTutorialLoading =
+  () =>
+  ({ settingsSlice }: SettingsSliceStore) =>
+    settingsSlice.loading;
+
+export const selectIsTutorialRestarted =
+  () =>
+  ({ settingsSlice }: SettingsSliceStore) =>
+    settingsSlice.isTutorialRestarted;
