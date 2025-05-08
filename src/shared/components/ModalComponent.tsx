@@ -65,7 +65,12 @@ export const ModalComponent = ({
         {subtitle}
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
-        <PopUpSeccondaryButton onClick={handleCloseModal}>
+        <PopUpSeccondaryButton
+          onClick={() => {
+            handleCloseModal();
+            playFooterSound();
+          }}
+        >
           {t("Close")}
         </PopUpSeccondaryButton>
         {additionalbutton}
