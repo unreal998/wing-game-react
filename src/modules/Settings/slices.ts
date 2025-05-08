@@ -4,12 +4,16 @@ export type SettingsState = {
   loading: boolean;
   errorMessage: string;
   isRoadMapOpen: boolean;
+  error: string | null;
+  isTutorialRestarted: boolean;
 };
 
 export const initialSettingsState: SettingsState = {
   loading: false,
   errorMessage: "",
   isRoadMapOpen: false,
+  error: null,
+  isTutorialRestarted: false,
 };
 
 export const settingsSlice = createSlice({
@@ -29,6 +33,18 @@ export const settingsSlice = createSlice({
       state.loading = false;
       state.errorMessage = payload;
     },
+    restartTutorialRequest: (state, { payload }: { payload: string }) => {
+      state.loading = true;
+      state.error = null;
+    },
+    restartTutorialSuccess: (state) => {
+      state.loading = false;
+      state.isTutorialRestarted = true;
+    },
+    restartTutorialFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.error = payload;
+    },
   },
 });
 
@@ -37,6 +53,9 @@ export const {
   updateSettingsSuccess,
   updateSettingsFailure,
   setRoadMapOpen,
+  restartTutorialRequest,
+  restartTutorialSuccess,
+  restartTutorialFailure,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
