@@ -1,4 +1,4 @@
-import { Box, Slider, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Slider, Stack, Typography } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
@@ -200,14 +200,14 @@ const Shop = () => {
               >
                 <Box display="flex" alignItems="center" gap="8px">
                   {currentCountryCode && (
-                    <img
+                    <Avatar
                       src={
-                        countryFlags?.[
+                        countryFlags[
                           currentCountryCode as keyof typeof countryFlags
                         ]
                       }
                       alt={currentCountryCode}
-                      style={{ width: 24, height: 16, borderRadius: 2 }}
+                      sx={{ width: 24, height: 24 }}
                     />
                   )}
                   <Typography fontWeight="600">
