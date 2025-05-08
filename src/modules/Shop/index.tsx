@@ -36,6 +36,7 @@ import { StyledTab } from "../../shared/components/StyledTab";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import { countryFlags } from "./components/flag";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -65,6 +66,8 @@ const Shop = () => {
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
   const currentModule = useSelector(selectCurrentModule());
 
+  const currentCountryCode = selectedCountry?.name;
+
   const handleModalClose = useCallback(() => {
     dispatch(setLowBalanceModalOpen(false));
   }, [dispatch]);
@@ -93,6 +96,7 @@ const Shop = () => {
   useEffect(() => {
     if (!shopValues?.length) {
       dispatch(getShopDataByArea(selectedCountry.name));
+      console.log("Покажи мне", userData);
     } else {
       const shopMarksFromModificator = shopValues.map((mark, index) => {
         return {
@@ -189,15 +193,28 @@ const Shop = () => {
         >
           <Stack flexDirection="column" gap="10px">
             <Box>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography fontWeight="600">
-                  {t("Wind speed")} : {windValue}
-                </Typography>
-                <StyledInputBox
-                  sx={{
-                    width: "20%",
-                  }}
-                >
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box display="flex" alignItems="center" gap="8px">
+                  {currentCountryCode && (
+                    <img
+                      src={
+                        countryFlags?.[
+                          currentCountryCode as keyof typeof countryFlags
+                        ]
+                      }
+                      alt={currentCountryCode}
+                      style={{ width: 24, height: 16, borderRadius: 2 }}
+                    />
+                  )}
+                  <Typography fontWeight="600">
+                    {t("Wind speed")} : {windValue}
+                  </Typography>
+                </Box>
+                <StyledInputBox sx={{ width: "20%" }}>
                   <StyledInput
                     type="text"
                     value={
