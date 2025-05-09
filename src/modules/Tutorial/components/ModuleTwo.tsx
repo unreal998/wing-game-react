@@ -1,23 +1,19 @@
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { StyledModuleBox } from "./StyledModuleBox";
 
 function ModuleTwo() {
   const { t } = useTranslation();
 
   return (
-    <Typography
+    <StyledModuleBox
       sx={{
-        color: "white",
-        fontSize: "16px",
-        fontWeight: 600,
-        textAlign: "center",
-        margin: "20px 20px 0",
-        zIndex: 2,
-        mb: "20px",
+        position: "absolute",
+        bottom: "10%",
       }}
     >
-      {t("tutorial.step2")}
-    </Typography>
+      <Typography>{t("tutorial.step2")}</Typography>
+    </StyledModuleBox>
   );
 }
 

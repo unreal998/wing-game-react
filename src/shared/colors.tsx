@@ -1,5 +1,6 @@
 export const MAIN_COLORS = {
   blockBG: "#01121D66",
+  blockBG2: "#00203C",
   sectionBG: "#043550",
   subTextColor: "#C6C6C8",
   mainGreen: "#6ADA43",

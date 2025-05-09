@@ -14,6 +14,11 @@ import { selectUserData } from "./selectors";
 import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
+import {
+  selectCurrentModule,
+  selectIsTutorialFinished,
+} from "../Tutorial/selectors";
+import { setCurrentModule } from "../Tutorial/slices";
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
@@ -22,6 +27,8 @@ const Header = () => {
   const navigate = useNavigate();
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
+  const currentModule = useSelector(selectCurrentModule());
+  const isTutorialFinished = useSelector(selectIsTutorialFinished());
 
   useEffect(() => {
     if (userData !== null) {
@@ -35,9 +42,18 @@ const Header = () => {
   }, [playSound, navigate]);
 
   const handleEarthClick = useCallback(() => {
-    navigate("/");
-    dispatch(clearSelectedCountry());
-  }, [navigate, dispatch]);
+    switch (currentModule) {
+      case 4:
+        return dispatch(setCurrentModule(5));
+      case 5:
+        return dispatch(setCurrentModule(5.5));
+      case 5.5:
+        return dispatch(setCurrentModule(6));
+      default:
+        navigate("/");
+        dispatch(clearSelectedCountry());
+    }
+  }, [navigate, dispatch, currentModule]);
 
   const isMobile = useMemo(
     () =>
@@ -110,6 +126,24 @@ const Header = () => {
               padding: "15px",
               backgroundColor: MAIN_COLORS.sectionBG,
               borderRadius: "12px",
+              ...(currentModule === 5.5 && {
+                boxShadow: `0 0 4px ${MAIN_COLORS.mainGreen}`,
+                animationName: "pulseShadow",
+                animationDuration: "2s",
+                animationTimingFunction: "ease-in-out",
+                animationIterationCount: "infinite",
+                "@keyframes pulseShadow": {
+                  "0%": {
+                    boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+                  },
+                  "50%": {
+                    boxShadow: `0 0 30px ${MAIN_COLORS.mainGreen}`,
+                  },
+                  "100%": {
+                    boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+                  },
+                },
+              }),
             }}
             onClick={handleEarthClick}
           >

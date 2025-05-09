@@ -51,13 +51,18 @@ export const Home = () => {
 
   return (
     <>
-      {(currentModule === 4 || currentModule === 5 || currentModule === 6) &&
+      {(currentModule === 4 ||
+        currentModule === 5 ||
+        currentModule === 5.5 ||
+        currentModule === 6) &&
         !isTutorialFinished && (
           <Box
             onClick={() => {
               if (currentModule === 4) {
                 dispatch(setCurrentModule(5));
               } else if (currentModule === 5) {
+                dispatch(setCurrentModule(5.5));
+              } else if (currentModule === 5.5) {
                 dispatch(setCurrentModule(6));
               }
             }}

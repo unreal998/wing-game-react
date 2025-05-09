@@ -1,32 +1,33 @@
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { MAIN_COLORS } from "../../../shared/colors";
+import { StyledModuleBox } from "./StyledModuleBox";
 
 function ModuleThree({ showModule }: { showModule: boolean }) {
   const { t } = useTranslation();
   return (
-    <Typography
+    <StyledModuleBox
       sx={{
-        color: "white",
-        fontSize: "20px",
-        fontWeight: 700,
-        textAlign: "center",
-        margin: "0 10px",
-        zIndex: 2,
+        position: "absolute",
+        top: 120,
+        left: 0,
       }}
     >
-      {showModule ? (
-        <>
-          {t("tutorial.step3a.before")}{" "}
-          <Box component="span" sx={{ color: MAIN_COLORS.mainGreen }}>
-            {t("Netherlands")}
-          </Box>{" "}
-          {t("tutorial.step3a.after")}
-        </>
-      ) : (
-        t("tutorial.step3b")
-      )}
-    </Typography>
+      <Typography
+        sx={{
+          whiteSpace: "pre-line",
+        }}
+      >
+        {showModule ? (
+          <>
+            {t("tutorial.step3a.before")} {t("Netherlands")}{" "}
+            {t("tutorial.step3a.after")}
+          </>
+        ) : (
+          t("tutorial.step3b")
+        )}
+      </Typography>
+    </StyledModuleBox>
   );
 }
 

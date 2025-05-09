@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
+import { StyledModuleBox } from "./StyledModuleBox";
 
 export const ModuleNineHalfTen = () => {
   const currentModule = useSelector(selectCurrentModule());
@@ -12,30 +13,39 @@ export const ModuleNineHalfTen = () => {
   }
 
   return (
-    <Typography
+    <StyledModuleBox
       sx={{
-        padding: "10px",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        borderRadius: "10px",
         position: "absolute",
-        width: "80%",
-        top: currentModule === 9.5 || currentModule === 10 ? "40%" : "30%",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 999,
+        top: currentModule === 9 ? "23%" : "35%",
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
-        fontSize: "20px",
-        fontWeight: 700,
-        color: "white",
-        textAlign: "center",
-        whiteSpace: "pre-line",
+        justifyContent: "center",
       }}
     >
-      {currentModule === 9 && t("tutorial.module9")}
-      {currentModule === 9.5 && t("tutorial.module9.5")}
-      {currentModule === 10 && t("tutorial.module10")}
-    </Typography>
+      <Typography
+        sx={{
+          fontSize: "24px",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        {currentModule === 9
+          ? t("tutorial.module9h")
+          : currentModule === 9.5
+            ? t("tutorial.module9.5")
+            : t("tutorial.module10")}
+      </Typography>
+      {currentModule === 9 && (
+        <Typography
+          sx={{
+            pt: "8px",
+            whiteSpace: "pre-line",
+          }}
+        >
+          {t("tutorial.module9")}
+        </Typography>
+      )}
+    </StyledModuleBox>
   );
 };
