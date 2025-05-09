@@ -3,6 +3,7 @@ import { selectCurrentModule } from "../selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { setCurrentModule } from "../slices";
+import { StyledModuleBox } from "./StyledModuleBox";
 
 export const ModuleFourFiveSix = () => {
   const { t } = useTranslation();
@@ -17,6 +18,8 @@ export const ModuleFourFiveSix = () => {
         return t("tutorial.step4");
       case 5:
         return t("tutorial.step5");
+      case 5.5:
+        return t("tutorial.step5.5");
       case 6:
         return t("tutorial.step6");
       default:
@@ -29,28 +32,23 @@ export const ModuleFourFiveSix = () => {
   };
 
   return (
-    <Typography
-      onClick={handleChangeModule}
+    <StyledModuleBox
       sx={{
-        padding: "10px",
-        backgroundColor: "rgba(0, 0, 0, 0.4)",
-        borderRadius: "10px",
         position: "absolute",
-        width: "80%",
-        top: "35%",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 999,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: currentModule === 4 ? "24px" : "16px",
-        fontWeight: 700,
-        color: "white",
-        textAlign: currentModule === 4 ? "center" : "left",
+        top: "29%",
       }}
     >
-      {getText()}
-    </Typography>
+      <Typography
+        onClick={handleChangeModule}
+        sx={{
+          whiteSpace: "pre-line",
+          fontSize: currentModule === 4 ? "24px" : "16px",
+          fontWeight: currentModule === 4 ? "bold" : "normal",
+          textAlign: currentModule === 4 ? "center" : "left",
+        }}
+      >
+        {getText()}
+      </Typography>
+    </StyledModuleBox>
   );
 };
