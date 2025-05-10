@@ -33,6 +33,7 @@ import { ReferalInputComponent } from "../Referal_temp/components/ReferalInputCo
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { setWithdrawModalOpen } from "../Wallet/slices";
 import { setRoadMapOpen } from "../Settings/slices";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import { buyItemAction, setLowBalanceModalOpen } from "../Shop/slices";
 import { selectShopData, selectWindValue } from "../Shop/selectors";
 
@@ -52,6 +53,7 @@ const Footer = () => {
   const currentModule = useSelector(selectCurrentModule());
   const incomeData = useSelector(selectIncomeData());
   const isAnyModuleActive = currentModule !== 0;
+  const [playFooterButtonSound] = useSound(footerButtonSound);
   const windValue = useSelector(selectWindValue());
   const shopValues = useSelector(selectShopData());
 
@@ -234,7 +236,10 @@ const Footer = () => {
             <GameButtonComponent
               disabled={isButtonDisabled}
               variant="contained"
-              onClick={handlePushPower}
+              onClick={() => {
+                playFooterButtonSound();
+                handlePushPower();
+              }}
               sx={{
                 padding: "15px",
                 width: "90%",
@@ -266,7 +271,10 @@ const Footer = () => {
         {location.pathname === "/referal" && <ReferalInputComponent />}
         {location.pathname === "/settings" && (
           <GameButtonComponent
-            onClick={handleOpenRoadmap}
+            onClick={() => {
+              playFooterButtonSound();
+              handleOpenRoadmap();
+            }}
             sx={{
               margin: "15px",
               width: "93%",
@@ -286,7 +294,10 @@ const Footer = () => {
               width: "93%",
               margin: "15px",
             }}
-            onClick={handleWithdrawOpen}
+            onClick={() => {
+              playFooterButtonSound();
+              handleWithdrawOpen();
+            }}
           >
             <PowerIcon />
             <Typography fontSize="20px" fontWeight="800" marginLeft="6px">
@@ -336,7 +347,10 @@ const Footer = () => {
                 key={path}
                 onClick={() => {
                   if (!isDisabled) {
+                    playFooterButtonSound();
+
                     handleNavigationChange(path);
+
                     if (!isTutorialFinished) {
                       if (path === "/missions" && currentModule === 6) {
                         dispatch(setCurrentModule(7));

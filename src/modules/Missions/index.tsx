@@ -35,6 +35,8 @@ import { ModuleSevenEight } from "../Tutorial/components/ModuleSevenEight";
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import { ModalComponent } from "../../shared/components/ModalComponent";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 
 const Missions = () => {
@@ -110,12 +112,14 @@ const Missions = () => {
       window.open(url, "_blank");
     }
   }, [selectedMission, userData, missionTimeoutRef, dispatch]);
+  const [playFooterSound] = useSound(footerButtonSound);
 
   return (
     <>
       {(currentModule === 7 || currentModule === 8) && (
         <Box
           onClick={() => {
+            playFooterSound();
             dispatch(setCurrentModule(8));
           }}
           width={"100vw"}
@@ -169,6 +173,9 @@ const Missions = () => {
                   label={mission.text}
                   value={index.toString()}
                   key={index}
+                  onClick={() => {
+                    playFooterSound();
+                  }}
                 />
               ))}
             </TabList>
@@ -210,6 +217,7 @@ const Missions = () => {
                     <StyledBoxMission
                       key={idx}
                       onClick={() => {
+                        playFooterSound();
                         if (!mission.isSuccess) {
                           handleOpen(mission);
                         }
@@ -260,7 +268,13 @@ const Missions = () => {
                           />
                         </Box>
                       ) : (
-                        <ButtonMissions>Go</ButtonMissions>
+                        <ButtonMissions
+                          onClick={() => {
+                            playFooterSound();
+                          }}
+                        >
+                          Go
+                        </ButtonMissions>
                       )}
                     </StyledBoxMission>
                   ))}
@@ -275,7 +289,12 @@ const Missions = () => {
           title={selectedMission?.title || ""}
           subtitle={selectedMission?.description || ""}
           additionalbutton={
-            <PopUpMainButton onClick={handleCompleteMission}>
+            <PopUpMainButton
+              onClick={() => {
+                playFooterSound();
+                handleCompleteMission();
+              }}
+            >
               {t("start")}
             </PopUpMainButton>
           }
