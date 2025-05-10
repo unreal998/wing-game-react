@@ -29,45 +29,56 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
         padding: "8px",
         borderRadius: "12px",
         gap: "8px",
+        maxHeight: "300px", // Ограничение высоты для прокрутки
+        overflowY: "auto", // Добавление вертикального скролла
       }}
     >
-      <TableRow
+      <Stack
+        direction="row"
+        justifyContent="space-between"
         sx={{
+          position: "sticky", // Закрепляем хедер
+          top: 0,
+          zIndex: 1, // Чтобы заголовок был выше
           backgroundColor: MAIN_COLORS.sectionBG,
           borderRadius: "8px",
+          padding: "8px",
         }}
       >
         <TableCellShop>#</TableCellShop>
         <TableCellShop>{t("Energy Flow")}</TableCellShop>
         <TableCellShop>{t("Clicks Remain")}</TableCellShop>
         <TableCellShop>{t("Bought Date")}</TableCellShop>
-      </TableRow>
+      </Stack>
 
-      {bought.length > 0 ? (
-        bought.map((mod, index) => (
-          <TableRow
-            key={index}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              backgroundColor: MAIN_COLORS.sectionBG,
-              borderRadius: "8px",
-            }}
-          >
-            <TableCellShop>{index + 1}</TableCellShop>
-            <TableCellShop>{mod.speed}</TableCellShop>
-            <TableCellShop>{mod.clicksRemaining} clicks</TableCellShop>
-            <TableCellShop>
-              {new Date(mod.boughtDate || 0).toLocaleDateString()}
-            </TableCellShop>
-          </TableRow>
-        ))
-      ) : (
-        <Typography textAlign="center" mt={2} width="100%">
-          {t("No bought modifiers yet")}
-        </Typography>
-      )}
+      <Stack sx={{ maxHeight: "200px", overflowY: "auto" }}>
+        {bought.length > 0 ? (
+          bought.map((mod, index) => (
+            <Stack
+              key={index}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{
+                backgroundColor: MAIN_COLORS.sectionBG,
+                borderRadius: "8px",
+                padding: "8px",
+              }}
+            >
+              <TableCellShop>{index + 1}</TableCellShop>
+              <TableCellShop>{mod.speed}</TableCellShop>
+              <TableCellShop>{mod.clicksRemaining} clicks</TableCellShop>
+              <TableCellShop>
+                {new Date(mod.boughtDate || 0).toLocaleDateString()}
+              </TableCellShop>
+            </Stack>
+          ))
+        ) : (
+          <Typography textAlign="center" mt={2} width="100%">
+            {t("No bought modifiers yet")}
+          </Typography>
+        )}
+      </Stack>
     </Stack>
   );
 };
