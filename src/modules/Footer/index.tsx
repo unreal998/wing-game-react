@@ -113,7 +113,7 @@ const Footer = () => {
 
   const buyModifier = useCallback(() => {
     const currentPrice = shopValues.find(
-      (value) => value.speed === windValue,
+      (value, index) => index === windValue,
     )?.price;
     if (currentPrice === undefined) return;
     if (userData === null) return;

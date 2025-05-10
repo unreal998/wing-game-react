@@ -78,7 +78,7 @@ const Shop = () => {
 
   const selectedWindPowerIncome = useMemo(() => {
     return (
-      shopValues.find((value) => value.speed === windValue) || {
+      shopValues.find((value, index) => index === windValue - 1) || {
         tonValue: 0,
         turxValue: 0,
         price: 0,
@@ -96,12 +96,11 @@ const Shop = () => {
   useEffect(() => {
     if (!shopValues?.length) {
       dispatch(getShopDataByArea(selectedCountry.name));
-      console.log("Покажи мне", userData);
     } else {
       const shopMarksFromModificator = shopValues.map((mark, index) => {
         return {
-          title: mark.speed,
-          value: mark.speed,
+          title: index + 1,
+          value: index + 1,
           level: index + 1,
         };
       });
@@ -232,7 +231,7 @@ const Shop = () => {
                 value={windValue}
                 marks={shopMarks}
                 defaultValue={0}
-                step={null}
+                max={shopMarks.length - 1}
                 sx={{
                   color: MAIN_COLORS.mainGreen,
                   "& .MuiSlider-rail": {
