@@ -29,17 +29,17 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
         padding: "8px",
         borderRadius: "12px",
         gap: "8px",
-        maxHeight: "300px", // Ограничение высоты для прокрутки
-        overflowY: "auto", // Добавление вертикального скролла
+        maxHeight: "300px",
+        overflowY: "auto",
       }}
     >
       <Stack
         direction="row"
         justifyContent="space-between"
         sx={{
-          position: "sticky", // Закрепляем хедер
+          position: "sticky",
           top: 0,
-          zIndex: 1, // Чтобы заголовок был выше
+          zIndex: 1,
           backgroundColor: MAIN_COLORS.sectionBG,
           borderRadius: "8px",
           padding: "8px",
