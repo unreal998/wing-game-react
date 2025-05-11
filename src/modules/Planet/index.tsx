@@ -156,25 +156,17 @@ export const Planet = () => {
                           boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
                         },
                       },
-
                     }),
                 }}
-              
-              disabled={!country.available}
-              onClick={() => {
-                playFooterSound();
+                disabled={!country.available}
+                onClick={() => {
+                  playFooterSound();
 
-                if (currentModule === 3 || currentModule === 14) {
-                  if (!isTutorialFinished && currentModule === 3) {
-                    dispatch(setCurrentModule(0));
-                  }
-                  
-                  handleButtonPress(country);
-                } else if (isTutorialFinished && country.available) {
-                  if (!country.bought) {
-                    setBuyCountrieModalOpen(true);
-                    setCountryToBuy(country);
-                  } else {
+                  if (currentModule === 3 || currentModule === 14) {
+                    if (!isTutorialFinished && currentModule === 3) {
+                      dispatch(setCurrentModule(0));
+                    }
+
                     handleButtonPress(country);
                   } else if (isTutorialFinished && country.available) {
                     if (!country.bought) {
