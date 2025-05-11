@@ -4,6 +4,7 @@ import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
 import Hint from "./Hint";
+import WebApp from "@twa-dev/sdk";
 
 export const ModuleSevenEight = () => {
   const { t } = useTranslation();
@@ -15,7 +16,10 @@ export const ModuleSevenEight = () => {
     <StyledModuleBox
       sx={{
         position: "absolute",
-        top: "23%",
+        top:
+          WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop"
+            ? "37%"
+            : "23%",
         left: "-0.9%",
         display: "flex",
         flexDirection: "column",

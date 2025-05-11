@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { setCurrentModule } from "../slices";
 import { StyledModuleBox } from "./StyledModuleBox";
 import Hint from "./Hint";
+import WebApp from "@twa-dev/sdk";
 
 export const ModuleFourFiveSix = () => {
   const { t } = useTranslation();
@@ -36,7 +37,10 @@ export const ModuleFourFiveSix = () => {
     <StyledModuleBox
       sx={{
         position: "absolute",
-        top: "29%",
+        top:
+          WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop"
+            ? "37%"
+            : "29%",
         left: "-0.9%",
       }}
     >
