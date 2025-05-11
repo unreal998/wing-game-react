@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
+import Hint from "./Hint";
 
 export const ModuleNineHalfTen = () => {
   const currentModule = useSelector(selectCurrentModule());
@@ -47,6 +48,7 @@ export const ModuleNineHalfTen = () => {
           {t("tutorial.module9")}
         </Typography>
       )}
+      {(currentModule === 9 || currentModule === 9.5) && <Hint />}
     </StyledModuleBox>
   );
 };

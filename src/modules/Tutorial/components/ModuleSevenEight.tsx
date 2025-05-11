@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
+import Hint from "./Hint";
 
 export const ModuleSevenEight = () => {
   const { t } = useTranslation();
@@ -33,6 +34,7 @@ export const ModuleSevenEight = () => {
             {t("tutorial.module7.p1")}
           </Typography>
           <Typography>{t("tutorial.module7.p2")}</Typography>
+          <Hint />
         </>
       )}
     </StyledModuleBox>

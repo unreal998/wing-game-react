@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
+import Hint from "./Hint";
 
 function ModuleOne({ onClick }: { onClick: () => void }) {
   const { t } = useTranslation();
@@ -42,6 +43,7 @@ function ModuleOne({ onClick }: { onClick: () => void }) {
           {t("tutorial.step1.p1")}
         </Typography>
         <Typography>{t("tutorial.step1.p2")}</Typography>
+        <Hint />
       </StyledModuleBox>
     </Box>
   );

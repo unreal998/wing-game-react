@@ -7,6 +7,6 @@ export const StyledModuleBox = styled(Box)({
   padding: "16px",
   borderRadius: "10px",
   border: `6px solid ${MAIN_COLORS.blockBG2}`,
-  zIndex: 9,
+  zIndex: 999999,
   width: "80vw",
 });

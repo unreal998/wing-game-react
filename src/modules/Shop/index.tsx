@@ -25,17 +25,12 @@ import { selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import ModificatorsTable from "./components/ModificatorsTable";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { ModuleElevenTwelve } from "../Tutorial/components/ModuleElevenTwelve";
 import { setCurrentModule } from "../Tutorial/slices";
-import {
-  selectCurrentModule,
-  selectIsTutorialFinished,
-} from "../Tutorial/selectors";
+import { selectIsTutorialFinished } from "../Tutorial/selectors";
 import { updateBalanceAction } from "../Header/slices";
 import { StyledTab } from "../../shared/components/StyledTab";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
-import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import { countryFlags } from "./components/flag";
 
 const Shop = () => {
@@ -49,7 +44,6 @@ const Shop = () => {
     ],
     [t],
   );
-  const [playFooterSound] = useSound(footerButtonSound);
   const loading = useSelector(selectShopLoading);
   const windValue = useSelector(selectWindValue());
   const [selectedScruberPosition, setSelectedScruberPosition] =
@@ -64,7 +58,6 @@ const Shop = () => {
     { title: number; value: number; level: number }[]
   >([]);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
-  const currentModule = useSelector(selectCurrentModule());
 
   const currentCountryCode = selectedCountry?.name;
 
@@ -135,207 +128,185 @@ const Shop = () => {
     num.toFixed(3).replace(/(?:\.|,)?0+$/, "");
 
   return (
-    <>
-      {(currentModule === 11 || currentModule === 12) && (
-        <Box
-          onClick={() => {
-            dispatch(setCurrentModule(12));
-          }}
-          width={"100vw"}
-          height={"120vh"}
-          position={"absolute"}
-          zIndex={9}
-          bgcolor={`rgba(0, 0, 0, 0.4)`}
-          top={"-1vh"}
-          sx={{
-            transition: "all 0.2s ease",
-          }}
-        >
-          <ModuleElevenTwelve />
-        </Box>
-      )}
-      <MainBox
-        position={"relative"}
-        onClick={(e) => {
-          if (!isTutorialFinished) {
-            e.stopPropagation();
-            e.preventDefault();
-            dispatch(setCurrentModule(12));
-          }
-        }}
+    <MainBox
+      position={"relative"}
+      onClick={(e) => {
+        if (!isTutorialFinished) {
+          e.stopPropagation();
+          e.preventDefault();
+          dispatch(setCurrentModule(12));
+        }
+      }}
+      sx={{
+        "& *": {
+          pointerEvents: !isTutorialFinished ? "none" : "auto",
+        },
+      }}
+    >
+      <LoaderComponent loading={loading} />
+      <NamedStyled
         sx={{
-          "& *": {
-            pointerEvents: !isTutorialFinished ? "none" : "auto",
+          "@media (max-height: 670px)": {
+            paddingTop: "0px",
           },
         }}
       >
-        <LoaderComponent loading={loading} />
-        <NamedStyled
-          sx={{
-            "@media (max-height: 670px)": {
-              paddingTop: "0px",
-            },
-          }}
-        >
-          {t("Market")}
-        </NamedStyled>
-        <Stack
-          sx={{
-            justifyContent: "space-between",
-            paddingTop: "8px",
-            width: "100%",
-            gap: "10px",
-            "@media (max-height: 732px)": {
-              padding: "0px",
-            },
-          }}
-        >
-          <Stack flexDirection="column" gap="10px">
-            <Box>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Box display="flex" alignItems="center" gap="8px">
-                  {currentCountryCode && (
-                    <Avatar
-                      src={
-                        countryFlags[
-                          currentCountryCode as keyof typeof countryFlags
-                        ]
-                      }
-                      alt={currentCountryCode}
-                      sx={{ width: 24, height: 24 }}
-                    />
-                  )}
-                  <Typography fontWeight="600">
-                    {t("Wind speed")} : {windValue}
-                  </Typography>
-                </Box>
-                <StyledInputBox sx={{ width: "20%" }}>
-                  <StyledInput
-                    type="text"
-                    value={
-                      (windValue === 0
-                        ? 0
-                        : shopValues[selectedScruberPosition]?.price || 0) +
-                      " TON"
+        {t("Market")}
+      </NamedStyled>
+      <Stack
+        sx={{
+          justifyContent: "space-between",
+          paddingTop: "8px",
+          width: "100%",
+          gap: "10px",
+          "@media (max-height: 732px)": {
+            padding: "0px",
+          },
+        }}
+      >
+        <Stack flexDirection="column" gap="10px">
+          <Box>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Box display="flex" alignItems="center" gap="8px">
+                {currentCountryCode && (
+                  <Avatar
+                    src={
+                      countryFlags[
+                        currentCountryCode as keyof typeof countryFlags
+                      ]
                     }
-                    readOnly
+                    alt={currentCountryCode}
+                    sx={{ width: 24, height: 24 }}
                   />
-                </StyledInputBox>
-              </Stack>
-              <Slider
-                aria-label="WindSpeed"
-                value={windValue}
-                marks={shopMarks}
-                defaultValue={0}
-                max={shopMarks.length - 1}
-                sx={{
-                  color: MAIN_COLORS.mainGreen,
-                  "& .MuiSlider-rail": {
-                    color: "black",
-                  },
-                  "& .Mui-active": {
-                    boxShadow: "0 0 0 9px black",
-                  },
-                  "@media (max-height: 732px)": {
-                    paddingTop: "0px",
-                    paddingBottom: "0px",
-                  },
-                }}
-                onChange={handleWindSlide}
-              />
-            </Box>
-          </Stack>
-          <TabContext value={tab}>
-            <TabList
+                )}
+                <Typography fontWeight="600">
+                  {t("Wind speed")} : {windValue}
+                </Typography>
+              </Box>
+              <StyledInputBox sx={{ width: "20%" }}>
+                <StyledInput
+                  type="text"
+                  value={
+                    (windValue === 0
+                      ? 0
+                      : shopValues[selectedScruberPosition]?.price || 0) +
+                    " TON"
+                  }
+                  readOnly
+                />
+              </StyledInputBox>
+            </Stack>
+            <Slider
+              aria-label="WindSpeed"
+              value={windValue}
+              marks={shopMarks}
+              defaultValue={0}
+              max={shopMarks.length - 1}
               sx={{
-                display: "flex",
-                minHeight: "0px",
-                "& .MuiTabs-list": {
-                  gap: "10px",
+                color: MAIN_COLORS.mainGreen,
+                "& .MuiSlider-rail": {
+                  color: "black",
                 },
-                "& .MuiTabs-indicator": {
-                  display: "none",
+                "& .Mui-active": {
+                  boxShadow: "0 0 0 9px black",
                 },
                 "@media (max-height: 732px)": {
-                  padding: "0px",
+                  paddingTop: "0px",
+                  paddingBottom: "0px",
                 },
               }}
-              onChange={handleTabChange}
-            >
-              <StyledTab
-                label={t("kW profit")}
-                value={0}
-                key={0}
-                onClick={handleSoundClick}
-              />
-              <StyledTab
-                label={`TON ${t("profit")}`}
-                value={1}
-                key={1}
-                onClick={handleSoundClick}
-              />
-              <StyledTab
-                label={t("History")}
-                value={2}
-                key={2}
-                onClick={handleSoundClick}
-              />
-            </TabList>
-
-            <TabContext value={tab}>
-              {tab !== 2 && (
-                <Stack gap="10px">
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    flexWrap="wrap"
-                    gap="8px"
-                    sx={{
-                      "@media (max-height: 732px)": {
-                        paddingTop: "0px",
-                        paddingBottom: "0px",
-                      },
-                    }}
-                  >
-                    {profitValues.map((row, rowIndex) => (
-                      <ProfitBox
-                        key={rowIndex}
-                        value={formatValue(
-                          tab === 0
-                            ? +selectedWindPowerIncome.turxValue /
-                                row.multiplier
-                            : +selectedWindPowerIncome.tonValue /
-                                row.multiplier,
-                        )}
-                        subtitle={row.label}
-                      />
-                    ))}
-                  </Stack>
-                </Stack>
-              )}
-            </TabContext>
-            {tab === 2 &&
-              (userData?.modifiers?.length ? (
-                <ModificatorsTable modifiers={userData.modifiers} />
-              ) : (
-                <Typography textAlign="center" mt={2}>
-                  {t("No bought modifiers yet")}
-                </Typography>
-              ))}
-          </TabContext>
-          <ModalComponent
-            openModal={lowBalanceModalOpen}
-            title={t("lowBalance")}
-            subtitle={t("lowBalanceContent")}
-            handleCloseModal={handleModalClose}
-          />
+              onChange={handleWindSlide}
+            />
+          </Box>
         </Stack>
-      </MainBox>
-    </>
+        <TabContext value={tab}>
+          <TabList
+            sx={{
+              display: "flex",
+              minHeight: "0px",
+              "& .MuiTabs-list": {
+                gap: "10px",
+              },
+              "& .MuiTabs-indicator": {
+                display: "none",
+              },
+              "@media (max-height: 732px)": {
+                padding: "0px",
+              },
+            }}
+            onChange={handleTabChange}
+          >
+            <StyledTab
+              label={t("kW profit")}
+              value={0}
+              key={0}
+              onClick={handleSoundClick}
+            />
+            <StyledTab
+              label={`TON ${t("profit")}`}
+              value={1}
+              key={1}
+              onClick={handleSoundClick}
+            />
+            <StyledTab
+              label={t("History")}
+              value={2}
+              key={2}
+              onClick={handleSoundClick}
+            />
+          </TabList>
+
+          <TabContext value={tab}>
+            {tab !== 2 && (
+              <Stack gap="10px">
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  flexWrap="wrap"
+                  gap="8px"
+                  sx={{
+                    "@media (max-height: 732px)": {
+                      paddingTop: "0px",
+                      paddingBottom: "0px",
+                    },
+                  }}
+                >
+                  {profitValues.map((row, rowIndex) => (
+                    <ProfitBox
+                      key={rowIndex}
+                      value={formatValue(
+                        tab === 0
+                          ? +selectedWindPowerIncome.turxValue / row.multiplier
+                          : +selectedWindPowerIncome.tonValue / row.multiplier,
+                      )}
+                      subtitle={row.label}
+                    />
+                  ))}
+                </Stack>
+              </Stack>
+            )}
+          </TabContext>
+          {tab === 2 &&
+            (userData?.modifiers?.length ? (
+              <ModificatorsTable modifiers={userData.modifiers} />
+            ) : (
+              <Typography textAlign="center" mt={2}>
+                {t("No bought modifiers yet")}
+              </Typography>
+            ))}
+        </TabContext>
+        <ModalComponent
+          openModal={lowBalanceModalOpen}
+          title={t("lowBalance")}
+          subtitle={t("lowBalanceContent")}
+          handleCloseModal={handleModalClose}
+        />
+      </Stack>
+    </MainBox>
   );
 };
 

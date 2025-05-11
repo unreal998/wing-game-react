@@ -1,8 +1,14 @@
 import { Typography } from "@mui/material";
 import { t } from "i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
+import { useSelector } from "react-redux";
+import { selectCurrentModule } from "../selectors";
 
 export const ModuleThirteen = () => {
+  const currentModule = useSelector(selectCurrentModule());
+
+  if (currentModule !== 13) return null;
+
   return (
     <StyledModuleBox
       sx={{

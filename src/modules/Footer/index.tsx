@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
@@ -28,7 +28,6 @@ import {
   selectIsTutorialFinished,
 } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
-import Hint from "../Tutorial/components/Hint";
 import { ReferalInputComponent } from "../Referal_temp/components/ReferalInputComponent";
 import { GameButtonComponent } from "../../shared/components/GameButtonComponent";
 import { setWithdrawModalOpen } from "../Wallet/slices";
@@ -49,7 +48,6 @@ const Footer = () => {
   const { t } = useTranslation();
   const [playWindSound, { sound: windSound }] = useSound(WindBlowing);
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
-  const [tutorialReady, setTutorialReady] = useState(false);
   const currentModule = useSelector(selectCurrentModule());
   const incomeData = useSelector(selectIncomeData());
   const isAnyModuleActive = currentModule !== 0;
@@ -161,12 +159,6 @@ const Footer = () => {
     dispatch(setWithdrawModalOpen(true));
   };
 
-  useEffect(() => {
-    if (typeof isTutorialFinished === "boolean") {
-      setTutorialReady(true);
-    }
-  }, [isTutorialFinished]);
-
   return (
     <>
       <StyledMainBox
@@ -192,9 +184,6 @@ const Footer = () => {
             }}
           />
         )}
-        {tutorialReady &&
-          !isTutorialFinished &&
-          [1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) && <Hint />}
         {location.pathname === "/home" && (
           <Stack
             justifyContent={"center"}

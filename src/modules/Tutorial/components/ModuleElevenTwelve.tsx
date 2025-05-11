@@ -2,8 +2,8 @@ import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
-import { StyledBox } from "../../Missions/components/StyledBox";
 import { StyledModuleBox } from "./StyledModuleBox";
+import Hint from "./Hint";
 
 export const ModuleElevenTwelve = () => {
   const { t } = useTranslation();
@@ -35,14 +35,17 @@ export const ModuleElevenTwelve = () => {
           : t("tutorial.module12")}
       </Typography>
       {currentModule === 11 && (
-        <Typography
-          sx={{
-            pt: "8px",
-            whiteSpace: "pre-line",
-          }}
-        >
-          {t("tutorial.module11")}
-        </Typography>
+        <>
+          <Typography
+            sx={{
+              pt: "8px",
+              whiteSpace: "pre-line",
+            }}
+          >
+            {t("tutorial.module11")}
+          </Typography>
+          <Hint />
+        </>
       )}
     </StyledModuleBox>
   );

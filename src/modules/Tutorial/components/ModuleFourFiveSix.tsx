@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { setCurrentModule } from "../slices";
 import { StyledModuleBox } from "./StyledModuleBox";
+import Hint from "./Hint";
 
 export const ModuleFourFiveSix = () => {
   const { t } = useTranslation();
@@ -50,6 +51,9 @@ export const ModuleFourFiveSix = () => {
       >
         {getText()}
       </Typography>
+      {(currentModule === 4 ||
+        currentModule === 5 ||
+        currentModule === 5.5) && <Hint />}
     </StyledModuleBox>
   );
 };

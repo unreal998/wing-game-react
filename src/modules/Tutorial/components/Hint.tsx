@@ -33,26 +33,7 @@ function Hint() {
   };
 
   return (
-    <Typography
-      onClick={handleClick}
-      sx={{
-        padding: "10px",
-        borderRadius: "10px",
-        position: "absolute",
-        width: "80%",
-        top: "-50px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 99999,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: "16px",
-        color: "white",
-        textAlign: "center",
-        cursor: "pointer",
-      }}
-    >
+    <Typography onClick={handleClick} mt={2} textAlign={"center"}>
       {t("tutorial.hint")}
     </Typography>
   );

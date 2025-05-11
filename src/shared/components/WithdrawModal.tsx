@@ -3,8 +3,6 @@ import { Typography, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../colors";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
-import footerButtonSound from "../../assets/sounds/footerButton.mp3";
-import useSound from "use-sound";
 import { WithdrawModalInput } from "./WithdrawModalInput";
 import { PopUpMainButton } from "./PopUpMainButton";
 import { PopUpSeccondaryButton } from "./PopUpSeccondaryButton";

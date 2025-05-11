@@ -27,6 +27,7 @@ import {
 import { setIsTutorialFinished } from "./modules/Tutorial/slices";
 import { selectUserId, selectUserSettings } from "./modules/Header/selectors";
 import Lottie from "lottie-react";
+import { Tutorial } from "./modules/Tutorial";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -165,6 +166,7 @@ const App = () => {
           />
         </Box>
       )}
+      <Tutorial></Tutorial>
     </Box>
   );
 };

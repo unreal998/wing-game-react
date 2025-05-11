@@ -14,10 +14,7 @@ import { selectUserData } from "./selectors";
 import { selectHeaderLoading, updateBalanceAction } from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
-import {
-  selectCurrentModule,
-  selectIsTutorialFinished,
-} from "../Tutorial/selectors";
+import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import switchSound from "../../assets/sounds/switch.mp3";
 
@@ -29,7 +26,6 @@ const Header = () => {
   const [playSound] = useSound(FooterButtonPress);
   const userData = useSelector(selectUserData());
   const currentModule = useSelector(selectCurrentModule());
-  const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const [playSwitchSound] = useSound(switchSound);
 
   useEffect(() => {

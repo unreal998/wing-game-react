@@ -5,12 +5,6 @@ import { selectDisabledPowerButton, selectSelectedCountry } from "./selectors";
 import { useNavigate } from "react-router-dom";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useMediaQuery } from "@mui/material";
-import {
-  selectCurrentModule,
-  selectIsTutorialFinished,
-} from "../Tutorial/selectors";
-import { ModuleFourFiveSix } from "../Tutorial/components/ModuleFourFiveSix";
-import { setCurrentModule } from "../Tutorial/slices";
 import { getIncomeDataAction } from "../Header/slices";
 import { selectUserId } from "../Header/selectors";
 
@@ -20,9 +14,7 @@ export const Home = () => {
   const selectedCountry = useSelector(selectSelectedCountry());
   const animationRef = useRef<LottieRefCurrentProps | null>(null);
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
-  const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const dispatch = useDispatch();
-  const currentModule = useSelector(selectCurrentModule());
   const userId = useSelector(selectUserId());
 
   useEffect(() => {
@@ -51,35 +43,6 @@ export const Home = () => {
 
   return (
     <>
-      {(currentModule === 4 ||
-        currentModule === 5 ||
-        currentModule === 5.5 ||
-        currentModule === 6) &&
-        !isTutorialFinished && (
-          <Box
-            onClick={() => {
-              if (currentModule === 4) {
-                dispatch(setCurrentModule(5));
-              } else if (currentModule === 5) {
-                dispatch(setCurrentModule(5.5));
-              } else if (currentModule === 5.5) {
-                dispatch(setCurrentModule(6));
-              }
-            }}
-            sx={{
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: "100vw",
-              height: "100vh",
-              backgroundColor: "rgba(0, 0, 0, 0.3)",
-              zIndex: 9,
-            }}
-          >
-            <ModuleFourFiveSix />
-          </Box>
-        )}
-
       <Box
         sx={{
           backgroundImage: `url(./windModel.png)`,

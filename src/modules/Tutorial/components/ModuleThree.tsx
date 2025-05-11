@@ -1,15 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { MAIN_COLORS } from "../../../shared/colors";
 import { StyledModuleBox } from "./StyledModuleBox";
 
-function ModuleThree({ showModule }: { showModule: boolean }) {
+function ModuleThree() {
   const { t } = useTranslation();
   return (
     <StyledModuleBox
       sx={{
         position: "absolute",
-        top: 120,
+        top: 30,
         left: 0,
       }}
     >
@@ -18,14 +17,10 @@ function ModuleThree({ showModule }: { showModule: boolean }) {
           whiteSpace: "pre-line",
         }}
       >
-        {showModule ? (
-          <>
-            {t("tutorial.step3a.before")} {t("Netherlands")}{" "}
-            {t("tutorial.step3a.after")}
-          </>
-        ) : (
-          t("tutorial.step3b")
-        )}
+        <>
+          {t("tutorial.step3a.before")} {t("Netherlands")}{" "}
+          {t("tutorial.step3a.after")}
+        </>
       </Typography>
     </StyledModuleBox>
   );
