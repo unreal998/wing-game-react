@@ -15,6 +15,7 @@ export const ModuleElevenTwelve = () => {
     <StyledModuleBox
       sx={{
         position: "absolute",
+        left: "-0.9%",
         top: currentModule === 11 ? "18%" : "35%",
         display: "flex",
         flexDirection: "column",

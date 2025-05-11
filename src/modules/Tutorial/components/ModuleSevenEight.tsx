@@ -15,6 +15,7 @@ export const ModuleSevenEight = () => {
       sx={{
         position: "absolute",
         top: "23%",
+        left: "-0.9%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

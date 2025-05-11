@@ -36,6 +36,7 @@ export const ModuleFourFiveSix = () => {
       sx={{
         position: "absolute",
         top: "29%",
+        left: "-0.9%",
       }}
     >
       <Typography
