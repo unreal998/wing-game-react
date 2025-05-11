@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
+import WebApp from "@twa-dev/sdk";
 
 function ModuleTwo() {
   const { t } = useTranslation();
@@ -18,7 +19,10 @@ function ModuleTwo() {
       <StyledModuleBox
         sx={{
           position: "absolute",
-          top: "5%",
+          top:
+            WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop"
+              ? "5%"
+              : "10%",
         }}
       >
         <Typography>{t("tutorial.step3b")}</Typography>

@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
+import WebApp from "@twa-dev/sdk";
 
 function ModuleThree() {
   const { t } = useTranslation();
@@ -8,7 +9,10 @@ function ModuleThree() {
     <StyledModuleBox
       sx={{
         position: "absolute",
-        top: 30,
+        top:
+          WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop"
+            ? 30
+            : 50,
         left: 0,
       }}
     >
