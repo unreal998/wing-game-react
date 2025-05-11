@@ -1,4 +1,4 @@
-import { Box, Slider, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Slider, Stack, Typography } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { ProfitBox } from "./components/ProfitBox";
@@ -35,6 +35,8 @@ import { updateBalanceAction } from "../Header/slices";
 import { StyledTab } from "../../shared/components/StyledTab";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import { countryFlags } from "./components/flag";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -47,6 +49,7 @@ const Shop = () => {
     ],
     [t],
   );
+  const [playFooterSound] = useSound(footerButtonSound);
   const loading = useSelector(selectShopLoading);
   const windValue = useSelector(selectWindValue());
   const [selectedScruberPosition, setSelectedScruberPosition] =
@@ -63,6 +66,8 @@ const Shop = () => {
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
   const currentModule = useSelector(selectCurrentModule());
 
+  const currentCountryCode = selectedCountry?.name;
+
   const handleModalClose = useCallback(() => {
     dispatch(setLowBalanceModalOpen(false));
   }, [dispatch]);
@@ -73,7 +78,7 @@ const Shop = () => {
 
   const selectedWindPowerIncome = useMemo(() => {
     return (
-      shopValues.find((value) => value.speed === windValue) || {
+      shopValues.find((value, index) => index === windValue - 1) || {
         tonValue: 0,
         turxValue: 0,
         price: 0,
@@ -94,8 +99,8 @@ const Shop = () => {
     } else {
       const shopMarksFromModificator = shopValues.map((mark, index) => {
         return {
-          title: mark.speed,
-          value: mark.speed,
+          title: index + 1,
+          value: index + 1,
           level: index + 1,
         };
       });
@@ -187,15 +192,28 @@ const Shop = () => {
         >
           <Stack flexDirection="column" gap="10px">
             <Box>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography fontWeight="600">
-                  {t("Wind speed")} : {windValue}
-                </Typography>
-                <StyledInputBox
-                  sx={{
-                    width: "20%",
-                  }}
-                >
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box display="flex" alignItems="center" gap="8px">
+                  {currentCountryCode && (
+                    <Avatar
+                      src={
+                        countryFlags[
+                          currentCountryCode as keyof typeof countryFlags
+                        ]
+                      }
+                      alt={currentCountryCode}
+                      sx={{ width: 24, height: 24 }}
+                    />
+                  )}
+                  <Typography fontWeight="600">
+                    {t("Wind speed")} : {windValue}
+                  </Typography>
+                </Box>
+                <StyledInputBox sx={{ width: "20%" }}>
                   <StyledInput
                     type="text"
                     value={
@@ -213,7 +231,7 @@ const Shop = () => {
                 value={windValue}
                 marks={shopMarks}
                 defaultValue={0}
-                step={null}
+                max={shopMarks.length - 1}
                 sx={{
                   color: MAIN_COLORS.mainGreen,
                   "& .MuiSlider-rail": {

@@ -2,6 +2,8 @@ import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
 import { ReactNode } from "react";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 import { PopUpSeccondaryButton } from "./PopUpSeccondaryButton";
 import { MAIN_COLORS } from "../colors";
 
@@ -21,6 +23,7 @@ export const ModalComponent = ({
   additionalbutton,
 }: ModalComponentPropsType) => {
   const { t } = useTranslation();
+  const [playFooterSound] = useSound(footerButtonSound);
   return (
     <ModalStyled
       open={openModal}
@@ -62,7 +65,12 @@ export const ModalComponent = ({
         {subtitle}
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
-        <PopUpSeccondaryButton onClick={handleCloseModal}>
+        <PopUpSeccondaryButton
+          onClick={() => {
+            handleCloseModal();
+            playFooterSound();
+          }}
+        >
           {t("Close")}
         </PopUpSeccondaryButton>
         {additionalbutton}

@@ -3,6 +3,8 @@ import { Typography, Stack } from "@mui/material";
 import { MAIN_COLORS } from "../colors";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
+import footerButtonSound from "../../assets/sounds/footerButton.mp3";
+import useSound from "use-sound";
 import { WithdrawModalInput } from "./WithdrawModalInput";
 import { PopUpMainButton } from "./PopUpMainButton";
 import { PopUpSeccondaryButton } from "./PopUpSeccondaryButton";
@@ -13,20 +15,29 @@ type WithdrawModalProps = {
   open: boolean;
   onClose: () => void;
   onSubmit: (wallet: string, amount: string, tonMemo: string) => void;
+  userTonBalance: number;
 };
 
 export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   open,
   onClose,
   onSubmit,
+  userTonBalance,
 }) => {
   const [withdrawWallet, setWithdrawWallet] = useState("");
   const [amount, setAmount] = useState("");
   const [tonMemo, setTonMemo] = useState("");
+  const [lowBalanceOpen, setLowBalanceOpen] = useState(false);
   const { t } = useTranslation();
   const userData = useSelector(selectUserData());
 
   const handleSubmit = () => {
+    const amountNum = parseFloat(amount);
+    if (isNaN(amountNum) || amountNum > userTonBalance) {
+      setLowBalanceOpen(true);
+      return;
+    }
+
     onSubmit(withdrawWallet, amount, tonMemo);
     setWithdrawWallet("");
     setAmount("");

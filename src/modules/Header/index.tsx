@@ -19,6 +19,7 @@ import {
   selectIsTutorialFinished,
 } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
+import switchSound from "../../assets/sounds/switch.mp3";
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
@@ -29,6 +30,7 @@ const Header = () => {
   const userData = useSelector(selectUserData());
   const currentModule = useSelector(selectCurrentModule());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
+  const [playSwitchSound] = useSound(switchSound);
 
   useEffect(() => {
     if (userData !== null) {
@@ -145,7 +147,10 @@ const Header = () => {
                 },
               }),
             }}
-            onClick={handleEarthClick}
+            onClick={() => {
+              playSwitchSound();
+              handleEarthClick();
+            }}
           >
             <Box
               sx={{
