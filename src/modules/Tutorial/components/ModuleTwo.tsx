@@ -21,8 +21,8 @@ function ModuleTwo() {
           position: "absolute",
           top:
             WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop"
-              ? "5%"
-              : "10%",
+              ? "10%"
+              : "5%",
         }}
       >
         <Typography>{t("tutorial.step3b")}</Typography>

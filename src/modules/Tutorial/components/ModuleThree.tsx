@@ -11,8 +11,8 @@ function ModuleThree() {
         position: "absolute",
         top:
           WebApp.platform !== "unknown" && WebApp.platform !== "tdesktop"
-            ? 30
-            : 50,
+            ? 50
+            : 30,
         left: 0,
       }}
     >
