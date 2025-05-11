@@ -178,6 +178,20 @@ const Footer = () => {
           }
         }}
       >
+        {!isTutorialFinished && currentModule === 1 && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
+              backdropFilter: "blur(2px)",
+              zIndex: 1,
+            }}
+          />
+        )}
         {tutorialReady &&
           !isTutorialFinished &&
           [1, 5, 9, 9.5, 10, 11, 13].includes(currentModule) && <Hint />}
@@ -233,6 +247,7 @@ const Footer = () => {
                 </Typography>
               </Box>
             </Stack>
+
             <GameButtonComponent
               disabled={isButtonDisabled}
               variant="contained"

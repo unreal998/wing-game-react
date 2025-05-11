@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
+import { StyledModuleBox } from "./StyledModuleBox";
 
 export const ModuleSevenEight = () => {
   const { t } = useTranslation();
@@ -9,31 +10,31 @@ export const ModuleSevenEight = () => {
 
   if (currentModule !== 7 && currentModule !== 8) return null;
 
-  const text =
-    currentModule === 7 ? t("tutorial.module7") : t("tutorial.module8");
-
   return (
-    <Typography
+    <StyledModuleBox
       sx={{
-        padding: "10px",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        borderRadius: "10px",
         position: "absolute",
-        width: "80%",
-        top: "50%",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 999,
+        top: "23%",
+        left: "-0.9%",
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
-        fontSize: "20px",
-        fontWeight: 700,
-        color: "white",
-        textAlign: "center",
+        justifyContent: "center",
       }}
     >
-      {text}
-    </Typography>
+      <Typography sx={{ fontSize: "24px", fontWeight: "bold", pb: "8px" }}>
+        {currentModule === 7
+          ? t("tutorial.module7.header")
+          : t("tutorial.module8")}
+      </Typography>
+      {currentModule === 7 && (
+        <>
+          <Typography sx={{ padding: "6px 0" }}>
+            {t("tutorial.module7.p1")}
+          </Typography>
+          <Typography>{t("tutorial.module7.p2")}</Typography>
+        </>
+      )}
+    </StyledModuleBox>
   );
 };

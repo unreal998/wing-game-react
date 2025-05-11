@@ -1,30 +1,45 @@
 import { Typography } from "@mui/material";
 import { t } from "i18next";
+import { StyledModuleBox } from "./StyledModuleBox";
 
 export const ModuleThirteen = () => {
   return (
-    <Typography
+    <StyledModuleBox
       sx={{
-        padding: "10px",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        borderRadius: "10px",
         position: "absolute",
-        width: "80%",
-        bottom: "33%",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 999,
+        top: "28%",
+        left: "-0.9%",
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
-        fontSize: "16px",
-        fontWeight: 700,
-        color: "white",
-        textAlign: "center",
-        whiteSpace: "pre-line",
+        justifyContent: "center",
       }}
     >
-      {t("tutorial.module13")}
-    </Typography>
+      <Typography
+        sx={{
+          fontSize: "24px",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        {t("tutorial.module13h")}
+      </Typography>
+      <Typography
+        sx={{
+          pt: "8px",
+          whiteSpace: "pre-line",
+        }}
+      >
+        {t("tutorial.module13p1")}
+      </Typography>
+      <Typography
+        sx={{
+          pt: "8px",
+          whiteSpace: "pre-line",
+        }}
+      >
+        {t("tutorial.module13p2")}
+      </Typography>
+    </StyledModuleBox>
   );
 };

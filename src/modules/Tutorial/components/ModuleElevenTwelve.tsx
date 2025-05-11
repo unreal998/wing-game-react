@@ -2,6 +2,8 @@ import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
+import { StyledBox } from "../../Missions/components/StyledBox";
+import { StyledModuleBox } from "./StyledModuleBox";
 
 export const ModuleElevenTwelve = () => {
   const { t } = useTranslation();
@@ -10,29 +12,38 @@ export const ModuleElevenTwelve = () => {
   if (currentModule !== 11 && currentModule !== 12) return null;
 
   return (
-    <Typography
+    <StyledModuleBox
       sx={{
-        padding: "10px",
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
-        borderRadius: "10px",
         position: "absolute",
-        width: "80%",
-        top: currentModule === 11 ? "25%" : "66%",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 999,
+        left: "-0.9%",
+        top: currentModule === 11 ? "18%" : "35%",
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
-        fontSize: "16px",
-        fontWeight: 700,
-        color: "white",
-        textAlign: "center",
-        whiteSpace: "pre-line",
+        justifyContent: "center",
       }}
     >
-      {currentModule === 11 && t("tutorial.module11")}
-      {currentModule === 12 && t("tutorial.module12")}
-    </Typography>
+      <Typography
+        sx={{
+          fontSize: "24px",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        {currentModule === 11
+          ? t("tutorial.module11h")
+          : t("tutorial.module12")}
+      </Typography>
+      {currentModule === 11 && (
+        <Typography
+          sx={{
+            pt: "8px",
+            whiteSpace: "pre-line",
+          }}
+        >
+          {t("tutorial.module11")}
+        </Typography>
+      )}
+    </StyledModuleBox>
   );
 };
