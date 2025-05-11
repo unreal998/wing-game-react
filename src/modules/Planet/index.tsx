@@ -69,13 +69,13 @@ export const Planet = () => {
   const getCoords = useCallback((index: number) => {
     switch (index) {
       case 0:
-        return { top: "100px", left: "180px" };
+        return { top: "120px", left: "180px" };
       case 1:
-        return { top: "40px", left: "120px" };
+        return { top: "60px", left: "120px" };
       case 2:
-        return { top: "180px", left: "90px" };
+        return { top: "200px", left: "90px" };
       case 3:
-        return { top: "100px", left: "50px" };
+        return { top: "120px", left: "50px" };
       default:
         return { top: "0px", left: "0px" };
     }
