@@ -87,8 +87,9 @@ const Settings = () => {
           <CustomSwitch
             checked={soundEnabled}
             onChange={() => {
-              if (!soundEnabled) playFooterSound();
-              dispatch(setSoundEnabled(!soundEnabled));
+              const newValue = !soundEnabled;
+              if (newValue) playFooterSound();
+              dispatch(setSoundEnabled(newValue));
             }}
           />
         </TabBoxSettings>
@@ -145,7 +146,7 @@ const Settings = () => {
             variant="body2"
             sx={{
               whiteSpace: "pre-line",
-              color: "#fff", // белый текст для читаемости на тёмном фоне
+              color: "#fff",
             }}
           >
             {[0, 1, 2, 3, 4, 5, 6]
