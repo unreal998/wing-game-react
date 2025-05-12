@@ -93,16 +93,13 @@ const Header = () => {
           />
         </Stack>
         <Stack direction="row" justifyContent="space-between" gap={"15px"}>
-          <StyledFlashBox sx={{ width: "60%" }}>
+          <StyledFlashBox sx={{ width: "40%" }}>
             <Stack direction="row" gap="3px">
               <img height="22px" width="22px" src={Flash} alt="flash" />
               <Typography sx={{ fontSize: "14px", fontWeight: 400 }}>
                 {userData?.WindBalance?.toFixed(2) || 0}
               </Typography>
             </Stack>
-            <Typography sx={{ fontSize: "16px", fontWeight: 600 }}>
-              lvl {userData?.lvl}
-            </Typography>
           </StyledFlashBox>
 
           <StyledFlashBox sx={{ gap: "8px", width: "30%" }}>
