@@ -6,6 +6,7 @@ import { UserData } from "../../../shared/types";
 import { useSelector } from "react-redux";
 import { selectSelectedCountry } from "../../Home/selectors";
 import { useTranslation } from "react-i18next";
+import { heightProportion } from "../../../shared/utils";
 
 type ModificatorsTableProps = {
   modifiers: UserData["modifiers"] | undefined;
@@ -21,6 +22,7 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
   );
 
   const bought = selectedCountryModifiers?.boughtModifier || [];
+  const tableHeight = useMemo(() => heightProportion - 285, []);
 
   return (
     <Stack
@@ -51,7 +53,17 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
         <TableCellShop>{t("Bought Date")}</TableCellShop>
       </Stack>
 
-      <Stack sx={{ maxHeight: "200px", overflowY: "auto" }}>
+      <Stack
+        sx={{
+          height: `${tableHeight} px`,
+          overflowY: "auto",
+          gap: "5px",
+          "@media (max-height: 667px)": {
+            height: "135px",
+            gap: "5px",
+          },
+        }}
+      >
         {bought.length > 0 ? (
           bought.map((mod, index) => (
             <Stack
