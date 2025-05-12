@@ -20,7 +20,11 @@ import { useTranslation } from "react-i18next";
 import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
 import { footerTabs } from "../../shared/components/FooterTabs";
-import { selectIncomeData, selectUserData } from "../Header/selectors";
+import {
+  selectCountiresData,
+  selectIncomeData,
+  selectUserData,
+} from "../Header/selectors";
 import WindBlowing from "../../assets/sounds/windBlowing.mp3";
 import RoadmapIcon from "../../assets/roadmap.svg";
 import {
@@ -54,6 +58,7 @@ const Footer = () => {
   const [playFooterButtonSound] = useSound(footerButtonSound);
   const windValue = useSelector(selectWindValue());
   const shopValues = useSelector(selectShopData());
+  const countries = useSelector(selectCountiresData());
 
   useEffect(() => {
     if (location.pathname === "/home" && isButtonDisabled && windSound) {
@@ -158,6 +163,16 @@ const Footer = () => {
   const handleWithdrawOpen = () => {
     dispatch(setWithdrawModalOpen(true));
   };
+
+  const currentAviailableMods = useMemo(() => {
+    if (countries) {
+      const currentCountryIndex = countries.findIndex((countrie) => {
+        return countrie.shortName === selectedCountry.name;
+      });
+      return (currentCountryIndex + 1) * 4;
+    }
+    return 0;
+  }, [shopValues, selectedCountry]);
 
   return (
     <>
@@ -312,7 +327,7 @@ const Footer = () => {
         {location.pathname === "/shop" && (
           <GameButtonComponent
             onClick={buyModifier}
-            disabled={windValue === 0}
+            disabled={windValue === 0 || windValue > currentAviailableMods}
             sx={{
               backgroundColor: MAIN_COLORS.mainGreen,
               cursor: windValue === 0 ? "not-allowed" : "pointer",
