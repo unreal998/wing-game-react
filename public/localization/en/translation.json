@@ -125,5 +125,13 @@
   "buy": "Buy",
   "lowBalance": "Low Balance",
   "lowBalanceContent": "You have not enough TON balance, please fund your TON balance",
-  "repeatTutorial": "Tutorial"
+  "repeatTutorial": "Tutorial",
+  "lockedCountryTitle": "This country is locked",
+  "lockedCountryContent": "You need to invite",
+  "lockedCountryContent1": " friends to unlock this country",
+  "lockedCountryContent2": " bring you ",
+  "lockedCountryContent2.1": " kW per click",
+  "lockedCountryContent2.2": " and open the new items in the Shop",
+  "lockedCountryContent3": "You need to buy",
+  "lockedCountryContent3.1": " to unlock"
 }

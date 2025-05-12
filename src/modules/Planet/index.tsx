@@ -9,7 +9,7 @@ import {
   selectCountiresData,
   selectUserData,
 } from "../Header/selectors";
-import { AreaType } from "../../shared/types";
+import { AreaType, County } from "../../shared/types";
 import { MAIN_COLORS } from "../../shared/colors";
 
 import {
@@ -22,7 +22,8 @@ import BuyCountryModal from "../../shared/components/BuyCountry";
 import { useTranslation } from "react-i18next";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
-import WebApp from "@twa-dev/sdk";
+import { LockOutlined } from "@mui/icons-material";
+import { LockedCountryModal } from "./components/LockedCountryModal";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -35,6 +36,8 @@ export const Planet = () => {
   const currentModule = useSelector(selectCurrentModule());
 
   const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
+  const [unavialableModalCountryData, setUnavialableModalCountryData] =
+    useState<string>("");
   const userData = useSelector(selectUserData());
   const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
 
@@ -112,27 +115,44 @@ export const Planet = () => {
                       },
                     },
                   }),
+                ...(!country.available && {
+                  backgroundColor: "#9CA8CE",
+                  boxShadow: "none",
+                  animation: "none",
+                  color: MAIN_COLORS.appBG,
+                }),
               }}
-              disabled={!country.available}
               onClick={() => {
                 playFooterSound();
+                if (!country.available) {
+                  setUnavialableModalCountryData(country.name);
+                } else {
+                  if (currentModule === 3 || currentModule === 14) {
+                    if (!isTutorialFinished && currentModule === 3) {
+                      dispatch(setCurrentModule(0));
+                    }
 
-                if (currentModule === 3 || currentModule === 14) {
-                  if (!isTutorialFinished && currentModule === 3) {
-                    dispatch(setCurrentModule(0));
-                  }
-
-                  handleButtonPress(country);
-                } else if (isTutorialFinished && country.available) {
-                  if (!country.bought) {
-                    setBuyCountrieModalOpen(true);
-                    setCountryToBuy(country);
-                  } else {
                     handleButtonPress(country);
+                  } else if (isTutorialFinished && country.available) {
+                    if (!country.bought) {
+                      setBuyCountrieModalOpen(true);
+                      setCountryToBuy(country);
+                    } else {
+                      handleButtonPress(country);
+                    }
                   }
                 }
               }}
             >
+              {!country.available && (
+                <LockOutlined
+                  sx={{
+                    width: "16px",
+                    height: "16px",
+                    marginBottom: "1px",
+                  }}
+                />
+              )}
               {t(`${country.title}`)}
             </StyledPlanetButton>
           ))}
@@ -141,6 +161,11 @@ export const Planet = () => {
         open={buyCountrieModalOpen}
         onClose={() => setBuyCountrieModalOpen(false)}
         onBuy={handleBuyCountry}
+      />
+      <LockedCountryModal
+        open={unavialableModalCountryData !== ""}
+        onClose={() => setUnavialableModalCountryData("")}
+        countryName={unavialableModalCountryData || ""}
       />
     </>
   );

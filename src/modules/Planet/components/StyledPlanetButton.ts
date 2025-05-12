@@ -12,11 +12,9 @@ export const StyledPlanetButton = styled(Button)<{ isBought: boolean }>(
     color: "black",
     borderRadius: "8px",
     backgroundColor: isBought ? MAIN_COLORS.mainGreen : MAIN_COLORS.gold,
-    "&.Mui-disabled": {
-      backgroundColor: "#9CA8CE",
-      boxShadow: "none",
-      animation: "none",
-      color: MAIN_COLORS.appBG,
-    },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "4px",
   }),
 );

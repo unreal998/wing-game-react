@@ -1,4 +1,9 @@
-import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import {
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
 import { ModalStyled } from "./ModalStyled";
 import { useTranslation } from "react-i18next";
 import { ReactNode } from "react";
@@ -13,6 +18,7 @@ type ModalComponentPropsType = {
   title: string;
   subtitle: string;
   additionalbutton?: ReactNode;
+  contentAlign?: "left" | "center" | "right";
 };
 
 export const ModalComponent = ({
@@ -21,6 +27,7 @@ export const ModalComponent = ({
   title,
   subtitle,
   additionalbutton,
+  contentAlign,
 }: ModalComponentPropsType) => {
   const { t } = useTranslation();
   const [playFooterSound] = useSound(footerButtonSound);
@@ -62,7 +69,14 @@ export const ModalComponent = ({
           lineBreak: "normal",
         }}
       >
-        {subtitle}
+        <Typography textAlign={contentAlign || "center"}>
+          {subtitle.split("\n").map((line, index) => (
+            <span key={index}>
+              {line}
+              <br />
+            </span>
+          ))}
+        </Typography>
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
         <PopUpSeccondaryButton

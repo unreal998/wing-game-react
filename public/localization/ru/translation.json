@@ -125,5 +125,13 @@
   "buy": "Купить",
   "lowBalance": "Недостаточно средств",
   "lowBalanceContent": "У вас недостаточно TON-баланса, пожалуйста, пополните свой TON-баланс",
-  "repeatTutorial": "Обучение"
+  "repeatTutorial": "Обучение",
+  "lockedCountryTitle": "Эта страна заблокирована",
+  "lockedCountryContent": "Вам нужно пригласить ещё",
+  "lockedCountryContent1": "друзей, чтобы разблокировать",
+  "lockedCountryContent2": " даст вам",
+  "lockedCountryContent2.1": " квт за клик",
+  "lockedCountryContent2.2": " и откроет доступ к новым товарам в магазине",
+  "lockedCountryContent3": "Вам нужно разблокировать",
+  "lockedCountryContent3.1": " чтобы разблокировать"
 }
