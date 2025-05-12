@@ -318,6 +318,9 @@ const Footer = () => {
               cursor: windValue === 0 ? "not-allowed" : "pointer",
               margin: "15px",
               width: "93%",
+              "@media (max-height: 667px)": {
+                marginBottom: "5px",
+              },
             }}
           >
             {t("Buy wind speed")}
