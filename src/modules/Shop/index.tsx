@@ -32,6 +32,7 @@ import { StyledTab } from "../../shared/components/StyledTab";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 import { countryFlags } from "./components/flag";
+import { selectSoundEnabled } from "../Settings/selectors";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -58,6 +59,7 @@ const Shop = () => {
     { title: number; value: number; level: number }[]
   >([]);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
+  const soundEnabled = useSelector(selectSoundEnabled());
 
   const currentCountryCode = selectedCountry?.name;
 
@@ -107,8 +109,8 @@ const Shop = () => {
   const [playSound] = useSound(FooterButtonPress);
 
   const handleSoundClick = useCallback(() => {
-    playSound();
-  }, [playSound]);
+    if (soundEnabled) playSound();
+  }, [playSound, soundEnabled]);
 
   const handleWindSlide = useCallback(
     (event: Event, newValue: number | number[]) => {

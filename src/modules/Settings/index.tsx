@@ -18,17 +18,22 @@ import {
   selectIsRoadmapOpen,
   selectIsTutorialRestarted,
   selectSettingsLoading,
+  selectSoundEnabled,
 } from "./selectors";
-import { restartTutorialRequest, setRoadMapOpen } from "./slices";
+import {
+  restartTutorialRequest,
+  setRoadMapOpen,
+  setSoundEnabled,
+} from "./slices";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { selectUserId } from "../Header/selectors";
 
 const Settings = () => {
+  const dispatch = useDispatch();
   const loading = useSelector(selectSettingsLoading());
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const soundEnabled = useSelector(selectSoundEnabled());
   const isRoadMapOpen = useSelector(selectIsRoadmapOpen());
   const { t, i18n } = useTranslation();
-  const dispatch = useDispatch();
 
   const [playFooterSound] = useSound(footerButtonSound);
   const userId = useSelector(selectUserId());
@@ -82,8 +87,8 @@ const Settings = () => {
           <CustomSwitch
             checked={soundEnabled}
             onChange={() => {
-              playFooterSound();
-              setSoundEnabled(!soundEnabled);
+              if (!soundEnabled) playFooterSound();
+              dispatch(setSoundEnabled(!soundEnabled));
             }}
           />
         </TabBoxSettings>
