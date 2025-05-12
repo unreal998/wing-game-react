@@ -132,6 +132,8 @@
   "lockedCountryContent2": " bring you ",
   "lockedCountryContent2.1": " kW per click",
   "lockedCountryContent2.2": " and open the new items in the Shop",
-  "lockedCountryContent3": "You need to buy",
-  "lockedCountryContent3.1": " to unlock"
+  "lockedCountryContent3": "You need to unlock",
+  "lockedCountryContent3.1": " to unlock",
+  "shopWarningMessage": "To get the access ",
+  "shopWarningTitle": "The product is not available"
 }
