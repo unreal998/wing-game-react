@@ -33,3 +33,8 @@ export const selectSoundEnabled =
   () =>
   ({ settingsSlice }: SettingsSliceStore) =>
     settingsSlice.soundEnabled;
+
+export const selectRoadmapText =
+  () =>
+  ({ settingsSlice }: SettingsSliceStore) =>
+    settingsSlice.roadmapText;

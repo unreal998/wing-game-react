@@ -17,10 +17,12 @@ import useSound from "use-sound";
 import {
   selectIsRoadmapOpen,
   selectIsTutorialRestarted,
+  selectRoadmapText,
   selectSettingsLoading,
   selectSoundEnabled,
 } from "./selectors";
 import {
+  getRoadmapTextAction,
   restartTutorialRequest,
   setRoadMapOpen,
   setSoundEnabled,
@@ -37,6 +39,7 @@ const Settings = () => {
 
   const [playFooterSound] = useSound(footerButtonSound);
   const userId = useSelector(selectUserId());
+  const roadmapText = useSelector(selectRoadmapText());
   const isTutorialRestarted = useSelector(selectIsTutorialRestarted());
 
   const closeRoadmapModal = useCallback(() => {
@@ -57,6 +60,10 @@ const Settings = () => {
       window.location.href = "/";
     }
   }, [isTutorialRestarted]);
+
+  useEffect(() => {
+    dispatch(getRoadmapTextAction(i18n.language));
+  }, [dispatch, i18n.language]);
 
   return (
     <MainBox>
@@ -149,9 +156,11 @@ const Settings = () => {
               color: "#fff",
             }}
           >
-            {[0, 1, 2, 3, 4, 5, 6]
+            {/*{[0, 1, 2, 3, 4, 5, 6]
               .map((i) => t(`roadmap.text${i === 0 ? "" : i}`))
               .join("\n\n")}
+               */}
+            {roadmapText}
           </Typography>
         </Box>
       </Modal>

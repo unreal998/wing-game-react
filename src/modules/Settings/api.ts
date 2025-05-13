@@ -8,3 +8,8 @@ export async function updateUserSettings(uid: string, settings: object) {
   );
   return response.data;
 }
+
+export async function fetchGetRoadmap(lng: string) {
+  const response = await axios.get(`${SERVER_URL}/roadmap?lng=${lng}`);
+  return response.data;
+}
