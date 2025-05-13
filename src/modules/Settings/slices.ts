@@ -7,6 +7,7 @@ export type SettingsState = {
   error: string | null;
   isTutorialRestarted: boolean;
   soundEnabled: boolean;
+  roadmapText: string;
 };
 
 export const initialSettingsState: SettingsState = {
@@ -16,6 +17,7 @@ export const initialSettingsState: SettingsState = {
   error: null,
   isTutorialRestarted: false,
   soundEnabled: true,
+  roadmapText: "",
 };
 
 export const settingsSlice = createSlice({
@@ -50,6 +52,17 @@ export const settingsSlice = createSlice({
     setSoundEnabled: (state, { payload }: { payload: boolean }) => {
       state.soundEnabled = payload;
     },
+    getRoadmapTextAction: (state, { payload }: { payload: string }) => {
+      state.loading = true;
+    },
+    getRoadmapTextActionSuccess: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.roadmapText = payload;
+    },
+    getRoadmapTextActionFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.errorMessage = payload;
+    },
   },
 });
 
@@ -62,6 +75,9 @@ export const {
   restartTutorialSuccess,
   restartTutorialFailure,
   setSoundEnabled,
+  getRoadmapTextAction,
+  getRoadmapTextActionFailure,
+  getRoadmapTextActionSuccess,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

@@ -4,8 +4,11 @@ import {
   restartTutorialSuccess,
   restartTutorialFailure,
   setSoundEnabled,
+  getRoadmapTextAction,
+  getRoadmapTextActionSuccess,
+  getRoadmapTextActionFailure,
 } from "./slices";
-import { updateUserSettings } from "./api";
+import { fetchGetRoadmap, updateUserSettings } from "./api";
 import { selectUserId } from "../Header/selectors";
 import { SagaIterator } from "redux-saga";
 
@@ -28,7 +31,17 @@ function* handleSetSoundEnabled(action: {
   yield call(updateUserSettings, uid, { soundEnabled: action.payload });
 }
 
+function* handleGetRoadmap(action: { type: string; payload: string }) {
+  try {
+    const roadmapText: string = yield call(fetchGetRoadmap, action.payload);
+    yield put(getRoadmapTextActionSuccess(roadmapText));
+  } catch (err: any) {
+    yield put(getRoadmapTextActionFailure(err.toString()));
+  }
+}
+
 export function* watchTutorialSaga() {
   yield takeLatest(restartTutorialRequest.type, handleRestartTutorial);
   yield takeLatest(setSoundEnabled.type, handleSetSoundEnabled);
+  yield takeLatest(getRoadmapTextAction.type, handleGetRoadmap);
 }
