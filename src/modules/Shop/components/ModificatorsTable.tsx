@@ -55,9 +55,20 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
 
       <Stack
         sx={{
-          height: `${tableHeight} px`,
+          height: `${tableHeight}px`,
           overflowY: "auto",
           gap: "5px",
+          pr: "6px",
+          "&::-webkit-scrollbar": {
+            width: "4px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: MAIN_COLORS.mainGreen,
+            borderRadius: "4px",
+          },
           "@media (max-height: 667px)": {
             height: "135px",
             gap: "5px",
