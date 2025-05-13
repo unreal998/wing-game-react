@@ -28,6 +28,8 @@ import { setIsTutorialFinished } from "./modules/Tutorial/slices";
 import { selectUserId, selectUserSettings } from "./modules/Header/selectors";
 import Lottie from "lottie-react";
 import { Tutorial } from "./modules/Tutorial";
+import { selectSoundEnabled } from "./modules/Settings/selectors";
+import { setSoundEnabled } from "./modules/Settings/slices";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -54,6 +56,7 @@ const App = () => {
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
   const userSettings = useSelector(selectUserSettings());
   const userId = useSelector(selectUserId());
+  const soundEnabled = useSelector(selectSoundEnabled());
 
   useEffect(() => {
     if (location.pathname !== "/") {
@@ -75,6 +78,12 @@ const App = () => {
       );
     }
   }, [currentStep, dispatch, isTutorialFinished, userSettings, userId]);
+
+  useEffect(() => {
+    if (typeof userSettings?.soundEnabled === "boolean") {
+      dispatch(setSoundEnabled(userSettings.soundEnabled));
+    }
+  }, [userSettings?.soundEnabled, dispatch]);
 
   useEffect(() => {
     try {

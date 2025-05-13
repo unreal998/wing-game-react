@@ -8,6 +8,7 @@ export type UserInitData = {
 
 export type UserSettingsData = {
   isTutorialFinished?: boolean;
+  soundEnabled?: boolean;
 };
 
 export type AreaType = {

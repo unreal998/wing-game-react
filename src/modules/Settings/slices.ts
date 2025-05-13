@@ -6,6 +6,7 @@ export type SettingsState = {
   isRoadMapOpen: boolean;
   error: string | null;
   isTutorialRestarted: boolean;
+  soundEnabled: boolean;
 };
 
 export const initialSettingsState: SettingsState = {
@@ -14,6 +15,7 @@ export const initialSettingsState: SettingsState = {
   isRoadMapOpen: false,
   error: null,
   isTutorialRestarted: false,
+  soundEnabled: true,
 };
 
 export const settingsSlice = createSlice({
@@ -45,6 +47,9 @@ export const settingsSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
+    setSoundEnabled: (state, { payload }: { payload: boolean }) => {
+      state.soundEnabled = payload;
+    },
   },
 });
 
@@ -56,6 +61,7 @@ export const {
   restartTutorialRequest,
   restartTutorialSuccess,
   restartTutorialFailure,
+  setSoundEnabled,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
