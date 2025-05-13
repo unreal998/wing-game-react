@@ -35,6 +35,7 @@ import { ModalComponent } from "../../shared/components/ModalComponent";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
+import { selectSoundEnabled } from "../Settings/selectors";
 
 const Missions = () => {
   const loading = useSelector(selectMissionsLoading);
@@ -49,6 +50,7 @@ const Missions = () => {
   const missions = useSelector(selectMissionsData()) as MissionsData[];
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
+  const soundEnabled = useSelector(selectSoundEnabled());
 
   const missionTitles = useMemo(
     () => [
@@ -152,7 +154,7 @@ const Missions = () => {
                 value={index.toString()}
                 key={index}
                 onClick={() => {
-                  playFooterSound();
+                  if (soundEnabled) playFooterSound();
                 }}
               />
             ))}
@@ -195,7 +197,7 @@ const Missions = () => {
                   <StyledBoxMission
                     key={idx}
                     onClick={() => {
-                      playFooterSound();
+                      if (soundEnabled) playFooterSound();
                       if (!mission.isSuccess) {
                         handleOpen(mission);
                       }
@@ -248,7 +250,7 @@ const Missions = () => {
                     ) : (
                       <ButtonMissions
                         onClick={() => {
-                          playFooterSound();
+                          if (soundEnabled) playFooterSound();
                         }}
                       >
                         Go
@@ -269,7 +271,7 @@ const Missions = () => {
         additionalbutton={
           <PopUpMainButton
             onClick={() => {
-              playFooterSound();
+              if (soundEnabled) playFooterSound();
               handleCompleteMission();
             }}
           >

@@ -32,6 +32,7 @@ import { StyledTab } from "../../shared/components/StyledTab";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 import { countryFlags } from "./components/flag";
+import { selectSoundEnabled } from "../Settings/selectors";
 import { heightProportion } from "../../shared/utils";
 
 const Shop = () => {
@@ -60,6 +61,7 @@ const Shop = () => {
     { title: number; value: number; level: number }[]
   >([]);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
+  const soundEnabled = useSelector(selectSoundEnabled());
   const [isBuyButtonBlocked, setIsBuyButtonBlocked] = useState(false);
 
   const currentCountryCode = selectedCountry?.name;
@@ -112,8 +114,8 @@ const Shop = () => {
   const [playSound] = useSound(FooterButtonPress);
 
   const handleSoundClick = useCallback(() => {
-    playSound();
-  }, [playSound]);
+    if (soundEnabled) playSound();
+  }, [playSound, soundEnabled]);
 
   const currentAviailableMods = useMemo(() => {
     if (countries) {

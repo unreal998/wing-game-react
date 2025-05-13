@@ -1,7 +1,10 @@
 import axios from "axios";
 import { SERVER_URL } from "../../shared/constants";
 
-export async function fetchCleanTutorial(uid: string) {
-  const response = await axios.put(`${SERVER_URL}/user/clean-tutor?uid=${uid}`);
-  return response.data.data;
+export async function updateUserSettings(uid: string, settings: object) {
+  const response = await axios.post(
+    `${SERVER_URL}/user/settings?uid=${uid}`,
+    settings,
+  );
+  return response.data;
 }

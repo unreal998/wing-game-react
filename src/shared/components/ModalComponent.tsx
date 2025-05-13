@@ -11,6 +11,8 @@ import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
 import { PopUpSeccondaryButton } from "./PopUpSeccondaryButton";
 import { MAIN_COLORS } from "../colors";
+import { useSelector } from "react-redux";
+import { selectSoundEnabled } from "../../modules/Settings/selectors";
 
 type ModalComponentPropsType = {
   openModal: boolean;
@@ -31,6 +33,9 @@ export const ModalComponent = ({
 }: ModalComponentPropsType) => {
   const { t } = useTranslation();
   const [playFooterSound] = useSound(footerButtonSound);
+
+  const soundEnabled = useSelector(selectSoundEnabled());
+
   return (
     <ModalStyled
       open={openModal}
@@ -82,7 +87,7 @@ export const ModalComponent = ({
         <PopUpSeccondaryButton
           onClick={() => {
             handleCloseModal();
-            playFooterSound();
+            if (soundEnabled) playFooterSound();
           }}
         >
           {t("Close")}

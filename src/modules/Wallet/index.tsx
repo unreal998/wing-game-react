@@ -19,12 +19,13 @@ import { updateBalanceAction } from "../Header/slices";
 import { WalletComponent } from "./components/WalletComponent";
 import { HistoryComponent } from "./components/HistoryComponent";
 import { selectIsWithdrawOpen } from "./selectors";
+import { selectSoundEnabled } from "../Settings/selectors";
 
 const Wallet = () => {
   const loading = useSelector(selectWalletLoading);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
+  const soundEnabled = useSelector(selectSoundEnabled());
   const [playTabSwitchSound] = useSound(Switch);
   const userData = useSelector(selectUserData());
   const isWithdrawModalOpen = useSelector(selectIsWithdrawOpen());
@@ -38,7 +39,7 @@ const Wallet = () => {
   const [value, setValue] = useState<number>(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    playTabSwitchSound();
+    if (soundEnabled) playTabSwitchSound();
     setValue(newValue);
   };
 

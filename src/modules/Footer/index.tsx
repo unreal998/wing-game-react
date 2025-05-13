@@ -39,6 +39,7 @@ import { setRoadMapOpen } from "../Settings/slices";
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import { buyItemAction, setLowBalanceModalOpen } from "../Shop/slices";
 import { selectShopData, selectWindValue } from "../Shop/selectors";
+import { selectSoundEnabled } from "../Settings/selectors";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const Footer = () => {
   const nextPressButtonTimeDelay = useSelector(selectNextPressTimeDelay());
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
   const dispatch = useDispatch();
+  const soundEnabled = useSelector(selectSoundEnabled());
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
   const { t } = useTranslation();
@@ -61,9 +63,14 @@ const Footer = () => {
   const countries = useSelector(selectCountiresData());
 
   useEffect(() => {
-    if (location.pathname === "/home" && isButtonDisabled && windSound) {
+    if (
+      location.pathname === "/home" &&
+      isButtonDisabled &&
+      windSound &&
+      soundEnabled
+    ) {
       const handleEnd = () => {
-        windSound.play();
+        if (soundEnabled) windSound.play();
       };
 
       windSound.play();
@@ -74,7 +81,7 @@ const Footer = () => {
         windSound.stop();
       };
     }
-  }, [location.pathname, isButtonDisabled, windSound]);
+  }, [location.pathname, isButtonDisabled, windSound, soundEnabled]);
 
   const handleOpenRoadmap = useCallback(() => {
     dispatch(setRoadMapOpen(true));
@@ -87,16 +94,16 @@ const Footer = () => {
       } else {
         navigate(path);
       }
-      playSound();
+      if (soundEnabled) playSound();
     },
-    [playSound, navigate, selectedCountry],
+    [playSound, navigate, selectedCountry, soundEnabled],
   );
 
   const handlePushPower = useCallback(() => {
     if (!isTutorialFinished && currentModule === 4) {
       dispatch(setCurrentModule(5));
     }
-    playWindSound();
+    if (soundEnabled) playWindSound();
     if (userData) {
       dispatch(
         powerButtonPressed({
@@ -112,6 +119,7 @@ const Footer = () => {
     userData,
     dispatch,
     selectedCountry.name,
+    soundEnabled,
   ]);
 
   const buyModifier = useCallback(() => {
@@ -256,7 +264,7 @@ const Footer = () => {
               disabled={isButtonDisabled}
               variant="contained"
               onClick={() => {
-                playFooterButtonSound();
+                if (soundEnabled) playFooterButtonSound();
                 handlePushPower();
               }}
               sx={{
@@ -291,7 +299,7 @@ const Footer = () => {
         {location.pathname === "/settings" && (
           <GameButtonComponent
             onClick={() => {
-              playFooterButtonSound();
+              if (soundEnabled) playFooterButtonSound();
               handleOpenRoadmap();
             }}
             sx={{
@@ -314,7 +322,7 @@ const Footer = () => {
               margin: "15px",
             }}
             onClick={() => {
-              playFooterButtonSound();
+              if (soundEnabled) playFooterButtonSound();
               handleWithdrawOpen();
             }}
           >
@@ -369,10 +377,8 @@ const Footer = () => {
                 key={path}
                 onClick={() => {
                   if (!isDisabled) {
-                    playFooterButtonSound();
-
+                    if (soundEnabled) playFooterButtonSound();
                     handleNavigationChange(path);
-
                     if (!isTutorialFinished) {
                       if (path === "/missions" && currentModule === 6) {
                         dispatch(setCurrentModule(7));

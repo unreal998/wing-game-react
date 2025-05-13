@@ -17,6 +17,7 @@ import { clearSelectedCountry } from "../Home/slices";
 import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import switchSound from "../../assets/sounds/switch.mp3";
+import { selectSoundEnabled } from "../Settings/selectors";
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
@@ -27,6 +28,7 @@ const Header = () => {
   const userData = useSelector(selectUserData());
   const currentModule = useSelector(selectCurrentModule());
   const [playSwitchSound] = useSound(switchSound);
+  const soundEnabled = useSelector(selectSoundEnabled());
 
   useEffect(() => {
     if (userData !== null) {
@@ -35,9 +37,9 @@ const Header = () => {
   }, [dispatch, userData]);
 
   const handleSoundClick = useCallback(() => {
-    playSound();
+    if (soundEnabled) playSound();
     navigate("/settings");
-  }, [playSound, navigate]);
+  }, [playSound, navigate, soundEnabled]);
 
   const handleEarthClick = useCallback(() => {
     switch (currentModule) {
@@ -141,7 +143,7 @@ const Header = () => {
               }),
             }}
             onClick={() => {
-              playSwitchSound();
+              if (soundEnabled) playSwitchSound();
               handleEarthClick();
             }}
           >

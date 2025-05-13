@@ -24,6 +24,7 @@ import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
 import { LockOutlined } from "@mui/icons-material";
 import { LockedCountryModal } from "./components/LockedCountryModal";
+import { selectSoundEnabled } from "../Settings/selectors";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -32,9 +33,8 @@ export const Planet = () => {
   const countries = useSelector(selectCountiresData());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const { t } = useTranslation();
-
+  const soundEnabled = useSelector(selectSoundEnabled());
   const currentModule = useSelector(selectCurrentModule());
-
   const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
   const [unavialableModalCountryData, setUnavialableModalCountryData] =
     useState<string>("");
@@ -123,7 +123,7 @@ export const Planet = () => {
                 }),
               }}
               onClick={() => {
-                playFooterSound();
+                if (soundEnabled) playFooterSound();
                 if (!country.available) {
                   setUnavialableModalCountryData(country.name);
                 } else {

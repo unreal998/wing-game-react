@@ -28,3 +28,8 @@ export const selectIsTutorialRestarted =
   () =>
   ({ settingsSlice }: SettingsSliceStore) =>
     settingsSlice.isTutorialRestarted;
+
+export const selectSoundEnabled =
+  () =>
+  ({ settingsSlice }: SettingsSliceStore) =>
+    settingsSlice.soundEnabled;
