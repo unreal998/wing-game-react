@@ -45,7 +45,7 @@ const Missions = () => {
   );
   const missionTimeoutRef = useRef<NodeJS.Timeout>(undefined);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const missions = useSelector(selectMissionsData()) as MissionsData[];
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
@@ -103,7 +103,7 @@ const Missions = () => {
       missionTimeoutRef.current = undefined;
     }, 5000);
 
-    const url = extractUrl(selectedMission?.description || "");
+    const url = extractUrl(selectedMission?.description[i18n.language] || "");
     if (url) {
       window.open(url, "_blank");
     }
@@ -209,7 +209,9 @@ const Missions = () => {
                       }}
                     >
                       <Box sx={{ padding: "10px 0px 10px 0px" }}>
-                        <StyledSubscrible>{mission.title}</StyledSubscrible>
+                        <StyledSubscrible>
+                          {mission.title[i18n.language]}
+                        </StyledSubscrible>
                         <StyledSHIB>
                           <img
                             height="20px"
@@ -264,8 +266,8 @@ const Missions = () => {
       <ModalComponent
         openModal={open}
         handleCloseModal={() => setOpen(false)}
-        title={selectedMission?.title || ""}
-        subtitle={selectedMission?.description || ""}
+        title={selectedMission?.title[i18n.language] || ""}
+        subtitle={selectedMission?.description[i18n.language] || ""}
         additionalbutton={
           <PopUpMainButton
             onClick={() => {
