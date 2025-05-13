@@ -21,7 +21,7 @@ import {
   setWindValue,
 } from "./slices";
 import { selectSelectedCountry } from "../Home/selectors";
-import { selectUserData } from "../Header/selectors";
+import { selectCountiresData, selectUserData } from "../Header/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import ModificatorsTable from "./components/ModificatorsTable";
 import LoaderComponent from "../../shared/components/LoaderComponent";
@@ -33,6 +33,7 @@ import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 import { countryFlags } from "./components/flag";
 import { selectSoundEnabled } from "../Settings/selectors";
+import { heightProportion } from "../../shared/utils";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -51,6 +52,7 @@ const Shop = () => {
     useState<number>(0);
   const [tab, setTab] = useState(0);
   const shopValues = useSelector(selectShopData());
+  const countries = useSelector(selectCountiresData());
   const selectedCountry = useSelector(selectSelectedCountry());
   const userData = useSelector(selectUserData());
   const dispatch = useDispatch();
@@ -60,6 +62,7 @@ const Shop = () => {
   >([]);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
   const soundEnabled = useSelector(selectSoundEnabled());
+  const [isBuyButtonBlocked, setIsBuyButtonBlocked] = useState(false);
 
   const currentCountryCode = selectedCountry?.name;
 
@@ -81,6 +84,8 @@ const Shop = () => {
       }
     );
   }, [shopValues, windValue]);
+
+  const tableHeight = useMemo(() => heightProportion - 230, []);
 
   useEffect(() => {
     if (userData !== null) {
@@ -112,6 +117,16 @@ const Shop = () => {
     if (soundEnabled) playSound();
   }, [playSound, soundEnabled]);
 
+  const currentAviailableMods = useMemo(() => {
+    if (countries) {
+      const currentCountryIndex = countries.findIndex((countrie) => {
+        return countrie.shortName === currentCountryCode;
+      });
+      return (currentCountryIndex + 1) * 4;
+    }
+    return 0;
+  }, [shopValues, currentCountryCode]);
+
   const handleWindSlide = useCallback(
     (event: Event, newValue: number | number[]) => {
       const newSlideValue = newValue as number;
@@ -122,8 +137,14 @@ const Shop = () => {
       if (currentShopIndex) {
         setSelectedScruberPosition(currentShopIndex.level - 1);
       }
+      if (newSlideValue > currentAviailableMods) {
+        setIsBuyButtonBlocked(true);
+        return;
+      } else {
+        setIsBuyButtonBlocked(false);
+      }
     },
-    [dispatch, shopMarks],
+    [dispatch, shopMarks, currentAviailableMods],
   );
 
   const formatValue = (num: number) =>
@@ -225,82 +246,125 @@ const Shop = () => {
             />
           </Box>
         </Stack>
-        <TabContext value={tab}>
-          <TabList
-            sx={{
-              display: "flex",
-              minHeight: "0px",
-              "& .MuiTabs-list": {
-                gap: "10px",
-              },
-              "& .MuiTabs-indicator": {
-                display: "none",
-              },
-              "@media (max-height: 732px)": {
-                padding: "0px",
-              },
-            }}
-            onChange={handleTabChange}
-          >
-            <StyledTab
-              label={t("kW profit")}
-              value={0}
-              key={0}
-              onClick={handleSoundClick}
-            />
-            <StyledTab
-              label={`TON ${t("profit")}`}
-              value={1}
-              key={1}
-              onClick={handleSoundClick}
-            />
-            <StyledTab
-              label={t("History")}
-              value={2}
-              key={2}
-              onClick={handleSoundClick}
-            />
-          </TabList>
-
+        {!isBuyButtonBlocked && (
           <TabContext value={tab}>
-            {tab !== 2 && (
-              <Stack gap="10px">
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  flexWrap="wrap"
-                  gap="8px"
-                  sx={{
-                    "@media (max-height: 732px)": {
-                      paddingTop: "0px",
-                      paddingBottom: "0px",
-                    },
-                  }}
-                >
-                  {profitValues.map((row, rowIndex) => (
-                    <ProfitBox
-                      key={rowIndex}
-                      value={formatValue(
-                        tab === 0
-                          ? +selectedWindPowerIncome.turxValue / row.multiplier
-                          : +selectedWindPowerIncome.tonValue / row.multiplier,
-                      )}
-                      subtitle={row.label}
-                    />
-                  ))}
+            <TabList
+              sx={{
+                display: "flex",
+                minHeight: "0px",
+                "& .MuiTabs-list": {
+                  gap: "10px",
+                },
+                "& .MuiTabs-indicator": {
+                  display: "none",
+                },
+                "@media (max-height: 732px)": {
+                  padding: "0px",
+                },
+              }}
+              onChange={handleTabChange}
+            >
+              <StyledTab
+                label={t("kW profit")}
+                value={0}
+                key={0}
+                onClick={handleSoundClick}
+              />
+              <StyledTab
+                label={`TON ${t("profit")}`}
+                value={1}
+                key={1}
+                onClick={handleSoundClick}
+              />
+              <StyledTab
+                label={t("History")}
+                value={2}
+                key={2}
+                onClick={handleSoundClick}
+              />
+            </TabList>
+
+            <TabContext value={tab}>
+              {tab !== 2 && (
+                <Stack gap="10px">
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    flexWrap="wrap"
+                    gap="8px"
+                    sx={{
+                      "@media (max-height: 732px)": {
+                        paddingTop: "0px",
+                        paddingBottom: "0px",
+                      },
+                    }}
+                  >
+                    {profitValues.map((row, rowIndex) => (
+                      <ProfitBox
+                        key={rowIndex}
+                        value={formatValue(
+                          tab === 0
+                            ? +selectedWindPowerIncome.turxValue /
+                                row.multiplier
+                            : +selectedWindPowerIncome.tonValue /
+                                row.multiplier,
+                        )}
+                        subtitle={row.label}
+                      />
+                    ))}
+                  </Stack>
                 </Stack>
-              </Stack>
-            )}
+              )}
+            </TabContext>
+            {tab === 2 &&
+              (userData?.modifiers?.length ? (
+                <ModificatorsTable modifiers={userData.modifiers} />
+              ) : (
+                <Typography textAlign="center" mt={2}>
+                  {t("No bought modifiers yet")}
+                </Typography>
+              ))}
           </TabContext>
-          {tab === 2 &&
-            (userData?.modifiers?.length ? (
-              <ModificatorsTable modifiers={userData.modifiers} />
-            ) : (
-              <Typography textAlign="center" mt={2}>
-                {t("No bought modifiers yet")}
+        )}
+        {isBuyButtonBlocked && countries && (
+          <Box
+            sx={{
+              backgroundColor: MAIN_COLORS.appBG,
+              padding: "6px",
+              borderRadius: "12px",
+              zIndex: 100,
+            }}
+          >
+            <Stack
+              sx={{
+                direction: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: MAIN_COLORS.sectionBG,
+                gap: "8px",
+                height: `${tableHeight}px`,
+              }}
+            >
+              <Typography
+                textAlign="center"
+                fontSize="20px"
+                fontWeight={600}
+                color="white"
+              >
+                {t("shopWarningTitle")}
               </Typography>
-            ))}
-        </TabContext>
+              <Typography
+                textAlign="center"
+                fontSize="16px"
+                fontWeight={600}
+                color="white"
+              >
+                {t("shopWarningMessage")} {t("lockedCountryContent3")}:{" "}
+                {t(countries[Math.ceil(+(windValue / 4) - 1)]?.title) || ""}
+              </Typography>
+            </Stack>
+          </Box>
+        )}
         <ModalComponent
           openModal={lowBalanceModalOpen}
           title={t("lowBalance")}
