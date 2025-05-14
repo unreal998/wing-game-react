@@ -92,6 +92,9 @@ const Shop = () => {
       dispatch(updateBalanceAction(userData.id));
     }
   }, [dispatch, userData]);
+  useEffect(() => {
+    dispatch(setWindValue(0));
+  }, [dispatch]);
 
   useEffect(() => {
     if (!shopValues?.length) {
@@ -343,6 +346,9 @@ const Shop = () => {
                 backgroundColor: MAIN_COLORS.sectionBG,
                 gap: "8px",
                 height: `${tableHeight}px`,
+                "@media (max-width: 430px) and (max-height: 932px)": {
+                  height: "350px",
+                },
               }}
             >
               <Typography
