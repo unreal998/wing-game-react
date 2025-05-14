@@ -9,7 +9,7 @@ import {
   selectCountiresData,
   selectUserData,
 } from "../Header/selectors";
-import { AreaType, County } from "../../shared/types";
+import { AreaType } from "../../shared/types";
 import { MAIN_COLORS } from "../../shared/colors";
 
 import {
@@ -25,6 +25,8 @@ import useSound from "use-sound";
 import { LockOutlined } from "@mui/icons-material";
 import { LockedCountryModal } from "./components/LockedCountryModal";
 import { selectSoundEnabled } from "../Settings/selectors";
+import { Stack, Typography } from "@mui/material";
+import { heightProportion } from "../../shared/utils";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -85,8 +87,15 @@ export const Planet = () => {
   }, []);
   const [playFooterSound] = useSound(footerButtonSound);
 
+  const planetScreenSize = useMemo(() => heightProportion - 60, []);
+
   return (
-    <>
+    <Stack
+      gap={2}
+      height={`${planetScreenSize}px`}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
       <StyledPlanetBox>
         {userCountiresData &&
           userCountiresData?.length &&
@@ -157,6 +166,9 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
+      <Typography textAlign="center" fontSize="16px">
+        {t("selectYourCountry")}
+      </Typography>
       <BuyCountryModal
         open={buyCountrieModalOpen}
         onClose={() => setBuyCountrieModalOpen(false)}
@@ -167,6 +179,6 @@ export const Planet = () => {
         onClose={() => setUnavialableModalCountryData("")}
         countryName={unavialableModalCountryData || ""}
       />
-    </>
+    </Stack>
   );
 };
