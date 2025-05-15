@@ -1,6 +1,6 @@
 // export const SERVER_URL = "http://localhost:3003";
 // prod
-export const SERVER_URL = "https://b90e-95-164-85-150.ngrok-free.app";
+export const SERVER_URL = "https://548c-95-164-85-150.ngrok-free.app";
 
 export const USER_MOCK_TELEGRAM_DATA = {
   telegramID: 123456789,
@@ -25,3 +25,11 @@ export const USER_MOCK_TELEGRAM_DATA = {
 // userName: "john_doe_2",
 //language: "en",
 //};
+
+// export const USER_MOCK_TELEGRAM_DATA = {
+//   telegramID: 6535707671,
+//   firstName: "Helen",
+//   lastName: "BlackAngel",
+//   userName: "helen_blackangel",
+//   language: "en",
+// };

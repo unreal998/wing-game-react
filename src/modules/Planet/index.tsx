@@ -9,7 +9,7 @@ import {
   selectCountiresData,
   selectUserData,
 } from "../Header/selectors";
-import { AreaType, County } from "../../shared/types";
+import { AreaType } from "../../shared/types";
 import { MAIN_COLORS } from "../../shared/colors";
 
 import {
@@ -25,6 +25,8 @@ import useSound from "use-sound";
 import { LockOutlined } from "@mui/icons-material";
 import { LockedCountryModal } from "./components/LockedCountryModal";
 import { selectSoundEnabled } from "../Settings/selectors";
+import { Stack, Typography } from "@mui/material";
+import { heightProportion } from "../../shared/utils";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -72,21 +74,28 @@ export const Planet = () => {
   const getCoords = useCallback((index: number) => {
     switch (index) {
       case 0:
-        return { top: "120px", left: "180px" };
+        return { top: "100px", left: "180px" };
       case 1:
-        return { top: "60px", left: "120px" };
+        return { top: "40px", left: "120px" };
       case 2:
-        return { top: "200px", left: "90px" };
+        return { top: "170px", left: "90px" };
       case 3:
-        return { top: "120px", left: "50px" };
+        return { top: "100px", left: "50px" };
       default:
         return { top: "0px", left: "0px" };
     }
   }, []);
   const [playFooterSound] = useSound(footerButtonSound);
 
+  const planetScreenSize = useMemo(() => heightProportion - 60, []);
+
   return (
-    <>
+    <Stack
+      gap={2}
+      height={`${planetScreenSize}px`}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
       <StyledPlanetBox>
         {userCountiresData &&
           userCountiresData?.length &&
@@ -157,6 +166,9 @@ export const Planet = () => {
             </StyledPlanetButton>
           ))}
       </StyledPlanetBox>
+      <Typography textAlign="center" fontSize="16px">
+        {t("selectYourCountry")}
+      </Typography>
       <BuyCountryModal
         open={buyCountrieModalOpen}
         onClose={() => setBuyCountrieModalOpen(false)}
@@ -167,6 +179,6 @@ export const Planet = () => {
         onClose={() => setUnavialableModalCountryData("")}
         countryName={unavialableModalCountryData || ""}
       />
-    </>
+    </Stack>
   );
 };

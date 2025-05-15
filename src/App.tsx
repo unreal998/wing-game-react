@@ -30,6 +30,7 @@ import Lottie from "lottie-react";
 import { Tutorial } from "./modules/Tutorial";
 import { selectSoundEnabled } from "./modules/Settings/selectors";
 import { setSoundEnabled } from "./modules/Settings/slices";
+import { clearSelectedCountry } from "./modules/Home/slices";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -78,6 +79,24 @@ const App = () => {
       );
     }
   }, [currentStep, dispatch, isTutorialFinished, userSettings, userId]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        navigate("/");
+        dispatch(clearSelectedCountry());
+      } else if (document.visibilityState === "visible") {
+        navigate("/");
+        dispatch(clearSelectedCountry());
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [dispatch, navigate]);
 
   useEffect(() => {
     if (typeof userSettings?.soundEnabled === "boolean") {
