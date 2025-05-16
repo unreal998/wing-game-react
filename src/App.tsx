@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import WebApp from "@twa-dev/sdk";
 import "./global.css";
 import { MAIN_COLORS } from "./shared/colors";
@@ -31,6 +31,10 @@ import { Tutorial } from "./modules/Tutorial";
 import { selectSoundEnabled } from "./modules/Settings/selectors";
 import { setSoundEnabled } from "./modules/Settings/slices";
 import { clearSelectedCountry } from "./modules/Home/slices";
+import { ModalComponent } from "./shared/components/ModalComponent";
+import { selectErrors } from "./shared/selectErrors";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -51,6 +55,7 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const selectedCountry = useSelector(selectSelectedCountry());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
   const currentStep = useSelector(selectCurrentModule());
@@ -58,6 +63,10 @@ const App = () => {
   const userSettings = useSelector(selectUserSettings());
   const userId = useSelector(selectUserId());
   const soundEnabled = useSelector(selectSoundEnabled());
+  const [openError, setOpenError] = useState(false);
+  const errors = useSelector(selectErrors);
+
+  const activeErrors = errors.filter((e) => e.trim() !== "");
 
   useEffect(() => {
     if (location.pathname !== "/") {
@@ -121,6 +130,19 @@ const App = () => {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    if (activeErrors.length > 0) {
+      setOpenError(true);
+    }
+  }, [activeErrors]);
+
+  const handleCloseErrorModal = () => {
+    setOpenError(false);
+    dispatch(clearSelectedCountry());
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
     <Box
       sx={{
@@ -142,7 +164,6 @@ const App = () => {
       }}
     >
       <Header />
-      <ErrorPopup />
       <Box sx={{ flexGrow: 1, zIndex: 99 }}>
         <Routes>
           <Route path="/home" element={<Home />} />
@@ -194,7 +215,13 @@ const App = () => {
           />
         </Box>
       )}
-      <Tutorial></Tutorial>
+      <Tutorial />
+      <ModalComponent
+        openModal={openError}
+        handleCloseModal={handleCloseErrorModal}
+        title={t("errTitle")}
+        subtitle={activeErrors.join("\n")}
+      />
     </Box>
   );
 };
