@@ -90,95 +90,97 @@ export const Planet = () => {
   const planetScreenSize = useMemo(() => heightProportion - 60, []);
 
   return (
-    <Stack
-      gap={2}
-      height={`${planetScreenSize}px`}
-      alignItems={"center"}
-      justifyContent={"center"}
-    >
-      <StyledPlanetBox>
-        {userCountiresData &&
-          userCountiresData?.length &&
-          userCountiresData.map((country, index) => (
-            <StyledPlanetButton
-              key={country.name}
-              isBought={country.bought}
-              sx={{
-                ...getCoords(index),
-                ...(!isTutorialFinished &&
-                  currentModule === 3 && {
-                    boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
-                    animationName: "pulseShadow",
-                    animationDuration: "2s",
-                    animationTimingFunction: "ease-in-out",
-                    animationIterationCount: "infinite",
-                    "@keyframes pulseShadow": {
-                      "0%": {
-                        boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+    <>
+      <Stack
+        gap={2}
+        height={`${planetScreenSize}px`}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <StyledPlanetBox>
+          {userCountiresData &&
+            userCountiresData?.length &&
+            userCountiresData.map((country, index) => (
+              <StyledPlanetButton
+                key={country.name}
+                isBought={country.bought}
+                sx={{
+                  ...getCoords(index),
+                  ...(!isTutorialFinished &&
+                    currentModule === 3 && {
+                      boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+                      animationName: "pulseShadow",
+                      animationDuration: "2s",
+                      animationTimingFunction: "ease-in-out",
+                      animationIterationCount: "infinite",
+                      "@keyframes pulseShadow": {
+                        "0%": {
+                          boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+                        },
+                        "50%": {
+                          boxShadow: `0 0 60px ${MAIN_COLORS.mainGreen}`,
+                        },
+                        "100%": {
+                          boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+                        },
                       },
-                      "50%": {
-                        boxShadow: `0 0 60px ${MAIN_COLORS.mainGreen}`,
-                      },
-                      "100%": {
-                        boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
-                      },
-                    },
+                    }),
+                  ...(!country.available && {
+                    backgroundColor: "#9CA8CE",
+                    boxShadow: "none",
+                    animation: "none",
+                    color: MAIN_COLORS.appBG,
                   }),
-                ...(!country.available && {
-                  backgroundColor: "#9CA8CE",
-                  boxShadow: "none",
-                  animation: "none",
-                  color: MAIN_COLORS.appBG,
-                }),
-              }}
-              onClick={() => {
-                if (soundEnabled) playFooterSound();
-                if (!country.available) {
-                  setUnavialableModalCountryData(country.name);
-                } else {
-                  if (currentModule === 3 || currentModule === 14) {
-                    if (!isTutorialFinished && currentModule === 3) {
-                      dispatch(setCurrentModule(0));
-                    }
+                }}
+                onClick={() => {
+                  if (soundEnabled) playFooterSound();
+                  if (!country.available) {
+                    setUnavialableModalCountryData(country.name);
+                  } else {
+                    if (currentModule === 3 || currentModule === 14) {
+                      if (!isTutorialFinished && currentModule === 3) {
+                        dispatch(setCurrentModule(0));
+                      }
 
-                    handleButtonPress(country);
-                  } else if (isTutorialFinished && country.available) {
-                    if (!country.bought) {
-                      setBuyCountrieModalOpen(true);
-                      setCountryToBuy(country);
-                    } else {
                       handleButtonPress(country);
+                    } else if (isTutorialFinished && country.available) {
+                      if (!country.bought) {
+                        setBuyCountrieModalOpen(true);
+                        setCountryToBuy(country);
+                      } else {
+                        handleButtonPress(country);
+                      }
                     }
                   }
-                }
-              }}
-            >
-              {!country.available && (
-                <LockOutlined
-                  sx={{
-                    width: "16px",
-                    height: "16px",
-                    marginBottom: "1px",
-                  }}
-                />
-              )}
-              {t(`${country.title}`)}
-            </StyledPlanetButton>
-          ))}
-      </StyledPlanetBox>
-      <Typography textAlign="center" fontSize="16px">
-        {t("selectYourCountry")}
-      </Typography>
-      <BuyCountryModal
-        open={buyCountrieModalOpen}
-        onClose={() => setBuyCountrieModalOpen(false)}
-        onBuy={handleBuyCountry}
-      />
-      <LockedCountryModal
-        open={unavialableModalCountryData !== ""}
-        onClose={() => setUnavialableModalCountryData("")}
-        countryName={unavialableModalCountryData || ""}
-      />
-    </Stack>
+                }}
+              >
+                {!country.available && (
+                  <LockOutlined
+                    sx={{
+                      width: "16px",
+                      height: "16px",
+                      marginBottom: "1px",
+                    }}
+                  />
+                )}
+                {t(`${country.title}`)}
+              </StyledPlanetButton>
+            ))}
+        </StyledPlanetBox>
+        <Typography textAlign="center" fontSize="16px">
+          {t("selectYourCountry")}
+        </Typography>
+        <BuyCountryModal
+          open={buyCountrieModalOpen}
+          onClose={() => setBuyCountrieModalOpen(false)}
+          onBuy={handleBuyCountry}
+        />
+        <LockedCountryModal
+          open={unavialableModalCountryData !== ""}
+          onClose={() => setUnavialableModalCountryData("")}
+          countryName={unavialableModalCountryData || ""}
+        />
+      </Stack>
+    </>
   );
 };

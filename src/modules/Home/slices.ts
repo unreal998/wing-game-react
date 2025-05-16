@@ -1,13 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AreaType } from "../../shared/types";
 import { PowerButtonPressType } from "./api";
-
-type HomeState = {
-  nextPressTimeDelay: number;
-  disabledPowerButton: boolean;
-  selectedCountry: AreaType;
-  loading: boolean;
-};
+import { HomeState } from "./types";
 
 export const initialHomeState: HomeState = {
   nextPressTimeDelay: 0,
@@ -20,6 +14,7 @@ export const initialHomeState: HomeState = {
     bought: false,
   },
   loading: false,
+  errMessage: "",
 };
 
 export const homeSlice = createSlice({
@@ -35,8 +30,9 @@ export const homeSlice = createSlice({
     powerButtonPressedSuccess: (state) => {
       state.loading = false;
     },
-    powerButtonPressedFailure: (state) => {
+    powerButtonPressedFailure: (state, { payload }: { payload: string }) => {
       state.loading = false;
+      state.errMessage = payload;
     },
     setPressTimeDelay: (state, { payload }: { payload: number }) => {
       state.nextPressTimeDelay = payload > 0 ? payload : 0;

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -40,6 +40,9 @@ import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import { buyItemAction, setLowBalanceModalOpen } from "../Shop/slices";
 import { selectShopData, selectWindValue } from "../Shop/selectors";
 import { selectSoundEnabled } from "../Settings/selectors";
+import { ConfirmBuyModal } from "./componets/ConfirmBuyModal";
+import { ModalComponent } from "../../shared/components/ModalComponent";
+import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -61,6 +64,7 @@ const Footer = () => {
   const windValue = useSelector(selectWindValue());
   const shopValues = useSelector(selectShopData());
   const countries = useSelector(selectCountiresData());
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
     if (
@@ -333,22 +337,50 @@ const Footer = () => {
           </GameButtonComponent>
         )}
         {location.pathname === "/shop" && (
-          <GameButtonComponent
-            onClick={buyModifier}
-            disabled={windValue === 0 || windValue > currentAviailableMods}
-            sx={{
-              backgroundColor: MAIN_COLORS.mainGreen,
-              cursor: windValue === 0 ? "not-allowed" : "pointer",
-              margin: "15px",
-              width: "93%",
-              "@media (max-height: 667px)": {
-                marginBottom: "5px",
-              },
-            }}
-          >
-            {t("Buy wind speed")}
-          </GameButtonComponent>
+          <>
+            <GameButtonComponent
+              onClick={() => setConfirmOpen(true)}
+              disabled={windValue === 0 || windValue > currentAviailableMods}
+              sx={{
+                backgroundColor: MAIN_COLORS.mainGreen,
+                cursor: windValue === 0 ? "not-allowed" : "pointer",
+                margin: "15px",
+                width: "93%",
+                "@media (max-height: 667px)": {
+                  marginBottom: "5px",
+                },
+              }}
+            >
+              {t("Buy wind speed")}
+            </GameButtonComponent>
+
+            <ModalComponent
+              title={t("Buy wind speed")}
+              subtitle={
+                t("Do you whant to buy.") +
+                windValue +
+                " for " +
+                (shopValues[windValue]?.price || 0) +
+                " TON"
+              }
+              openModal={confirmOpen}
+              handleCloseModal={() => setConfirmOpen(false)}
+              additionalbutton={
+                <PopUpMainButton
+                  onClick={() => {
+                    {
+                      buyModifier();
+                      setConfirmOpen(false);
+                    }
+                  }}
+                >
+                  {t("Buy")}
+                </PopUpMainButton>
+              }
+            />
+          </>
         )}
+
         <StyledFooterBox>
           {footerTabs.map(({ path, icon, activeIcon, label, isCenter }) => {
             const isActive = location.pathname === path;

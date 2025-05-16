@@ -46,6 +46,7 @@ function* handleInit(action: { type: string; payload: UserInitData }) {
     const countriesData: County[] = yield call(fetchCountries);
     yield put(fetchCountriesActionSuccess(countriesData));
   } catch (err: any) {
+    console.log("INIT ERROR:", err.toString());
     yield put(initActionFailure(err.toString()));
   }
 }
