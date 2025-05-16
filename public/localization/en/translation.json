@@ -135,5 +135,6 @@
   "lockedCountryContent3": "You need to unlock",
   "lockedCountryContent3.1": " to unlock",
   "shopWarningMessage": "To get the access ",
-  "shopWarningTitle": "The product is not available"
+  "shopWarningTitle": "The product is not available",
+  "errTitle": "Oops, something went wrong"
 }
