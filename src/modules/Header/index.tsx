@@ -11,7 +11,11 @@ import WebApp from "@twa-dev/sdk";
 import { StyledFlashBox } from "./components/StyledFlashBox";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "./selectors";
-import { selectHeaderLoading, updateBalanceAction } from "./slices";
+import {
+  selectHeaderLoading,
+  updateBalanceAction,
+  updateDailyMissionsAction,
+} from "./slices";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { clearSelectedCountry } from "../Home/slices";
 import { selectCurrentModule } from "../Tutorial/selectors";
@@ -54,6 +58,34 @@ const Header = () => {
         dispatch(clearSelectedCountry());
     }
   }, [navigate, dispatch, currentModule]);
+
+  useEffect(() => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const nextDayMidnight = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate() + 1,
+      0,
+      1, // +1 minute for no rase condition
+      0,
+    );
+
+    const timeToMidnight =
+      nextDayMidnight.getMilliseconds() - new Date().getMilliseconds();
+
+    let everyDayInterval: NodeJS.Timer;
+    const timer = setTimeout(() => {
+      dispatch(updateDailyMissionsAction());
+      everyDayInterval = setInterval(() => {
+        dispatch(updateDailyMissionsAction());
+      }, oneDay);
+    }, timeToMidnight);
+
+    return () => {
+      clearTimeout(timer);
+      if (everyDayInterval) clearInterval(everyDayInterval);
+    };
+  }, []);
 
   const isMobile = useMemo(
     () =>

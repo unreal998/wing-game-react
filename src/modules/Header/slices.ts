@@ -93,6 +93,21 @@ export const headerSlice = createSlice({
     updateIncomeDataActionFailed: (state, { payload }: { payload: string }) => {
       state.loading = false;
     },
+    updateDailyMissionsAction: (state) => {
+      state.loading = true;
+    },
+    updateDailyMissionsActionSuccess: (state) => {
+      state.loading = false;
+      if (!state.userData) return;
+      state.userData.missions = [];
+    },
+    updateDailyMissionsActionFailure: (
+      state,
+      { payload }: { payload: string },
+    ) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
   },
 });
 
@@ -110,6 +125,9 @@ export const {
   updateIncomeDataActionSuccess,
   updateIncomeDataActionFailed,
   getIncomeDataAction,
+  updateDailyMissionsAction,
+  updateDailyMissionsActionFailure,
+  updateDailyMissionsActionSuccess,
 } = headerSlice.actions;
 
 export type HeaderStateType = typeof initialHeaderState;
