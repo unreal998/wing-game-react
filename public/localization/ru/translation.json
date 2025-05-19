@@ -135,5 +135,7 @@
   "lockedCountryContent3": "Вам нужно преобрести",
   "lockedCountryContent3.1": " чтобы разблокировать",
   "shopWarningMessage": "Чтобы получить доступ к данной секции товаров.",
-  "shopWarningTitle": "Товар недоступен !"
+  "shopWarningTitle": "Товар недоступен !",
+  "Do you whant to buy:": "Вы хотите купить: ",
+  " for ": " за "
 }
