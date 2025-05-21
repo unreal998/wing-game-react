@@ -22,6 +22,9 @@ export const ProfitBox = ({
         "@media (max-height: 732px)": {
           height: "64px",
         },
+        "@media (max-width: 374px)": {
+          width: "140px",
+        },
       }}
     >
       <Typography

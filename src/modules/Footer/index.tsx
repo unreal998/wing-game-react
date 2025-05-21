@@ -255,10 +255,27 @@ const Footer = () => {
                   flex: "1",
                 }}
               >
-                <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    "@media (max-width: 338px)": {
+                      fontSize: "11px",
+                    },
+                  }}
+                >
                   + {(+incomeData.kwtIncome).toFixed(2)} {t("kW")}
                 </Typography>
-                <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    "@media (max-width: 338px)": {
+                      fontSize: "11px",
+                    },
+                  }}
+                >
                   + {(+incomeData.tonIncome).toFixed(2)} TON
                 </Typography>
               </Box>
