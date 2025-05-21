@@ -256,10 +256,10 @@ const Footer = () => {
                 }}
               >
                 <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
-                  + {(+incomeData.kwtIncome).toFixed(2)} {t("kW")}
+                  + {(+incomeData.kwtIncome).toFixed(3)} {t("kW")}
                 </Typography>
                 <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
-                  + {(+incomeData.tonIncome).toFixed(2)} TON
+                  + {(+incomeData.tonIncome).toFixed(3)} TON
                 </Typography>
               </Box>
             </Stack>
