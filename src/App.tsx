@@ -33,7 +33,6 @@ import { setSoundEnabled } from "./modules/Settings/slices";
 import { clearSelectedCountry } from "./modules/Home/slices";
 import { ModalComponent } from "./shared/components/ModalComponent";
 import { selectErrors } from "./shared/selectErrors";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 
 function convertToUserData(

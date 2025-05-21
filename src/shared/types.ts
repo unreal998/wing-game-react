@@ -42,6 +42,7 @@ export type UserData = UserInitData & {
   modifiers: UserModifiersType[];
   lvl: number;
   userSettings: UserSettingsData;
+  withdrawLimit: number;
 };
 
 export type IncomeDataType = {

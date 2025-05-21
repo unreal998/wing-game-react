@@ -62,7 +62,7 @@
   "tutorial.step3a.before": "Click on ",
   "tutorial.step3a.after": "and take a peek at your first power station!",
   "tutorial.step3b": "You have 4 countries in front of you. \n But only Netherlands is unlocked so far.",
-  "tutorial.step2": "To unlock other countries, you need to invite more friends, and buy them for a TON.",
+  "tutorial.step2": "To unlock other countries, you need to buy them for a ton and invite the required number of friends.",
   "tutorial.step4": "This button is your main source of energy!",
   "tutorial.step5": "Press it once every 12 hours to receive Kw (the in-game currency - kilowatts) \n The more upgrades you buy on the market - the more Kw you get per click!",
   "tutorial.step5.5": "Tap on the planet to return to the country selection screen.",
@@ -136,5 +136,7 @@
   "lockedCountryContent3.1": " to unlock",
   "shopWarningMessage": "To get the access ",
   "shopWarningTitle": "The product is not available",
+  "Do you whant to buy:": "Do you want to buy: ",
+  " for ": " for "
   "errTitle": "Oops, something went wrong"
 }

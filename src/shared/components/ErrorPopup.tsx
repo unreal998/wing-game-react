@@ -22,7 +22,6 @@ const ErrorPopup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errors = useSelector(selectErrors);
-  console.log("Redux errors:", errors);
 
   const activeErrors = errors.filter((e) => e.trim() !== "");
 
