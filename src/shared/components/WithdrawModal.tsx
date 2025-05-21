@@ -59,7 +59,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
 
   const handleMAX = useCallback(() => {
     if (userTonBalance) {
-      setAmount(userTonBalance.toString());
+      setAmount(userTonBalance.toFixed(3).toString());
     }
   }, [userTonBalance]);
 
