@@ -1,4 +1,5 @@
 import { homeSlice, HomeStateType } from "./slices";
+import { HomeState } from "./types";
 
 export type HomeSliceStore = {
   [homeSlice.name]: HomeStateType;
@@ -18,3 +19,6 @@ export const selectSelectedCountry =
   () =>
   ({ homeSlice }: HomeSliceStore) =>
     homeSlice.selectedCountry;
+
+export const selectHomeErrors = (state: { homeSlice: HomeState }) =>
+  state.homeSlice.errMessage;

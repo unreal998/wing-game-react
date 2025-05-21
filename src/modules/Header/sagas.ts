@@ -12,6 +12,7 @@ import {
   updateUserSettingsActionFailure,
   updateIncomeDataActionSuccess,
   getIncomeDataAction,
+  getIncomeDataFailure,
 } from "./slices";
 import {
   County,
@@ -46,6 +47,7 @@ function* handleInit(action: { type: string; payload: UserInitData }) {
     const countriesData: County[] = yield call(fetchCountries);
     yield put(fetchCountriesActionSuccess(countriesData));
   } catch (err: any) {
+    console.log("INIT ERROR:", err.toString());
     yield put(initActionFailure(err.toString()));
   }
 }
@@ -88,7 +90,7 @@ function* handleGetIncomeData(action: { type: string; payload: any }) {
 
     yield put(updateIncomeDataActionSuccess(incomeData));
   } catch (err: any) {
-    yield put(initActionFailure(err.toString()));
+    yield put(getIncomeDataFailure(err.toString()));
   }
 }
 

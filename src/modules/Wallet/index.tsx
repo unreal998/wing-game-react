@@ -115,7 +115,7 @@ const Wallet = () => {
         open={isWithdrawModalOpen}
         onClose={handleWithdrawClose}
         onSubmit={handleWithdrawRequest}
-        userTonBalance={userData?.TONBalance || 0}
+        userTonBalance={userData?.withdrawLimit || 0}
       />
     </MainBox>
   );

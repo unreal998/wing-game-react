@@ -1,8 +1,9 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectErrors } from "./selectors";
-import { useState } from "react";
 import { Alert, Button, Snackbar } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import { clearSelectedCountry } from "../../modules/Home/slices";
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
   backgroundColor: "#1a237e", // Dark blue background
@@ -18,13 +19,25 @@ const StyledAlert = styled(Alert)(({ theme }) => ({
 }));
 
 const ErrorPopup = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const errors = useSelector(selectErrors);
-  const [open, setOpen] = useState(true);
-  const activeErrors = errors.filter(
-    (error: string) => error[0] === "5" || error[0] === "4",
-  );
-  const handleClose = () => setOpen(false);
-  if (activeErrors.length === 0 || !open) {
+
+  const activeErrors = errors.filter((e) => e.trim() !== "");
+
+  if (activeErrors.length === 0) {
+    return null;
+  }
+
+  const open = true;
+
+  const handleClose = () => {
+    dispatch(clearSelectedCountry());
+    navigate("/");
+    window.location.reload();
+  };
+
+  if (activeErrors.length === 0) {
     return null;
   }
 
@@ -33,7 +46,7 @@ const ErrorPopup = () => {
       open={open}
       autoHideDuration={6000}
       onClose={handleClose}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
       sx={{
         marginTop: "30px",
         "& .MuiPaper-root": {
@@ -62,7 +75,7 @@ const ErrorPopup = () => {
           </Button>
         }
       >
-        Oops, something went wrong: {activeErrors[0]}
+        Oops, something went wrong: {activeErrors}
       </StyledAlert>
     </Snackbar>
   );
