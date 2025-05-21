@@ -8,9 +8,15 @@ export const StyledTab = styled(Tab)({
   color: MAIN_COLORS.textColor,
   border: `1px solid ${MAIN_COLORS.mainGreen}`,
   borderRadius: "8px",
-  minHeight: "35px",
+  minHeight: "auto",
+  minWidth: "auto",
   "&.Mui-selected": {
     backgroundColor: MAIN_COLORS.mainGreen,
     color: "black",
+  },
+  "@media (max-width: 346px)": {
+    fontSize: "10px",
+    padding: "9px 11px",
+    width: "64px",
   },
 });
