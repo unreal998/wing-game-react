@@ -82,6 +82,9 @@ export const headerSlice = createSlice({
     getIncomeDataAction: (state, { payload }) => {
       state.loading = true;
     },
+    getIncomeDataFailure: (state, { payload }) => {
+      state.loading = false;
+    },
     updateIncomeDataActionSuccess: (
       state,
       { payload }: { payload: IncomeDataType },
@@ -110,6 +113,7 @@ export const {
   updateIncomeDataActionSuccess,
   updateIncomeDataActionFailed,
   getIncomeDataAction,
+  getIncomeDataFailure,
 } = headerSlice.actions;
 
 export type HeaderStateType = typeof initialHeaderState;

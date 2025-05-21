@@ -33,7 +33,6 @@ export const ModalComponent = ({
 }: ModalComponentPropsType) => {
   const { t } = useTranslation();
   const [playFooterSound] = useSound(footerButtonSound);
-
   const soundEnabled = useSelector(selectSoundEnabled());
 
   return (
@@ -41,6 +40,7 @@ export const ModalComponent = ({
       open={openModal}
       onClose={handleCloseModal}
       sx={{
+        zIndex: 10000,
         "& .MuiPaper-root": {
           backgroundColor: MAIN_COLORS.sectionBG,
           padding: "24px 12px",

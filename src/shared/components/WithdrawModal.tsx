@@ -6,8 +6,6 @@ import { useTranslation } from "react-i18next";
 import { WithdrawModalInput } from "./WithdrawModalInput";
 import { PopUpMainButton } from "./PopUpMainButton";
 import { PopUpSeccondaryButton } from "./PopUpSeccondaryButton";
-import { useSelector } from "react-redux";
-import { selectUserData } from "../../modules/Header/selectors";
 
 type WithdrawModalProps = {
   open: boolean;
@@ -26,7 +24,6 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   const [amount, setAmount] = useState("");
   const [tonMemo, setTonMemo] = useState("");
   const { t } = useTranslation();
-  const userData = useSelector(selectUserData());
 
   const amountNum = parseFloat(amount);
 
@@ -61,10 +58,10 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   };
 
   const handleMAX = useCallback(() => {
-    if (userData) {
-      setAmount(userData.TONBalance.toString());
+    if (userTonBalance) {
+      setAmount(userTonBalance.toFixed(3).toString());
     }
-  }, [userData]);
+  }, [userTonBalance]);
 
   return (
     <ModalStyled

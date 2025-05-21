@@ -31,7 +31,7 @@ export const Tutorial = () => {
           currentModule !== 8 &&
           currentModule !== 10 &&
           currentModule !== 12
-            ? 999999
+            ? 9999
             : 99,
       }}
       onClick={handleModuleClick}

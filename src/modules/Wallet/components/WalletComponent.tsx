@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { WalletContentBox } from "./WalletContentBox";
 import { MAIN_COLORS } from "../../../shared/colors";
 import { WalletTypography } from "./WalletTypography";
@@ -50,6 +50,15 @@ export const WalletComponent = () => {
           alt="ton"
           style={{ paddingTop: "15px", width: "88px" }}
         />
+        <Typography
+          sx={{
+            color: MAIN_COLORS.missionTable,
+            fontSize: "12px",
+            fontWeight: 700,
+          }}
+        >
+          {t("To refill your balance, use the address below")}
+        </Typography>
         <Stack direction="row">
           {walletNumber ? (
             <Stack gap="12px">
@@ -87,7 +96,6 @@ export const WalletComponent = () => {
             <WalletTypography>{t("Connect")}</WalletTypography>
           )}
         </Stack>
-
         {!walletNumber && (
           <GameButtonComponent
             sx={{
