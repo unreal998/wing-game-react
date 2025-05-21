@@ -357,9 +357,9 @@ const Footer = () => {
             <ModalComponent
               title={t("Buy wind speed")}
               subtitle={
-                t("Do you whant to buy.") +
+                t("Do you whant to buy:") +
                 windValue +
-                " for " +
+                t(" for ") +
                 (shopValues[windValue]?.price || 0) +
                 " TON"
               }
