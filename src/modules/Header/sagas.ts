@@ -12,6 +12,7 @@ import {
   updateUserSettingsActionFailure,
   updateIncomeDataActionSuccess,
   getIncomeDataAction,
+  getIncomeDataFailure,
 } from "./slices";
 import {
   County,
@@ -89,7 +90,7 @@ function* handleGetIncomeData(action: { type: string; payload: any }) {
 
     yield put(updateIncomeDataActionSuccess(incomeData));
   } catch (err: any) {
-    yield put(initActionFailure(err.toString()));
+    yield put(getIncomeDataFailure(err.toString()));
   }
 }
 
