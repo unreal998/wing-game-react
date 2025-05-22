@@ -10,8 +10,8 @@ export const fetchCreateWallet = async (uid: string) => {
   return response.data;
 };
 
-export const fetchWithdrawData = async (uid: string) => {
-  const response = await axios.get(`${SERVER_URL}/withdraw?uid=${uid}`, {
+export const fetchWithdrawData = async (id: string) => {
+  const response = await axios.get(`${SERVER_URL}/withdraw?id=${id}`, {
     headers: {
       "ngrok-skip-browser-warning": true,
     },
