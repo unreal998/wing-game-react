@@ -12,7 +12,9 @@ import {
   updateUserSettingsActionFailure,
   updateIncomeDataActionSuccess,
   getIncomeDataAction,
-  getIncomeDataFailure,
+  updateDailyMissionsAction,
+  updateDailyMissionsActionSuccess,
+  updateDailyMissionsActionFailure,
 } from "./slices";
 import {
   County,
@@ -94,9 +96,18 @@ function* handleGetIncomeData(action: { type: string; payload: any }) {
   }
 }
 
+function* handleUpdateDailyMissions() {
+  try {
+    yield put(updateDailyMissionsActionSuccess());
+  } catch (err: any) {
+    yield put(updateDailyMissionsActionFailure(err.toString()));
+  }
+}
+
 export function* watchHeaderActions() {
   yield takeLatest(initAction.type, handleInit);
   yield takeLatest(updateBalanceAction.type, handleUpdateBalance);
   yield takeLatest(updateUserSettingsAction.type, handleUpdateUserSettings);
   yield takeLatest(getIncomeDataAction.type, handleGetIncomeData);
+  yield takeLatest(updateDailyMissionsAction.type, handleUpdateDailyMissions);
 }
