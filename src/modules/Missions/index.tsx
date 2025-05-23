@@ -91,9 +91,11 @@ const Missions = () => {
   };
 
   const handleCompleteMission = useCallback(() => {
+    setOpen(false);
     if (
       !selectedMission ||
       !userData ||
+      selectedMission.specType ||
       missionTimeoutRef.current !== undefined
     )
       return;

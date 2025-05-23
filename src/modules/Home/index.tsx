@@ -21,15 +21,16 @@ export const Home = () => {
     if (!selectedCountry.name) {
       navigate("/");
     }
-    if (userId) {
-      dispatch(
-        getIncomeDataAction({
-          uid: userId,
-          country: selectedCountry.name,
-        }),
-      );
-    }
   }, [dispatch, navigate, selectedCountry, userId]);
+
+  useEffect(() => {
+    dispatch(
+      getIncomeDataAction({
+        uid: userId,
+        country: selectedCountry.name,
+      }),
+    );
+  }, []);
 
   useEffect(() => {
     if (animationRef.current) {

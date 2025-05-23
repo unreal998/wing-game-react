@@ -85,7 +85,7 @@ const Shop = () => {
     );
   }, [shopValues, windValue]);
 
-  const tableHeight = useMemo(() => heightProportion - 230, []);
+  const tableHeight = useMemo(() => heightProportion - 280, []);
 
   useEffect(() => {
     if (userData !== null) {
