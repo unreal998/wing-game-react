@@ -15,6 +15,7 @@ import {
   updateDailyMissionsAction,
   updateDailyMissionsActionSuccess,
   updateDailyMissionsActionFailure,
+  getIncomeDataFailure,
 } from "./slices";
 import {
   County,
