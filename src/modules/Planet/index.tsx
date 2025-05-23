@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCountry } from "../Home/slices";
 import {
@@ -27,6 +27,8 @@ import { LockedCountryModal } from "./components/LockedCountryModal";
 import { selectSoundEnabled } from "../Settings/selectors";
 import { Stack, Typography } from "@mui/material";
 import { heightProportion } from "../../shared/utils";
+import { selectReferalData } from "../Referal_temp/selectors";
+import { getReferalDataAction } from "../Referal_temp/slices";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -37,11 +39,18 @@ export const Planet = () => {
   const { t } = useTranslation();
   const soundEnabled = useSelector(selectSoundEnabled());
   const currentModule = useSelector(selectCurrentModule());
+  const referalData = useSelector(selectReferalData());
   const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
   const [unavialableModalCountryData, setUnavialableModalCountryData] =
     useState<string>("");
   const userData = useSelector(selectUserData());
   const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
+
+  useEffect(() => {
+    if (userData?.telegramID) {
+      dispatch(getReferalDataAction(userData.telegramID));
+    }
+  }, [dispatch, userData?.telegramID]);
 
   const handleButtonPress = useCallback(
     (selectedCountry: AreaType) => {
@@ -63,13 +72,29 @@ export const Planet = () => {
   }, [dispatch, userData, countryToBuy]);
 
   const userCountiresData = useMemo(() => {
-    if (!countries || !areasData) return [];
-    return areasData.map((area) => ({
-      ...area,
-      title: countries.find((country) => country.shortName === area.name)
-        ?.title,
-    }));
-  }, [countries, areasData]);
+    if (!countries || !areasData || !userData || !referalData) return [];
+    const hasTransactions = userData.transactions?.length >= 1;
+
+    return areasData.map((area) => {
+      const matchedCountry = countries.find(
+        (country) => country.shortName === area.name,
+      );
+
+      const userReferalsLength = userData.referals?.length ?? 0;
+      const referalDataLength = referalData.length;
+      const requiredReferals = matchedCountry?.referalsToUnlock ?? 0;
+
+      const referalsUnlocked =
+        userReferalsLength >= requiredReferals &&
+        referalDataLength >= requiredReferals;
+
+      return {
+        ...area,
+        available: area.available && hasTransactions && referalsUnlocked,
+        title: matchedCountry?.title,
+      };
+    });
+  }, [countries, areasData, userData, referalData]);
 
   const getCoords = useCallback((index: number) => {
     switch (index) {
@@ -88,6 +113,13 @@ export const Planet = () => {
   const [playFooterSound] = useSound(footerButtonSound);
 
   const planetScreenSize = useMemo(() => heightProportion - 60, []);
+
+  // console.log("userData.areas", userData?.areas);
+  // console.log("userData.transaction", userData?.transactions.length);
+  // console.log("userData.referals", userData?.referals.length);
+  //console.log("referalData", referalData.length);
+  // console.log("countries", countries);
+  // console.log("areasData", areasData);
 
   return (
     <>
