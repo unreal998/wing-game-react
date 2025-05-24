@@ -347,7 +347,7 @@ const Shop = () => {
                 gap: "8px",
                 height: `${tableHeight}px`,
                 "@media (max-width: 430px) and (max-height: 932px)": {
-                  height: "350px",
+                  height: "240px",
                 },
               }}
             >

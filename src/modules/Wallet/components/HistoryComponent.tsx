@@ -26,7 +26,7 @@ export const HistoryComponent = () => {
 
   return (
     <HistoryWrapperBox sx={{ marginTop: "5px", height: `${wrapperHeight}px` }}>
-      {withdrawData.map((withdraw, i) => (
+      {withdrawData?.map((withdraw, i) => (
         <HistoryItem
           key={i}
           date={new Date(withdraw.created_at || 0).toLocaleDateString()}
