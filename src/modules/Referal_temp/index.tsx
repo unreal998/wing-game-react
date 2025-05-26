@@ -98,7 +98,7 @@ const Referal = () => {
           }}
         >
           <TableBox>
-            {["User", "Level", "Coin"].map((item, index) => (
+            {["User", "Coin"].map((item, index) => (
               <StyledHeader
                 key={index}
                 sx={{
@@ -120,7 +120,7 @@ const Referal = () => {
                   </StyledReferalTypography>
                 </StyledMainJpg>
 
-                {[user.lvl, user.WindBalance].map((value, idx) => (
+                {[user.WindBalance].map((value, idx) => (
                   <StyledReferalTypography
                     sx={
                       idx === 1
