@@ -64,7 +64,7 @@ const Referal = () => {
     }
   }, [dispatch, userData]);
 
-  const tableHeight = useMemo(() => heightProportion - 280, []);
+  const tableHeight = useMemo(() => heightProportion - 270, []);
 
   return (
     <MainBox height={heightProportion} position={"relative"}>
