@@ -105,7 +105,7 @@ const Missions = () => {
       );
       setOpen(false);
       missionTimeoutRef.current = undefined;
-    }, 5000);
+    }, 15000);
 
     const url = extractUrl(selectedMission?.description[i18n.language] || "");
     if (url) {
