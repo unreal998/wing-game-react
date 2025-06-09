@@ -9,7 +9,7 @@ export type MissionsData = {
   img: string | null;
   specType: string | null;
   specValue: string | null;
-  isSuccess: boolean;
+  status: "new" | "completed" | "finished";
 };
 
 export type MissionByTypeRequestType = {

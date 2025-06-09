@@ -20,6 +20,7 @@ import { selectMissionsData } from "./selectors";
 import {
   completeMissionAction,
   getMissionsDataAction,
+  getRewardRequest,
   selectMissionsLoading,
 } from "./slices";
 import { selectUserData } from "../Header/selectors";
@@ -89,6 +90,15 @@ const Missions = () => {
     const match = text.match(/https?:\/\/[^"]+/);
     return match ? match[0] : null;
   };
+
+  const handleGetReward = useCallback(
+    (mission: MissionsData) => {
+      if (userData) {
+        dispatch(getRewardRequest({ mission, uid: userData.id }));
+      }
+    },
+    [dispatch, userData],
+  );
 
   const handleCompleteMission = useCallback(() => {
     setOpen(false);
@@ -200,7 +210,7 @@ const Missions = () => {
                     key={idx}
                     onClick={() => {
                       if (soundEnabled) playFooterSound();
-                      if (!mission.isSuccess) {
+                      if (mission.status === "new") {
                         handleOpen(mission);
                       }
                     }}
@@ -230,7 +240,7 @@ const Missions = () => {
                         </StyledSHIB>
                       </Box>
                     </Box>
-                    {mission.isSuccess ? (
+                    {mission.status === "completed" ? (
                       <Box
                         sx={{
                           display: "flex",
@@ -251,6 +261,17 @@ const Missions = () => {
                           sx={{ color: MAIN_COLORS.mainGreen }}
                         />
                       </Box>
+                    ) : mission.status === "finished" ? (
+                      <ButtonMissions
+                        sx={{
+                          width: "100px",
+                        }}
+                        onClick={() => {
+                          if (soundEnabled) handleGetReward(mission);
+                        }}
+                      >
+                        Get Reward
+                      </ButtonMissions>
                     ) : (
                       <ButtonMissions
                         onClick={() => {

@@ -6,8 +6,13 @@ import {
   getMissionsDataAction,
   getMissionsDataActionFailure,
   getMissionsDataActionSuccess,
+  getRewardRequest,
 } from "./slices";
-import { fetchCompleteMission, fetchMissionsData } from "./api";
+import {
+  fetchCompleteMission,
+  fetchGetRewardMission,
+  fetchMissionsData,
+} from "./api";
 import { MissionsData, MissionByTypeRequestType } from "./types";
 import { UserData } from "../../shared/types";
 import { initActionSuccess } from "../Header/slices";
@@ -35,8 +40,27 @@ function* handleCompleteMission(action: {
   };
 }) {
   try {
+    yield call(fetchCompleteMission, action.payload);
+    const updatedMissions: MissionsData[] = yield call(fetchMissionsData, {
+      uid: action.payload.uid,
+      type: action.payload.mission.type,
+    });
+    yield put(completeMissionActionSuccess(updatedMissions));
+  } catch (err: any) {
+    yield put(completeMissionActionFailure(err.toString()));
+  }
+}
+
+function* handleGetReward(action: {
+  type: string;
+  payload: {
+    uid: string;
+    mission: MissionsData;
+  };
+}) {
+  try {
     const updatedUser: UserData = yield call(
-      fetchCompleteMission,
+      fetchGetRewardMission,
       action.payload,
     );
     yield put(initActionSuccess(updatedUser));
@@ -53,4 +77,5 @@ function* handleCompleteMission(action: {
 export function* watchMissionsActions() {
   yield takeLatest(getMissionsDataAction.type, handleMissionsData);
   yield takeLatest(completeMissionAction.type, handleCompleteMission);
+  yield takeLatest(getRewardRequest.type, handleGetReward);
 }

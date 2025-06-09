@@ -55,6 +55,13 @@ export const missionsSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    getRewardRequest: (
+      state,
+      { payload }: { payload: CompleteMissionRequestType },
+    ) => {
+      state.loading = true;
+      state.errMessage = "";
+    },
   },
 });
 
@@ -65,6 +72,7 @@ export const {
   completeMissionAction,
   completeMissionActionSuccess,
   completeMissionActionFailure,
+  getRewardRequest,
 } = missionsSlice.actions;
 
 export type MissionsStateType = typeof initialMissionsState;

@@ -31,3 +31,19 @@ export const fetchCompleteMission = async ({
   );
   return response.data;
 };
+
+export const fetchGetRewardMission = async ({
+  uid,
+  mission,
+}: CompleteMissionRequestType) => {
+  const response = await axios.post(
+    `${SERVER_URL}/missions/reward?uid=${uid}`,
+    mission,
+    {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    },
+  );
+  return response.data;
+};
