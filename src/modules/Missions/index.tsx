@@ -270,7 +270,7 @@ const Missions = () => {
                           if (soundEnabled) handleGetReward(mission);
                         }}
                       >
-                        Get Reward
+                        {t("getReward")}
                       </ButtonMissions>
                     ) : (
                       <ButtonMissions
