@@ -27,6 +27,9 @@ import { LockedCountryModal } from "./components/LockedCountryModal";
 import { selectSoundEnabled } from "../Settings/selectors";
 import { Stack, Typography } from "@mui/material";
 import { heightProportion } from "../../shared/utils";
+import { ModalComponent } from "../../shared/components/ModalComponent";
+import { selectLowBalanceModalOpen } from "../Shop/selectors";
+import { setLowBalanceModalOpen } from "../Shop/slices";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -42,6 +45,11 @@ export const Planet = () => {
     useState<string>("");
   const userData = useSelector(selectUserData());
   const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
+  const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
+
+  const handleModalClose = useCallback(() => {
+    dispatch(setLowBalanceModalOpen(false));
+  }, [dispatch]);
 
   const handleButtonPress = useCallback(
     (selectedCountry: AreaType) => {
@@ -58,6 +66,9 @@ export const Planet = () => {
           buyCountry({ uid: userData?.id, countryName: countryToBuy.name }),
           setBuyCountrieModalOpen(false),
         );
+      } else {
+        setBuyCountrieModalOpen(false);
+        dispatch(setLowBalanceModalOpen(true));
       }
     }
   }, [dispatch, userData, countryToBuy]);
@@ -174,6 +185,12 @@ export const Planet = () => {
           open={buyCountrieModalOpen}
           onClose={() => setBuyCountrieModalOpen(false)}
           onBuy={handleBuyCountry}
+        />
+        <ModalComponent
+          openModal={lowBalanceModalOpen}
+          title={t("lowBalance")}
+          subtitle={t("lowBalanceContent")}
+          handleCloseModal={handleModalClose}
         />
         <LockedCountryModal
           open={unavialableModalCountryData !== ""}
