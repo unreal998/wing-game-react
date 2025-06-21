@@ -92,6 +92,7 @@ const Shop = () => {
       dispatch(updateBalanceAction(userData.id));
     }
   }, [dispatch, userData]);
+
   useEffect(() => {
     dispatch(setWindValue(0));
   }, [dispatch]);

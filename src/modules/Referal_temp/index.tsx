@@ -120,7 +120,7 @@ const Referal = () => {
                   </StyledReferalTypography>
                 </StyledMainJpg>
 
-                {[user.WindBalance].map((value, idx) => (
+                {[user.rewardFromClicks].map((value, idx) => (
                   <StyledReferalTypography
                     sx={
                       idx === 1

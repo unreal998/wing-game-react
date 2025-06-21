@@ -26,12 +26,26 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   const { t } = useTranslation();
 
   const amountNum = parseFloat(amount);
+  const [walletError, setWalletError] = useState("");
+
+  const isValidTonAddress = (address: string): boolean => {
+    // Raw format (ex: 0:abcd... or -1:abcd...)
+    const rawRegex = /^-?\d+:[a-fA-F0-9]{64}$/;
+
+    // Base64 format (ex: EQB... or UQC...)
+    const base64Regex = /^[A-Za-z0-9+/]{48}$/;
+
+    return rawRegex.test(address) || base64Regex.test(address);
+  };
+
+  const isWalletValid = isValidTonAddress(withdrawWallet);
 
   const isSubmitDisabled =
     !withdrawWallet.trim() ||
     !amount ||
     isNaN(amountNum) ||
     amountNum <= 0 ||
+    !isWalletValid ||
     amountNum > userTonBalance;
 
   const handleSubmit = () => {
@@ -91,8 +105,19 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           fullWidth
           variant="outlined"
           value={withdrawWallet}
-          onChange={(e) => setWithdrawWallet(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            setWithdrawWallet(value);
+            setWalletError(
+              isValidTonAddress(value) ? "" : t("Invalid wallet address"),
+            );
+          }}
         />
+        {walletError && (
+          <Typography fontSize="12px" color="red">
+            {walletError}
+          </Typography>
+        )}
       </Stack>
 
       <Stack alignItems="flex-start" gap="10px">

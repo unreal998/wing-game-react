@@ -140,5 +140,6 @@
   " for ": " за ",
   "errTitle": "Упс, что-то пошло не так",
   "To refill your balance, use the address below": "Чтобы пополнить баланс, используйте адрес ниже",
-  "getReward": "Награда"
+  "getReward": "Награда",
+  "invalidWallet": "Неверный кошелек"
 }

@@ -128,7 +128,7 @@ const Footer = () => {
 
   const buyModifier = useCallback(() => {
     const currentPrice = shopValues.find(
-      (value, index) => index === windValue,
+      (value, index) => index === windValue - 1,
     )?.price;
     if (currentPrice === undefined) return;
     if (userData === null) return;
@@ -377,7 +377,7 @@ const Footer = () => {
                 t("Do you whant to buy:") +
                 windValue +
                 t(" for ") +
-                (shopValues[windValue]?.price || 0) +
+                (shopValues[windValue - 1]?.price || 0) +
                 " TON"
               }
               openModal={confirmOpen}
