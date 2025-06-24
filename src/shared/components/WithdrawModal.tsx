@@ -29,11 +29,9 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   const [walletError, setWalletError] = useState("");
 
   const isValidTonAddress = (address: string): boolean => {
-    // Raw format (ex: 0:abcd... or -1:abcd...)
-    const rawRegex = /^-?\d+:[a-fA-F0-9]{64}$/;
+    const rawRegex = /^-?\d+:[\w!@#$%^&*()\-_=+[\]{}|:;"',.<>/?~`]{64}$/;
 
-    // Base64 format (ex: EQB... or UQC...)
-    const base64Regex = /^[A-Za-z0-9+/]{48}$/;
+    const base64Regex = /^[A-Za-z0-9+/]{47}[=]{0,1}$/;
 
     return rawRegex.test(address) || base64Regex.test(address);
   };
