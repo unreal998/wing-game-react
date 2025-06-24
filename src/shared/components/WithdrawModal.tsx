@@ -31,7 +31,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
   const isValidTonAddress = (address: string): boolean => {
     const rawRegex = /^-?\d+:[\w!@#$%^&*()\-_=+[\]{}|:;"',.<>/?~`]{64}$/;
 
-    const base64Regex = /^[A-Za-z0-9+/]{48}[=]{0,1}$/;
+    const base64Regex = /^[A-Za-z0-9_-]{43,64}$/;
 
     return rawRegex.test(address) || base64Regex.test(address);
   };
