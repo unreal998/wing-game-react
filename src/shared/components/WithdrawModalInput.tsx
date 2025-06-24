@@ -2,7 +2,7 @@ import { styled, TextField } from "@mui/material";
 import { MAIN_COLORS } from "../colors";
 
 export const WithdrawModalInput = styled(TextField)({
-  fontSize: "14px",
+  fontSize: "16px",
   "& .MuiOutlinedInput-root": {
     color: MAIN_COLORS.subTextColor,
     outline: "none",
