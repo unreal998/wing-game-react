@@ -132,7 +132,7 @@ const Footer = () => {
     )?.price;
     if (currentPrice === undefined) return;
     if (userData === null) return;
-    if (userData.TONBalance <= currentPrice) {
+    if (userData.TONBalance < currentPrice) {
       dispatch(setLowBalanceModalOpen(true));
       return;
     }
