@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -40,7 +40,6 @@ import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import { buyItemAction, setLowBalanceModalOpen } from "../Shop/slices";
 import { selectShopData, selectWindValue } from "../Shop/selectors";
 import { selectSoundEnabled } from "../Settings/selectors";
-import { ConfirmBuyModal } from "./componets/ConfirmBuyModal";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 

@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { ModalComponent } from "./ModalComponent";
 import { PopUpMainButton } from "./PopUpMainButton";
-import { AreaType } from "../types";
 
 type Props = {
   open: boolean;

@@ -88,7 +88,7 @@ export const Planet = () => {
         dispatch(setLowBalanceModalOpen(true));
       }
     }
-  }, [dispatch, userData, countryToBuy]);
+  }, [dispatch, userData, countryToBuy, countries]);
 
   const userCountiresData = useMemo(() => {
     if (!countries || !areasData) return [];
