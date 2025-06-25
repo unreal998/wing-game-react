@@ -59,9 +59,26 @@ export const Planet = () => {
     [dispatch, navigate],
   );
 
+  const price = useMemo(() => {
+    if (countryToBuy && countries) {
+      const selectedCountry = countries.find(
+        (country) => countryToBuy.name === country.shortName,
+      )?.unlockPrice;
+      return selectedCountry || 0;
+    }
+
+    return 0;
+  }, [countries, countryToBuy]);
+
   const handleBuyCountry = useCallback(() => {
-    if (countryToBuy && userData) {
-      if (userData.TONBalance >= 1) {
+    if (countryToBuy && userData && countries) {
+      const selectedCountry = countries.find(
+        (country) => countryToBuy.name === country.shortName,
+      );
+      if (
+        selectedCountry &&
+        userData.TONBalance >= selectedCountry.unlockPrice
+      ) {
         dispatch(
           buyCountry({ uid: userData?.id, countryName: countryToBuy.name }),
           setBuyCountrieModalOpen(false),
@@ -185,6 +202,7 @@ export const Planet = () => {
           open={buyCountrieModalOpen}
           onClose={() => setBuyCountrieModalOpen(false)}
           onBuy={handleBuyCountry}
+          price={price}
         />
         <ModalComponent
           openModal={lowBalanceModalOpen}
