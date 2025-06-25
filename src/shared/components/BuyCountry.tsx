@@ -19,12 +19,7 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy, price }) => {
       title={t("doYouWhantToBuy")}
       subtitle={t("newOpportunities")}
       additionalbutton={
-        <PopUpMainButton
-          onClick={onBuy}
-          sx={{
-            fontSize: "12px",
-          }}
-        >
+        <PopUpMainButton onClick={onBuy}>
           {t("unblock")} ({price.toString()} TON)
         </PopUpMainButton>
       }
