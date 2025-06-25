@@ -122,14 +122,20 @@ const Shop = () => {
   }, [playSound, soundEnabled]);
 
   const currentAviailableMods = useMemo(() => {
-    if (countries) {
+    if (countries && userData) {
+      const lastBoughtCountry = userData.areas.filter(
+        (area) => area.bought && area.available,
+      );
       const currentCountryIndex = countries.findIndex((countrie) => {
-        return countrie.shortName === currentCountryCode;
+        return (
+          countrie.shortName ===
+          lastBoughtCountry[lastBoughtCountry.length - 1].name
+        );
       });
       return (currentCountryIndex + 1) * 4;
     }
     return 0;
-  }, [shopValues, currentCountryCode]);
+  }, [shopValues, userData]);
 
   const handleWindSlide = useCallback(
     (event: Event, newValue: number | number[]) => {
@@ -141,6 +147,7 @@ const Shop = () => {
       if (currentShopIndex) {
         setSelectedScruberPosition(currentShopIndex.level - 1);
       }
+      console.log(currentAviailableMods, newSlideValue);
       if (newSlideValue > currentAviailableMods) {
         setIsBuyButtonBlocked(true);
         return;

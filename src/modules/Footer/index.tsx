@@ -132,8 +132,10 @@ const Footer = () => {
     )?.price;
     if (currentPrice === undefined) return;
     if (userData === null) return;
-    if (userData.TONBalance <= currentPrice)
+    if (userData.TONBalance <= currentPrice) {
       dispatch(setLowBalanceModalOpen(true));
+      return;
+    }
     dispatch(
       buyItemAction({
         windSpeed: windValue,
@@ -177,14 +179,20 @@ const Footer = () => {
   };
 
   const currentAviailableMods = useMemo(() => {
-    if (countries) {
+    if (countries && userData) {
+      const lastBoughtCountry = userData.areas.filter(
+        (area) => area.bought && area.available,
+      );
       const currentCountryIndex = countries.findIndex((countrie) => {
-        return countrie.shortName === selectedCountry.name;
+        return (
+          countrie.shortName ===
+          lastBoughtCountry[lastBoughtCountry.length - 1].name
+        );
       });
       return (currentCountryIndex + 1) * 4;
     }
     return 0;
-  }, [shopValues, selectedCountry]);
+  }, [shopValues, userData]);
 
   return (
     <>
