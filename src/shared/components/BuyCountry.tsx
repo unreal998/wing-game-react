@@ -22,7 +22,7 @@ const BuyCountryModal: React.FC<Props> = ({ open, onClose, onBuy, price }) => {
         <PopUpMainButton
           onClick={onBuy}
           sx={{
-            fontSize: "13px",
+            fontSize: "12px",
           }}
         >
           {t("unblock")} ({price.toString()} TON)
