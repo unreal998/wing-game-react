@@ -10,5 +10,5 @@ export const WalletContentBox = styled(Box)({
   alignItems: "center",
   textAlign: "center",
   gap: "10px",
-  padding: "24px",
+  padding: "32px 12px",
 });

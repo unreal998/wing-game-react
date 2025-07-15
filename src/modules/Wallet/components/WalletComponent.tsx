@@ -45,11 +45,7 @@ export const WalletComponent = () => {
       }}
     >
       <WalletContentBox>
-        <img
-          src={TON}
-          alt="ton"
-          style={{ paddingTop: "15px", width: "88px" }}
-        />
+        <img src={TON} alt="ton" style={{ width: "88px" }} />
         <Typography
           sx={{
             color: MAIN_COLORS.missionTable,
