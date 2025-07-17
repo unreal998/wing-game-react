@@ -12,7 +12,7 @@ import {
 } from "./slices";
 import {
   fetchCreateWallet,
-  fetchWithdrawData,
+  fetchHistoryData,
   sendWithdrawRequest,
 } from "./api";
 import { Withdraw } from "../../shared/types";
@@ -28,9 +28,8 @@ function* handleCreateWallet(action: { type: string; payload: string }) {
 
 function* handleGetWithdrawData(action: { type: string; payload: string }) {
   try {
-    console.log("handleGetWithdrawData ACTION:", action);
     const withdrawData: Withdraw[] = yield call(
-      fetchWithdrawData,
+      fetchHistoryData,
       action.payload,
     );
     yield put(getWithdrawActionSuccess(withdrawData));
