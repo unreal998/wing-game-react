@@ -9,10 +9,10 @@ export const selectWalletNumber =
   ({ walletSlice }: WalletSliceStore) =>
     walletSlice.walletNumber;
 
-export const selectWithdrawData =
+export const selectHistoryData =
   () =>
   ({ walletSlice }: WalletSliceStore) =>
-    walletSlice.withdrawData;
+    walletSlice.historyData;
 
 export const selectIsWithdrawOpen =
   () =>

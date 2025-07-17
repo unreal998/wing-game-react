@@ -3,13 +3,13 @@ import { HistoryWrapperBox } from "./HistoryWrapperBox";
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "../../Header/selectors";
-import { selectWithdrawData } from "../selectors";
-import { getWithdrawAction } from "../slices";
+import { selectHistoryData } from "../selectors";
+import { getHistoryAction } from "../slices";
 import { heightProportion } from "../../../shared/utils";
 
 export const HistoryComponent = () => {
   const userData = useSelector(selectUserData());
-  const withdrawData = useSelector(selectWithdrawData());
+  const historyData = useSelector(selectHistoryData());
   const dispatch = useDispatch();
   const formatMinutes = (dateVal: any) => {
     const minutes = new Date(dateVal || 0).getMinutes();
@@ -17,7 +17,7 @@ export const HistoryComponent = () => {
   };
 
   useEffect(() => {
-    if (userData) dispatch(getWithdrawAction(userData.id));
+    if (userData) dispatch(getHistoryAction(userData.id));
   }, [dispatch, userData]);
 
   const wrapperHeight = useMemo(() => {
@@ -26,12 +26,12 @@ export const HistoryComponent = () => {
 
   return (
     <HistoryWrapperBox sx={{ marginTop: "5px", height: `${wrapperHeight}px` }}>
-      {withdrawData?.map((withdraw, i) => (
+      {historyData?.map((withdraw, i) => (
         <HistoryItem
           key={i}
           date={new Date(withdraw.created_at || 0).toLocaleDateString()}
           time={`${new Date(withdraw.created_at || 0).getHours()}:${formatMinutes(withdraw.created_at)}`}
-          amount={`${withdraw.sum} TON`}
+          amount={` ${withdraw.type === "transaction" ? "+" : "-"} ${withdraw.sum} TON`}
           status={withdraw.status}
         />
       ))}

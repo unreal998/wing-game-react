@@ -61,6 +61,13 @@ export type Withdraw = {
   MEMO: string;
 };
 
+export type HistoryType = {
+  sum: number;
+  created_at: string;
+  status: string;
+  type: string;
+};
+
 export type County = {
   basicBonusPerClick: number;
   referalsToUnlock: number;

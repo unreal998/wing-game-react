@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Withdraw } from "../../shared/types";
+import { HistoryType } from "../../shared/types";
 
 type WalletState = {
   walletNumber: string;
   TONBalance: number;
   WindBalance: number;
-  withdrawData: Withdraw[];
+  historyData: HistoryType[];
   loading: boolean;
   errMessage: string;
   isWithdrawOpen: boolean;
@@ -15,7 +15,7 @@ export const initialWalletState: WalletState = {
   walletNumber: "",
   TONBalance: 0,
   WindBalance: 0,
-  withdrawData: [],
+  historyData: [],
   loading: true,
   errMessage: "",
   isWithdrawOpen: false,
@@ -36,14 +36,14 @@ export const walletSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
-    getWithdrawAction: (state, { payload }: { payload: string }) => {
+    getHistoryAction: (state, { payload }: { payload: string }) => {
       state.loading = true;
     },
-    getWithdrawActionSuccess: (state, { payload }: { payload: Withdraw[] }) => {
+    getHistorySuccess: (state, { payload }: { payload: HistoryType[] }) => {
       state.loading = false;
-      state.withdrawData = payload;
+      state.historyData = payload;
     },
-    getWithdrawActionFailure: (state, { payload }: { payload: string }) => {
+    getHistoryActionFailure: (state, { payload }: { payload: string }) => {
       state.loading = false;
       state.errMessage = payload;
     },
@@ -80,9 +80,9 @@ export const {
   createWalletAction,
   createWalletActionSuccess,
   createWalletActionFailure,
-  getWithdrawAction,
-  getWithdrawActionSuccess,
-  getWithdrawActionFailure,
+  getHistoryAction,
+  getHistorySuccess,
+  getHistoryActionFailure,
   sendWithdrawRequestAction,
   sendWithdrawRequestSuccess,
   sendWithdrawRequestFailure,

@@ -3,9 +3,9 @@ import {
   createWalletAction,
   createWalletActionFailure,
   createWalletActionSuccess,
-  getWithdrawAction,
-  getWithdrawActionFailure,
-  getWithdrawActionSuccess,
+  getHistoryAction,
+  getHistoryActionFailure,
+  getHistorySuccess,
   sendWithdrawRequestAction,
   sendWithdrawRequestSuccess,
   sendWithdrawRequestFailure,
@@ -15,7 +15,7 @@ import {
   fetchHistoryData,
   sendWithdrawRequest,
 } from "./api";
-import { Withdraw } from "../../shared/types";
+import { HistoryType } from "../../shared/types";
 
 function* handleCreateWallet(action: { type: string; payload: string }) {
   try {
@@ -26,15 +26,15 @@ function* handleCreateWallet(action: { type: string; payload: string }) {
   }
 }
 
-function* handleGetWithdrawData(action: { type: string; payload: string }) {
+function* handleGetHistoryData(action: { type: string; payload: string }) {
   try {
-    const withdrawData: Withdraw[] = yield call(
+    const historyData: HistoryType[] = yield call(
       fetchHistoryData,
       action.payload,
     );
-    yield put(getWithdrawActionSuccess(withdrawData));
+    yield put(getHistorySuccess(historyData));
   } catch (err: any) {
-    yield put(getWithdrawActionFailure(err.toString()));
+    yield put(getHistoryActionFailure(err.toString()));
   }
 }
 
@@ -52,7 +52,7 @@ function* handleSendWithdrawRequest(action: {
     const { uid, wallet, amount, tonMemo, tid } = action.payload;
     yield call(sendWithdrawRequest, uid, wallet, amount, tonMemo, tid); // ⬅️ передаємо
     yield put(sendWithdrawRequestSuccess());
-    yield put(getWithdrawAction(uid));
+    yield put(getHistoryAction(uid));
   } catch (err: any) {
     yield put(sendWithdrawRequestFailure(err.toString()));
   }
@@ -60,6 +60,6 @@ function* handleSendWithdrawRequest(action: {
 
 export function* watchWalletActions() {
   yield takeLatest(createWalletAction.type, handleCreateWallet);
-  yield takeLatest(getWithdrawAction.type, handleGetWithdrawData);
+  yield takeLatest(getHistoryAction.type, handleGetHistoryData);
   yield takeLatest(sendWithdrawRequestAction.type, handleSendWithdrawRequest);
 }
