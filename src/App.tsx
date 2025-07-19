@@ -38,16 +38,16 @@ import { useTranslation } from "react-i18next";
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
 ): UserInitData {
-  if (!userData) {
-    return USER_MOCK_TELEGRAM_DATA;
-  }
-  return {
-    telegramID: userData.id,
-    firstName: userData.first_name,
-    lastName: userData.last_name || "",
-    userName: userData.username || "",
-    language: userData.language_code || "",
-  };
+  // if (!userData) {
+  return USER_MOCK_TELEGRAM_DATA;
+  // }
+  // return {
+  //   telegramID: userData.id,
+  //   firstName: userData.first_name,
+  //   lastName: userData.last_name || "",
+  //   userName: userData.username || "",
+  //   language: userData.language_code || "",
+  // };
 }
 
 const App = () => {
