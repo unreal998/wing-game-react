@@ -30,6 +30,7 @@ export const ModuleNineHalfTen = () => {
           fontSize: "24px",
           fontWeight: "bold",
           textAlign: "center",
+          whiteSpace: "pre-line",
         }}
       >
         {currentModule === 9
