@@ -62,7 +62,15 @@ const Settings = () => {
   }, [isTutorialRestarted]);
 
   useEffect(() => {
-    dispatch(getRoadmapTextAction(i18n.language));
+    const language = i18n.language;
+    const selectedLanguageLabel = language.split("-");
+    dispatch(
+      getRoadmapTextAction(
+        selectedLanguageLabel[0] === "en" || selectedLanguageLabel[0] === "ua"
+          ? selectedLanguageLabel[0]
+          : "en",
+      ),
+    );
   }, [dispatch, i18n.language]);
 
   return (
@@ -156,10 +164,6 @@ const Settings = () => {
               color: "#fff",
             }}
           >
-            {/*{[0, 1, 2, 3, 4, 5, 6]
-              .map((i) => t(`roadmap.text${i === 0 ? "" : i}`))
-              .join("\n\n")}
-               */}
             {roadmapText}
           </Typography>
         </Box>
