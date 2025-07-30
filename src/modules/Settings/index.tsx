@@ -66,7 +66,7 @@ const Settings = () => {
     const selectedLanguageLabel = language.split("-");
     dispatch(
       getRoadmapTextAction(
-        selectedLanguageLabel[0] === "en" || selectedLanguageLabel[0] === "ua"
+        selectedLanguageLabel[0] === "en" || selectedLanguageLabel[0] === "ru"
           ? selectedLanguageLabel[0]
           : "en",
       ),
