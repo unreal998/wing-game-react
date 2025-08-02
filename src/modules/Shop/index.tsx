@@ -277,13 +277,13 @@ const Shop = () => {
             >
               <StyledTab
                 label={`TON ${t("profit")}`}
-                value={0}
+                value={1}
                 key={0}
                 onClick={handleSoundClick}
               />
               <StyledTab
                 label={t("kW profit")}
-                value={1}
+                value={0}
                 key={1}
                 onClick={handleSoundClick}
               />
