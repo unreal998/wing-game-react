@@ -276,14 +276,14 @@ const Shop = () => {
               onChange={handleTabChange}
             >
               <StyledTab
-                label={t("kW profit")}
-                value={0}
+                label={`TON ${t("profit")}`}
+                value={1}
                 key={0}
                 onClick={handleSoundClick}
               />
               <StyledTab
-                label={`TON ${t("profit")}`}
-                value={1}
+                label={t("kW profit")}
+                value={0}
                 key={1}
                 onClick={handleSoundClick}
               />
