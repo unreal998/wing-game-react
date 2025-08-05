@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import ModuleOne from "./components/ModuleOne";
-import { setCurrentModule } from "./slices";
+import { setCurrentModule, setIsTutorialFinished } from "./slices";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentModule, selectIsTutorialFinished } from "./selectors";
 import ModuleTwo from "./components/ModuleTwo";
@@ -18,10 +18,16 @@ export const Tutorial = () => {
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
 
   const handleModuleClick = useCallback(() => {
-    if (!isTutorialFinished && currentModule < 3) {
-      dispatch(setCurrentModule(currentModule + 1));
+    if (!isTutorialFinished) {
+      if (currentModule === 16) {
+        dispatch(setIsTutorialFinished(true));
+      } else if (currentModule < 3) {
+        dispatch(setCurrentModule(currentModule + 1));
+      }
     }
   }, [isTutorialFinished, currentModule, dispatch]);
+
+  if (isTutorialFinished) return null;
 
   return (
     <Box
@@ -104,38 +110,54 @@ export const Tutorial = () => {
           <ModuleSevenEight />
         </Box>
       )}
-      {(currentModule === 9 ||
-        currentModule === 9.5 ||
-        currentModule === 10 ||
-        currentModule === 11 ||
-        currentModule === 12 ||
-        currentModule === 13) && (
-        <Box
-          onClick={() => {
-            if (currentModule === 9) {
-              dispatch(setCurrentModule(9.5));
-            } else if (currentModule === 9.5) {
-              dispatch(setCurrentModule(10));
-            } else if (currentModule === 11) {
-              dispatch(setCurrentModule(12));
-            } else if (currentModule === 13) {
-              dispatch(setCurrentModule(14));
-            }
-          }}
-          width={"100vw"}
-          height={"120vh"}
-          position={"absolute"}
-          bgcolor={`rgba(0, 0, 0, 0.${currentModule === 9 ? "4" : "2"}3)`}
-          top={"-1vh"}
-          sx={{
-            transition: "all 0.2s ease",
-          }}
-        >
-          <ModuleNineHalfTen />
-          <ModuleElevenTwelve />
-          <ModuleThirteen />
-        </Box>
-      )}
+      {!isTutorialFinished &&
+        (currentModule === 9 ||
+          currentModule === 9.5 ||
+          currentModule === 10 ||
+          currentModule === 11 ||
+          currentModule === 11.5 ||
+          currentModule === 12 ||
+          currentModule === 13 ||
+          currentModule === 14 ||
+          currentModule === 15 ||
+          currentModule === 16 ||
+          currentModule === 17) && (
+          <Box
+            onClick={() => {
+              if (currentModule === 9) {
+                dispatch(setCurrentModule(9.5));
+              } else if (currentModule === 9.5) {
+                dispatch(setCurrentModule(10));
+              } else if (currentModule === 11) {
+                dispatch(setCurrentModule(11.5));
+              } else if (currentModule === 11.5) {
+                dispatch(setCurrentModule(12));
+              } else if (currentModule === 13) {
+                dispatch(setCurrentModule(14));
+              } else if (currentModule === 14) {
+                dispatch(setCurrentModule(15));
+              } else if (currentModule === 15) {
+                dispatch(setCurrentModule(16));
+              } else if (currentModule === 16) {
+                dispatch(setCurrentModule(17));
+              } else if (currentModule === 17) {
+                dispatch(setIsTutorialFinished(true));
+              }
+            }}
+            width={"100vw"}
+            height={"120vh"}
+            position={"absolute"}
+            bgcolor={`rgba(0, 0, 0, 0.${currentModule === 9 ? "4" : "2"}3)`}
+            top={"-1vh"}
+            sx={{
+              transition: "all 0.2s ease",
+            }}
+          >
+            <ModuleNineHalfTen />
+            <ModuleElevenTwelve />
+            <ModuleThirteen />
+          </Box>
+        )}
     </Box>
   );
 };

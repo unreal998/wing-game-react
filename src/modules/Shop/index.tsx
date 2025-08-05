@@ -26,7 +26,10 @@ import { ModalComponent } from "../../shared/components/ModalComponent";
 import ModificatorsTable from "./components/ModificatorsTable";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { setCurrentModule } from "../Tutorial/slices";
-import { selectIsTutorialFinished } from "../Tutorial/selectors";
+import {
+  selectCurrentModule,
+  selectIsTutorialFinished,
+} from "../Tutorial/selectors";
 import { updateBalanceAction } from "../Header/slices";
 import { StyledTab } from "../../shared/components/StyledTab";
 import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
@@ -63,7 +66,7 @@ const Shop = () => {
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
   const soundEnabled = useSelector(selectSoundEnabled());
   const [isBuyButtonBlocked, setIsBuyButtonBlocked] = useState(false);
-
+  const currentStep = useSelector(selectCurrentModule());
   const currentCountryCode = selectedCountry?.name;
 
   const handleModalClose = useCallback(() => {
@@ -252,6 +255,24 @@ const Shop = () => {
                   paddingTop: "0px",
                   paddingBottom: "0px",
                 },
+                ...(currentStep === 11.5 && {
+                  animationName: "pulseTopBottom",
+                  animationDuration: "2s",
+                  animationTimingFunction: "ease-in-out",
+                  animationIterationCount: "infinite",
+                  boxShadow: `0 -6px 15px ${MAIN_COLORS.mainGreen}, 0 6px 15px ${MAIN_COLORS.mainGreen}`,
+                  "@keyframes pulseTopBottom": {
+                    "0%": {
+                      boxShadow: `0 -6px 15px ${MAIN_COLORS.mainGreen}, 0 6px 15px ${MAIN_COLORS.mainGreen}`,
+                    },
+                    "50%": {
+                      boxShadow: `0 -10px 30px ${MAIN_COLORS.mainGreen}, 0 10px 30px ${MAIN_COLORS.mainGreen}`,
+                    },
+                    "100%": {
+                      boxShadow: `0 -6px 15px ${MAIN_COLORS.mainGreen}, 0 6px 15px ${MAIN_COLORS.mainGreen}`,
+                    },
+                  },
+                }),
               }}
               onChange={handleWindSlide}
             />

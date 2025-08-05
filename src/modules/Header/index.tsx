@@ -42,8 +42,11 @@ const Header = () => {
 
   const handleSoundClick = useCallback(() => {
     if (soundEnabled) playSound();
+    if (currentModule === 14) {
+      dispatch(setCurrentModule(15));
+    }
     navigate("/settings");
-  }, [playSound, navigate, soundEnabled]);
+  }, [playSound, navigate, soundEnabled, dispatch, currentModule]);
 
   const handleEarthClick = useCallback(() => {
     switch (currentModule) {
@@ -98,7 +101,7 @@ const Header = () => {
   return (
     <Stack
       sx={{
-        zIndex: 100,
+        zIndex: currentModule === 14 ? 999999 : 100,
         marginLeft: "14px",
         marginRight: "14px",
         gap: "12px",
@@ -118,13 +121,42 @@ const Header = () => {
           <Typography sx={{ fontSize: "16px", fontWeight: 400 }}>
             {userData?.userName}
           </Typography>
-          <img
-            src={Gear}
-            width="22px"
-            height="22px"
-            alt="gear"
+          <Box
             onClick={handleSoundClick}
-          />
+            sx={{
+              ...(currentModule === 14 && {
+                borderRadius: "50%",
+                padding: "6px 6px 4px 6px",
+                boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+                animationName: "pulseShadow",
+                animationDuration: "2s",
+                animationTimingFunction: "ease-in-out",
+                animationIterationCount: "infinite",
+                "@keyframes pulseShadow": {
+                  "0%": {
+                    boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+                  },
+                  "50%": {
+                    boxShadow: `0 0 60px ${MAIN_COLORS.mainGreen}`,
+                  },
+                  "100%": {
+                    boxShadow: `0 0 10px ${MAIN_COLORS.mainGreen}`,
+                  },
+                },
+              }),
+            }}
+          >
+            <img
+              src={Gear}
+              width="22px"
+              height="22px"
+              alt="gear"
+              style={{
+                zIndex: 999999,
+                cursor: "pointer",
+              }}
+            />
+          </Box>
         </Stack>
         <Stack direction="row" justifyContent="space-between" gap={"15px"}>
           <StyledFlashBox sx={{ width: "40%" }}>

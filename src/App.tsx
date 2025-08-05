@@ -77,7 +77,7 @@ const App = () => {
     if (userSettings?.isTutorialFinished) {
       dispatch(setIsTutorialFinished(true));
     }
-    if (currentStep === 14) {
+    if (currentStep === 17) {
       dispatch(setIsTutorialFinished(true));
       dispatch(
         updateUserSettingsAction({
