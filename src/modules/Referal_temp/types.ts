@@ -6,4 +6,5 @@ export type ReferalData = {
   WindBalance: number;
   rewardFromClicks: number;
   TONRewardFromClicks: number;
+  telegramID: number;
 };

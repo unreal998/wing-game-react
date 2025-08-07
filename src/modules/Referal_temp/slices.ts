@@ -5,12 +5,18 @@ type ReferalState = {
   referalData: ReferalData[];
   loading: boolean;
   errMessage: string;
+  subReferalLoading: boolean;
+  subReferalData: ReferalData[];
+  selectedSubReferalId: number;
 };
 
 export const initialReferalState: ReferalState = {
   referalData: [],
   loading: false,
   errMessage: "",
+  subReferalLoading: false,
+  subReferalData: [],
+  selectedSubReferalId: 0,
 };
 
 export const referalSlice = createSlice({
@@ -44,6 +50,21 @@ export const referalSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    getSubReferalData: (state, { payload }: { payload: number }) => {
+      state.selectedSubReferalId = payload;
+      state.loading = true;
+    },
+    getSubReferalDataSuccess: (
+      state,
+      { payload }: { payload: ReferalData[] },
+    ) => {
+      state.loading = false;
+      state.subReferalData = payload;
+    },
+    getSubReferalDataFailure: (state, { payload }: { payload: string }) => {
+      state.loading = false;
+      state.errMessage = payload;
+    },
   },
 });
 
@@ -54,6 +75,9 @@ export const {
   buyCountry,
   buyCountrySuccess,
   buyCountryFailure,
+  getSubReferalData,
+  getSubReferalDataFailure,
+  getSubReferalDataSuccess,
 } = referalSlice.actions;
 
 export type ReferalStateType = typeof initialReferalState;

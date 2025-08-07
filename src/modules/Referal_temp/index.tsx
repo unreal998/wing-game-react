@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import { useEffect, useMemo } from "react";
+import { Box, Stack, Typography } from "@mui/material";
+import { useCallback, useEffect, useMemo } from "react";
 import { MAIN_COLORS } from "../../shared/colors";
 import { TableBox } from "./components/TableBox";
 import Male from "../../assets/Male.svg";
@@ -14,8 +14,16 @@ import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCountiresData, selectUserData } from "../Header/selectors";
-import { getReferalDataAction, selectReferalLoading } from "./slices";
-import { selectReferalData } from "./selectors";
+import {
+  getReferalDataAction,
+  getSubReferalData,
+  selectReferalLoading,
+} from "./slices";
+import {
+  selectReferalData,
+  selectSelectedSubReferalId,
+  selectSubReferalData,
+} from "./selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { AreaType } from "../../shared/types";
 import { updateBalanceAction } from "../Header/slices";
@@ -29,6 +37,8 @@ const Referal = () => {
   const userData = useSelector(selectUserData());
   const referalData = useSelector(selectReferalData());
   const countries = useSelector(selectCountiresData());
+  const subReferalData = useSelector(selectSubReferalData());
+  const selectedSubReferalId = useSelector(selectSelectedSubReferalId());
 
   const nextArea = useMemo(() => {
     if (!userData || !countries) return null;
@@ -63,6 +73,13 @@ const Referal = () => {
       dispatch(updateBalanceAction(userData.id));
     }
   }, [dispatch, userData]);
+
+  const handleSubReferals = useCallback(
+    (telegramID: number) => {
+      dispatch(getSubReferalData(telegramID));
+    },
+    [dispatch],
+  );
 
   const tableHeight = useMemo(() => heightProportion - 270, []);
 
@@ -112,29 +129,87 @@ const Referal = () => {
 
           {referalData && referalData.length > 0 ? (
             referalData.map((user, index) => (
-              <TableBox key={index}>
-                <StyledMainJpg sx={{ flex: 1.6 }}>
-                  <img src={Male} alt="male" style={commonImgStyle} />
-                  <StyledReferalTypography>
-                    {user.userName || user.firstName || user.lastName || " "}
-                  </StyledReferalTypography>
-                </StyledMainJpg>
-
-                {[user.rewardFromClicks, user.TONRewardFromClicks].map(
-                  (value, idx) => (
-                    <StyledReferalTypography
-                      sx={
-                        idx === 1
-                          ? { color: MAIN_COLORS.mainGreen, fontWeight: "600" }
-                          : {}
-                      }
-                      flex={0.7}
-                    >
-                      {value.toFixed(2)}
+              <Stack alignItems={"center"} width={"100%"}>
+                <TableBox
+                  onClick={() =>
+                    handleSubReferals(
+                      user.telegramID === selectedSubReferalId
+                        ? 0
+                        : user.telegramID,
+                    )
+                  }
+                  width="93%"
+                  key={index}
+                >
+                  <StyledMainJpg sx={{ flex: 1.6 }}>
+                    <img src={Male} alt="male" style={commonImgStyle} />
+                    <StyledReferalTypography>
+                      {user.userName || user.firstName || user.lastName || " "}
                     </StyledReferalTypography>
-                  ),
-                )}
-              </TableBox>
+                  </StyledMainJpg>
+
+                  {[user.rewardFromClicks, user.TONRewardFromClicks].map(
+                    (value, idx) => (
+                      <StyledReferalTypography
+                        sx={
+                          idx === 1
+                            ? {
+                                color: MAIN_COLORS.mainGreen,
+                                fontWeight: "600",
+                              }
+                            : {}
+                        }
+                        flex={0.7}
+                      >
+                        {value.toFixed(2)}
+                      </StyledReferalTypography>
+                    ),
+                  )}
+                </TableBox>
+                <Box
+                  sx={{
+                    display:
+                      selectedSubReferalId === user.telegramID
+                        ? "block"
+                        : "none",
+                    backgroundColor: MAIN_COLORS.sectionBG,
+                    width: "95%",
+                    marginTop: "5px",
+                  }}
+                >
+                  {subReferalData.map((user, index) => (
+                    <TableBox key={index}>
+                      <StyledMainJpg sx={{ flex: 1.6 }}>
+                        <img src={Male} alt="male" style={commonImgStyle} />
+                        <StyledReferalTypography>
+                          {user.userName ||
+                            user.firstName ||
+                            user.lastName ||
+                            " "}
+                        </StyledReferalTypography>
+                      </StyledMainJpg>
+
+                      {[user.rewardFromClicks, user.TONRewardFromClicks].map(
+                        (value, idx) => (
+                          <StyledReferalTypography
+                            sx={
+                              idx === 1
+                                ? {
+                                    color: MAIN_COLORS.mainGreen,
+                                    fontWeight: "600",
+                                  }
+                                : {}
+                            }
+                            flex={0.7}
+                          >
+                            {(value / 2).toFixed(2)}
+                          </StyledReferalTypography>
+                        ),
+                      )}
+                    </TableBox>
+                  ))}
+                </Box>
+              </Stack>
             ))
           ) : (
             <Typography sx={{ textAlign: "center", padding: "20px" }}>

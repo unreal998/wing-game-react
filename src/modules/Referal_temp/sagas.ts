@@ -6,6 +6,9 @@ import {
   getReferalDataAction,
   getReferalDataActionFailure,
   getReferalDataActionSuccess,
+  getSubReferalData,
+  getSubReferalDataFailure,
+  getSubReferalDataSuccess,
 } from "./slices";
 import { fetchBuyCountryData, fetchReferalsData } from "./api";
 import { ReferalData } from "./types";
@@ -41,7 +44,20 @@ function* handleBuyCountryData(action: {
   }
 }
 
+function* handleGetSubReferalData(action: { type: string; payload: string }) {
+  try {
+    const referalsDatas: ReferalData[] = yield call(
+      fetchReferalsData,
+      action.payload,
+    );
+    yield put(getSubReferalDataSuccess(referalsDatas));
+  } catch (err: any) {
+    yield put(getSubReferalDataFailure(err.toString()));
+  }
+}
+
 export function* watchReferalActions() {
   yield takeLatest(getReferalDataAction.type, handleReferalData);
   yield takeLatest(buyCountry.type, handleBuyCountryData);
+  yield takeLatest(getSubReferalData.type, handleGetSubReferalData);
 }
