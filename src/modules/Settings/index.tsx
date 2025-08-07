@@ -55,6 +55,10 @@ const Settings = () => {
     dispatch(restartTutorialRequest(userId));
   };
 
+  const handleSupportButton = () => {
+    window.location.href = "https://t.me/helen_blackangel";
+  };
+
   useEffect(() => {
     if (isTutorialRestarted) {
       window.location.href = "/";
@@ -111,16 +115,24 @@ const Settings = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "flex-start",
+            justifyContent: "space-between",
           }}
         >
           <PopUpMainButton
             onClick={handleRestartTutorial}
             sx={{
-              width: "60%",
+              width: "45%",
             }}
           >
             {t("repeatTutorial")}
+          </PopUpMainButton>
+          <PopUpMainButton
+            onClick={handleSupportButton}
+            sx={{
+              width: "45%",
+            }}
+          >
+            {t("support")}
           </PopUpMainButton>
         </Box>
       </StyledBasicBox>

@@ -92,7 +92,7 @@ const Shop = () => {
 
   useEffect(() => {
     dispatch(setWindValue(0));
-    if (selectedCountry) {
+    if (selectedCountry.name) {
       dispatch(getShopDataByArea(selectedCountry.name));
     }
     if (userData !== null) {
