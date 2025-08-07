@@ -276,7 +276,7 @@ const Shop = () => {
             />
           </Box>
         </Stack>
-        {!isBuyButtonBlocked && (
+        {
           <TabContext value={tab}>
             <TabList
               sx={{
@@ -355,49 +355,7 @@ const Shop = () => {
                 </Typography>
               ))}
           </TabContext>
-        )}
-        {isBuyButtonBlocked && countries && (
-          <Box
-            sx={{
-              backgroundColor: MAIN_COLORS.appBG,
-              padding: "6px",
-              borderRadius: "12px",
-              zIndex: 100,
-            }}
-          >
-            <Stack
-              sx={{
-                direction: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: MAIN_COLORS.sectionBG,
-                gap: "8px",
-                height: `${tableHeight}px`,
-                "@media (max-width: 430px) and (max-height: 932px)": {
-                  height: "240px",
-                },
-              }}
-            >
-              <Typography
-                textAlign="center"
-                fontSize="20px"
-                fontWeight={600}
-                color="white"
-              >
-                {t("shopWarningTitle")}
-              </Typography>
-              <Typography
-                textAlign="center"
-                fontSize="16px"
-                fontWeight={600}
-                color="white"
-              >
-                {t("shopWarningMessage")} {t("lockedCountryContent3")}:{" "}
-                {t(countries[Math.ceil(+(windValue / 4) - 1)]?.title) || ""}
-              </Typography>
-            </Stack>
-          </Box>
-        )}
+        }
         <ModalComponent
           openModal={lowBalanceModalOpen}
           title={t("lowBalance")}

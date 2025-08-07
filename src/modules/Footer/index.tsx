@@ -64,6 +64,7 @@ const Footer = () => {
   const shopValues = useSelector(selectShopData());
   const countries = useSelector(selectCountiresData());
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [isBlockedCountryOpen, setIsBlockedCountryOpen] = useState(false);
 
   useEffect(() => {
     if (
@@ -360,13 +361,22 @@ const Footer = () => {
             </Typography>
           </GameButtonComponent>
         )}
-        {location.pathname === "/shop" && (
+        {location.pathname === "/shop" && countries && (
           <>
             <GameButtonComponent
-              onClick={() => setConfirmOpen(true)}
-              disabled={windValue === 0 || windValue > currentAviailableMods}
+              onClick={() => {
+                if (windValue > currentAviailableMods) {
+                  setIsBlockedCountryOpen(true);
+                } else {
+                  setConfirmOpen(true);
+                }
+              }}
+              disabled={windValue === 0}
               sx={{
-                backgroundColor: MAIN_COLORS.mainGreen,
+                backgroundColor:
+                  windValue > currentAviailableMods
+                    ? MAIN_COLORS.disabledButtonBGColor
+                    : MAIN_COLORS.mainGreen,
                 cursor: windValue === 0 ? "not-allowed" : "pointer",
                 margin: "15px",
                 width: "93%",
@@ -401,6 +411,18 @@ const Footer = () => {
                   {t("Buy")}
                 </PopUpMainButton>
               }
+            />
+            <ModalComponent
+              title={t("shopWarningTitle")}
+              subtitle={
+                t("shopWarningMessage") +
+                " " +
+                t("lockedCountryContent3") +
+                ": " +
+                t(countries[Math.ceil(+(windValue / 4) - 1)]?.title)
+              }
+              openModal={isBlockedCountryOpen}
+              handleCloseModal={() => setIsBlockedCountryOpen(false)}
             />
           </>
         )}
