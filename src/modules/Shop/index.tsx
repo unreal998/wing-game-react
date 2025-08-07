@@ -44,7 +44,7 @@ const Shop = () => {
     () => [
       { label: t("Profit per click"), multiplier: 63 },
       { label: t("Profit per day"), multiplier: 21 },
-      { label: t("Profit per week"), multiplier: 7 },
+      { label: t("Profit per week"), multiplier: 3 },
       { label: t("Full profit"), multiplier: 1 },
     ],
     [t],
