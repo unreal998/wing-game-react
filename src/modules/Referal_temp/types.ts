@@ -5,4 +5,5 @@ export type ReferalData = {
   lvl: number;
   WindBalance: number;
   rewardFromClicks: number;
+  TONRewardFromClicks: number;
 };

@@ -120,18 +120,20 @@ const Referal = () => {
                   </StyledReferalTypography>
                 </StyledMainJpg>
 
-                {[user.rewardFromClicks].map((value, idx) => (
-                  <StyledReferalTypography
-                    sx={
-                      idx === 1
-                        ? { color: MAIN_COLORS.mainGreen, fontWeight: "600" }
-                        : {}
-                    }
-                    flex={0.7}
-                  >
-                    {value.toFixed(2)}
-                  </StyledReferalTypography>
-                ))}
+                {[user.rewardFromClicks, user.TONRewardFromClicks].map(
+                  (value, idx) => (
+                    <StyledReferalTypography
+                      sx={
+                        idx === 1
+                          ? { color: MAIN_COLORS.mainGreen, fontWeight: "600" }
+                          : {}
+                      }
+                      flex={0.7}
+                    >
+                      {value.toFixed(2)}
+                    </StyledReferalTypography>
+                  ),
+                )}
               </TableBox>
             ))
           ) : (
