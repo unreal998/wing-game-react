@@ -98,7 +98,7 @@ const Referal = () => {
           }}
         >
           <TableBox>
-            {["User", "Coin"].map((item, index) => (
+            {["User", "Coin", "TON"].map((item, index) => (
               <StyledHeader
                 key={index}
                 sx={{

@@ -91,19 +91,17 @@ const Shop = () => {
   const tableHeight = useMemo(() => heightProportion - 280, []);
 
   useEffect(() => {
+    dispatch(setWindValue(0));
+    if (selectedCountry) {
+      dispatch(getShopDataByArea(selectedCountry.name));
+    }
     if (userData !== null) {
       dispatch(updateBalanceAction(userData.id));
     }
-  }, [dispatch, userData]);
+  }, [dispatch, userData, selectedCountry]);
 
   useEffect(() => {
-    dispatch(setWindValue(0));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!shopValues?.length) {
-      dispatch(getShopDataByArea(selectedCountry.name));
-    } else {
+    if (shopValues?.length) {
       const shopMarksFromModificator = shopValues.map((mark, index) => {
         return {
           title: index + 1,
@@ -116,7 +114,7 @@ const Shop = () => {
         ...shopMarksFromModificator,
       ]);
     }
-  }, [shopValues, dispatch, selectedCountry]);
+  }, [shopValues]);
 
   const [playSound] = useSound(FooterButtonPress);
 
