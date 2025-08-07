@@ -3,7 +3,7 @@
 export const SERVER_URL = "https://01767df04bf7.ngrok-free.app";
 
 export const USER_MOCK_TELEGRAM_DATA = {
-  telegramID: 820018851,
+  telegramID: 123456789,
   firstName: "John",
   lastName: "Doe",
   userName: "john_doe",
