@@ -148,7 +148,7 @@ const Shop = () => {
       if (currentShopIndex) {
         setSelectedScruberPosition(currentShopIndex.level - 1);
       }
-      console.log(currentAviailableMods, newSlideValue);
+
       if (newSlideValue > currentAviailableMods) {
         setIsBuyButtonBlocked(true);
         return;

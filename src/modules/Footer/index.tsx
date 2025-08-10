@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../shared/colors";
 import { StyledFooterBoxes } from "./componets/StyledFooterBoxes";
 import { StyledFooterBoxesTypography } from "./componets/StyledFooterBoxesTypography";
@@ -42,6 +42,7 @@ import { selectShopData, selectWindValue } from "../Shop/selectors";
 import { selectSoundEnabled } from "../Settings/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
+import { countryFlags } from "../Shop/components/flag";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -409,15 +410,36 @@ const Footer = () => {
             <ModalComponent
               title={t("shopWarningTitle")}
               subtitle={
-                t("shopWarningMessage") +
-                " " +
-                t("lockedCountryContent3") +
-                ": " +
-                t(
-                  countries.find(
-                    (countrie) => countrie.id === Math.ceil(+(windValue / 4)),
-                  )?.title || "",
-                )
+                <Stack direction="column" gap="5px">
+                  <Typography>
+                    {t("shopWarningMessage") +
+                      " " +
+                      t("lockedCountryContent3") +
+                      ": "}
+                  </Typography>
+                  <Stack direction="row" gap="5px" justifyContent="center">
+                    <Avatar
+                      src={
+                        countryFlags[
+                          (countries.find(
+                            (countrie) =>
+                              countrie.id === Math.ceil(+(windValue / 4)),
+                          )?.shortName as keyof typeof countryFlags) || "nl"
+                        ]
+                      }
+                      alt={"flag"}
+                      sx={{ width: 24, height: 24 }}
+                    />
+                    <Typography>
+                      {t(
+                        countries.find(
+                          (countrie) =>
+                            countrie.id === Math.ceil(+(windValue / 4)),
+                        )?.title || "",
+                      )}
+                    </Typography>
+                  </Stack>
+                </Stack>
               }
               openModal={isBlockedCountryOpen}
               handleCloseModal={() => setIsBlockedCountryOpen(false)}

@@ -26,20 +26,42 @@ export const LockedCountryModal: React.FC<Props> = ({
 
   const countriesForUnlock = useMemo(() => {
     if (selectedCountry && countries) {
-      const countryIndex = countries.findIndex(
-        (country) => country.shortName === selectedCountry.shortName,
-      );
+      const countryIndex =
+        countries.find(
+          (country) => country.shortName === selectedCountry.shortName,
+        )?.id || 1;
       const countriesForUnlock = userData?.areas.filter((area, index) => {
-        return index < countryIndex && !area.bought && !area.available;
+        return index < countryIndex - 1 && !area.bought && !area.available;
       });
-      return countriesForUnlock?.map((area) => {
-        return t(
-          countries.find((country) => country.shortName === area.name)?.title ||
-            "",
-        );
-      });
+      return countriesForUnlock;
     }
   }, [countries, selectedCountry, userData]);
+
+  const countriesForUnlockNames = useMemo(() => {
+    if (countriesForUnlock && countries) {
+      const countriesNamesArray = countriesForUnlock.map((area) => {
+        const countrieItem = countries.find(
+          (country) => country.shortName === area.name,
+        );
+        return t(countrieItem?.title || "");
+      });
+      return countriesNamesArray.join(" ");
+    }
+    return "";
+  }, [countriesForUnlock, countries]);
+
+  const countriesForUnlockPrice = useMemo(() => {
+    if (countriesForUnlock && countries) {
+      const countriesPrice = countriesForUnlock.map((area) => {
+        const countrieItem = countries.find(
+          (country) => country.shortName === area.name,
+        );
+        return countrieItem?.unlockPrice || 0;
+      });
+      return countriesPrice.reduce((sum, price) => sum + price, 0);
+    }
+    return 0;
+  }, [countriesForUnlock, countries]);
 
   return (
     <ModalComponent
@@ -49,7 +71,7 @@ export const LockedCountryModal: React.FC<Props> = ({
       subtitle={`
                 ${t("lockedCountryContent")}: ${(selectedCountry?.referalsToUnlock || 0) - (userData?.referals?.length || 0)} ${t("lockedCountryContent1")} ${t(selectedCountry?.title || "")}\n
                 ${t(selectedCountry?.title || "")} ${t("lockedCountryContent2")}: ${selectedCountry?.basicBonusPerClick} ${t("lockedCountryContent2.1")} ${t("lockedCountryContent2.2")} 
-                ${countriesForUnlock?.length ? `\n ${t("lockedCountryContent3")}: ${countriesForUnlock?.join(" ")} ${t("lockedCountryContent3.1")} ${t(selectedCountry?.title || "")}` : ""}`}
+                ${countriesForUnlockNames ? `\n ${t("lockedCountryContent3")}: ${countriesForUnlockNames} ${t("lockedCountryContent3.1")} ${t(selectedCountry?.title || "")} ${t("for")} ${countriesForUnlockPrice} TON` : ""}`}
       contentAlign="left"
     ></ModalComponent>
   );

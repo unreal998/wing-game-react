@@ -146,5 +146,6 @@
   "errTitle": "Oops, something went wrong",
   "To refill your balance, use the address below": "To refill your balance, use the address below",
   "getReward": "Reward",
-  "invalidWallet": "Invalid wallet address"
+  "invalidWallet": "Invalid wallet address",
+  "for": "for the"
 }

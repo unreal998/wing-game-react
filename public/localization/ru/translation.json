@@ -137,7 +137,7 @@
   "lockedCountryContent2": " даст вам",
   "lockedCountryContent2.1": " квт за клик",
   "lockedCountryContent2.2": " и откроет доступ к новым возможностям в магазине",
-  "lockedCountryContent3": "Вам нужно преобрести",
+  "lockedCountryContent3": "Вам нужно приобрести",
   "lockedCountryContent3.1": " чтобы открыть",
   "shopWarningMessage": "Чтобы получить доступ к данной секции товаров.",
   "shopWarningTitle": "Товар недоступен !",
@@ -146,5 +146,6 @@
   "errTitle": "Упс, что-то пошло не так",
   "To refill your balance, use the address below": "Чтобы пополнить баланс, используйте адрес ниже",
   "getReward": "Награда",
-  "invalidWallet": "Неверный кошелек"
+  "invalidWallet": "Неверный кошелек",
+  "for": "за"
 }

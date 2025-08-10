@@ -18,7 +18,7 @@ type ModalComponentPropsType = {
   openModal: boolean;
   handleCloseModal: () => void;
   title: string;
-  subtitle: string;
+  subtitle: string | ReactNode;
   additionalbutton?: ReactNode;
   contentAlign?: "left" | "center" | "right";
 };
@@ -74,14 +74,17 @@ export const ModalComponent = ({
           lineBreak: "normal",
         }}
       >
-        <Typography textAlign={contentAlign || "center"}>
-          {subtitle.split("\n").map((line, index) => (
-            <span key={index}>
-              {line}
-              <br />
-            </span>
-          ))}
-        </Typography>
+        {typeof subtitle === "string" && (
+          <Typography textAlign={contentAlign || "center"}>
+            {subtitle.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
+          </Typography>
+        )}
+        {typeof subtitle !== "string" && subtitle}
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
         <PopUpSeccondaryButton
