@@ -133,6 +133,7 @@ const Referal = () => {
               <Stack alignItems={"center"} width={"100%"} position="relative">
                 <TableBox
                   onClick={() =>
+                    user.referals.length > 0 &&
                     handleSubReferals(
                       user.telegramID === selectedSubReferalId
                         ? 0
