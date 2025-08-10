@@ -73,5 +73,6 @@ export type County = {
   referalsToUnlock: number;
   shortName: string;
   title: string;
+  id: number;
   unlockPrice: number;
 };
