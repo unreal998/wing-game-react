@@ -183,13 +183,7 @@ const Footer = () => {
       const lastBoughtCountry = userData.areas.filter(
         (area) => area.bought && area.available,
       );
-      const currentCountryIndex = countries.findIndex((countrie) => {
-        return (
-          countrie.shortName ===
-          lastBoughtCountry[lastBoughtCountry.length - 1].name
-        );
-      });
-      return (currentCountryIndex + 1) * 4;
+      return lastBoughtCountry.length * 4;
     }
     return 0;
   }, [shopValues, userData]);
