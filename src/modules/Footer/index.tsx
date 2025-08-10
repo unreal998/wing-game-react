@@ -419,7 +419,11 @@ const Footer = () => {
                 " " +
                 t("lockedCountryContent3") +
                 ": " +
-                t(countries[Math.ceil(+(windValue / 4) - 1)]?.title)
+                t(
+                  countries.find(
+                    (countrie) => countrie.id === Math.ceil(+(windValue / 4)),
+                  )?.title || "",
+                )
               }
               openModal={isBlockedCountryOpen}
               handleCloseModal={() => setIsBlockedCountryOpen(false)}
