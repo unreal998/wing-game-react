@@ -5,6 +5,7 @@ import { TableBox } from "./components/TableBox";
 import Male from "../../assets/Male.svg";
 import { StyledHeader } from "./components/StyledHeader";
 import { StyledReferalTypography } from "./components/StyledReferalTypography";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { StyledMainJpg } from "./components/StyledMainJpg";
 import { heightProportion } from "../../shared/utils";
 import { InfoBox } from "../../shared/components/InfoBox";
@@ -129,7 +130,7 @@ const Referal = () => {
 
           {referalData && referalData.length > 0 ? (
             referalData.map((user, index) => (
-              <Stack alignItems={"center"} width={"100%"}>
+              <Stack alignItems={"center"} width={"100%"} position="relative">
                 <TableBox
                   onClick={() =>
                     handleSubReferals(
@@ -164,6 +165,26 @@ const Referal = () => {
                         {value.toFixed(2)}
                       </StyledReferalTypography>
                     ),
+                  )}
+                  {user.referals.length > 0 && (
+                    <Box
+                      sx={{
+                        width: "24px",
+                        height: "24px",
+                        position: "absolute",
+                        right: "7px",
+                        top: "6px",
+                      }}
+                    >
+                      <KeyboardArrowDownIcon
+                        sx={{
+                          transform:
+                            selectedSubReferalId === user.telegramID
+                              ? "rotate(180deg)"
+                              : "",
+                        }}
+                      />
+                    </Box>
                   )}
                 </TableBox>
                 <Box

@@ -7,4 +7,5 @@ export type ReferalData = {
   rewardFromClicks: number;
   TONRewardFromClicks: number;
   telegramID: number;
+  referals: number[];
 };
