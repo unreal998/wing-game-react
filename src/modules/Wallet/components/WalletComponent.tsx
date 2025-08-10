@@ -3,6 +3,7 @@ import { WalletContentBox } from "./WalletContentBox";
 import { MAIN_COLORS } from "../../../shared/colors";
 import { WalletTypography } from "./WalletTypography";
 import Copy from "../../../assets/copy.svg";
+import Checkmark from "../../../assets/checkmark.png";
 import TON from "../../../assets/ton.png";
 import { useTranslation } from "react-i18next";
 import { GameButtonComponent } from "../../../shared/components/GameButtonComponent";
@@ -10,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createWalletAction } from "../slices";
 import { selectUserData } from "../../Header/selectors";
 import { selectWalletNumber } from "../selectors";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { StyledInputBox } from "../../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../../Referal_temp/components/StyledInput";
 
@@ -19,6 +20,7 @@ export const WalletComponent = () => {
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData());
   const walletNumber = useSelector(selectWalletNumber());
+  const [isClicked, setIsClicked] = useState(false);
 
   const handleAddWalletClick = () => {
     if (userData) {
@@ -26,7 +28,13 @@ export const WalletComponent = () => {
     }
   };
 
+  const throttleMarkIcon = useCallback(() => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 3000);
+  }, []);
+
   const handleCopyClick = useCallback(() => {
+    throttleMarkIcon();
     if (walletNumber) {
       navigator.clipboard
         .writeText(walletNumber)
@@ -81,7 +89,7 @@ export const WalletComponent = () => {
                   </StyledInputBox>
                   <img
                     onClick={handleCopyClick}
-                    src={Copy}
+                    src={isClicked ? Checkmark : Copy}
                     alt="Copy"
                     style={{ width: "16px", height: "16px", cursor: "pointer" }}
                   />

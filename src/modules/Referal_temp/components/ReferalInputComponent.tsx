@@ -15,7 +15,7 @@ export const ReferalInputComponent = () => {
   const [isClicked, setIsClicked] = useState(false);
 
   const referalLink = useMemo(() => {
-    let urlString = `https://t.me/WindGameAppWrapperBot?start=r_`;
+    let urlString = `https://t.me/TurbinexAppBot?start=r_`;
     if (userData) {
       return `${urlString}${userData.telegramID}`;
     }
