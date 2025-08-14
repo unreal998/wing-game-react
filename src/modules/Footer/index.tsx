@@ -279,7 +279,7 @@ const Footer = () => {
                     },
                   }}
                 >
-                  + {(+incomeData.tonIncome).toFixed(2)} TON
+                  + {(+incomeData.tonIncome).toFixed(3)} TON
                 </Typography>
               </Box>
             </Stack>
