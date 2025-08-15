@@ -56,7 +56,7 @@ const Settings = () => {
   };
 
   const handleSupportButton = () => {
-    window.location.href = "https://t.me/helen_blackangel";
+    window.location.href = "https://t.me/turbinex_official";
   };
 
   useEffect(() => {
