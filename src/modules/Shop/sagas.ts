@@ -7,14 +7,14 @@ import {
   buyItemActionSuccess,
 } from "./slices";
 import { fetchBuyItem, fetchShopData } from "./api";
-import { BuyItemType, ShopValues } from "./types";
+import { BuyItemType, ShopData } from "./types";
 import { UserData } from "../../shared/types";
 import { initActionSuccess } from "../Header/slices";
 import { setSelectedCountry } from "../Home/slices";
 
 function* handleShopScreenAction(action: { type: string; payload: string }) {
   try {
-    const shopValues: ShopValues[] = yield call(fetchShopData, action.payload);
+    const shopValues: ShopData[] = yield call(fetchShopData, action.payload);
     yield put(getShopDataByAreaSuccess(shopValues));
   } catch (err: any) {
     yield put(getShopDataByAreaFailure(err.toString()));

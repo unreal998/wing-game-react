@@ -4,6 +4,13 @@ export type ShopValues = {
   turxValue: number;
 };
 
+export type ShopData = {
+  area: string;
+  created_at: string;
+  id: number;
+  values: ShopValues[];
+};
+
 export type BuyItemType = {
   windSpeed: number;
   selectedArea: string;

@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BuyItemType, ShopValues } from "./types";
+import { BuyItemType, ShopData, ShopValues } from "./types";
 
 type ShopState = {
   loading: boolean;
-  values: ShopValues[];
+  values: ShopData[];
   message: string;
   windValue: number;
   lowBalanceModalOpen: boolean;
@@ -21,13 +21,10 @@ export const shopSlice = createSlice({
   name: "shopSlice",
   initialState: initialShopState,
   reducers: {
-    getShopDataByArea: (state, { payload }: { payload: string }) => {
+    getShopDataByArea: (state) => {
       state.loading = true;
     },
-    getShopDataByAreaSuccess: (
-      state,
-      { payload }: { payload: ShopValues[] },
-    ) => {
+    getShopDataByAreaSuccess: (state, { payload }: { payload: ShopData[] }) => {
       state.loading = false;
       state.values = payload;
     },

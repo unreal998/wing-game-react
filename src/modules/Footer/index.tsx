@@ -43,6 +43,7 @@ import { selectSoundEnabled } from "../Settings/selectors";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { countryFlags } from "../Shop/components/flag";
+import { ShopValues } from "../Shop/types";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -66,6 +67,14 @@ const Footer = () => {
   const countries = useSelector(selectCountiresData());
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [isBlockedCountryOpen, setIsBlockedCountryOpen] = useState(false);
+
+  const convertedShopValues: ShopValues[] = useMemo(() => {
+    const valuesData: ShopValues[] = [];
+    shopValues.forEach((shopValues) => {
+      valuesData.push(...shopValues.values);
+    });
+    return valuesData;
+  }, [shopValues]);
 
   useEffect(() => {
     if (
@@ -128,7 +137,7 @@ const Footer = () => {
   ]);
 
   const buyModifier = useCallback(() => {
-    const currentPrice = shopValues.find(
+    const currentPrice = convertedShopValues.find(
       (value, index) => index === windValue - 1,
     )?.price;
     if (currentPrice === undefined) return;
@@ -181,10 +190,10 @@ const Footer = () => {
 
   const currentAviailableMods = useMemo(() => {
     if (countries && userData) {
-      const lastBoughtCountry = userData.areas.filter(
-        (area) => area.bought && area.available,
-      );
-      return lastBoughtCountry.length * 4;
+      const lastBoughtCountry =
+        userData.areas.findIndex((area) => area.name === selectedCountry.name) +
+        1;
+      return lastBoughtCountry * 4;
     }
     return 0;
   }, [shopValues, userData]);
@@ -360,7 +369,10 @@ const Footer = () => {
           <>
             <GameButtonComponent
               onClick={() => {
-                if (windValue > currentAviailableMods) {
+                if (
+                  windValue > currentAviailableMods ||
+                  windValue < currentAviailableMods - 4
+                ) {
                   setIsBlockedCountryOpen(true);
                 } else {
                   setConfirmOpen(true);
@@ -369,7 +381,8 @@ const Footer = () => {
               disabled={windValue === 0}
               sx={{
                 backgroundColor:
-                  windValue > currentAviailableMods
+                  windValue > currentAviailableMods ||
+                  windValue < currentAviailableMods - 4
                     ? MAIN_COLORS.disabledButtonBGColor
                     : MAIN_COLORS.mainGreen,
                 cursor: windValue === 0 ? "not-allowed" : "pointer",
@@ -389,7 +402,7 @@ const Footer = () => {
                 t("Do you whant to buy:") +
                 windValue +
                 t(" for ") +
-                (shopValues[windValue - 1]?.price || 0) +
+                (convertedShopValues[windValue - 1]?.price || 0) +
                 " TON"
               }
               openModal={confirmOpen}

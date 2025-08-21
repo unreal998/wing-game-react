@@ -37,6 +37,7 @@ import { StyledInput } from "../Referal_temp/components/StyledInput";
 import { countryFlags } from "./components/flag";
 import { selectSoundEnabled } from "../Settings/selectors";
 import { heightProportion } from "../../shared/utils";
+import { ShopData, ShopValues } from "./types";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -65,7 +66,6 @@ const Shop = () => {
   >([]);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
   const soundEnabled = useSelector(selectSoundEnabled());
-  const [isBuyButtonBlocked, setIsBuyButtonBlocked] = useState(false);
   const currentStep = useSelector(selectCurrentModule());
   const currentCountryCode = selectedCountry?.name;
 
@@ -77,23 +77,36 @@ const Shop = () => {
     setTab(newValue);
   };
 
+  const convertedShopValues: ShopValues[] = useMemo(() => {
+    const valuesData: ShopValues[] = [];
+    shopValues.forEach((shopValues) => {
+      valuesData.push(...shopValues.values);
+    });
+    return valuesData;
+  }, [shopValues]);
+
   const selectedWindPowerIncome = useMemo(() => {
-    return (
-      shopValues.find((value, index) => index === windValue - 1) || {
+    if (convertedShopValues) {
+      return (
+        convertedShopValues.find((value, index) => index === windValue - 1) || {
+          tonValue: 0,
+          turxValue: 0,
+          price: 0,
+        }
+      );
+    } else {
+      return {
         tonValue: 0,
         turxValue: 0,
         price: 0,
-        speed: 0,
-      }
-    );
-  }, [shopValues, windValue]);
-
-  const tableHeight = useMemo(() => heightProportion - 280, []);
+      };
+    }
+  }, [convertedShopValues, windValue]);
 
   useEffect(() => {
     dispatch(setWindValue(0));
     if (selectedCountry.name) {
-      dispatch(getShopDataByArea(selectedCountry.name));
+      dispatch(getShopDataByArea());
     }
     if (userData !== null) {
       dispatch(updateBalanceAction(userData.id));
@@ -102,13 +115,15 @@ const Shop = () => {
 
   useEffect(() => {
     if (shopValues?.length) {
-      const shopMarksFromModificator = shopValues.map((mark, index) => {
-        return {
-          title: index + 1,
-          value: index + 1,
-          level: index + 1,
-        };
-      });
+      const shopMarksFromModificator = convertedShopValues.map(
+        (mark, index) => {
+          return {
+            title: index + 1,
+            value: index + 1,
+            level: index + 1,
+          };
+        },
+      );
       setShopMarks([
         { title: 0, value: 0, level: 0 },
         ...shopMarksFromModificator,
@@ -147,13 +162,6 @@ const Shop = () => {
       );
       if (currentShopIndex) {
         setSelectedScruberPosition(currentShopIndex.level - 1);
-      }
-
-      if (newSlideValue > currentAviailableMods) {
-        setIsBuyButtonBlocked(true);
-        return;
-      } else {
-        setIsBuyButtonBlocked(false);
       }
     },
     [dispatch, shopMarks, currentAviailableMods],
@@ -228,8 +236,8 @@ const Shop = () => {
                   value={
                     (windValue === 0
                       ? 0
-                      : shopValues[selectedScruberPosition]?.price || 0) +
-                    " TON"
+                      : convertedShopValues[selectedScruberPosition]?.price ||
+                        0) + " TON"
                   }
                   readOnly
                 />
