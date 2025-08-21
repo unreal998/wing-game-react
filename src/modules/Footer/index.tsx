@@ -427,7 +427,9 @@ const Footer = () => {
                   <Typography>
                     {t("shopWarningMessage") +
                       " " +
-                      t("lockedCountryContent3") +
+                      (windValue > currentAviailableMods
+                        ? t("lockedCountryContent3")
+                        : t("lockedCountryContent3.2")) +
                       ": "}
                   </Typography>
                   <Stack direction="row" gap="5px" justifyContent="center">
