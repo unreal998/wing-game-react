@@ -291,7 +291,7 @@ const Footer = () => {
                     },
                   }}
                 >
-                  + {(+incomeData.kwtIncome).toFixed(2)} {t("kW")}
+                  + {Math.floor(+incomeData.kwtIncome * 1000) / 1000} {t("kW")}
                 </Typography>
 
                 <Typography
@@ -303,7 +303,7 @@ const Footer = () => {
                     },
                   }}
                 >
-                  + {(+incomeData.tonIncome).toFixed(3)} TON
+                  + {Math.floor(+incomeData.tonIncome * 1000) / 1000} TON
                 </Typography>
               </Box>
             </Stack>

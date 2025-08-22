@@ -90,7 +90,7 @@ const ModificatorsTable: React.FC<ModificatorsTableProps> = ({ modifiers }) => {
             >
               <TableCellShop>{index + 1}</TableCellShop>
               <TableCellShop>{mod.speed}</TableCellShop>
-              <TableCellShop>{mod.clicksRemaining} clicks</TableCellShop>
+              <TableCellShop>{mod.clicksRemaining}</TableCellShop>
               <TableCellShop>
                 {new Date(mod.boughtDate || 0).toLocaleDateString()}
               </TableCellShop>

@@ -106,7 +106,7 @@
   "USA": "США",
   "Germany": "Германия",
   "Energy Flow": "Энергетический поток",
-  "Clicks Remain": "Осталось кликов",
+  "Clicks Remain": "Осталось нажатий",
   "Bought Date": "Дата покупки",
   "kW profit": "Прибыль в кВт",
   "Profit per click": "Прибыль за клик",
@@ -148,5 +148,6 @@
   "To refill your balance, use the address below": "Чтобы пополнить баланс, используйте адрес ниже",
   "getReward": "Награда",
   "invalidWallet": "Неверный кошелек",
-  "for": "за"
+  "for": "за",
+  "clicks": "нажатий"
 }
