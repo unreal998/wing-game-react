@@ -36,8 +36,7 @@ import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 import { countryFlags } from "./components/flag";
 import { selectSoundEnabled } from "../Settings/selectors";
-import { heightProportion } from "../../shared/utils";
-import { ShopData, ShopValues } from "./types";
+import { ShopValues } from "./types";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -82,6 +81,7 @@ const Shop = () => {
     shopValues.forEach((shopValues) => {
       valuesData.push(...shopValues.values);
     });
+    valuesData.sort((a, b) => a.price - b.price);
     return valuesData;
   }, [shopValues]);
 

@@ -73,6 +73,7 @@ const Footer = () => {
     shopValues.forEach((shopValues) => {
       valuesData.push(...shopValues.values);
     });
+    valuesData.sort((a, b) => a.price - b.price);
     return valuesData;
   }, [shopValues]);
 
@@ -371,7 +372,7 @@ const Footer = () => {
               onClick={() => {
                 if (
                   windValue > currentAviailableMods ||
-                  windValue < currentAviailableMods - 4
+                  windValue < currentAviailableMods - 3
                 ) {
                   setIsBlockedCountryOpen(true);
                 } else {
@@ -382,7 +383,7 @@ const Footer = () => {
               sx={{
                 backgroundColor:
                   windValue > currentAviailableMods ||
-                  windValue < currentAviailableMods - 4
+                  windValue < currentAviailableMods - 3
                     ? MAIN_COLORS.disabledButtonBGColor
                     : MAIN_COLORS.mainGreen,
                 cursor: windValue === 0 ? "not-allowed" : "pointer",
