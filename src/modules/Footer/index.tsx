@@ -137,6 +137,20 @@ const Footer = () => {
     soundEnabled,
   ]);
 
+  const getWindSpeedByCountry = useCallback(
+    (windValue: number) => {
+      if (countries && selectedCountry && windValue) {
+        const selectedCountryIndex =
+          countries.find(
+            (countrie) => countrie.shortName === selectedCountry.name,
+          )?.id || 0;
+        return windValue - (selectedCountryIndex - 1) * 4;
+      }
+      return 0;
+    },
+    [countries, selectedCountry],
+  );
+
   const buyModifier = useCallback(() => {
     const currentPrice = convertedShopValues.find(
       (value, index) => index === windValue - 1,
@@ -149,7 +163,7 @@ const Footer = () => {
     }
     dispatch(
       buyItemAction({
-        windSpeed: windValue,
+        windSpeed: getWindSpeedByCountry(windValue),
         selectedArea: selectedCountry.name,
         uid: !!userData ? userData.id : "",
       }),
