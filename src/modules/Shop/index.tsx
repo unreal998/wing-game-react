@@ -53,7 +53,7 @@ const Shop = () => {
   const windValue = useSelector(selectWindValue());
   const [selectedScruberPosition, setSelectedScruberPosition] =
     useState<number>(0);
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(1);
   const shopValues = useSelector(selectShopData());
   const countries = useSelector(selectCountiresData());
   const selectedCountry = useSelector(selectSelectedCountry());
