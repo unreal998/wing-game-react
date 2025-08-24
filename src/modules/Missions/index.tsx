@@ -294,14 +294,16 @@ const Missions = () => {
         title={selectedMission?.title[i18n.language] || ""}
         subtitle={selectedMission?.description[i18n.language] || ""}
         additionalbutton={
-          <PopUpMainButton
-            onClick={() => {
-              if (soundEnabled) playFooterSound();
-              handleCompleteMission();
-            }}
-          >
-            {t("start")}
-          </PopUpMainButton>
+          !selectedMission?.specType && (
+            <PopUpMainButton
+              onClick={() => {
+                if (soundEnabled) playFooterSound();
+                handleCompleteMission();
+              }}
+            >
+              {t("start")}
+            </PopUpMainButton>
+          )
         }
       />
     </Box>
