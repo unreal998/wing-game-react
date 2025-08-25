@@ -71,7 +71,7 @@ export const LockedCountryModal: React.FC<Props> = ({
       subtitle={`
                 ${t("lockedCountryContent")}: ${(selectedCountry?.referalsToUnlock || 0) - (userData?.referals?.length || 0)} ${t("lockedCountryContent1")} ${t(selectedCountry?.title || "")}\n
                 ${t(selectedCountry?.title || "")} ${t("lockedCountryContent2")}: ${selectedCountry?.basicBonusPerClick} ${t("lockedCountryContent2.1")} ${t("lockedCountryContent2.2")} 
-                ${countriesForUnlockNames ? `\n ${t("lockedCountryContent3")}: ${countriesForUnlockNames} ${t("lockedCountryContent3.1")} ${t(selectedCountry?.title || "")} ${t("for")} ${countriesForUnlockPrice} TON` : ""}`}
+                ${countriesForUnlockNames ? `\n ${t("lockedCountryContent3")}: ${countriesForUnlockNames} ${t("lockedCountryContent3.1")} ${t(selectedCountry?.title || "")} ${t("for")} ${selectedCountry?.unlockPrice} TON` : ""}`}
       contentAlign="left"
     ></ModalComponent>
   );
