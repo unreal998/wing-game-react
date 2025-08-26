@@ -68,6 +68,17 @@ const Footer = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [isBlockedCountryOpen, setIsBlockedCountryOpen] = useState(false);
 
+  const normilizedWindValue = useMemo(() => {
+    if (countries && selectedCountry && windValue) {
+      const selectedCountryIndex =
+        countries.find(
+          (countrie) => countrie.shortName === selectedCountry.name,
+        )?.id || 0;
+      return windValue + (selectedCountryIndex - 1) * 4;
+    }
+    return windValue;
+  }, [countries, selectedCountry, windValue]);
+
   const convertedShopValues: ShopValues[] = useMemo(() => {
     const valuesData: ShopValues[] = [];
     shopValues.forEach((shopValues) => {
@@ -137,23 +148,9 @@ const Footer = () => {
     soundEnabled,
   ]);
 
-  const getWindSpeedByCountry = useCallback(
-    (windValue: number) => {
-      if (countries && selectedCountry && windValue) {
-        const selectedCountryIndex =
-          countries.find(
-            (countrie) => countrie.shortName === selectedCountry.name,
-          )?.id || 0;
-        return windValue - (selectedCountryIndex - 1) * 4;
-      }
-      return 0;
-    },
-    [countries, selectedCountry],
-  );
-
   const buyModifier = useCallback(() => {
     const currentPrice = convertedShopValues.find(
-      (value, index) => index === windValue - 1,
+      (value, index) => index === normilizedWindValue - 1,
     )?.price;
     if (currentPrice === undefined) return;
     if (userData === null) return;
@@ -163,12 +160,12 @@ const Footer = () => {
     }
     dispatch(
       buyItemAction({
-        windSpeed: getWindSpeedByCountry(windValue),
+        windSpeed: windValue,
         selectedArea: selectedCountry.name,
         uid: !!userData ? userData.id : "",
       }),
     );
-  }, [dispatch, userData, shopValues, windValue, selectedCountry]);
+  }, [dispatch, userData, shopValues, normilizedWindValue, selectedCountry]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -384,22 +381,11 @@ const Footer = () => {
           <>
             <GameButtonComponent
               onClick={() => {
-                if (
-                  windValue > currentAviailableMods ||
-                  windValue < currentAviailableMods - 3
-                ) {
-                  setIsBlockedCountryOpen(true);
-                } else {
-                  setConfirmOpen(true);
-                }
+                setConfirmOpen(true);
               }}
               disabled={windValue === 0}
               sx={{
-                backgroundColor:
-                  windValue > currentAviailableMods ||
-                  windValue < currentAviailableMods - 3
-                    ? MAIN_COLORS.disabledButtonBGColor
-                    : MAIN_COLORS.mainGreen,
+                backgroundColor: MAIN_COLORS.mainGreen,
                 cursor: windValue === 0 ? "not-allowed" : "pointer",
                 margin: "15px",
                 width: "93%",
@@ -417,7 +403,7 @@ const Footer = () => {
                 t("Do you whant to buy:") +
                 windValue +
                 t(" for ") +
-                (convertedShopValues[windValue - 1]?.price || 0) +
+                (convertedShopValues[normilizedWindValue - 1]?.price || 0) +
                 " TON"
               }
               openModal={confirmOpen}
@@ -439,14 +425,6 @@ const Footer = () => {
               title={t("shopWarningTitle")}
               subtitle={
                 <Stack direction="column" gap="5px">
-                  <Typography>
-                    {t("shopWarningMessage") +
-                      " " +
-                      (windValue > currentAviailableMods
-                        ? t("lockedCountryContent3")
-                        : t("lockedCountryContent3.2")) +
-                      ": "}
-                  </Typography>
                   <Stack direction="row" gap="5px" justifyContent="center">
                     <Avatar
                       src={

@@ -77,12 +77,17 @@ const Shop = () => {
   };
 
   const convertedShopValues: ShopValues[] = useMemo(() => {
-    const valuesData: ShopValues[] = [];
-    shopValues.forEach((shopValues) => {
-      valuesData.push(...shopValues.values);
-    });
-    valuesData.sort((a, b) => a.price - b.price);
-    return valuesData;
+    // const valuesData: ShopValues[] = [];
+    const selectedCountryValues = shopValues.find(
+      (shopArea) => shopArea.area === selectedCountry.name,
+    );
+    if (shopValues && selectedCountryValues) {
+      return selectedCountryValues.values;
+    } else {
+      return [];
+    }
+    // valuesData.sort((a, b) => a.price - b.price);
+    // return valuesData;
   }, [shopValues]);
 
   const selectedWindPowerIncome = useMemo(() => {
