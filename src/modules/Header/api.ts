@@ -35,6 +35,7 @@ export const fetchInitData = async (userData: UserInitData) => {
       "ngrok-skip-browser-warning": true,
     },
   });
+
   return response.data;
 };
 
