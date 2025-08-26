@@ -131,6 +131,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           <WithdrawModalInput
             fullWidth
             variant="outlined"
+            inputMode="decimal"
             type="number"
             value={amount}
             onChange={handleAmountChange}
