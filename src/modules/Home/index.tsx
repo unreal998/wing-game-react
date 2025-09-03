@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDisabledPowerButton, selectSelectedCountry } from "./selectors";
 import { useNavigate } from "react-router-dom";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useMediaQuery } from "@mui/material";
 import { getIncomeDataAction } from "../Header/slices";
-import { selectUserId } from "../Header/selectors";
+import { selectUserData, selectUserId } from "../Header/selectors";
 
 export const Home = () => {
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
@@ -16,6 +16,12 @@ export const Home = () => {
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
   const dispatch = useDispatch();
   const userId = useSelector(selectUserId());
+  const modifiers = useSelector(selectUserData())?.modifiers;
+
+  const selectedCountryModifiers = useMemo(
+    () => modifiers?.find((mod) => mod.areaName === selectedCountry.name),
+    [modifiers, selectedCountry],
+  );
 
   useEffect(() => {
     if (!selectedCountry.name) {
@@ -24,13 +30,27 @@ export const Home = () => {
   }, [dispatch, navigate, selectedCountry, userId]);
 
   useEffect(() => {
+    if (
+      selectedCountryModifiers?.boughtModifier &&
+      selectedCountryModifiers.boughtModifier?.length > 0
+    ) {
+      const speed =
+        selectedCountryModifiers.boughtModifier.reduce(
+          (acc, mod) => acc + mod.speed,
+          0,
+        ) / 10;
+      animationRef.current?.setSpeed(1 + speed);
+    }
+  }, [selectedCountryModifiers]);
+
+  useEffect(() => {
     dispatch(
       getIncomeDataAction({
         uid: userId,
         country: selectedCountry.name,
       }),
     );
-  }, []);
+  }, [dispatch, userId, selectedCountry]);
 
   useEffect(() => {
     if (animationRef.current) {

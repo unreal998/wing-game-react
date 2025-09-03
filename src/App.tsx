@@ -17,7 +17,6 @@ import { initAction, updateUserSettingsAction } from "./modules/Header/slices";
 import { UserInitData } from "./shared/types";
 import { WebAppInitData } from "@twa-dev/types";
 import { USER_MOCK_TELEGRAM_DATA } from "./shared/constants";
-import ErrorPopup from "./shared/components/ErrorPopup";
 import { selectSelectedCountry } from "./modules/Home/selectors";
 import Footer from "./modules/Footer";
 import {
@@ -28,7 +27,6 @@ import { setIsTutorialFinished } from "./modules/Tutorial/slices";
 import { selectUserId, selectUserSettings } from "./modules/Header/selectors";
 import Lottie from "lottie-react";
 import { Tutorial } from "./modules/Tutorial";
-import { selectSoundEnabled } from "./modules/Settings/selectors";
 import { setSoundEnabled } from "./modules/Settings/slices";
 import { clearSelectedCountry } from "./modules/Home/slices";
 import { ModalComponent } from "./shared/components/ModalComponent";
@@ -61,7 +59,6 @@ const App = () => {
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
   const userSettings = useSelector(selectUserSettings());
   const userId = useSelector(selectUserId());
-  const soundEnabled = useSelector(selectSoundEnabled());
   const [openError, setOpenError] = useState(false);
   const errors = useSelector(selectErrors);
 
