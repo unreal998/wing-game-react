@@ -38,7 +38,7 @@ export const Home = () => {
         selectedCountryModifiers.boughtModifier.reduce(
           (acc, mod) => acc + mod.speed,
           0,
-        ) / 10;
+        ) / 5;
       animationRef.current?.setSpeed(1 + speed);
     }
   }, [selectedCountryModifiers]);
