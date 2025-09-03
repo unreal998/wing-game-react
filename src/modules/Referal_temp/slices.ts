@@ -3,27 +3,32 @@ import { ReferalData } from "./types";
 
 type ReferalState = {
   referalData: ReferalData[];
+
   loading: boolean;
+
   errMessage: string;
-  subReferalLoading: boolean;
-  subReferalData: ReferalData[];
-  selectedSubReferalId: number;
+
+  childrenByParent: Record<string, ReferalData[]>;
+
+  loadingByParent: Record<string, boolean>;
 };
 
 export const initialReferalState: ReferalState = {
   referalData: [],
   loading: false,
   errMessage: "",
-  subReferalLoading: false,
-  subReferalData: [],
-  selectedSubReferalId: 0,
+  childrenByParent: {},
+  loadingByParent: {},
 };
 
 export const referalSlice = createSlice({
   name: "referalSlice",
   initialState: initialReferalState,
   reducers: {
-    getReferalDataAction: (state, { payload }: { payload: number }) => {
+    getReferalDataAction: (
+      state,
+      { payload }: { payload: number | string },
+    ) => {
       state.loading = true;
     },
     getReferalDataActionSuccess: (
@@ -37,6 +42,36 @@ export const referalSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+
+    setLoadingByParent: (
+      state,
+      { payload }: { payload: { tid: string; value: boolean } },
+    ) => {
+      state.loadingByParent[payload.tid] = payload.value;
+    },
+
+    getReferalChildrenAction: (
+      state,
+      { payload }: { payload: number | string },
+    ) => {
+      const tid = String(payload);
+      state.loadingByParent[tid] = true;
+    },
+    getReferalChildrenActionSuccess: (
+      state,
+      { payload }: { payload: { tid: string; children: ReferalData[] } },
+    ) => {
+      state.loadingByParent[payload.tid] = false;
+      state.childrenByParent[payload.tid] = payload.children;
+    },
+    getReferalChildrenActionFailure: (
+      state,
+      { payload }: { payload: { tid: string; error: string } },
+    ) => {
+      state.loadingByParent[payload.tid] = false;
+      state.errMessage = payload.error;
+    },
+
     buyCountry: (
       state,
       { payload }: { payload: { uid: string; countryName: string } },
@@ -50,21 +85,6 @@ export const referalSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
-    getSubReferalData: (state, { payload }: { payload: number }) => {
-      state.selectedSubReferalId = payload;
-      state.loading = true;
-    },
-    getSubReferalDataSuccess: (
-      state,
-      { payload }: { payload: ReferalData[] },
-    ) => {
-      state.loading = false;
-      state.subReferalData = payload;
-    },
-    getSubReferalDataFailure: (state, { payload }: { payload: string }) => {
-      state.loading = false;
-      state.errMessage = payload;
-    },
   },
 });
 
@@ -72,12 +92,15 @@ export const {
   getReferalDataAction,
   getReferalDataActionSuccess,
   getReferalDataActionFailure,
+
+  setLoadingByParent,
+  getReferalChildrenAction,
+  getReferalChildrenActionSuccess,
+  getReferalChildrenActionFailure,
+
   buyCountry,
   buyCountrySuccess,
   buyCountryFailure,
-  getSubReferalData,
-  getSubReferalDataFailure,
-  getSubReferalDataSuccess,
 } = referalSlice.actions;
 
 export type ReferalStateType = typeof initialReferalState;

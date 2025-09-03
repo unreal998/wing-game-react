@@ -37,15 +37,17 @@ const StyledInfoBox = styled(Box)(({ theme }) => ({
 export const InfoBox = ({
   value,
   subtitle,
+  onClick,
 }: {
   value: string;
   subtitle: string;
+  onClick?: () => void;
 }) => {
   const currentModule = useSelector(selectCurrentModule());
   const shouldPulse = currentModule === 9.5 && subtitle === "Referrals";
 
   return (
-    <StyledInfoBox className={shouldPulse ? "pulse" : ""}>
+    <StyledInfoBox className={shouldPulse ? "pulse" : ""} onClick={onClick}>
       <Typography sx={{ fontSize: "20px", fontWeight: 700 }}>
         {value}
       </Typography>

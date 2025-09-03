@@ -9,15 +9,15 @@ export const selectReferalData =
   ({ referalSlice }: ReferalSliceStore) =>
     referalSlice.referalData;
 
-export const selectSubReferalData =
+export const selectChildrenByParent =
   () =>
   ({ referalSlice }: ReferalSliceStore) =>
-    referalSlice.subReferalData;
+    referalSlice.childrenByParent;
 
-export const selectSelectedSubReferalId =
+export const selectLoadingByParent =
   () =>
   ({ referalSlice }: ReferalSliceStore) =>
-    referalSlice.selectedSubReferalId;
+    referalSlice.loadingByParent;
 
 export const selectLoading =
   () =>
