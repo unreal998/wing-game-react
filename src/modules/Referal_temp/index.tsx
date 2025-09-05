@@ -110,6 +110,23 @@ const Referal = () => {
     [dispatch, childrenByParent],
   );
 
+  const getColor = (level: number) => {
+    switch (level) {
+      case 0:
+        return "#3dcdeaff";
+      case 1:
+        return "#44d97dff";
+      case 2:
+        return "#3f3ceaff";
+      case 3:
+        return "#9514ffff";
+      case 4:
+        return "#e22bb1ff";
+      default:
+        return MAIN_COLORS.mainGreen;
+    }
+  };
+
   const ReferralNode: React.FC<{ user: ReferalData; level: number }> = ({
     user,
     level,
@@ -140,9 +157,10 @@ const Referal = () => {
             level + 1 < MAX_LEVEL &&
             toggleExpand(tid, hasChildren)
           }
+          sx={{ border: `2px solid ${getColor(level)}` }}
           width="93%"
         >
-          <StyledMainJpg sx={{ flex: 1.6, pl: `${level * 4}px` }}>
+          <StyledMainJpg sx={{ flex: 1.6, pl: `${level * 8}px` }}>
             <img src={Male} alt="male" style={commonImgStyle} />
             <StyledReferalTypography>
               {user.userName || user.firstName || user.lastName || " "}
@@ -250,7 +268,27 @@ const Referal = () => {
         <ModalComponent
           openModal={isReferalInfoOpen}
           title={t("referalInfoTitle")}
-          subtitle={t("referalInfoIncome")}
+          subtitle={
+            <Stack gap={1} justifyContent={"flex-start"}>
+              <Typography>{t("referalInfoIncome")}</Typography>
+              <Typography sx={{ color: "#3dcdeaff" }}>
+                {t("referralInfoIncomeLevel1")}
+              </Typography>
+              <Typography sx={{ color: "#44d97dff" }}>
+                {t("referralInfoIncomeLevel2")}
+              </Typography>
+              <Typography sx={{ color: "#3f3ceaff" }}>
+                {t("referralInfoIncomeLevel3")}
+              </Typography>
+              <Typography sx={{ color: "#9514ffff" }}>
+                {t("referralInfoIncomeLevel4")}
+              </Typography>
+              <Typography sx={{ color: "#e22bb1ff" }}>
+                {t("referralInfoIncomeLevel5")}
+              </Typography>
+              <Typography>{t("referalInfoIncome2")}</Typography>
+            </Stack>
+          }
           handleCloseModal={() => {
             setIsReferalInfoOpen(false);
           }}
