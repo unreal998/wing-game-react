@@ -40,12 +40,12 @@ function* handleInit(action: { type: string; payload: UserInitData }) {
 
     yield put(initActionSuccess(userData));
 
-    if (!userData.wallet) {
-      const walletNumber: string = yield call(fetchCreateWallet, userData.id);
-      yield put(createWalletActionSuccess(walletNumber));
-    } else {
-      yield put(createWalletActionSuccess(userData.wallet));
-    }
+    // if (!userData.wallet) {
+    //   const walletNumber: string = yield call(fetchCreateWallet, userData.id);
+    //   yield put(createWalletActionSuccess(walletNumber));
+    // } else {
+    //   yield put(createWalletActionSuccess(userData.wallet));
+    // }
 
     const countriesData: County[] = yield call(fetchCountries);
     yield put(fetchCountriesActionSuccess(countriesData));
