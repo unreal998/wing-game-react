@@ -140,7 +140,7 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
         </Stack>
         <Typography fontSize="14px" color="#999999" mt={-1}>
           * {t("fee")} 2%
-          {amountNum > 0 && ` (${amountNum * 0.98})`}
+          {amountNum > 0 && ` (${(amountNum * 0.98).toFixed(3)})`}
         </Typography>
       </Stack>
 
