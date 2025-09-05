@@ -138,6 +138,10 @@ export const WithdrawModal: React.FC<WithdrawModalProps> = ({
           />
           <PopUpMainButton onClick={handleMAX}>{"MAX"}</PopUpMainButton>
         </Stack>
+        <Typography fontSize="14px" color="#999999" mt={-1}>
+          * {t("fee")} 2%
+          {amountNum > 0 && ` (${amountNum * 0.98})`}
+        </Typography>
       </Stack>
 
       <Stack alignItems="flex-start" gap="5px">

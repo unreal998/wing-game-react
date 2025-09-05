@@ -1,11 +1,16 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../selectors";
 import { useTranslation } from "react-i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
 import Hint from "./Hint";
+import CloseIcon from "@mui/icons-material/Close";
 
-export const ModuleElevenTwelve = () => {
+export const ModuleElevenTwelve = ({
+  onClose,
+}: {
+  onClose: (e: React.MouseEvent) => void;
+}) => {
   const { t } = useTranslation();
   const currentModule = useSelector(selectCurrentModule());
 
@@ -32,33 +37,49 @@ export const ModuleElevenTwelve = () => {
         left: "-0.9%",
         top:
           currentModule === 11 ? "18%" : currentModule === 11.5 ? "27%" : "35%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
       }}
     >
-      <Typography
-        sx={{
-          fontSize: "24px",
-          fontWeight: "bold",
-          textAlign: "center",
-          whiteSpace: "pre-line",
-        }}
+      <Box
+        position={"relative"}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        justifyContent={"center"}
       >
-        {getText()}
-      </Typography>
+        <Box
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            top: -8,
+            right: -8,
+            color: "#999999",
+            zIndex: 10000,
+          }}
+        >
+          <CloseIcon />
+        </Box>
+        <Typography
+          sx={{
+            fontSize: "24px",
+            fontWeight: "bold",
+            textAlign: "center",
+            whiteSpace: "pre-line",
+          }}
+        >
+          {getText()}
+        </Typography>
 
-      {currentModule === 11 && (
-        <>
-          <Typography sx={{ pt: "8px", whiteSpace: "pre-line" }}>
-            {t("tutorial.module11")}
-          </Typography>
-          <Hint />
-        </>
-      )}
+        {currentModule === 11 && (
+          <>
+            <Typography sx={{ pt: "8px", whiteSpace: "pre-line" }}>
+              {t("tutorial.module11")}
+            </Typography>
+            <Hint />
+          </>
+        )}
 
-      {currentModule === 11.5 && <Hint />}
+        {currentModule === 11.5 && <Hint />}
+      </Box>
     </StyledModuleBox>
   );
 };
