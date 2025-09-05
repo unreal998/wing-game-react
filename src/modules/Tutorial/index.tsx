@@ -11,11 +11,14 @@ import { ModuleSevenEight } from "./components/ModuleSevenEight";
 import { ModuleNineHalfTen } from "./components/ModuleNineHalfTen";
 import { ModuleElevenTwelve } from "./components/ModuleElevenTwelve";
 import { ModuleThirteen } from "./components/ModuleThirteen";
+import { selectUserId } from "../Header/selectors";
+import { updateUserSettingsAction } from "../Header/slices";
 
 export const Tutorial = () => {
   const dispatch = useDispatch();
   const currentModule = useSelector(selectCurrentModule());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
+  const uid = useSelector(selectUserId());
 
   const handleModuleClick = useCallback(() => {
     if (!isTutorialFinished) {
@@ -26,6 +29,20 @@ export const Tutorial = () => {
       }
     }
   }, [isTutorialFinished, currentModule, dispatch]);
+
+  const handleCloseTutorial = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    if (uid) {
+      dispatch(
+        updateUserSettingsAction({
+          uid,
+          settings: { isTutorialFinished: true },
+        }),
+      );
+    }
+    dispatch(setIsTutorialFinished(true));
+  };
 
   if (isTutorialFinished) return null;
 
@@ -60,10 +77,17 @@ export const Tutorial = () => {
           }}
         >
           {!isTutorialFinished && currentModule === 1 && (
-            <ModuleOne onClick={handleModuleClick} />
+            <ModuleOne
+              onClick={handleModuleClick}
+              onClose={handleCloseTutorial}
+            />
           )}
-          {!isTutorialFinished && currentModule === 2 && <ModuleTwo />}
-          {!isTutorialFinished && currentModule === 3 && <ModuleThree />}
+          {!isTutorialFinished && currentModule === 2 && (
+            <ModuleTwo onClose={handleCloseTutorial} />
+          )}
+          {!isTutorialFinished && currentModule === 3 && (
+            <ModuleThree onClose={handleCloseTutorial} />
+          )}
         </Box>
       )}
       {(currentModule === 4 ||
@@ -91,7 +115,7 @@ export const Tutorial = () => {
                 currentModule !== 6 ? "rgba(0, 0, 0, 0.1)" : "none",
             }}
           >
-            <ModuleFourFiveSix />
+            <ModuleFourFiveSix onClose={handleCloseTutorial} />
           </Box>
         )}
       {(currentModule === 7 || currentModule === 8) && (
@@ -107,7 +131,7 @@ export const Tutorial = () => {
           top={"-1vh"}
           sx={{ transition: "all 0.2s ease" }}
         >
-          <ModuleSevenEight />
+          <ModuleSevenEight onClose={handleCloseTutorial} />
         </Box>
       )}
       {!isTutorialFinished &&
@@ -153,9 +177,9 @@ export const Tutorial = () => {
               transition: "all 0.2s ease",
             }}
           >
-            <ModuleNineHalfTen />
-            <ModuleElevenTwelve />
-            <ModuleThirteen />
+            <ModuleNineHalfTen onClose={handleCloseTutorial} />
+            <ModuleElevenTwelve onClose={handleCloseTutorial} />
+            <ModuleThirteen onClose={handleCloseTutorial} />
           </Box>
         )}
     </Box>

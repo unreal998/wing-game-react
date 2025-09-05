@@ -2,8 +2,15 @@ import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { StyledModuleBox } from "./StyledModuleBox";
 import Hint from "./Hint";
+import CloseIcon from "@mui/icons-material/Close";
 
-function ModuleOne({ onClick }: { onClick: () => void }) {
+function ModuleOne({
+  onClick,
+  onClose,
+}: {
+  onClick: () => void;
+  onClose: (e: React.MouseEvent) => void;
+}) {
   const { t } = useTranslation();
 
   return (
@@ -24,7 +31,19 @@ function ModuleOne({ onClick }: { onClick: () => void }) {
         zIndex: 2222,
       }}
     >
-      <StyledModuleBox>
+      <StyledModuleBox sx={{ position: "relative" }}>
+        <Box
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            color: "#999999",
+            zIndex: 10000,
+          }}
+        >
+          <CloseIcon />
+        </Box>
         <Typography
           sx={{
             fontSize: "24px",

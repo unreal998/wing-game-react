@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import WebApp from "@twa-dev/sdk";
 import "./global.css";
 import { MAIN_COLORS } from "./shared/colors";
@@ -24,7 +24,11 @@ import {
   selectIsTutorialFinished,
 } from "./modules/Tutorial/selectors";
 import { setIsTutorialFinished } from "./modules/Tutorial/slices";
-import { selectUserId, selectUserSettings } from "./modules/Header/selectors";
+import {
+  selectUserData,
+  selectUserId,
+  selectUserSettings,
+} from "./modules/Header/selectors";
 import Lottie from "lottie-react";
 import { Tutorial } from "./modules/Tutorial";
 import { setSoundEnabled } from "./modules/Settings/slices";
@@ -32,6 +36,7 @@ import { clearSelectedCountry } from "./modules/Home/slices";
 import { ModalComponent } from "./shared/components/ModalComponent";
 import { selectErrors } from "./shared/selectErrors";
 import { useTranslation } from "react-i18next";
+import LoaderComponent from "./shared/components/LoaderComponent";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -52,6 +57,8 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userData = useSelector(selectUserData());
+  const booting = !userData;
   const { t } = useTranslation();
   const selectedCountry = useSelector(selectSelectedCountry());
   const isTutorialFinished = useSelector(selectIsTutorialFinished());
@@ -140,85 +147,88 @@ const App = () => {
   };
 
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        backgroundColor: MAIN_COLORS.appBG,
-        backgroundImage: `${
-          selectedCountry.name
-            ? `url(./${selectedCountry.name}BG.png)`
-            : "url(./PlanetBG.jpg)"
-        }`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        display: "flex",
-        flexDirection: "column",
-        color: "white",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
-      <Header />
-      <Box sx={{ flexGrow: 1, zIndex: 99 }}>
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Planet />} />
-          <Route path="/referal" element={<Referal />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/missions" element={<Missions />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-      </Box>
-      <Footer />
+    <>
+      <LoaderComponent loading={booting} />
+      <Box
+        sx={{
+          height: "100vh",
+          backgroundColor: MAIN_COLORS.appBG,
+          backgroundImage: `${
+            selectedCountry.name
+              ? `url(./${selectedCountry.name}BG.png)`
+              : "url(./PlanetBG.jpg)"
+          }`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          flexDirection: "column",
+          color: "white",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        <Header />
+        <Box sx={{ flexGrow: 1, zIndex: 99 }}>
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Planet />} />
+            <Route path="/referal" element={<Referal />} />
+            <Route path="/wallet" element={<Wallet />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/missions" element={<Missions />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </Box>
+        {location.pathname !== "/" && <Footer />}
 
-      {location.pathname !== "/home" && location.pathname !== "/" && (
-        <Box
-          sx={{
-            position: "absolute",
-            inset: 0,
-            backgroundColor: "#01121DD9",
-            zIndex: 1,
-          }}
-        />
-      )}
-
-      {selectedCountry?.name && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: "220px",
-            left: 0,
-            zIndex: 0,
-            transform: isSmallScreen
-              ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
-              : "matrix(2.2, 0, 0, 2.2, 0, 0)",
-          }}
-        >
-          <Lottie
-            animationData={require(
-              `./assets/animations/${selectedCountry.name}Anim.json`,
-            )}
-            loop
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "relative",
-              zIndex: 0,
-              pointerEvents: "none",
+        {location.pathname !== "/home" && location.pathname !== "/" && (
+          <Box
+            sx={{
+              position: "absolute",
+              inset: 0,
+              backgroundColor: "#01121DD9",
+              zIndex: 1,
             }}
           />
-        </Box>
-      )}
-      <Tutorial />
-      <ModalComponent
-        openModal={openError}
-        handleCloseModal={handleCloseErrorModal}
-        title={t("errTitle")}
-        subtitle={activeErrors.join("\n")}
-      />
-    </Box>
+        )}
+
+        {selectedCountry?.name && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: "220px",
+              left: 0,
+              zIndex: 0,
+              transform: isSmallScreen
+                ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
+                : "matrix(2.2, 0, 0, 2.2, 0, 0)",
+            }}
+          >
+            <Lottie
+              animationData={require(
+                `./assets/animations/${selectedCountry.name}Anim.json`,
+              )}
+              loop
+              style={{
+                width: "100%",
+                height: "100%",
+                position: "relative",
+                zIndex: 0,
+                pointerEvents: "none",
+              }}
+            />
+          </Box>
+        )}
+        {!booting && <Tutorial />}
+        <ModalComponent
+          openModal={openError}
+          handleCloseModal={handleCloseErrorModal}
+          title={t("errTitle")}
+          subtitle={activeErrors.join("\n")}
+        />
+      </Box>
+    </>
   );
 };
 

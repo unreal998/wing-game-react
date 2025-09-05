@@ -159,5 +159,6 @@
   "referralInfoIncomeLevel5": "Level 5: 2%",
   "referalInfoIncome2": "The income is calculated based on the profit of your referrals. The more active your referrals are, the higher your income will be.",
   "referalInfoButton": "Info",
-  "referralInfoSubtitle": "Tap to view"
+  "referralInfoSubtitle": "Tap to view",
+  "fee": "fee"
 }

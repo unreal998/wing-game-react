@@ -159,5 +159,6 @@
   "referralInfoIncomeLevel5": "Уровень 5: 2%",
   "referalInfoIncome2": "Доход рассчитывается на основе прибыли ваших рефералов. Чем активнее ваши рефералы, тем выше будет ваш доход.",
   "referalInfoButton": "Инфо",
-  "referralInfoSubtitle": "Нажмите для просмотра"
+  "referralInfoSubtitle": "Нажмите для просмотра",
+  "fee": "комиссия"
 }

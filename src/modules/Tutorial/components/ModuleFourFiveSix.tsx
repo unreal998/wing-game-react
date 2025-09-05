@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { selectCurrentModule } from "../selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -6,8 +6,13 @@ import { setCurrentModule } from "../slices";
 import { StyledModuleBox } from "./StyledModuleBox";
 import Hint from "./Hint";
 import WebApp from "@twa-dev/sdk";
+import CloseIcon from "@mui/icons-material/Close";
 
-export const ModuleFourFiveSix = () => {
+export const ModuleFourFiveSix = ({
+  onClose,
+}: {
+  onClose: (e: React.MouseEvent) => void;
+}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentModule = useSelector(selectCurrentModule());
@@ -44,6 +49,18 @@ export const ModuleFourFiveSix = () => {
         left: "-0.9%",
       }}
     >
+      <Box
+        onClick={onClose}
+        sx={{
+          position: "absolute",
+          top: 2,
+          right: 2,
+          color: "#999999",
+          zIndex: 10000,
+        }}
+      >
+        <CloseIcon />
+      </Box>
       <Typography
         onClick={handleChangeModule}
         sx={{
