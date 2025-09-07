@@ -16,7 +16,7 @@ export const initialWalletState: WalletState = {
   TONBalance: 0,
   WindBalance: 0,
   historyData: [],
-  loading: true,
+  loading: false,
   errMessage: "",
   isWithdrawOpen: false,
 };

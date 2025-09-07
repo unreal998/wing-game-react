@@ -360,7 +360,7 @@ const Footer = () => {
             {t("Roadmap")}
           </GameButtonComponent>
         )}
-        {location.pathname === "/wallet" && (
+        {userData?.wallet && location.pathname === "/wallet" && (
           <GameButtonComponent
             sx={{
               width: "93%",

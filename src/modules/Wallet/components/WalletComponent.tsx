@@ -10,10 +10,10 @@ import { GameButtonComponent } from "../../../shared/components/GameButtonCompon
 import { useDispatch, useSelector } from "react-redux";
 import { createWalletAction } from "../slices";
 import { selectUserData } from "../../Header/selectors";
-import { selectWalletNumber } from "../selectors";
 import { useCallback, useState } from "react";
 import { StyledInputBox } from "../../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../../Referal_temp/components/StyledInput";
+import { selectWalletNumber } from "../selectors";
 
 export const WalletComponent = () => {
   const { t } = useTranslation();
@@ -54,15 +54,17 @@ export const WalletComponent = () => {
     >
       <WalletContentBox>
         <img src={TON} alt="ton" style={{ width: "88px" }} />
-        <Typography
-          sx={{
-            color: MAIN_COLORS.missionTable,
-            fontSize: "12px",
-            fontWeight: 700,
-          }}
-        >
-          {t("To refill your balance, use the address below")}
-        </Typography>
+        {walletNumber && (
+          <Typography
+            sx={{
+              color: MAIN_COLORS.missionTable,
+              fontSize: "12px",
+              fontWeight: 700,
+            }}
+          >
+            {t("To refill your balance, use the address below")}
+          </Typography>
+        )}
         <Stack direction="row">
           {walletNumber ? (
             <Stack gap="12px">
@@ -97,21 +99,29 @@ export const WalletComponent = () => {
               </Stack>
             </Stack>
           ) : (
-            <WalletTypography>{t("Connect")}</WalletTypography>
+            <Typography
+              sx={{
+                color: MAIN_COLORS.missionTable,
+                fontSize: "12px",
+                fontWeight: 700,
+              }}
+            >
+              {t("Connect")}
+            </Typography>
           )}
         </Stack>
         {!walletNumber && (
           <GameButtonComponent
             sx={{
-              paddtingTop: "12px",
-              paddingBottom: "12px",
+              paddtingTop: "8px",
+              paddingBottom: "8px",
               backgroundColor: MAIN_COLORS.mainGreen,
               borderRadius: "12px",
               width: "100%",
             }}
             onClick={handleAddWalletClick}
           >
-            {t("Create wallet")}
+            {t("create wallet")}
           </GameButtonComponent>
         )}
       </WalletContentBox>
