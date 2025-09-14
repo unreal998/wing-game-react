@@ -29,13 +29,22 @@ import { ModalComponent } from "../../shared/components/ModalComponent";
 
 const commonImgStyle = { width: "20px", height: "20px", borderRadius: "52px" };
 
-const LEVEL_BONUSES = [0.1, 0.08, 0.06, 0.04, 0.02];
+const LEVEL_BONUSES_KWT = [0.1, 0.08, 0.06, 0.04, 0.02];
+const LEVEL_BONUSES_TON = [0.07, 0.05, 0.03, 0.02, 0.01];
+
 const MAX_LEVEL = 5;
 
-const levelDisplayMultiplier = (level: number) => {
+const levelDisplayMultiplierKWT = (level: number) => {
   if (level <= 0) return 1;
-  const base = LEVEL_BONUSES[0] ?? 0;
-  const b = LEVEL_BONUSES[level] ?? 0;
+  const base = LEVEL_BONUSES_KWT[0] ?? 0;
+  const b = LEVEL_BONUSES_KWT[level] ?? 0;
+  return base > 0 ? b / base : 0;
+};
+
+const levelDisplayMultiplierTON = (level: number) => {
+  if (level <= 0) return 1;
+  const base = LEVEL_BONUSES_TON[0] ?? 0;
+  const b = LEVEL_BONUSES_TON[level] ?? 0;
   return base > 0 ? b / base : 0;
 };
 
@@ -140,9 +149,10 @@ const Referal = () => {
       (Array.isArray(user.referals) && user.referals.length > 0) ||
       children.length > 0;
 
-    const mult = levelDisplayMultiplier(level);
-    const coinShown = (user.rewardFromClicks * mult).toFixed(2);
-    const tonShown = (user.TONRewardFromClicks * mult).toFixed(2);
+    const multKWT = levelDisplayMultiplierKWT(level);
+    const multTon = levelDisplayMultiplierTON(level);
+    const coinShown = (user.rewardFromClicks * multKWT).toFixed(2);
+    const tonShown = (user.TONRewardFromClicks * multTon).toFixed(2);
 
     return (
       <Stack
