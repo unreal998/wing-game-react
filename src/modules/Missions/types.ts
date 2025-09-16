@@ -18,6 +18,6 @@ export type MissionByTypeRequestType = {
 };
 
 export type CompleteMissionRequestType = {
-  mission: MissionsData;
+  mission: { id: number; status: string };
   uid: string;
 };
