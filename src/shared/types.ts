@@ -37,7 +37,7 @@ export type UserData = UserInitData & {
   WindBalance: number;
   transactions: string[];
   referals: string[];
-  missions: string[];
+  missions: { id: number; status: string }[];
   areas: AreaType[];
   modifiers: UserModifiersType[];
   lvl: number;

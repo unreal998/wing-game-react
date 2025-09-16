@@ -160,5 +160,8 @@
   "referalInfoIncome2": "The income is calculated based on the TON and kw profit of your referrals. The more active your referrals are, the higher your income will be.",
   "referalInfoButton": "Info",
   "referralInfoSubtitle": "Tap to view",
-  "fee": "fee"
+  "fee": "fee",
+  "subscribe": "Subscribe",
+  "subscribeTitle": "Want to earn faster?",
+  "subscribeSubtitle": "Join our community and stay updated with all the news and updates!"
 }

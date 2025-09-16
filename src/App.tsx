@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import WebApp from "@twa-dev/sdk";
 import "./global.css";
 import { MAIN_COLORS } from "./shared/colors";
 import Referal from "./modules/Referal_temp";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
@@ -37,6 +37,8 @@ import { ModalComponent } from "./shared/components/ModalComponent";
 import { selectErrors } from "./shared/selectErrors";
 import { useTranslation } from "react-i18next";
 import LoaderComponent from "./shared/components/LoaderComponent";
+import { PopUpMainButton } from "./shared/components/PopUpMainButton";
+import { completeMissionAction } from "./modules/Missions/slices";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -67,6 +69,7 @@ const App = () => {
   const userSettings = useSelector(selectUserSettings());
   const userId = useSelector(selectUserId());
   const [openError, setOpenError] = useState(false);
+  const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
   const errors = useSelector(selectErrors);
 
   const activeErrors = errors.filter((e) => e.trim() !== "");
@@ -145,6 +148,39 @@ const App = () => {
     navigate("/");
     window.location.reload();
   };
+
+  const triggerSubscribeModal = () => {
+    setTimeout(() => {
+      setSubscribeModalOpen(true);
+    }, 90000);
+  };
+
+  const handleNavigate = useCallback(() => {
+    window.location.href = "https://t.me/TurbineX_channel";
+
+    setSubscribeModalOpen(false);
+
+    if (!userId) return;
+
+    dispatch(
+      completeMissionAction({
+        mission: {
+          id: 138,
+          status: "new",
+        },
+        uid: userId,
+      }),
+    );
+  }, []);
+
+  useEffect(() => {
+    if (userData) {
+      const subscribeMisssion = userData.missions.find((m) => m.id === 138);
+      if (!subscribeMisssion) {
+        triggerSubscribeModal();
+      }
+    }
+  }, [userData]);
 
   return (
     <>
@@ -226,6 +262,20 @@ const App = () => {
           handleCloseModal={handleCloseErrorModal}
           title={t("errTitle")}
           subtitle={activeErrors.join("\n")}
+        />
+        <ModalComponent
+          openModal={subscribeModalOpen}
+          handleCloseModal={() => {
+            setSubscribeModalOpen(false);
+            triggerSubscribeModal();
+          }}
+          title={t("subscribeTitle")}
+          subtitle={t("subscribeSubtitle")}
+          additionalbutton={
+            <PopUpMainButton onClick={handleNavigate}>
+              {t("Subscribe")}
+            </PopUpMainButton>
+          }
         />
       </Box>
     </>
