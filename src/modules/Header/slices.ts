@@ -60,6 +60,7 @@ export const headerSlice = createSlice({
       if (state.userData) {
         state.userData.TONBalance = payload.TONBalance;
         state.userData.WindBalance = payload.WindBalance;
+        state.userData.withdrawLimit = payload.withdrawLimit;
       }
     },
     updateBalanceActionFailure: (state, { payload }: { payload: string }) => {

@@ -6,6 +6,7 @@ export type UserBalanceResponse = {
   id: string;
   TONBalance: number;
   WindBalance: number;
+  withdrawLimit: number;
 };
 
 export const fetchUserBalance = async (uid: string) => {

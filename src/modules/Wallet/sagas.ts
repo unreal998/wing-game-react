@@ -16,6 +16,8 @@ import {
   sendWithdrawRequest,
 } from "./api";
 import { HistoryType } from "../../shared/types";
+import { fetchUserBalance, UserBalanceResponse } from "../Header/api";
+import { updateBalanceActionSuccess } from "../Header/slices";
 
 function* handleCreateWallet(action: { type: string; payload: string }) {
   try {
@@ -50,9 +52,11 @@ function* handleSendWithdrawRequest(action: {
 }) {
   try {
     const { uid, wallet, amount, tonMemo, tid } = action.payload;
-    yield call(sendWithdrawRequest, uid, wallet, amount, tonMemo, tid); // ⬅️ передаємо
+    yield call(sendWithdrawRequest, uid, wallet, amount, tonMemo, tid);
     yield put(sendWithdrawRequestSuccess());
     yield put(getHistoryAction(uid));
+    const userBalance: UserBalanceResponse = yield call(fetchUserBalance, uid);
+    yield put(updateBalanceActionSuccess(userBalance));
   } catch (err: any) {
     yield put(sendWithdrawRequestFailure(err.toString()));
   }
