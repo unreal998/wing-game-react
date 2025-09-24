@@ -6,6 +6,7 @@ import { watchShopScreenActions } from "../modules/Shop/sagas";
 import { watchReferalActions } from "../modules/Referal_temp/sagas";
 import { watchMissionsActions } from "../modules/Missions/sagas";
 import { watchTutorialSaga } from "../modules/Settings/sagas";
+import { watchScoreboardSagas } from "../modules/Scoreboard/sagas";
 
 export function* rootSaga() {
   yield all([
@@ -16,5 +17,6 @@ export function* rootSaga() {
     watchReferalActions(),
     watchMissionsActions(),
     watchTutorialSaga(),
+    watchScoreboardSagas(),
   ]);
 }

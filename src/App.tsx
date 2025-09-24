@@ -39,6 +39,7 @@ import { useTranslation } from "react-i18next";
 import LoaderComponent from "./shared/components/LoaderComponent";
 import { PopUpMainButton } from "./shared/components/PopUpMainButton";
 import { completeMissionAction } from "./modules/Missions/slices";
+import { Scoreboard } from "./modules/Scoreboard";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -98,10 +99,10 @@ const App = () => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
-        navigate("/");
+        navigate("/scoreboard");
         dispatch(clearSelectedCountry());
       } else if (document.visibilityState === "visible") {
-        navigate("/");
+        navigate("/scoreboard");
         dispatch(clearSelectedCountry());
       }
     };
@@ -214,6 +215,7 @@ const App = () => {
             <Route path="/shop" element={<Shop />} />
             <Route path="/missions" element={<Missions />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/scoreboard" element={<Scoreboard />} />
           </Routes>
         </Box>
         {location.pathname !== "/" && <Footer />}
@@ -273,7 +275,7 @@ const App = () => {
           subtitle={t("subscribeSubtitle")}
           additionalbutton={
             <PopUpMainButton onClick={handleNavigate}>
-              {t("Subscribe")}
+              {t("subscribe")}
             </PopUpMainButton>
           }
         />

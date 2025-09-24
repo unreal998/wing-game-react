@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
 import TON from "../../assets/ton.png";
@@ -221,6 +222,26 @@ const Header = () => {
                 backgroundPosition: "center",
               }}
             ></Box>
+          </Box>
+          <Box
+            sx={{
+              padding: "12px 15px",
+              backgroundColor: MAIN_COLORS.sectionBG,
+              borderRadius: "12px",
+            }}
+            onClick={() => {
+              if (soundEnabled) playSwitchSound();
+              navigate("/scoreboard");
+            }}
+          >
+            <EmojiEventsIcon
+              style={{
+                color: "#6ADA43",
+                width: "24px",
+                height: "24px",
+                marginTop: "2px",
+              }}
+            />
           </Box>
         </Stack>
       )}

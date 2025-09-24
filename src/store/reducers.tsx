@@ -7,6 +7,7 @@ import { referalSlice } from "../modules/Referal_temp/slices";
 import { missionsSlice } from "../modules/Missions/slices";
 import { settingsSlice } from "../modules/Settings/slices";
 import { tutorialSlice } from "../modules/Tutorial/slices";
+import { scoreSlice } from "../modules/Scoreboard/slice";
 
 const slices: any[] = [
   homeSlice,
@@ -17,6 +18,7 @@ const slices: any[] = [
   missionsSlice,
   settingsSlice,
   tutorialSlice,
+  scoreSlice,
 ];
 
 const toolkitReducers = Object.fromEntries(
