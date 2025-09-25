@@ -99,10 +99,10 @@ const App = () => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
-        navigate("/scoreboard");
+        navigate("/");
         dispatch(clearSelectedCountry());
       } else if (document.visibilityState === "visible") {
-        navigate("/scoreboard");
+        navigate("/");
         dispatch(clearSelectedCountry());
       }
     };
