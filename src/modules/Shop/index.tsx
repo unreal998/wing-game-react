@@ -37,6 +37,8 @@ import { StyledInput } from "../Referal_temp/components/StyledInput";
 import { countryFlags } from "./components/flag";
 import { selectSoundEnabled } from "../Settings/selectors";
 import { ShopValues } from "./types";
+import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
+import { useNavigate } from "react-router-dom";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -67,6 +69,7 @@ const Shop = () => {
   const soundEnabled = useSelector(selectSoundEnabled());
   const currentStep = useSelector(selectCurrentModule());
   const currentCountryCode = selectedCountry?.name;
+  const navigate = useNavigate();
 
   const handleModalClose = useCallback(() => {
     dispatch(setLowBalanceModalOpen(false));
@@ -374,6 +377,11 @@ const Shop = () => {
           title={t("lowBalance")}
           subtitle={t("lowBalanceContent")}
           handleCloseModal={handleModalClose}
+          additionalbutton={
+            <PopUpMainButton onClick={() => navigate("/wallet")}>
+              {t("fund")}
+            </PopUpMainButton>
+          }
         />
       </Stack>
     </MainBox>

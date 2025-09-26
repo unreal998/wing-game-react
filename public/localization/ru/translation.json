@@ -137,6 +137,7 @@
   "lockedCountryContent2": " даст вам",
   "lockedCountryContent2.1": " квт за клик",
   "lockedCountryContent2.2": " и откроет доступ к новым возможностям в магазине",
+  "lockedCountryContent2.3": "Доходность модов: ",
   "lockedCountryContent3": "Вам нужно приобрести",
   "lockedCountryContent3.2": "Вам нужно перейти в",
   "lockedCountryContent3.1": " Чтобы открыть",
@@ -165,5 +166,6 @@
   "subscribeTitle": "Хочешь зарабатывать быстрее ?",
   "subscribeSubtitle": "Вступай в наше комьюнити и будь в курсе всех новостей и обновлений !",
   "No scoreboard yet": "Пока нет таблицы лидеров",
-  "Scoreboard": "Таблица лидеров"
+  "Scoreboard": "Таблица лидеров",
+  "fund": "Пополнить"
 }
