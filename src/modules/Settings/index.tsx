@@ -1,5 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Box, Typography, Modal, IconButton } from "@mui/material";
+import React, { useCallback, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  Modal,
+  IconButton,
+  Stack,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { StyledBasicBox } from "../Referal_temp/components/StyledBasicBox";
@@ -11,6 +20,7 @@ import { NamedStyled } from "../../shared/components/NameStyled";
 import { SubMainBox } from "./components/SubMainBox";
 import { useDispatch, useSelector } from "react-redux";
 import LoaderComponent from "../../shared/components/LoaderComponent";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import footerButtonSound from "../../assets/sounds/footerButton.mp3";
 import useSound from "use-sound";
@@ -29,6 +39,37 @@ import {
 } from "./slices";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { selectUserId } from "../Header/selectors";
+
+const AccordionComponent = ({ block }: { block: string }) => {
+  const headMatch = block.match(/<head>([\s\S]*?)<\/head>/);
+  const bodyMatch = block.match(/<body>([\s\S]*?)<\/body>/);
+
+  const head = headMatch ? headMatch[1].trim() : "";
+  const body = bodyMatch ? bodyMatch[1].trim() : "";
+
+  return (
+    <Accordion
+      sx={{
+        border: "0px",
+        backgroundColor: "rgba(4, 53, 80, 1)",
+        color: "#fff",
+        boxShadow: "0px 0px 0px 0px",
+      }}
+    >
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon sx={{ color: "#fff" }} />}
+        sx={{
+          padding: "0px",
+        }}
+      >
+        <Typography sx={{ fontWeight: "700" }}>{head}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Typography>{body}</Typography>
+      </AccordionDetails>
+    </Accordion>
+  );
+};
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -76,6 +117,46 @@ const Settings = () => {
       ),
     );
   }, [dispatch, i18n.language]);
+
+  const generateRoadmaMarkup = useCallback((blocks: string[]) => {
+    return blocks.map((block) =>
+      block.includes("<list>") ? (
+        <AccordionComponent key={block} block={block} />
+      ) : (
+        <Typography key={block}>{block}</Typography>
+      ),
+    );
+  }, []);
+
+  const parseRoadmapText = useCallback(
+    (text: string) => {
+      const blocks: string[] = [];
+      let lastIndex = 0;
+
+      const regex = /<list>[\s\S]*?<\/list>/g;
+      let match;
+
+      while ((match = regex.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+          const before = text.slice(lastIndex, match.index).trim();
+          if (before) blocks.push(before);
+        }
+
+        const listBlock = match[0].trim();
+        blocks.push(listBlock);
+
+        lastIndex = regex.lastIndex;
+      }
+
+      if (lastIndex < text.length) {
+        const after = text.slice(lastIndex).trim();
+        if (after) blocks.push(after);
+      }
+
+      return generateRoadmaMarkup(blocks);
+    },
+    [generateRoadmaMarkup],
+  );
 
   return (
     <MainBox>
@@ -169,15 +250,18 @@ const Settings = () => {
             </IconButton>
           </Box>
 
-          <Typography
-            variant="body2"
+          <Stack
+            direction="column"
+            justifyContent="space-between"
+            gap="10px"
             sx={{
-              whiteSpace: "pre-line",
+              width: "100%",
               color: "#fff",
+              whiteSpace: "pre-line",
             }}
           >
-            {roadmapText}
-          </Typography>
+            {parseRoadmapText(roadmapText)}
+          </Stack>
         </Box>
       </Modal>
     </MainBox>
