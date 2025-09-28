@@ -1,9 +1,10 @@
 // export const SERVER_URL = "http://localhost:3003";
 // prod
-export const SERVER_URL = "https://3623de90c38f.ngrok-free.app";
+export const SERVER_URL =
+  "https://generously-nonfluorescent-marivel.ngrok-free.dev";
 
 export const USER_MOCK_TELEGRAM_DATA = {
-  telegramID: 12345678910,
+  telegramID: 123456789,
   firstName: "John21",
   lastName: "Doe21",
   userName: "john_doe21",
