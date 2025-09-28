@@ -124,7 +124,7 @@ export const Scoreboard = () => {
                     fontSize: "12px",
                   }}
                 >
-                  {user.score.toFixed(3)}
+                  {user.score.toFixed(0)}
                 </Typography>
               </Stack>
             ))
