@@ -10,9 +10,16 @@ import {
   getReferalChildrenActionFailure,
   getReferalChildrenActionSuccess,
   setLoadingByParent,
+  getUserReferalDataActionFailure,
+  getUserReferalDataActionSuccess,
+  getUserReferalDataAction,
 } from "./slices";
-import { fetchBuyCountryData, fetchReferalsData } from "./api";
-import { ReferalData } from "./types";
+import {
+  fetchBuyCountryData,
+  fetchReferalsData,
+  fetchUserReferalCountData,
+} from "./api";
+import { ReferalData, ReferalsByLevelResponse } from "./types";
 import { UserData } from "../../shared/types";
 import { initActionSuccess } from "../Header/slices";
 
@@ -63,8 +70,21 @@ function* handleGetChildren(action: {
   }
 }
 
+function* handleGetUserReferalData(action: { type: string; payload: string }) {
+  try {
+    const referalsDatas: ReferalsByLevelResponse = yield call(
+      fetchUserReferalCountData,
+      action.payload,
+    );
+    yield put(getUserReferalDataActionSuccess(referalsDatas));
+  } catch (err: any) {
+    yield put(getUserReferalDataActionFailure(err.toString()));
+  }
+}
+
 export function* watchReferalActions() {
   yield takeLatest(getReferalDataAction.type, handleReferalData);
   yield takeLatest(buyCountry.type, handleBuyCountryData);
   yield takeLatest(getReferalChildrenAction.type, handleGetChildren);
+  yield takeLatest(getUserReferalDataAction.type, handleGetUserReferalData);
 }

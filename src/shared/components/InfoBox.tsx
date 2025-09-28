@@ -51,7 +51,14 @@ export const InfoBox = ({
       <Typography sx={{ fontSize: "20px", fontWeight: 700 }}>
         {value}
       </Typography>
-      <Typography sx={{ fontSize: "12px", fontWeight: 400 }}>
+      <Typography
+        sx={{
+          fontSize: "12px",
+          fontWeight: 400,
+          whiteSpace: "pre-line",
+          textAlign: "center",
+        }}
+      >
         {subtitle}
       </Typography>
     </StyledInfoBox>

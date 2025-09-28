@@ -15,17 +15,23 @@ import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCountiresData, selectUserData } from "../Header/selectors";
-import { getReferalDataAction, selectReferalLoading } from "./slices";
+import {
+  getReferalDataAction,
+  getUserReferalDataAction,
+  selectReferalLoading,
+} from "./slices";
 import {
   selectReferalData,
   selectChildrenByParent,
   selectLoadingByParent,
+  selectUserReferalData,
 } from "./selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { AreaType } from "../../shared/types";
 import { updateBalanceAction } from "../Header/slices";
-import { ReferalData } from "./types";
+import { ReferalData, ReferalsByLevelResponse } from "./types";
 import { ModalComponent } from "../../shared/components/ModalComponent";
+import { ReferalsByLevelInfoModal } from "./components/UserReferalInfoModal";
 
 const commonImgStyle = { width: "20px", height: "20px", borderRadius: "52px" };
 
@@ -57,6 +63,8 @@ const Referal = () => {
   const childrenByParent = useSelector(selectChildrenByParent());
   const loadingByParent = useSelector(selectLoadingByParent());
   const [isReferalInfoOpen, setIsReferalInfoOpen] = useState(false);
+  const [isUserReferalInfoOpen, setIsUserReferalInfoOpen] = useState(false);
+  const userReferalData = useSelector(selectUserReferalData());
 
   const [expandedTids, setExpandedTids] = useState<Set<string>>(new Set());
 
@@ -234,7 +242,8 @@ const Referal = () => {
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <InfoBox
             value={`${referalData.length}/${nextArea?.referalsToUnlock || 0}`}
-            subtitle={t("Referrals")}
+            subtitle={`${t("Referrals")}\n ${t("referralInfoSubtitle")}`}
+            onClick={() => setIsUserReferalInfoOpen(true)}
           />
           <InfoBox
             value={`${t("referalInfoButton")}`}
@@ -301,6 +310,14 @@ const Referal = () => {
           }
           handleCloseModal={() => {
             setIsReferalInfoOpen(false);
+          }}
+        />
+        <ModalComponent
+          openModal={isUserReferalInfoOpen}
+          title={t("userReferalInfoTitle")}
+          subtitle={<ReferalsByLevelInfoModal />}
+          handleCloseModal={() => {
+            setIsUserReferalInfoOpen(false);
           }}
         />
       </Box>

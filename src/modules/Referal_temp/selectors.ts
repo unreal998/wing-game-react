@@ -23,3 +23,13 @@ export const selectLoading =
   () =>
   ({ referalSlice }: ReferalSliceStore) =>
     referalSlice.loading;
+
+export const selectUserReferalData =
+  () =>
+  ({ referalSlice }: ReferalSliceStore) =>
+    referalSlice.userReferalData?.referralsByLevel;
+
+export const selectLoadingUserReferalData =
+  () =>
+  ({ referalSlice }: ReferalSliceStore) =>
+    referalSlice.loadingUserReferalData;

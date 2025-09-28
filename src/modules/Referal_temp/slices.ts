@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ReferalData } from "./types";
+import { ReferalData, ReferalsByLevelResponse } from "./types";
 
 type ReferalState = {
   referalData: ReferalData[];
@@ -11,6 +11,10 @@ type ReferalState = {
   childrenByParent: Record<string, ReferalData[]>;
 
   loadingByParent: Record<string, boolean>;
+
+  userReferalData: ReferalsByLevelResponse | null;
+  loadingUserReferalData: boolean;
+  errMessageUserReferalData: string;
 };
 
 export const initialReferalState: ReferalState = {
@@ -19,6 +23,9 @@ export const initialReferalState: ReferalState = {
   errMessage: "",
   childrenByParent: {},
   loadingByParent: {},
+  userReferalData: null,
+  loadingUserReferalData: false,
+  errMessageUserReferalData: "",
 };
 
 export const referalSlice = createSlice({
@@ -85,6 +92,26 @@ export const referalSlice = createSlice({
       state.loading = false;
       state.errMessage = payload;
     },
+    getUserReferalDataAction: (
+      state,
+      { payload }: { payload: number | string },
+    ) => {
+      state.loadingUserReferalData = true;
+    },
+    getUserReferalDataActionSuccess: (
+      state,
+      { payload }: { payload: ReferalsByLevelResponse },
+    ) => {
+      state.loadingUserReferalData = false;
+      state.userReferalData = payload;
+    },
+    getUserReferalDataActionFailure: (
+      state,
+      { payload }: { payload: string },
+    ) => {
+      state.loadingUserReferalData = false;
+      state.errMessageUserReferalData = payload;
+    },
   },
 });
 
@@ -101,6 +128,10 @@ export const {
   buyCountry,
   buyCountrySuccess,
   buyCountryFailure,
+
+  getUserReferalDataAction,
+  getUserReferalDataActionSuccess,
+  getUserReferalDataActionFailure,
 } = referalSlice.actions;
 
 export type ReferalStateType = typeof initialReferalState;

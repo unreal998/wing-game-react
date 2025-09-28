@@ -26,3 +26,15 @@ export const fetchBuyCountryData = async (uid: string, countryName: string) => {
 
   return response.data.data;
 };
+
+export const fetchUserReferalCountData = async (tid: string) => {
+  const response = await axios.get(
+    `${SERVER_URL}/user/nested-referrals?tid=${tid}`,
+    {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    },
+  );
+  return response.data;
+};
