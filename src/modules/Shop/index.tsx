@@ -36,6 +36,7 @@ import { StyledInputBox } from "../Referal_temp/components/StyledInputBox";
 import { StyledInput } from "../Referal_temp/components/StyledInput";
 import { countryFlags } from "./components/flag";
 import { selectSoundEnabled } from "../Settings/selectors";
+import { heightProportion } from "../../shared/utils";
 import { ShopValues } from "./types";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { useNavigate } from "react-router-dom";
@@ -70,6 +71,7 @@ const Shop = () => {
   const currentStep = useSelector(selectCurrentModule());
   const currentCountryCode = selectedCountry?.name;
   const navigate = useNavigate();
+  const [isBuyButtonBlocked, setIsBuyButtonBlocked] = useState(false);
 
   const handleModalClose = useCallback(() => {
     dispatch(setLowBalanceModalOpen(false));
@@ -80,17 +82,11 @@ const Shop = () => {
   };
 
   const convertedShopValues: ShopValues[] = useMemo(() => {
-    // const valuesData: ShopValues[] = [];
-    const selectedCountryValues = shopValues.find(
-      (shopArea) => shopArea.area === selectedCountry.name,
-    );
-    if (shopValues && selectedCountryValues) {
-      return selectedCountryValues.values;
-    } else {
-      return [];
-    }
-    // valuesData.sort((a, b) => a.price - b.price);
-    // return valuesData;
+    const valuesData: ShopValues[] = [];
+    shopValues.forEach((shopValues) => {
+      valuesData.push(...shopValues.values);
+    });
+    return valuesData.sort((a, b) => a.price - b.price);
   }, [shopValues]);
 
   const selectedWindPowerIncome = useMemo(() => {
@@ -110,6 +106,8 @@ const Shop = () => {
       };
     }
   }, [convertedShopValues, windValue]);
+
+  const tableHeight = useMemo(() => heightProportion - 280, []);
 
   useEffect(() => {
     dispatch(setWindValue(0));
@@ -137,7 +135,7 @@ const Shop = () => {
         ...shopMarksFromModificator,
       ]);
     }
-  }, [shopValues]);
+  }, [shopValues, convertedShopValues]);
 
   const [playSound] = useSound(FooterButtonPress);
 
@@ -159,7 +157,15 @@ const Shop = () => {
       return (currentCountryIndex + 1) * 4;
     }
     return 0;
-  }, [shopValues, userData]);
+  }, [userData, countries]);
+
+  const selectedSliderCountry = useMemo(() => {
+    if (countries && countries.length > 0) {
+      return countries[Math.ceil(+(windValue / 4) - 1)];
+    }
+
+    return null;
+  }, [countries, windValue]);
 
   const handleWindSlide = useCallback(
     (event: Event, newValue: number | number[]) => {
@@ -170,6 +176,13 @@ const Shop = () => {
       );
       if (currentShopIndex) {
         setSelectedScruberPosition(currentShopIndex.level - 1);
+      }
+
+      if (newSlideValue > currentAviailableMods) {
+        setIsBuyButtonBlocked(true);
+        return;
+      } else {
+        setIsBuyButtonBlocked(false);
       }
     },
     [dispatch, shopMarks, currentAviailableMods],
@@ -223,17 +236,17 @@ const Shop = () => {
               alignItems="center"
             >
               <Box display="flex" alignItems="center" gap="8px">
-                {currentCountryCode && (
-                  <Avatar
-                    src={
-                      countryFlags[
-                        currentCountryCode as keyof typeof countryFlags
-                      ]
-                    }
-                    alt={currentCountryCode}
-                    sx={{ width: 24, height: 24 }}
-                  />
-                )}
+                <Avatar
+                  src={
+                    countryFlags[
+                      (selectedSliderCountry?.shortName ||
+                        "nl") as keyof typeof countryFlags
+                    ]
+                  }
+                  alt={selectedSliderCountry?.shortName || "nl"}
+                  sx={{ width: 24, height: 24 }}
+                />
+
                 <Typography fontWeight="600">
                   {t("Wind speed")} : {windValue}
                 </Typography>
@@ -292,7 +305,7 @@ const Shop = () => {
             />
           </Box>
         </Stack>
-        {
+        {!isBuyButtonBlocked && (
           <TabContext value={tab}>
             <TabList
               sx={{
@@ -371,7 +384,49 @@ const Shop = () => {
                 </Typography>
               ))}
           </TabContext>
-        }
+        )}
+        {isBuyButtonBlocked && countries && (
+          <Box
+            sx={{
+              backgroundColor: MAIN_COLORS.appBG,
+              padding: "6px",
+              borderRadius: "12px",
+              zIndex: 100,
+            }}
+          >
+            <Stack
+              sx={{
+                direction: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: MAIN_COLORS.sectionBG,
+                gap: "8px",
+                height: `${tableHeight}px`,
+                "@media (max-width: 430px) and (max-height: 932px)": {
+                  height: "240px",
+                },
+              }}
+            >
+              <Typography
+                textAlign="center"
+                fontSize="20px"
+                fontWeight={600}
+                color="white"
+              >
+                {t("shopWarningTitle")}
+              </Typography>
+              <Typography
+                textAlign="center"
+                fontSize="16px"
+                fontWeight={600}
+                color="white"
+              >
+                {t("shopWarningMessage")} {t("lockedCountryContent3")}:{" "}
+                {t(selectedSliderCountry?.title || "")}
+              </Typography>
+            </Stack>
+          </Box>
+        )}
         <ModalComponent
           openModal={lowBalanceModalOpen}
           title={t("lowBalance")}

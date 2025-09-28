@@ -47,7 +47,7 @@ export const headerSlice = createSlice({
       state,
       { payload }: { payload: County[] },
     ) => {
-      state.countriesData = payload;
+      state.countriesData = payload.sort((a, b) => a.id - b.id);
     },
     updateBalanceAction: (state, { payload }: { payload: UserData["id"] }) => {
       state.loading = true;

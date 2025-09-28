@@ -383,10 +383,9 @@ const Footer = () => {
               onClick={() => {
                 setConfirmOpen(true);
               }}
-              disabled={windValue === 0}
+              disabled={windValue === 0 || windValue > currentAviailableMods}
               sx={{
                 backgroundColor: MAIN_COLORS.mainGreen,
-                cursor: windValue === 0 ? "not-allowed" : "pointer",
                 margin: "15px",
                 width: "93%",
                 "@media (max-height: 667px)": {
