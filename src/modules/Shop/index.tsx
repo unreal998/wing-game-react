@@ -151,7 +151,7 @@ const Shop = () => {
       const currentCountryIndex = countries.findIndex((countrie) => {
         return (
           countrie.shortName ===
-          lastBoughtCountry[lastBoughtCountry.length - 1].name
+          lastBoughtCountry[lastBoughtCountry.length - 1]?.name
         );
       });
       return (currentCountryIndex + 1) * 4;
