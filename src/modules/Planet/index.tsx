@@ -172,7 +172,7 @@ export const Planet = () => {
 
                       handleButtonPress(country);
                     } else if (isTutorialFinished && country.available) {
-                      if (!country.bought) {
+                      if (!country.bought && country.name !== "nl") {
                         setBuyCountrieModalOpen(true);
                         setCountryToBuy(country);
                       } else {

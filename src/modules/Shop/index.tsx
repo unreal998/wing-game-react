@@ -40,6 +40,7 @@ import { heightProportion } from "../../shared/utils";
 import { ShopValues } from "./types";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { useNavigate } from "react-router-dom";
+import { countrieModsProfit } from "../Planet/components/LockedCountryModal";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -69,7 +70,6 @@ const Shop = () => {
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
   const soundEnabled = useSelector(selectSoundEnabled());
   const currentStep = useSelector(selectCurrentModule());
-  const currentCountryCode = selectedCountry?.name;
   const navigate = useNavigate();
   const [isBuyButtonBlocked, setIsBuyButtonBlocked] = useState(false);
 
@@ -146,7 +146,7 @@ const Shop = () => {
   const currentAviailableMods = useMemo(() => {
     if (countries && userData) {
       const lastBoughtCountry = userData.areas.filter(
-        (area) => area.bought && area.available,
+        (area) => (area.bought && area.available) || area.name === "nl",
       );
       const currentCountryIndex = countries.findIndex((countrie) => {
         return (
@@ -178,14 +178,18 @@ const Shop = () => {
         setSelectedScruberPosition(currentShopIndex.level - 1);
       }
 
-      if (newSlideValue > currentAviailableMods) {
+      if (
+        newSlideValue > currentAviailableMods &&
+        selectedSliderCountry &&
+        selectedSliderCountry?.shortName !== "nl"
+      ) {
         setIsBuyButtonBlocked(true);
         return;
       } else {
         setIsBuyButtonBlocked(false);
       }
     },
-    [dispatch, shopMarks, currentAviailableMods],
+    [dispatch, shopMarks, currentAviailableMods, selectedSliderCountry],
   );
 
   const formatValue = (num: number) =>
@@ -422,7 +426,13 @@ const Shop = () => {
                 color="white"
               >
                 {t("shopWarningMessage")} {t("lockedCountryContent3")}:{" "}
-                {t(selectedSliderCountry?.title || "")}
+                {t(selectedSliderCountry?.title || "")} {t("for")}{" "}
+                {selectedSliderCountry?.unlockPrice} TON
+                {`${t("lockedCountryContentShop")} ${(selectedSliderCountry?.referalsToUnlock || 0) - (userData?.referals?.length || 0)} ${t("friends")} \n`}
+                {t("lockedCountryContent2.3")}{" "}
+                {countrieModsProfit(selectedSliderCountry)}% {t("and from")}{" "}
+                {selectedSliderCountry?.basicBonusPerClick}{" "}
+                {t("basicBonusPerClick")}
               </Typography>
             </Stack>
           </Box>

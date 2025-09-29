@@ -138,11 +138,13 @@
   "lockedCountryContent2.1": " квт за клик",
   "lockedCountryContent2.2": " и откроет доступ к новым возможностям в магазине",
   "lockedCountryContent2.3": "Доходность модов: ",
-  "lockedCountryContent3": "Вам нужно приобрести",
+  "lockedCountryContent3": "Вам нужно открыть",
   "lockedCountryContent3.2": "Вам нужно перейти в",
   "lockedCountryContent3.1": " Чтобы открыть",
-  "shopWarningMessage": "Чтобы получить доступ к данной секции товаров.",
-  "shopWarningTitle": "Товар недоступен !",
+  "lockedCountryContentShop": " и пригласить ещё",
+  "shopWarningMessage": "Чтобы получить доступ к данной секции модов.",
+  "friends": "друзей",
+  "shopWarningTitle": "Мод недоступен !",
   "Do you whant to buy:": "Вы хотите купить: ",
   " for ": " за ",
   "errTitle": "Упс, что-то пошло не так",
@@ -169,5 +171,8 @@
   "Scoreboard": "Таблица лидеров",
   "fund": "Пополнить",
   "userReferalInfoTitle": "Информация о реферальном доходе",
-  "Count": "К-во"
+  "Count": "К-во",
+  "and": "и",
+  "and from": "и от",
+  "basicBonusPerClick": "квт за клик"
 }

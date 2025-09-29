@@ -139,10 +139,12 @@
   "lockedCountryContent2.2": " and open the new items in the shop",
   "lockedCountryContent2.3": "Mods profit: ",
   "lockedCountryContent3": "You need to unlock",
-  "lockedCountryContent3.2": "You need to mothe to the",
+  "lockedCountryContent3.2": "You need to go to the",
   "lockedCountryContent3.1": " To unlock",
-  "shopWarningMessage": "To get the access ",
-  "shopWarningTitle": "The product is not available",
+  "lockedCountryContentShop": " and invite ",
+  "shopWarningMessage": "To get the access to the mods",
+  "shopWarningTitle": "The mod is not available",
+  "friends": "friends",
   "Do you whant to buy:": "Do you want to buy: ",
   " for ": " for ",
   "errTitle": "Oops, something went wrong",
@@ -169,5 +171,8 @@
   "Scoreboard": "Scoreboard",
   "fund": "Fund",
   "userReferalInfoTitle": "User Referral Info",
-  "Count": "Count"
+  "Count": "Count",
+  "and": "and",
+  "and from": "and from",
+  "basicBonusPerClick": "kW per click"
 }

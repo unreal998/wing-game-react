@@ -3,11 +3,30 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { selectCountiresData, selectUserData } from "../../Header/selectors";
 import { useMemo } from "react";
+import { County } from "../../../shared/types";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   countryName: string;
+};
+
+export const countrieModsProfit = (
+  selectedCountry: County | null | undefined,
+) => {
+  if (selectedCountry) {
+    switch (selectedCountry.shortName) {
+      case "dk":
+        return 14;
+      case "gr":
+        return 17;
+      case "usa":
+        return 20;
+      default:
+        return 0;
+    }
+  }
+  return 0;
 };
 
 export const LockedCountryModal: React.FC<Props> = ({
@@ -63,22 +82,6 @@ export const LockedCountryModal: React.FC<Props> = ({
     return 0;
   }, [countriesForUnlock, countries]);
 
-  const countrieModsProfit = useMemo(() => {
-    if (selectedCountry) {
-      switch (selectedCountry.shortName) {
-        case "dk":
-          return 14;
-        case "gr":
-          return 17;
-        case "usa":
-          return 20;
-        default:
-          return 0;
-      }
-    }
-    return 0;
-  }, [selectedCountry]);
-
   return (
     <ModalComponent
       openModal={open}
@@ -87,7 +90,7 @@ export const LockedCountryModal: React.FC<Props> = ({
       subtitle={`
                 ${t("lockedCountryContent")}: ${(selectedCountry?.referalsToUnlock || 0) - (userData?.referals?.length || 0)} ${t("lockedCountryContent1")} ${t(selectedCountry?.title || "")}\n
                 ${t(selectedCountry?.title || "")} ${t("lockedCountryContent2")}: ${selectedCountry?.basicBonusPerClick} ${t("lockedCountryContent2.1")} ${t("lockedCountryContent2.2")}\n
-                ${t("lockedCountryContent2.3")} ${countrieModsProfit}%
+                ${t("lockedCountryContent2.3")} ${countrieModsProfit(selectedCountry)}%
                 ${countriesForUnlockNames ? `\n ${t("lockedCountryContent3")}: ${countriesForUnlockNames} \n` : ""}
                 ${t("lockedCountryContent3.1")} ${t(selectedCountry?.title || "")} ${t("for")} ${selectedCountry?.unlockPrice} TON
                 `}
