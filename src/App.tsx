@@ -169,7 +169,9 @@ const App = () => {
       }),
     );
 
-    window.location.href = "https://t.me/TurbineX_channel";
+    setTimeout(() => {
+      window.location.href = "https://t.me/TurbineX_channel";
+    }, 1000);
 
     setSubscribeModalOpen(false);
   }, [userId, dispatch]);
