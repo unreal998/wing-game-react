@@ -157,10 +157,6 @@ const App = () => {
   };
 
   const handleNavigate = useCallback(() => {
-    window.location.href = "https://t.me/TurbineX_channel";
-
-    setSubscribeModalOpen(false);
-
     if (!userId) return;
 
     dispatch(
@@ -172,7 +168,11 @@ const App = () => {
         uid: userId,
       }),
     );
-  }, []);
+
+    window.location.href = "https://t.me/TurbineX_channel";
+
+    setSubscribeModalOpen(false);
+  }, [userId, dispatch]);
 
   useEffect(() => {
     if (userData) {
