@@ -109,6 +109,19 @@ const Missions = () => {
       missionTimeoutRef.current !== undefined
     )
       return;
+
+    const url = extractUrl(selectedMission?.description[i18n.language] || "");
+    if (url) {
+      dispatch(
+        completeMissionAction({ mission: selectedMission, uid: userData.id }),
+      );
+      missionTimeoutRef.current = setTimeout(() => {
+        window.open(url, "_blank");
+      }, 1000);
+      setOpen(false);
+      return;
+    }
+
     missionTimeoutRef.current = setTimeout(() => {
       dispatch(
         completeMissionAction({ mission: selectedMission, uid: userData.id }),
@@ -116,11 +129,6 @@ const Missions = () => {
       setOpen(false);
       missionTimeoutRef.current = undefined;
     }, 15000);
-
-    const url = extractUrl(selectedMission?.description[i18n.language] || "");
-    if (url) {
-      window.open(url, "_blank");
-    }
   }, [selectedMission, userData, missionTimeoutRef, dispatch]);
   const [playFooterSound] = useSound(footerButtonSound);
 
