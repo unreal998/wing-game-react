@@ -44,6 +44,7 @@ import { ModalComponent } from "../../shared/components/ModalComponent";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { countryFlags } from "../Shop/components/flag";
 import { ShopValues } from "../Shop/types";
+import { buyCountry } from "../Referal_temp/slices";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -67,6 +68,7 @@ const Footer = () => {
   const countries = useSelector(selectCountiresData());
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [isBlockedCountryOpen, setIsBlockedCountryOpen] = useState(false);
+  const [isBuyNetherlandsOpen, setIsBuyNetherlandsOpen] = useState(false);
 
   const normilizedWindValue = useMemo(() => {
     if (countries && selectedCountry && windValue) {
@@ -112,6 +114,21 @@ const Footer = () => {
   const handleOpenRoadmap = useCallback(() => {
     dispatch(setRoadMapOpen(true));
   }, [dispatch]);
+
+  const handleBuyButtonPress = useCallback(() => {
+    if (soundEnabled) playFooterButtonSound();
+    if (selectedCountry.name === "nl" && !selectedCountry.bought) {
+      setIsBuyNetherlandsOpen(true);
+    } else {
+      setConfirmOpen(true);
+    }
+  }, [soundEnabled, playFooterButtonSound]);
+
+  const handleBuyNetherlands = useCallback(() => {
+    if (soundEnabled) playFooterButtonSound();
+    if (!userData) return;
+    dispatch(buyCountry({ uid: userData?.id, countryName: "nl" }));
+  }, [dispatch, soundEnabled, playFooterButtonSound]);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
@@ -381,7 +398,7 @@ const Footer = () => {
           <>
             <GameButtonComponent
               onClick={() => {
-                setConfirmOpen(true);
+                handleBuyButtonPress();
               }}
               disabled={windValue === 0 || windValue > currentAviailableMods}
               sx={{
@@ -450,6 +467,28 @@ const Footer = () => {
               }
               openModal={isBlockedCountryOpen}
               handleCloseModal={() => setIsBlockedCountryOpen(false)}
+            />
+            <ModalComponent
+              title={t("Buy Netherlands")}
+              subtitle={
+                t("Buy Netherlands content") +
+                " " +
+                countries.find((country) => country.shortName === "nl")
+                  ?.unlockPrice +
+                " TON"
+              }
+              openModal={isBuyNetherlandsOpen}
+              handleCloseModal={() => setIsBuyNetherlandsOpen(false)}
+              additionalbutton={
+                <PopUpMainButton
+                  onClick={() => {
+                    handleBuyNetherlands();
+                    setIsBuyNetherlandsOpen(false);
+                  }}
+                >
+                  {t("Buy")}
+                </PopUpMainButton>
+              }
             />
           </>
         )}
