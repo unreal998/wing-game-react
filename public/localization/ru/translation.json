@@ -148,7 +148,7 @@
   "Do you whant to buy:": "Вы хотите купить: ",
   " for ": " за ",
   "errTitle": "Упс, что-то пошло не так",
-  "To refill your balance, use the address below": "Чтобы пополнить баланс, используйте адрес ниже",
+  "To refill your balance, use the address below": "Чтобы пополнить баланс, используйте адрес ниже. При пополнении взимается комиссия сети в виде 1% от суммы пополнения.",
   "getReward": "Награда",
   "invalidWallet": "Неверный кошелек",
   "for": "за",

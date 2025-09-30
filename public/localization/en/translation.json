@@ -148,7 +148,7 @@
   "Do you whant to buy:": "Do you want to buy: ",
   " for ": " for ",
   "errTitle": "Oops, something went wrong",
-  "To refill your balance, use the address below": "To refill your balance, use the address below",
+  "To refill your balance, use the address below": "To refill your balance, use the address below. A network fee of 1% is charged when you top up.",
   "getReward": "Reward",
   "invalidWallet": "Invalid wallet address",
   "for": "for the",
