@@ -49,6 +49,7 @@ import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { countryFlags } from "../Shop/components/flag";
 import { ShopValues } from "../Shop/types";
 import { buyCountry } from "../Referal_temp/slices";
+import { selectWalletNumber } from "../Wallet/selectors";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const Footer = () => {
   const location = useLocation();
   const nextPressButtonTimeDelay = useSelector(selectNextPressTimeDelay());
   const isButtonDisabled = useSelector(selectDisabledPowerButton());
+  const walletNumber = useSelector(selectWalletNumber());
   const dispatch = useDispatch();
   const soundEnabled = useSelector(selectSoundEnabled());
   const selectedCountry = useSelector(selectSelectedCountry());
@@ -383,23 +385,24 @@ const Footer = () => {
             {t("Roadmap")}
           </GameButtonComponent>
         )}
-        {userData?.wallet && location.pathname === "/wallet" && (
-          <GameButtonComponent
-            sx={{
-              width: "93%",
-              margin: "15px",
-            }}
-            onClick={() => {
-              if (soundEnabled) playFooterButtonSound();
-              handleWithdrawOpen();
-            }}
-          >
-            <PowerIcon />
-            <Typography fontSize="20px" fontWeight="800" marginLeft="6px">
-              {t("Withdraw funds")}
-            </Typography>
-          </GameButtonComponent>
-        )}
+        {(userData?.wallet || walletNumber) &&
+          location.pathname === "/wallet" && (
+            <GameButtonComponent
+              sx={{
+                width: "93%",
+                margin: "15px",
+              }}
+              onClick={() => {
+                if (soundEnabled) playFooterButtonSound();
+                handleWithdrawOpen();
+              }}
+            >
+              <PowerIcon />
+              <Typography fontSize="20px" fontWeight="800" marginLeft="6px">
+                {t("Withdraw funds")}
+              </Typography>
+            </GameButtonComponent>
+          )}
         {location.pathname === "/shop" && countries && (
           <>
             <GameButtonComponent

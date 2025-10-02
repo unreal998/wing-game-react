@@ -110,6 +110,17 @@ export const WalletComponent = () => {
             </Typography>
           )}
         </Stack>
+        {walletNumber && (
+          <Typography
+            sx={{
+              fontSize: "12px",
+              fontWeight: 700,
+              color: MAIN_COLORS.missionTable,
+            }}
+          >
+            {t("A network fee of 1% is charged when you top up.")}
+          </Typography>
+        )}
         {!walletNumber && (
           <GameButtonComponent
             sx={{

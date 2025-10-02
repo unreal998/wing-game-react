@@ -148,7 +148,7 @@
   "Do you whant to buy:": "Do you want to buy: ",
   " for ": " for ",
   "errTitle": "Oops, something went wrong",
-  "To refill your balance, use the address below": "To refill your balance, use the address below. A network fee of 1% is charged when you top up.",
+  "To refill your balance, use the address below": "To refill your balance, use the address below.",
   "getReward": "Reward",
   "invalidWallet": "Invalid wallet address",
   "for": "for the",
@@ -176,5 +176,6 @@
   "and from": "and from",
   "basicBonusPerClick": "kW per click",
   "Buy Netherlands": "Shop is blocked!",
-  "Buy Netherlands content": "To open the shop you need to open Netherlands for"
+  "Buy Netherlands content": "To open the shop you need to open Netherlands for",
+  "A network fee of 1% is charged when you top up.": "A network fee of 1% is charged when you top up."
 }
