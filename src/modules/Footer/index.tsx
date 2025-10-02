@@ -133,6 +133,10 @@ const Footer = () => {
   const handleBuyNetherlands = useCallback(() => {
     if (soundEnabled) playFooterButtonSound();
     if (!userData) return;
+    if (userData.TONBalance < 1) {
+      dispatch(setLowBalanceModalOpen(true));
+      return;
+    }
     dispatch(buyCountry({ uid: userData?.id, countryName: "nl" }));
     navigate("/");
     dispatch(clearSelectedCountry());
