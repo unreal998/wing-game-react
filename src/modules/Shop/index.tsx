@@ -181,7 +181,8 @@ const Shop = () => {
       if (
         newSlideValue > currentAviailableMods &&
         selectedSliderCountry &&
-        selectedSliderCountry?.shortName !== "nl"
+        countries &&
+        countries[Math.ceil(+(newSlideValue / 4) - 1)]?.shortName !== "nl"
       ) {
         setIsBuyButtonBlocked(true);
         return;
@@ -429,6 +430,13 @@ const Shop = () => {
                 {t(selectedSliderCountry?.title || "")} {t("for")}{" "}
                 {selectedSliderCountry?.unlockPrice} TON
                 {`${t("lockedCountryContentShop")} ${(selectedSliderCountry?.referalsToUnlock || 0) - (userData?.referals?.length || 0)} ${t("friends")} \n`}
+              </Typography>
+              <Typography
+                textAlign="center"
+                fontSize="16px"
+                fontWeight={600}
+                color="white"
+              >
                 {t("lockedCountryContent2.3")}{" "}
                 {countrieModsProfit(selectedSliderCountry)}% {t("and from")}{" "}
                 {selectedSliderCountry?.basicBonusPerClick}{" "}

@@ -179,7 +179,7 @@ const Footer = () => {
 
   const buyModifier = useCallback(() => {
     const currentPrice = convertedShopValues.find(
-      (value, index) => index === normilizedWindValue - 1,
+      (value, index) => index === windValue - 1,
     )?.price;
     if (currentPrice === undefined) return;
     if (userData === null) return;
@@ -189,12 +189,12 @@ const Footer = () => {
     }
     dispatch(
       buyItemAction({
-        windSpeed: windValue,
+        windSpeed: windValue % 4 === 0 ? 4 : windValue % 4,
         selectedArea: selectedCountry.name,
         uid: !!userData ? userData.id : "",
       }),
     );
-  }, [dispatch, userData, shopValues, normilizedWindValue, selectedCountry]);
+  }, [dispatch, userData, shopValues, windValue, selectedCountry]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -432,7 +432,7 @@ const Footer = () => {
                 t("Do you whant to buy:") +
                 windValue +
                 t(" for ") +
-                (convertedShopValues[normilizedWindValue - 1]?.price || 0) +
+                (convertedShopValues[windValue - 1]?.price || 0) +
                 " TON"
               }
               openModal={confirmOpen}
