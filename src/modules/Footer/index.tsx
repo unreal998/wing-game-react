@@ -15,7 +15,11 @@ import {
   selectSelectedCountry,
 } from "../Home/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import { powerButtonPressed, setPressTimeDelay } from "../Home/slices";
+import {
+  clearSelectedCountry,
+  powerButtonPressed,
+  setPressTimeDelay,
+} from "../Home/slices";
 import { useTranslation } from "react-i18next";
 import { StyledTypographyButton } from "./componets/StyledTypographyButton";
 import { StyledMainBox } from "./componets/StyledMainBox";
@@ -122,13 +126,15 @@ const Footer = () => {
     } else {
       setConfirmOpen(true);
     }
-  }, [soundEnabled, playFooterButtonSound]);
+  }, [soundEnabled, playFooterButtonSound, userData, selectedCountry]);
 
   const handleBuyNetherlands = useCallback(() => {
     if (soundEnabled) playFooterButtonSound();
     if (!userData) return;
     dispatch(buyCountry({ uid: userData?.id, countryName: "nl" }));
-  }, [dispatch, soundEnabled, playFooterButtonSound]);
+    navigate("/");
+    dispatch(clearSelectedCountry());
+  }, [dispatch, soundEnabled, playFooterButtonSound, navigate, userData]);
 
   const handleNavigationChange = useCallback(
     (path: string) => {
