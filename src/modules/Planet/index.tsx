@@ -133,7 +133,7 @@ export const Planet = () => {
           animationData={require(`../../assets/animations/planet.json`)}
           loop
           style={{
-            top: isSmallScreen ? "-20px" : "50px",
+            top: isSmallScreen ? "-10px" : "60px",
             left: "0",
             position: "absolute",
             transform: isSmallScreen
