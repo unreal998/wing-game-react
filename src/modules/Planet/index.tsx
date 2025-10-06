@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCountry } from "../Home/slices";
 import {
@@ -25,11 +25,12 @@ import useSound from "use-sound";
 import { LockOutlined } from "@mui/icons-material";
 import { LockedCountryModal } from "./components/LockedCountryModal";
 import { selectSoundEnabled } from "../Settings/selectors";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, useMediaQuery } from "@mui/material";
 import { heightProportion } from "../../shared/utils";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { selectLowBalanceModalOpen } from "../Shop/selectors";
 import { setLowBalanceModalOpen } from "../Shop/slices";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -46,6 +47,8 @@ export const Planet = () => {
   const userData = useSelector(selectUserData());
   const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
+  const isSmallScreen = useMediaQuery("(max-width: 376px)");
+  const animationRef = useRef<LottieRefCurrentProps | null>(null);
 
   const handleModalClose = useCallback(() => {
     dispatch(setLowBalanceModalOpen(false));
@@ -125,6 +128,19 @@ export const Planet = () => {
         alignItems={"center"}
         justifyContent={"center"}
       >
+        <Lottie
+          lottieRef={animationRef}
+          animationData={require(`../../assets/animations/planet.json`)}
+          loop
+          style={{
+            top: isSmallScreen ? "-20px" : "50px",
+            left: "0",
+            position: "absolute",
+            transform: isSmallScreen
+              ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
+              : "matrix(1.7, 0, 0, 1.7, 0, 0)",
+          }}
+        />
         <StyledPlanetBox>
           {userCountiresData &&
             userCountiresData?.length &&

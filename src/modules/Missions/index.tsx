@@ -116,7 +116,7 @@ const Missions = () => {
         completeMissionAction({ mission: selectedMission, uid: userData.id }),
       );
       missionTimeoutRef.current = setTimeout(() => {
-        window.open(url, "_blank");
+        window.location.href = url;
       }, 1000);
       setOpen(false);
       return;
@@ -129,7 +129,7 @@ const Missions = () => {
       setOpen(false);
       missionTimeoutRef.current = undefined;
     }, 15000);
-  }, [selectedMission, userData, missionTimeoutRef, dispatch]);
+  }, [selectedMission, userData, missionTimeoutRef, dispatch, i18n]);
   const [playFooterSound] = useSound(footerButtonSound);
 
   return (

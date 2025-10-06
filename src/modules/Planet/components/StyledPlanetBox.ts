@@ -13,5 +13,5 @@ export const StyledPlanetBox = styled(Box)({
   justifyContent: "center",
   backgroundPosition: "center",
   position: "relative",
-  backgroundImage: `url(./Planet.png)`,
+  // backgroundImage: `url(./Planet.png)`,
 });

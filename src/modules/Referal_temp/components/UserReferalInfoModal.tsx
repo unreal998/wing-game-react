@@ -112,7 +112,7 @@ export const ReferalsByLevelInfoModal = () => {
           >
             <Typography flex={0.25}>{level}</Typography>
             <Typography flex={0.25}>{income.count}</Typography>
-            <Typography flex={0.25}>{income.kwtIncome}</Typography>
+            <Typography flex={0.25}>{income.kwtIncome.toFixed(0)}</Typography>
             <Typography flex={0.25}>{income.tonIncome.toFixed(3)}</Typography>
           </Stack>
         ))}
