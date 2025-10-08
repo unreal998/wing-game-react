@@ -275,7 +275,7 @@ const Missions = () => {
                           width: "100px",
                         }}
                         onClick={() => {
-                          if (soundEnabled) handleGetReward(mission);
+                          handleGetReward(mission);
                         }}
                       >
                         {t("getReward")}
