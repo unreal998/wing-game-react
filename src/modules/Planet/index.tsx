@@ -47,7 +47,7 @@ export const Planet = () => {
   const userData = useSelector(selectUserData());
   const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
-  const isSmallScreen = useMediaQuery("(max-width: 376px)");
+  const isSmallScreen = useMediaQuery("(max-width: 376px, max-height: 668px)");
   const animationRef = useRef<LottieRefCurrentProps | null>(null);
 
   const handleModalClose = useCallback(() => {
@@ -105,13 +105,13 @@ export const Planet = () => {
   const getCoords = useCallback((index: number) => {
     switch (index) {
       case 0:
-        return { top: "100px", left: "180px" };
+        return { top: "120px", left: "180px" };
       case 1:
-        return { top: "40px", left: "120px" };
+        return { top: "60px", left: "120px" };
       case 2:
-        return { top: "170px", left: "90px" };
+        return { top: "190px", left: "90px" };
       case 3:
-        return { top: "100px", left: "50px" };
+        return { top: "120px", left: "50px" };
       default:
         return { top: "0px", left: "0px" };
     }
@@ -119,6 +119,16 @@ export const Planet = () => {
   const [playFooterSound] = useSound(footerButtonSound);
 
   const planetScreenSize = useMemo(() => heightProportion - 60, []);
+
+  const calculatePlanetSize = useCallback(() => {
+    return `matrix(${window.innerWidth / 700 + 1}, 0, 0, ${window.innerWidth / 786 + 1}, 0, 0)`;
+  }, []);
+
+  const calculatePlanetTop = useCallback(() => {
+    return `${planetScreenSize / 2 - 200}px`;
+  }, []);
+
+  calculatePlanetSize();
 
   return (
     <>
@@ -128,20 +138,17 @@ export const Planet = () => {
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Lottie
-          lottieRef={animationRef}
-          animationData={require(`../../assets/animations/planet.json`)}
-          loop
-          style={{
-            top: isSmallScreen ? "-10px" : "60px",
-            left: "0",
-            position: "absolute",
-            transform: isSmallScreen
-              ? "matrix(1.6, 0, 0, 1.6, 0, 0)"
-              : "matrix(1.7, 0, 0, 1.7, 0, 0)",
-          }}
-        />
         <StyledPlanetBox>
+          <Lottie
+            lottieRef={animationRef}
+            animationData={require(`../../assets/animations/planet.json`)}
+            loop
+            style={{
+              left: "0",
+              position: "absolute",
+              transform: calculatePlanetSize(),
+            }}
+          />
           {userCountiresData &&
             userCountiresData?.length &&
             userCountiresData.map((country, index) => (
@@ -210,10 +217,15 @@ export const Planet = () => {
                 {t(`${country.title}`)}
               </StyledPlanetButton>
             ))}
+          <Typography
+            textAlign="center"
+            fontSize="16px"
+            zIndex={1000}
+            alignSelf="flex-end"
+          >
+            {t("selectYourCountry")}
+          </Typography>
         </StyledPlanetBox>
-        <Typography textAlign="center" fontSize="16px">
-          {t("selectYourCountry")}
-        </Typography>
         <BuyCountryModal
           open={buyCountrieModalOpen}
           onClose={() => setBuyCountrieModalOpen(false)}

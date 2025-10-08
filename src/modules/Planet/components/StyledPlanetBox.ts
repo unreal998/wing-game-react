@@ -3,7 +3,7 @@ import { Box, styled } from "@mui/material";
 export const StyledPlanetBox = styled(Box)({
   display: "flex",
   width: "100%",
-  height: "100vw",
+  height: "120vw",
   backgroundRepeat: "no-repeat",
   backgroundSize: "contain",
   gap: "10px",
@@ -12,6 +12,6 @@ export const StyledPlanetBox = styled(Box)({
   alignItems: "center",
   justifyContent: "center",
   backgroundPosition: "center",
-  position: "relative",
+  position: "absolute",
   // backgroundImage: `url(./Planet.png)`,
 });
