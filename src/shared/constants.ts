@@ -3,7 +3,7 @@
 export const SERVER_URL = "https://turbinex.pp.ua";
 
 export const USER_MOCK_TELEGRAM_DATA = {
-  telegramID: 875867810,
+  telegramID: 123456789,
   firstName: "John21",
   lastName: "Doe21",
   userName: "john_doe21",
