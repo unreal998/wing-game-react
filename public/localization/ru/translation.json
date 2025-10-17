@@ -177,5 +177,7 @@
   "basicBonusPerClick": "квт за клик",
   "Buy Netherlands": "Магазин заблокирован !",
   "Buy Netherlands content": "Для открытия магазина вам нужно открыть Нидерланды за",
-  "A network fee of 1% is charged when you top up.": "При пополнении взимается комиссия сети в виде 1% от суммы пополнения."
+  "A network fee of 1% is charged when you top up.": "При пополнении взимается комиссия сети в виде 1% от суммы пополнения.",
+  "shareTitle": "Поделиться ссылкой",
+  "shareText": "Поделиться ссылкой"
 }
