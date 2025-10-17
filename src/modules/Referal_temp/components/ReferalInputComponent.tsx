@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import { HeaderTypographyStyle } from "./HeaderTypographyStyle";
 import { StyledInputBox } from "./StyledInputBox";
 import { StyledInput } from "./StyledInput";
@@ -8,6 +8,7 @@ import { selectUserData } from "../../Header/selectors";
 import Copy from "../../../assets/copy.svg";
 import Checkmark from "../../../assets/checkmark.png";
 import { useTranslation } from "react-i18next";
+import { MAIN_COLORS } from "../../../shared/colors";
 
 export const ReferalInputComponent = () => {
   const userData = useSelector(selectUserData());
@@ -48,10 +49,46 @@ export const ReferalInputComponent = () => {
       marginBottom="10px"
     >
       <HeaderTypographyStyle>{t("Your Invite Link")}</HeaderTypographyStyle>
-      <Box sx={{ display: "flex", gap: "15px", alignItems: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: "15px",
+          alignItems: "center",
+          position: "relative",
+        }}
+      >
         <StyledInputBox>
           <StyledInput type="text" value={referalLink} readOnly />
         </StyledInputBox>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          key={`bottom-right-${isClicked}`}
+          open={isClicked}
+          autoHideDuration={3000}
+          onClose={() => setIsClicked(false)}
+          message={t("Copied" + " !")}
+          sx={{
+            "&.MuiSnackbar-root": {
+              width: "100px",
+              left: "auto",
+              position: "absolute",
+              bottom: "30px",
+              right: "-40px",
+              "& .MuiSnackbarContent-root": {
+                fontSize: "14px",
+                fontWeight: 700,
+                borderRadius: "8px",
+                padding: "0px 18px",
+                width: "100px",
+                backgroundColor: "transparent",
+                color: "white",
+                "& .MuiSnackbarContent-message": {
+                  color: MAIN_COLORS.mainGreen,
+                },
+              },
+            },
+          }}
+        />
         <img
           onClick={copyToClipboard}
           src={isClicked ? Checkmark : Copy}
