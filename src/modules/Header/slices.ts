@@ -32,7 +32,7 @@ export const headerSlice = createSlice({
   initialState: initialHeaderState,
   reducers: {
     initAction: (state, { payload }: { payload: UserInitData }) => {
-      state.loading = true; // Устанавливаем загрузку
+      state.loading = true;
       state.userInitData = payload;
     },
     initActionSuccess: (state, { payload }: { payload: UserData }) => {

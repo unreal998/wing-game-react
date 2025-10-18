@@ -3,6 +3,7 @@ import { StyledPlanetBox } from "./components/StyledPlanetBox";
 import { StyledPlanetButton } from "./components/StyledPlanetButton";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import { setSelectedCountry } from "../Home/slices";
 import {
   selectAreasData,
@@ -25,12 +26,13 @@ import useSound from "use-sound";
 import { LockOutlined } from "@mui/icons-material";
 import { LockedCountryModal } from "./components/LockedCountryModal";
 import { selectSoundEnabled } from "../Settings/selectors";
-import { Stack, Typography, useMediaQuery } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { heightProportion } from "../../shared/utils";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { selectLowBalanceModalOpen } from "../Shop/selectors";
 import { setLowBalanceModalOpen } from "../Shop/slices";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import { selectLastSelectedCountry } from "../Home/selectors";
 
 export const Planet = () => {
   const navigate = useNavigate();
@@ -47,8 +49,8 @@ export const Planet = () => {
   const userData = useSelector(selectUserData());
   const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
-  const isSmallScreen = useMediaQuery("(max-width: 376px, max-height: 668px)");
   const animationRef = useRef<LottieRefCurrentProps | null>(null);
+  const lastSelectedCountry = useSelector(selectLastSelectedCountry());
 
   const handleModalClose = useCallback(() => {
     dispatch(setLowBalanceModalOpen(false));
@@ -122,10 +124,6 @@ export const Planet = () => {
 
   const calculatePlanetSize = useCallback(() => {
     return `matrix(${window.innerWidth / 700 + 1}, 0, 0, ${window.innerWidth / 786 + 1}, 0, 0)`;
-  }, []);
-
-  const calculatePlanetTop = useCallback(() => {
-    return `${planetScreenSize / 2 - 200}px`;
   }, []);
 
   calculatePlanetSize();
@@ -214,17 +212,36 @@ export const Planet = () => {
                     }}
                   />
                 )}
-                {t(`${country.title}`)}
+                {lastSelectedCountry !== "" &&
+                lastSelectedCountry === country.name ? (
+                  <Stack direction="row" alignItems="center" gap={"2px"}>
+                    <RoomOutlinedIcon sx={{ width: "18px", height: " 18px" }} />
+                    {t(`${country.title}`)}
+                  </Stack>
+                ) : (
+                  <>{t(`${country.title}`)}</>
+                )}
               </StyledPlanetButton>
             ))}
-          <Typography
-            textAlign="center"
-            fontSize="16px"
-            zIndex={1000}
-            alignSelf="flex-end"
-          >
-            {t("selectYourCountry")}
-          </Typography>
+          {lastSelectedCountry === "" ? (
+            <Typography
+              textAlign="center"
+              fontSize="16px"
+              zIndex={1000}
+              alignSelf="flex-end"
+            >
+              {t("selectYourCountry")}
+            </Typography>
+          ) : (
+            <Typography
+              textAlign="center"
+              fontSize="16px"
+              zIndex={1000}
+              alignSelf="flex-end"
+            >
+              {`${t("lastSelectedCountry")}: ${t(userCountiresData.find((country) => country.name === lastSelectedCountry)?.title || "")}`}
+            </Typography>
+          )}
         </StyledPlanetBox>
         <BuyCountryModal
           open={buyCountrieModalOpen}

@@ -6,6 +6,7 @@ import { HomeState } from "./types";
 export const initialHomeState: HomeState = {
   nextPressTimeDelay: 0,
   disabledPowerButton: false,
+  lastSelectedCountry: "",
   selectedCountry: {
     name: "",
     available: false,
@@ -49,6 +50,7 @@ export const homeSlice = createSlice({
       state.disabledPowerButton = payload.nextButtonPress - Date.now() > 0;
     },
     clearSelectedCountry: (state) => {
+      state.lastSelectedCountry = state.selectedCountry.name;
       state.selectedCountry = {
         name: "",
         available: false,

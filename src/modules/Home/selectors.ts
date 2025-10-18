@@ -22,3 +22,8 @@ export const selectSelectedCountry =
 
 export const selectHomeErrors = (state: { homeSlice: HomeState }) =>
   state.homeSlice.errMessage;
+
+export const selectLastSelectedCountry =
+  () =>
+  ({ homeSlice }: HomeSliceStore) =>
+    homeSlice.lastSelectedCountry;
