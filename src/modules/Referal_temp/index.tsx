@@ -20,7 +20,6 @@ import {
   selectReferalData,
   selectChildrenByParent,
   selectLoadingByParent,
-  selectUserReferalData,
 } from "./selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
 import { AreaType } from "../../shared/types";
@@ -28,7 +27,6 @@ import { updateBalanceAction } from "../Header/slices";
 import { ReferalData } from "./types";
 import { ModalComponent } from "../../shared/components/ModalComponent";
 import { ReferalsByLevelInfoModal } from "./components/UserReferalInfoModal";
-import { ShareButton } from "./components/ShareButton";
 
 const commonImgStyle = { width: "20px", height: "20px", borderRadius: "52px" };
 
@@ -241,9 +239,6 @@ const Referal = () => {
           alignItems="center"
         >
           <NamedStyled>{t("Referal")}</NamedStyled>
-          <ShareButton
-            shareLink={`https://t.me/TurbinexAppBot?start=r_${userData?.telegramID || ""}`}
-          />
         </Stack>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <InfoBox

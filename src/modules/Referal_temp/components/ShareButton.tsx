@@ -38,7 +38,7 @@ export const ShareButton = ({ shareLink }: { shareLink: string }) => {
     <IconButton
       onClick={handleShare}
       sx={{
-        paddingTop: "3px",
+        paddingTop: "5px",
       }}
     >
       <IosShareIcon sx={{ color: MAIN_COLORS.mainGreen }} />

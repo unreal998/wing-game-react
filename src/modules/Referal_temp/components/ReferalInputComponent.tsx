@@ -9,6 +9,7 @@ import Copy from "../../../assets/copy.svg";
 import Checkmark from "../../../assets/checkmark.png";
 import { useTranslation } from "react-i18next";
 import { MAIN_COLORS } from "../../../shared/colors";
+import { ShareButton } from "./ShareButton";
 
 export const ReferalInputComponent = () => {
   const userData = useSelector(selectUserData());
@@ -99,6 +100,9 @@ export const ReferalInputComponent = () => {
             cursor: "pointer",
             filter: isClicked ? "brightness(1.5)" : "brightness(1)",
           }}
+        />
+        <ShareButton
+          shareLink={`https://t.me/TurbinexAppBot?start=r_${userData?.telegramID || ""}`}
         />
       </Box>
     </Box>
