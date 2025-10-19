@@ -66,7 +66,7 @@ const Referal = () => {
     if (!userData || !countries) return null;
     let nextOpenedCountry: AreaType | null = null;
     userData.areas.forEach((area, index) => {
-      if (area.bought && area.available) {
+      if (area.available) {
         if (userData.areas[index + 1]) {
           if (
             !userData.areas[index + 1].bought ||
