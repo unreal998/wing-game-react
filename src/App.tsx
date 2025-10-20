@@ -170,7 +170,7 @@ const App = () => {
     );
 
     setTimeout(() => {
-      window.location.href = "https://t.me/turbinex_support";
+      window.location.href = "https://t.me/TurbineX_channel";
     }, 1000);
 
     setSubscribeModalOpen(false);
