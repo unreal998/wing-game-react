@@ -97,7 +97,7 @@ const Settings = () => {
   };
 
   const handleSupportButton = () => {
-    window.location.href = "https://t.me/turbinex_official";
+    window.location.href = "https://t.me/turbinex_support";
   };
 
   useEffect(() => {
