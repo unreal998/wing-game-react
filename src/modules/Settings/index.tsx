@@ -87,10 +87,6 @@ const Settings = () => {
     dispatch(setRoadMapOpen(false));
   }, [dispatch]);
 
-  const handleLanguageChange = (languageCode: string) => {
-    i18n.changeLanguage(languageCode);
-  };
-
   const handleRestartTutorial = () => {
     if (!userId) return;
     dispatch(restartTutorialRequest(userId));
@@ -167,19 +163,6 @@ const Settings = () => {
       </SubMainBox>
 
       <StyledBasicBox>
-        <TabBoxSettings>
-          <Typography
-            sx={{
-              paddingTop: "10px",
-              paddingBottom: "10px",
-              textTransform: "capitalize",
-            }}
-          >
-            {t("Language")}:
-          </Typography>
-          <LanguageSelector onLanguageChange={handleLanguageChange} />
-        </TabBoxSettings>
-
         <TabBoxSettings justifyContent="space-between">
           <Typography sx={{ paddingTop: "10px", paddingBottom: "10px" }}>
             {t("Sound")}

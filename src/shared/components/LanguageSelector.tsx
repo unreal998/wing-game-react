@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import Vector from "../../assets/Vector.svg";
+import { MAIN_COLORS } from "../colors";
+import LanguageIcon from "@mui/icons-material/Language";
 
 const languages = {
   en: "English",
@@ -55,7 +57,15 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   };
 
   return (
-    <Box sx={{ position: "relative", display: "inline-block" }}>
+    <Box
+      sx={{
+        position: "relative",
+        display: "inline-block",
+        border: `1px solid ${MAIN_COLORS.mainGreen}`,
+        borderRadius: "15px",
+        padding: "5px 10px",
+      }}
+    >
       <Box
         ref={buttonRef}
         sx={{
@@ -64,10 +74,25 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           cursor: "pointer",
           alignItems: "center",
           color: "#fff",
+          minWidth: "110px",
+          justifyContent: "space-around",
         }}
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <Typography>{languages[selectedLanguage]}</Typography>
+        <Stack direction="row" alignItems="center" gap="5px">
+          <LanguageIcon
+            sx={{ fontSize: "18px", color: MAIN_COLORS.mainGreen }}
+          />
+          <Typography
+            sx={{
+              fontSize: "14px",
+              fontWeight: 400,
+              color: MAIN_COLORS.mainGreen,
+            }}
+          >
+            {languages[selectedLanguage]}
+          </Typography>
+        </Stack>
         <img src={Vector} alt="vector" />
       </Box>
       {isOpen && (
@@ -92,6 +117,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 padding: "8px 12px",
                 color: "#fff",
                 "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
+                fontSize: "14px",
+                fontWeight: 400,
               }}
               onClick={() => handleLanguageChange(code as LanguageCode)}
             >

@@ -23,6 +23,8 @@ import { selectCurrentModule } from "../Tutorial/selectors";
 import { setCurrentModule } from "../Tutorial/slices";
 import switchSound from "../../assets/sounds/switch.mp3";
 import { selectSoundEnabled } from "../Settings/selectors";
+import LanguageSelector from "../../shared/components/LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const loading = useSelector(selectHeaderLoading);
@@ -34,6 +36,11 @@ const Header = () => {
   const currentModule = useSelector(selectCurrentModule());
   const [playSwitchSound] = useSound(switchSound);
   const soundEnabled = useSelector(selectSoundEnabled());
+  const { i18n } = useTranslation();
+
+  const handleLanguageChange = (languageCode: string) => {
+    i18n.changeLanguage(languageCode);
+  };
 
   useEffect(() => {
     if (userData !== null) {
@@ -118,10 +125,16 @@ const Header = () => {
         }}
       >
         <LoaderComponent loading={loading} />
-        <Stack width={"100%"} direction="row" justifyContent="space-between">
+        <Stack
+          width={"100%"}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Typography sx={{ fontSize: "16px", fontWeight: 400 }}>
             {userData?.userName}
           </Typography>
+          <LanguageSelector onLanguageChange={handleLanguageChange} />
           <Box
             onClick={handleSoundClick}
             sx={{
