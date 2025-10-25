@@ -111,7 +111,10 @@ export const Scoreboard = () => {
                     fontSize: "12px",
                   }}
                 >
-                  {user.userName}
+                  {user.userName
+                    ? user.userName.slice(0, 2) +
+                      "*".repeat(Math.max(0, user.userName.length - 2))
+                    : ""}
                 </Typography>
                 <Typography
                   sx={{
