@@ -75,4 +75,5 @@ export type County = {
   title: string;
   id: number;
   unlockPrice: number;
+  percent_income: number;
 };
