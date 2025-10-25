@@ -19,7 +19,7 @@ interface LanguageSelectorProps {
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   onLanguageChange,
 }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode>(
     i18n.language as LanguageCode,
@@ -74,7 +74,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           cursor: "pointer",
           alignItems: "center",
           color: "#fff",
-          minWidth: "110px",
+          minWidth: "70px",
           justifyContent: "space-around",
         }}
         onClick={() => setIsOpen((prev) => !prev)}
@@ -90,7 +90,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               color: MAIN_COLORS.mainGreen,
             }}
           >
-            {languages[selectedLanguage]}
+            {t(selectedLanguage)}
           </Typography>
         </Stack>
         <img src={Vector} alt="vector" />

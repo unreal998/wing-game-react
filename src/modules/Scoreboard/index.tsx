@@ -70,7 +70,7 @@ export const Scoreboard = () => {
           }}
         >
           <TableBox>
-            {["#", "User", "kW"].map((item, index) => (
+            {["#", "User", "Referal"].map((item, index) => (
               <StyledHeader key={index} sx={{ flex: index === 0 ? 0.2 : 0.4 }}>
                 <Typography sx={{ fontSize: "12px" }}>{t(item)}</Typography>
               </StyledHeader>
