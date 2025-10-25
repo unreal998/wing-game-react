@@ -217,16 +217,14 @@ export const Planet = () => {
                   <Stack direction="row" alignItems="center" gap={"2px"}>
                     <RoomOutlinedIcon sx={{ width: "18px", height: " 18px" }} />
                     <Typography>
-                      {t(
-                        `${country.title} ${countries?.find((c) => c.shortName === country.name)?.percent_income}%`,
-                      )}
+                      {t(`${country.title}`) +
+                        ` ${countries?.find((c) => c.shortName === country.name)?.percent_income}%`}
                     </Typography>
                   </Stack>
                 ) : (
                   <Typography>
-                    {t(
-                      `${country.title} ${countries?.find((c) => c.shortName === country.name)?.percent_income}%`,
-                    )}
+                    {t(`${country.title}`) +
+                      ` ${countries?.find((c) => c.shortName === country.name)?.percent_income}%`}
                   </Typography>
                 )}
               </StyledPlanetButton>
