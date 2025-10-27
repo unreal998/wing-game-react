@@ -132,7 +132,7 @@
   "lowBalanceContent": "You have not enough TON balance, please fund your TON balance",
   "repeatTutorial": "Tutorial",
   "support": "Support",
-  "lockedCountryTitle": "This country is locked",
+  "lockedCountryTitle": "Country data",
   "lockedCountryContent": "You need to invite",
   "lockedCountryContent1": " friends to unlock this country",
   "lockedCountryContent2": " bring you ",
@@ -182,5 +182,6 @@
   "shareTitle": "Share Link",
   "shareText": "Share Link",
   "ru": "Ru",
-  "en": "Eng"
+  "en": "Eng",
+  "open": "Open"
 }

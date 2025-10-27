@@ -132,7 +132,7 @@
   "lowBalanceContent": "У вас недостаточно TON-баланса, пожалуйста, пополните свой TON-баланс",
   "repeatTutorial": "Обучение",
   "support": "Поддержка",
-  "lockedCountryTitle": "Эта страна заблокирована",
+  "lockedCountryTitle": "Данные по стране",
   "lockedCountryContent": "Вам нужно пригласить ещё",
   "lockedCountryContent1": "друзей, чтобы открыть",
   "lockedCountryContent2": " даст вам",
@@ -182,5 +182,6 @@
   "shareTitle": "Поделиться ссылкой",
   "shareText": "Поделиться ссылкой",
   "ru": "Ru",
-  "en": "Eng"
+  "en": "Eng",
+  "open": "Открыть"
 }

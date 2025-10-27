@@ -45,7 +45,7 @@ export const Planet = () => {
   const currentModule = useSelector(selectCurrentModule());
   const [buyCountrieModalOpen, setBuyCountrieModalOpen] = useState(false);
   const [unavialableModalCountryData, setUnavialableModalCountryData] =
-    useState<string>("");
+    useState<AreaType | null>(null);
   const userData = useSelector(selectUserData());
   const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
@@ -57,7 +57,8 @@ export const Planet = () => {
   }, [dispatch]);
 
   const handleButtonPress = useCallback(
-    (selectedCountry: AreaType) => {
+    (selectedCountry: AreaType | null) => {
+      if (!selectedCountry) return;
       dispatch(setSelectedCountry(selectedCountry));
       navigate("/home");
     },
@@ -183,23 +184,14 @@ export const Planet = () => {
                 }}
                 onClick={() => {
                   if (soundEnabled) playFooterSound();
-                  if (!country.available) {
-                    setUnavialableModalCountryData(country.name);
-                  } else {
-                    if (currentModule === 3 || currentModule === 14) {
-                      if (!isTutorialFinished && currentModule === 3) {
-                        dispatch(setCurrentModule(0));
-                      }
-
-                      handleButtonPress(country);
-                    } else if (isTutorialFinished && country.available) {
-                      if (!country.bought && country.name !== "nl") {
-                        setBuyCountrieModalOpen(true);
-                        setCountryToBuy(country);
-                      } else {
-                        handleButtonPress(country);
-                      }
+                  if (currentModule === 3 || currentModule === 14) {
+                    if (!isTutorialFinished && currentModule === 3) {
+                      dispatch(setCurrentModule(0));
                     }
+
+                    handleButtonPress(country);
+                  } else if (isTutorialFinished) {
+                    setUnavialableModalCountryData(country);
                   }
                 }}
               >
@@ -262,9 +254,10 @@ export const Planet = () => {
           handleCloseModal={handleModalClose}
         />
         <LockedCountryModal
-          open={unavialableModalCountryData !== ""}
-          onClose={() => setUnavialableModalCountryData("")}
-          countryName={unavialableModalCountryData || ""}
+          open={unavialableModalCountryData !== null}
+          onClose={() => setUnavialableModalCountryData(null)}
+          countryName={unavialableModalCountryData?.name || ""}
+          onOpen={() => handleButtonPress(unavialableModalCountryData)}
         />
       </Stack>
     </>

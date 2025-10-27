@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 import { selectCountiresData, selectUserData } from "../../Header/selectors";
 import { useMemo } from "react";
 import { County } from "../../../shared/types";
+import { PopUpMainButton } from "../../../shared/components/PopUpMainButton";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   countryName: string;
+  onOpen: () => void;
 };
 
 export const countrieModsProfit = (
@@ -33,6 +35,7 @@ export const LockedCountryModal: React.FC<Props> = ({
   open,
   onClose,
   countryName,
+  onOpen,
 }) => {
   const { t } = useTranslation();
   const userData = useSelector(selectUserData());
@@ -88,13 +91,13 @@ export const LockedCountryModal: React.FC<Props> = ({
       handleCloseModal={onClose}
       title={t("lockedCountryTitle")}
       subtitle={`
-                ${t("lockedCountryContent")}: ${(selectedCountry?.referalsToUnlock || 0) - (userData?.referals?.length || 0)} ${t("lockedCountryContent1")} ${t(selectedCountry?.title || "")}\n
                 ${t(selectedCountry?.title || "")} ${t("lockedCountryContent2")}: ${selectedCountry?.basicBonusPerClick} ${t("lockedCountryContent2.1")} ${t("lockedCountryContent2.2")}\n
                 ${t("lockedCountryContent2.3")} ${countrieModsProfit(selectedCountry)}%
-                ${countriesForUnlockNames ? `\n ${t("lockedCountryContent3")}: ${countriesForUnlockNames} \n` : ""}
-                ${t("lockedCountryContent3.1")} ${t(selectedCountry?.title || "")} ${t("for")} ${selectedCountry?.unlockPrice} TON
                 `}
       contentAlign="left"
+      additionalbutton={
+        <PopUpMainButton onClick={onOpen}>{t("open")}</PopUpMainButton>
+      }
     ></ModalComponent>
   );
 };
