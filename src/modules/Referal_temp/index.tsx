@@ -96,7 +96,7 @@ const Referal = () => {
     }
   }, [dispatch, userData]);
 
-  const tableHeight = useMemo(() => heightProportion - 270, []);
+  const tableHeight = useMemo(() => heightProportion - 300, []);
 
   const toggleExpand = useCallback(
     (tid: number | string, hasChildrenHint?: boolean) => {
@@ -242,7 +242,7 @@ const Referal = () => {
         </Stack>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <InfoBox
-            value={`${referalData.length}/${nextArea?.referalsToUnlock || 0}`}
+            value={`${referalData.length}`}
             subtitle={`${t("Referrals")}\n ${t("referralInfoSubtitle")}`}
             onClick={() => setIsUserReferalInfoOpen(true)}
           />

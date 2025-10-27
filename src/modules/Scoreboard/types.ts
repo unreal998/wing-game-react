@@ -1,6 +1,6 @@
 export type ScoreType = {
-  position: number;
+  rank: number;
   userName: string;
-  score: number;
+  real_referal_count: number;
   id: string;
 };

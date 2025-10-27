@@ -80,10 +80,10 @@ export const Scoreboard = () => {
             scoreData.map((user) => (
               <Stack
                 direction="row"
-                key={user.position}
+                key={user.rank}
                 sx={{
                   padding: "10px 12px",
-                  border: `1px solid ${user.id === uid ? "#3f3ceaff" : getScoreColor(user.position)}`,
+                  border: `1px solid ${user.id === uid ? "#3f3ceaff" : getScoreColor(user.rank)}`,
                   borderRadius: "8px",
                 }}
               >
@@ -92,22 +92,18 @@ export const Scoreboard = () => {
                     flex: 0.2,
                     textAlign: "flex-start",
                     color:
-                      user.id === uid
-                        ? "#3f3ceaff"
-                        : getScoreColor(user.position),
+                      user.id === uid ? "#3f3ceaff" : getScoreColor(user.rank),
                     fontSize: "12px",
                   }}
                 >
-                  {user.position}
+                  {user.rank}
                 </Typography>
                 <Typography
                   sx={{
                     flex: 0.4,
                     textAlign: "flex-start",
                     color:
-                      user.id === uid
-                        ? "#3f3ceaff"
-                        : getScoreColor(user.position),
+                      user.id === uid ? "#3f3ceaff" : getScoreColor(user.rank),
                     fontSize: "12px",
                   }}
                 >
@@ -121,13 +117,11 @@ export const Scoreboard = () => {
                     flex: 0.4,
                     textAlign: "flex-start",
                     color:
-                      user.id === uid
-                        ? "#3f3ceaff"
-                        : getScoreColor(user.position),
+                      user.id === uid ? "#3f3ceaff" : getScoreColor(user.rank),
                     fontSize: "12px",
                   }}
                 >
-                  {user.score.toFixed(0)}
+                  {user.real_referal_count}
                 </Typography>
               </Stack>
             ))
