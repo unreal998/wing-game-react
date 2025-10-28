@@ -11,7 +11,7 @@ import FooterButtonPress from "../../assets/sounds/footerButton.mp3";
 import WebApp from "@twa-dev/sdk";
 import { StyledFlashBox } from "./components/StyledFlashBox";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserData } from "./selectors";
+import { selectUserData, selectUserInitData } from "./selectors";
 import {
   selectHeaderLoading,
   updateBalanceAction,
@@ -37,6 +37,7 @@ const Header = () => {
   const [playSwitchSound] = useSound(switchSound);
   const soundEnabled = useSelector(selectSoundEnabled());
   const { i18n } = useTranslation();
+  const userInitData = useSelector(selectUserInitData());
 
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
@@ -132,7 +133,7 @@ const Header = () => {
           alignItems="center"
         >
           <Typography sx={{ fontSize: "16px", fontWeight: 400 }}>
-            {userData?.userName}
+            {userInitData?.userName}
           </Typography>
           <LanguageSelector onLanguageChange={handleLanguageChange} />
           <Box

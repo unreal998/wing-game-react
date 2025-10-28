@@ -42,3 +42,8 @@ export const selectIncomeData =
       tonIncome: headerSlice.tonIncome,
     };
   };
+
+export const selectUserInitData =
+  () =>
+  ({ headerSlice }: HeaderSliceStore) =>
+    headerSlice.userInitData;
