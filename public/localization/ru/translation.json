@@ -183,5 +183,9 @@
   "shareText": "Поделиться ссылкой",
   "ru": "Ru",
   "en": "Eng",
-  "open": "Открыть"
+  "open": "Открыть",
+  "Investitions": "Инвестиции",
+  "No investitions yet": "Пока нет инвестиций",
+  "Investition Time": "Время инвестиции",
+  "Currency": "Валюта"
 }

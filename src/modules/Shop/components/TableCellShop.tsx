@@ -6,4 +6,5 @@ export const TableCellShop = styled(TableCell)({
   color: MAIN_COLORS.textColor,
   fontSize: "13px",
   padding: "8px",
+  textAlign: "center",
 });

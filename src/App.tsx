@@ -40,6 +40,7 @@ import LoaderComponent from "./shared/components/LoaderComponent";
 import { PopUpMainButton } from "./shared/components/PopUpMainButton";
 import { completeMissionAction } from "./modules/Missions/slices";
 import { Scoreboard } from "./modules/Scoreboard";
+import Investitions from "./modules/Investitions";
 
 function convertToUserData(
   userData: WebAppInitData["user"] | undefined,
@@ -215,6 +216,7 @@ const App = () => {
             <Route path="/referal" element={<Referal />} />
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/investitions" element={<Investitions />} />
             <Route path="/missions" element={<Missions />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/scoreboard" element={<Scoreboard />} />

@@ -7,6 +7,7 @@ import { watchReferalActions } from "../modules/Referal_temp/sagas";
 import { watchMissionsActions } from "../modules/Missions/sagas";
 import { watchTutorialSaga } from "../modules/Settings/sagas";
 import { watchScoreboardSagas } from "../modules/Scoreboard/sagas";
+import { watchInvestitionsData } from "../modules/Investitions/sagas";
 
 export function* rootSaga() {
   yield all([
@@ -18,5 +19,6 @@ export function* rootSaga() {
     watchMissionsActions(),
     watchTutorialSaga(),
     watchScoreboardSagas(),
+    watchInvestitionsData(),
   ]);
 }

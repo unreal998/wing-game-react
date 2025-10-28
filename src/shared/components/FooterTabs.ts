@@ -8,6 +8,7 @@ import Cart from "../../assets/cart-shopping.svg";
 import CartActive from "../../assets/cart-shoppingActive.svg";
 import Wallet from "../../assets/wallet.svg";
 import WalletActive from "../../assets/walletActive.svg";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
 export const footerTabs = [
   {
@@ -29,6 +30,12 @@ export const footerTabs = [
     label: "Home",
     isCenter: true,
   },
-  { path: "/shop", icon: Cart, activeIcon: CartActive, label: "Shop" },
+  // { path: "/shop", icon: Cart, activeIcon: CartActive, label: "Shop" },
+  {
+    path: "/investitions",
+    icon: Cart,
+    activeIcon: CartActive,
+    label: "Investitions",
+  },
   { path: "/wallet", icon: Wallet, activeIcon: WalletActive, label: "Wallet" },
 ];

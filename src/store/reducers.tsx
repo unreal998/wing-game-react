@@ -8,6 +8,7 @@ import { missionsSlice } from "../modules/Missions/slices";
 import { settingsSlice } from "../modules/Settings/slices";
 import { tutorialSlice } from "../modules/Tutorial/slices";
 import { scoreSlice } from "../modules/Scoreboard/slice";
+import { investitionsSlice } from "../modules/Investitions/slice";
 
 const slices: any[] = [
   homeSlice,
@@ -19,6 +20,7 @@ const slices: any[] = [
   settingsSlice,
   tutorialSlice,
   scoreSlice,
+  investitionsSlice,
 ];
 
 const toolkitReducers = Object.fromEntries(
