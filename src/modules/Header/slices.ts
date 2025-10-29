@@ -13,8 +13,14 @@ type HeaderState = {
   errMessage: string;
   loading: boolean;
   countriesData: null | County[];
-  tonIncome: string;
-  kwtIncome: string;
+  KwtIncome: number;
+  TONIncome: number;
+  USDTIncome: number;
+  SOLIncome: number;
+  BNBIncome: number;
+  SOLBalance: number;
+  BNBBalance: number;
+  USDTBalance: number;
 };
 
 export const initialHeaderState: HeaderState = {
@@ -23,8 +29,14 @@ export const initialHeaderState: HeaderState = {
   userInitData: null,
   loading: false,
   countriesData: null,
-  tonIncome: "0",
-  kwtIncome: "0",
+  KwtIncome: 0,
+  TONIncome: 0,
+  USDTIncome: 0,
+  SOLIncome: 0,
+  BNBIncome: 0,
+  SOLBalance: 0,
+  BNBBalance: 0,
+  USDTBalance: 0,
 };
 
 export const headerSlice = createSlice({
@@ -60,6 +72,9 @@ export const headerSlice = createSlice({
       if (state.userData) {
         state.userData.TONBalance = payload.TONBalance;
         state.userData.WindBalance = payload.WindBalance;
+        state.userData.SOLBalance = payload.SOLBalance;
+        state.userData.BNBBalance = payload.BNBBalance;
+        state.userData.USDTBalance = payload.USDTBalance;
         state.userData.withdrawLimit = payload.withdrawLimit;
       }
     },
@@ -91,8 +106,11 @@ export const headerSlice = createSlice({
       { payload }: { payload: IncomeDataType },
     ) => {
       state.loading = false;
-      state.kwtIncome = payload.totalTurxGain;
-      state.tonIncome = payload.totalTonGain;
+      state.KwtIncome = payload.kwt;
+      state.TONIncome = payload.TON;
+      state.USDTIncome = payload.USDT;
+      state.SOLIncome = payload.SOL;
+      state.BNBIncome = payload.BNB;
     },
     updateIncomeDataActionFailed: (state, { payload }: { payload: string }) => {
       state.loading = false;

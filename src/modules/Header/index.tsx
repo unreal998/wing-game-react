@@ -4,6 +4,9 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { MAIN_COLORS } from "../../shared/colors";
 import Gear from "../../assets/gear.svg";
 import TON from "../../assets/ton.png";
+import BNB from "../../assets/bnb.png";
+import USDT from "../../assets/usdt.png";
+import SOL from "../../assets/solana.png";
 import Flash from "../../assets/flash.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import useSound from "use-sound";
@@ -182,12 +185,34 @@ const Header = () => {
             </Stack>
           </StyledFlashBox>
 
-          <StyledFlashBox sx={{ gap: "8px", width: "30%" }}>
-            <img src={TON} alt="usdt" width="24px" height="24px" />
-            <Typography sx={{ fontSize: "16px", fontWeight: 700 }}>
-              {Math.floor((userData?.TONBalance || 0) * 1000) / 1000}
-            </Typography>
-          </StyledFlashBox>
+          <Stack direction="column" gap="15px">
+            <StyledFlashBox sx={{ gap: "8px", width: "70%" }}>
+              <img src={TON} alt="usdt" width="18px" height="18px" />
+              <Typography sx={{ fontSize: "14px", fontWeight: 700 }}>
+                {Math.floor((userData?.TONBalance || 0) * 1000) / 1000}
+              </Typography>
+            </StyledFlashBox>
+            <StyledFlashBox sx={{ gap: "8px", width: "70%" }}>
+              <img src={BNB} alt="usdt" width="18px" height="18px" />
+              <Typography sx={{ fontSize: "14px", fontWeight: 700 }}>
+                {Math.floor((userData?.BNBBalance || 0) * 1000) / 1000}
+              </Typography>
+            </StyledFlashBox>
+          </Stack>
+          <Stack direction="column" gap="15px">
+            <StyledFlashBox sx={{ gap: "8px", width: "70%" }}>
+              <img src={USDT} alt="usdt" width="18px" height="18px" />
+              <Typography sx={{ fontSize: "14px", fontWeight: 700 }}>
+                {Math.floor((userData?.USDTBalance || 0) * 1000) / 1000}
+              </Typography>
+            </StyledFlashBox>
+            <StyledFlashBox sx={{ gap: "8px", width: "70%" }}>
+              <img src={SOL} alt="usdt" width="18px" height="18px" />
+              <Typography sx={{ fontSize: "14px", fontWeight: 700 }}>
+                {Math.floor((userData?.SOLBalance || 0) * 1000) / 1000}
+              </Typography>
+            </StyledFlashBox>
+          </Stack>
         </Stack>
       </Stack>
       {location.pathname === "/home" && (

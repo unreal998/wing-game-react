@@ -43,11 +43,17 @@ export type UserData = UserInitData & {
   lvl: number;
   userSettings: UserSettingsData;
   withdrawLimit: number;
+  SOLBalance: number;
+  BNBBalance: number;
+  USDTBalance: number;
 };
 
 export type IncomeDataType = {
-  totalTurxGain: string;
-  totalTonGain: string;
+  kwt: number;
+  TON: number;
+  USDT: number;
+  SOL: number;
+  BNB: number;
 };
 
 export type Withdraw = {

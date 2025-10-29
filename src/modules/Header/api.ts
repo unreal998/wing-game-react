@@ -7,6 +7,9 @@ export type UserBalanceResponse = {
   TONBalance: number;
   WindBalance: number;
   withdrawLimit: number;
+  SOLBalance: number;
+  BNBBalance: number;
+  USDTBalance: number;
 };
 
 export const fetchUserBalance = async (uid: string) => {
@@ -21,11 +24,6 @@ export const fetchUserBalance = async (uid: string) => {
 export const fetchUserIncome = async (uid: string, country: string) => {
   const response = await axios.get(
     `${SERVER_URL}/user/income?uid=${uid}&country=${country}`,
-    {
-      headers: {
-        "ngrok-skip-browser-warning": true,
-      },
-    },
   );
   return response.data;
 };

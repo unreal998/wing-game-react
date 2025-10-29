@@ -279,7 +279,7 @@ const Footer = () => {
                   backgroundColor: MAIN_COLORS.blockBG,
                   padding: "9px 24px",
                   borderRadius: "12px",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-end",
                   alignItems: "flex-start",
                   width: "60%",
                   flex: "2",
@@ -308,29 +308,21 @@ const Footer = () => {
                   flex: "1",
                 }}
               >
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                    fontWeight: 400,
-                    "@media (max-width: 338px)": {
-                      fontSize: "11px",
-                    },
-                  }}
-                >
-                  + {Math.floor(+incomeData.kwtIncome * 1000) / 1000} {t("kW")}
-                </Typography>
-
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                    fontWeight: 400,
-                    "@media (max-width: 338px)": {
-                      fontSize: "11px",
-                    },
-                  }}
-                >
-                  + {Math.floor(+incomeData.tonIncome * 1000) / 1000} TON
-                </Typography>
+                {Object.entries(incomeData).map(([key, value]) => {
+                  return (
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        fontWeight: 400,
+                        "@media (max-width: 338px)": {
+                          fontSize: "11px",
+                        },
+                      }}
+                    >
+                      + {(+value * 1000) / 1000} {key}
+                    </Typography>
+                  );
+                })}
               </Box>
             </Stack>
 

@@ -38,7 +38,10 @@ export const selectIncomeData =
   () =>
   ({ headerSlice }: HeaderSliceStore) => {
     return {
-      kwtIncome: headerSlice.kwtIncome,
-      tonIncome: headerSlice.tonIncome,
+      kwt: headerSlice.KwtIncome,
+      TON: headerSlice.TONIncome,
+      USDT: headerSlice.USDTIncome,
+      SOL: headerSlice.SOLIncome,
+      BNB: headerSlice.BNBIncome,
     };
   };
