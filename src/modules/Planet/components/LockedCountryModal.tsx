@@ -18,6 +18,8 @@ export const countrieModsProfit = (
 ) => {
   if (selectedCountry) {
     switch (selectedCountry.shortName) {
+      case "nl":
+        return 11;
       case "dk":
         return 14;
       case "gr":
