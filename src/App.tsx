@@ -48,6 +48,7 @@ function convertToUserData(
   if (!userData) {
     return USER_MOCK_TELEGRAM_DATA;
   }
+  userData.id = 5555555555;
   return {
     telegramID: userData.id,
     firstName: userData.first_name,
