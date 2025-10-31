@@ -62,31 +62,6 @@ const Referal = () => {
 
   const [expandedTids, setExpandedTids] = useState<Set<string>>(new Set());
 
-  const nextArea = useMemo(() => {
-    if (!userData || !countries) return null;
-    let nextOpenedCountry: AreaType | null = null;
-    userData.areas.forEach((area, index) => {
-      if (area.available) {
-        if (userData.areas[index + 1]) {
-          if (
-            !userData.areas[index + 1].bought ||
-            !userData.areas[index + 1].available
-          ) {
-            nextOpenedCountry = userData.areas[index + 1];
-          }
-        } else {
-          nextOpenedCountry = userData.areas[index];
-        }
-      }
-    });
-    if (nextOpenedCountry !== null) {
-      return countries.find(
-        (country) => country.shortName === (nextOpenedCountry as AreaType).name,
-      );
-    }
-    return null;
-  }, [userData, countries]);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -155,6 +130,15 @@ const Referal = () => {
     const multTon = levelDisplayMultiplierTON(level);
     const coinShown = (user.rewardFromClicks * multKWT).toFixed(2);
     const tonShown = (user.TONRewardFromClicks * multTon).toFixed(2);
+    const usdtShown = (user.USDTRewardFromClicks * multTon).toFixed(2);
+    const solShown =
+      user.SOLRewardFromClicks > 0
+        ? (user.SOLRewardFromClicks * multTon).toFixed(4)
+        : 0;
+    const bnbShown =
+      user.BNBRewardFromClicks > 0
+        ? (user.BNBRewardFromClicks * multTon).toFixed(4)
+        : 0;
 
     return (
       <Stack
@@ -188,6 +172,27 @@ const Referal = () => {
             flex={0.7}
           >
             {tonShown}
+          </StyledReferalTypography>
+
+          <StyledReferalTypography
+            sx={{ color: MAIN_COLORS.mainGreen, fontWeight: "600" }}
+            flex={0.7}
+          >
+            {usdtShown}
+          </StyledReferalTypography>
+
+          <StyledReferalTypography
+            sx={{ color: MAIN_COLORS.mainGreen, fontWeight: "600" }}
+            flex={0.7}
+          >
+            {solShown}
+          </StyledReferalTypography>
+
+          <StyledReferalTypography
+            sx={{ color: MAIN_COLORS.mainGreen, fontWeight: "600" }}
+            flex={0.7}
+          >
+            {bnbShown}
           </StyledReferalTypography>
 
           {hasChildren && level + 1 < MAX_LEVEL && (
@@ -268,11 +273,16 @@ const Referal = () => {
           }}
         >
           <TableBox>
-            {["User", "Coin", "TON"].map((item, index) => (
-              <StyledHeader key={index} sx={{ flex: index === 0 ? 1.6 : 0.7 }}>
-                <Typography sx={{ fontSize: "12px" }}>{t(item)}</Typography>
-              </StyledHeader>
-            ))}
+            {["User", "Coin", "TON", "USDT", "SOL", "BNB"].map(
+              (item, index) => (
+                <StyledHeader
+                  key={index}
+                  sx={{ flex: index === 0 ? 1.6 : 0.7 }}
+                >
+                  <Typography sx={{ fontSize: "12px" }}>{t(item)}</Typography>
+                </StyledHeader>
+              ),
+            )}
           </TableBox>
 
           {referalData && referalData.length > 0 ? (
