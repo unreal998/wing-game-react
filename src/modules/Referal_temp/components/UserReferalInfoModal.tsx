@@ -47,26 +47,41 @@ export const ReferalsByLevelInfoModal = () => {
       1: {
         kwtIncome: 0,
         tonIncome: 0,
+        usdtIncome: 0,
+        solIncome: 0,
+        bnbIncome: 0,
         count: 0,
       },
       2: {
         kwtIncome: 0,
         tonIncome: 0,
+        usdtIncome: 0,
+        solIncome: 0,
+        bnbIncome: 0,
         count: 0,
       },
       3: {
         kwtIncome: 0,
         tonIncome: 0,
+        usdtIncome: 0,
+        solIncome: 0,
+        bnbIncome: 0,
         count: 0,
       },
       4: {
         kwtIncome: 0,
         tonIncome: 0,
+        usdtIncome: 0,
+        solIncome: 0,
+        bnbIncome: 0,
         count: 0,
       },
       5: {
         kwtIncome: 0,
         tonIncome: 0,
+        usdtIncome: 0,
+        solIncome: 0,
+        bnbIncome: 0,
         count: 0,
       },
     };
@@ -81,6 +96,15 @@ export const ReferalsByLevelInfoModal = () => {
         usersIncomeByLevel[
           (userData.level ?? 1) as keyof typeof usersIncomeByLevel
         ].count += 1;
+        usersIncomeByLevel[
+          (userData.level ?? 1) as keyof typeof usersIncomeByLevel
+        ].usdtIncome += userData.USDTRewardFromClicks;
+        usersIncomeByLevel[
+          (userData.level ?? 1) as keyof typeof usersIncomeByLevel
+        ].solIncome += userData.SOLRewardFromClicks;
+        usersIncomeByLevel[
+          (userData.level ?? 1) as keyof typeof usersIncomeByLevel
+        ].bnbIncome += userData.BNBRewardFromClicks;
       });
     });
     return usersIncomeByLevel;
@@ -97,6 +121,9 @@ export const ReferalsByLevelInfoModal = () => {
           <Typography flex={0.25}>{t("Count")}</Typography>
           <Typography flex={0.25}>{t("kW")}</Typography>
           <Typography flex={0.25}>{t("TON")}</Typography>
+          <Typography flex={0.25}>{t("USDT")}</Typography>
+          <Typography flex={0.25}>{t("SOL")}</Typography>
+          <Typography flex={0.25}>{t("BNB")}</Typography>
         </Stack>
       )}
 
@@ -114,6 +141,9 @@ export const ReferalsByLevelInfoModal = () => {
             <Typography flex={0.25}>{income.count}</Typography>
             <Typography flex={0.25}>{income.kwtIncome.toFixed(0)}</Typography>
             <Typography flex={0.25}>{income.tonIncome.toFixed(3)}</Typography>
+            <Typography flex={0.25}>{income.usdtIncome.toFixed(2)}</Typography>
+            <Typography flex={0.25}>{income.solIncome.toFixed(4)}</Typography>
+            <Typography flex={0.25}>{income.bnbIncome.toFixed(4)}</Typography>
           </Stack>
         ))}
       <LoaderComponent loading={loadingUserReferalData} />
