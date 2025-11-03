@@ -1,12 +1,17 @@
 import { Box } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDisabledPowerButton, selectSelectedCountry } from "./selectors";
+import {
+  selectDisabledPowerButton,
+  selectHomeLoading,
+  selectSelectedCountry,
+} from "./selectors";
 import { useNavigate } from "react-router-dom";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useMediaQuery } from "@mui/material";
 import { getIncomeDataAction } from "../Header/slices";
 import { selectUserData, selectUserId } from "../Header/selectors";
+import LoaderComponent from "../../shared/components/LoaderComponent";
 
 export const Home = () => {
   const isSmallScreen = useMediaQuery("(max-width: 376px)");
@@ -17,6 +22,7 @@ export const Home = () => {
   const dispatch = useDispatch();
   const userId = useSelector(selectUserId());
   const modifiers = useSelector(selectUserData())?.modifiers;
+  const loading = useSelector(selectHomeLoading());
 
   const selectedCountryModifiers = useMemo(
     () => modifiers?.find((mod) => mod.areaName === selectedCountry.name),
@@ -64,6 +70,7 @@ export const Home = () => {
 
   return (
     <>
+      <LoaderComponent loading={loading} />
       <Box
         sx={{
           backgroundImage: `url(./windModel.png)`,

@@ -27,6 +27,7 @@ export const homeSlice = createSlice({
       { payload }: { payload: PowerButtonPressType },
     ) => {
       state.loading = true;
+      state.disabledPowerButton = true;
     },
     powerButtonPressedSuccess: (state) => {
       state.loading = false;

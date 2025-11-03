@@ -27,3 +27,8 @@ export const selectLastSelectedCountry =
   () =>
   ({ homeSlice }: HomeSliceStore) =>
     homeSlice.lastSelectedCountry;
+
+export const selectHomeLoading =
+  () =>
+  ({ homeSlice }: HomeSliceStore) =>
+    homeSlice.loading;
