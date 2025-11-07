@@ -76,16 +76,16 @@ const Footer = () => {
   const [isBlockedCountryOpen, setIsBlockedCountryOpen] = useState(false);
   const [isBuyNetherlandsOpen, setIsBuyNetherlandsOpen] = useState(false);
 
-  const normilizedWindValue = useMemo(() => {
-    if (countries && selectedCountry && windValue) {
-      const selectedCountryIndex =
-        countries.find(
-          (countrie) => countrie.shortName === selectedCountry.name,
-        )?.id || 0;
-      return windValue + (selectedCountryIndex - 1) * 4;
-    }
-    return windValue;
-  }, [countries, selectedCountry, windValue]);
+  // const normilizedWindValue = useMemo(() => {
+  //   if (countries && selectedCountry && windValue) {
+  //     const selectedCountryIndex =
+  //       countries.find(
+  //         (countrie) => countrie.shortName === selectedCountry.name,
+  //       )?.id || 0;
+  //     return windValue + (selectedCountryIndex - 1) * 4;
+  //   }
+  //   return windValue;
+  // }, [countries, selectedCountry, windValue]);
 
   const convertedShopValues: ShopValues[] = useMemo(() => {
     const valuesData: ShopValues[] = [];
@@ -413,7 +413,11 @@ const Footer = () => {
               onClick={() => {
                 handleBuyButtonPress();
               }}
-              disabled={windValue === 0 || windValue > currentAviailableMods}
+              disabled={
+                windValue === 0 ||
+                windValue > currentAviailableMods ||
+                windValue < currentAviailableMods - 3
+              }
               sx={{
                 backgroundColor: MAIN_COLORS.mainGreen,
                 margin: "15px",
