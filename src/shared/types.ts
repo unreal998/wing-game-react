@@ -1,3 +1,5 @@
+import { ReferalsByLevel } from "../modules/Referal_temp/types";
+
 export type UserInitData = {
   telegramID: number;
   firstName: string;
@@ -43,6 +45,8 @@ export type UserData = UserInitData & {
   lvl: number;
   userSettings: UserSettingsData;
   withdrawLimit: number;
+  referalIncomeTON: ReferalsByLevel;
+  referalIncomeKWT: ReferalsByLevel;
 };
 
 export type IncomeDataType = {

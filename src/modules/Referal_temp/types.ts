@@ -12,12 +12,15 @@ export type ReferalData = {
 };
 
 export type ReferalsByLevel = {
-  level: number;
-  count: number;
+  1: number;
+  2: number;
+  3: number;
+  4: number;
+  5: number;
 };
 
 export type ReferalsByLevelResponse = {
   data: ReferalData[];
-  levelCounts: ReferalsByLevel[];
+  levelCounts: { kwt: ReferalsByLevel; ton: ReferalsByLevel };
   referralsByLevel: Record<number, ReferalData[]>;
 };

@@ -45,46 +45,41 @@ export const ReferalsByLevelInfoModal = () => {
     if (!userReferalData) return [];
     let usersIncomeByLevel = {
       1: {
-        kwtIncome: 0,
-        tonIncome: 0,
+        kwtIncome: userData?.referalIncomeKWT[1] ?? 0,
+        tonIncome: userData?.referalIncomeTON[1] ?? 0,
         count: 0,
       },
       2: {
-        kwtIncome: 0,
-        tonIncome: 0,
+        kwtIncome: userData?.referalIncomeKWT[2] ?? 0,
+        tonIncome: userData?.referalIncomeTON[2] ?? 0,
         count: 0,
       },
       3: {
-        kwtIncome: 0,
-        tonIncome: 0,
+        kwtIncome: userData?.referalIncomeKWT[3] ?? 0,
+        tonIncome: userData?.referalIncomeTON[3] ?? 0,
         count: 0,
       },
       4: {
-        kwtIncome: 0,
-        tonIncome: 0,
+        kwtIncome: userData?.referalIncomeKWT[4] ?? 0,
+        tonIncome: userData?.referalIncomeTON[4] ?? 0,
         count: 0,
       },
       5: {
-        kwtIncome: 0,
-        tonIncome: 0,
+        kwtIncome: userData?.referalIncomeKWT[5] ?? 0,
+        tonIncome: userData?.referalIncomeTON[5] ?? 0,
         count: 0,
       },
     };
     Object.values(userReferalData).forEach((user) => {
-      user.forEach((userData) => {
+      user.forEach((refUserData) => {
         usersIncomeByLevel[
-          (userData.level ?? 1) as keyof typeof usersIncomeByLevel
-        ].kwtIncome += userData.rewardFromClicks;
-        usersIncomeByLevel[
-          (userData.level ?? 1) as keyof typeof usersIncomeByLevel
-        ].tonIncome += userData.TONRewardFromClicks;
-        usersIncomeByLevel[
-          (userData.level ?? 1) as keyof typeof usersIncomeByLevel
+          (refUserData.level ?? 1) as keyof typeof usersIncomeByLevel
         ].count += 1;
       });
     });
     return usersIncomeByLevel;
-  }, [userReferalData]);
+  }, [userReferalData, userData]);
+
   return (
     <Stack gap={1}>
       {referalsByLevelIncome && !loadingUserReferalData && (
