@@ -180,14 +180,14 @@ const Referal = () => {
           </StyledMainJpg>
 
           <StyledReferalTypography flex={0.7}>
-            {coinShown}
+            {Math.floor(LEVEL_BONUSES_KWT[level] * +coinShown * 1000) / 1000}
           </StyledReferalTypography>
 
           <StyledReferalTypography
             sx={{ color: MAIN_COLORS.mainGreen, fontWeight: "600" }}
             flex={0.7}
           >
-            {tonShown}
+            {Math.floor(LEVEL_BONUSES_TON[level] * +tonShown * 1000) / 1000}
           </StyledReferalTypography>
 
           {hasChildren && level + 1 < MAX_LEVEL && (
