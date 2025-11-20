@@ -41,6 +41,7 @@ import { ShopValues } from "./types";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { useNavigate } from "react-router-dom";
 import { countrieModsProfit } from "../Planet/components/LockedCountryModal";
+import { modificatorsData } from "./components/modificatorsData";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -72,6 +73,24 @@ const Shop = () => {
   const currentStep = useSelector(selectCurrentModule());
   const navigate = useNavigate();
   const [isBuyButtonBlocked, setIsBuyButtonBlocked] = useState(false);
+
+  const sortedShopValues = useMemo(() => {
+    return [...shopValues].sort((a, b) => a.id - b.id);
+  }, [shopValues]);
+
+  const countriesRangeArray = useMemo(() => {
+    const countriesRange: { start: number; end: number; country: string }[] =
+      [];
+    sortedShopValues.forEach((value) => {
+      const start = countriesRange[countriesRange.length - 1]?.end || 0;
+      countriesRange.push({
+        start: start + 1,
+        end: start + value.values.length,
+        country: value.area,
+      });
+    });
+    return countriesRange;
+  }, [sortedShopValues]);
 
   const handleModalClose = useCallback(() => {
     dispatch(setLowBalanceModalOpen(false));
@@ -145,27 +164,37 @@ const Shop = () => {
 
   const currentAviailableMods = useMemo(() => {
     if (countries && userData) {
-      const lastBoughtCountry = userData.areas.filter(
-        (area) => (area.bought && area.available) || area.name === "nl",
-      );
-      const currentCountryIndex = countries.findIndex((countrie) => {
-        return (
-          countrie.shortName ===
-          lastBoughtCountry[lastBoughtCountry.length - 1]?.name
-        );
-      });
-      return (currentCountryIndex + 1) * 4;
+      let stopIncrement = false;
+      let startPositionIndex = shopValues.reduce((acc, curr) => {
+        if (curr.area === selectedCountry.name) {
+          stopIncrement = true;
+        }
+        if (stopIncrement) {
+          return acc;
+        }
+        return acc + curr.values.length;
+      }, 0);
+
+      return startPositionIndex;
     }
     return 0;
-  }, [userData, countries]);
+  }, [shopValues, userData, selectedCountry.name]);
 
   const selectedSliderCountry = useMemo(() => {
-    if (countries && countries.length > 0) {
-      return countries[Math.ceil(+(windValue / 4) - 1)];
+    if (countriesRangeArray.length > 0 && countries) {
+      const countryInRange = countriesRangeArray.find(
+        (range) => windValue >= range.start && windValue <= range.end,
+      );
+      if (countryInRange) {
+        return countries.find(
+          (country) => country.shortName === countryInRange.country,
+        );
+      }
+      return null;
     }
 
     return null;
-  }, [countries, windValue]);
+  }, [countries, windValue, sortedShopValues]);
 
   const handleWindSlide = useCallback(
     (event: Event, newValue: number | number[]) => {
@@ -178,17 +207,16 @@ const Shop = () => {
         setSelectedScruberPosition(currentShopIndex.level - 1);
       }
 
-      if (
-        newSlideValue > currentAviailableMods &&
-        selectedSliderCountry &&
-        countries &&
-        countries[Math.ceil(+(newSlideValue / 4) - 1)]?.shortName !== "nl"
-      ) {
-        setIsBuyButtonBlocked(true);
-        return;
-      } else {
-        setIsBuyButtonBlocked(false);
-      }
+      // if (
+      //   newSlideValue > (currentAviailableMods + valuesCount) &&
+      //   selectedSliderCountry &&
+      //   countries
+      // ) {
+      //   setIsBuyButtonBlocked(true);
+      //   return;
+      // } else {
+      //   setIsBuyButtonBlocked(false);
+      // }
     },
     [dispatch, shopMarks, currentAviailableMods, selectedSliderCountry],
   );

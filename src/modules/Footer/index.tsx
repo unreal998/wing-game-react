@@ -75,17 +75,12 @@ const Footer = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [isBlockedCountryOpen, setIsBlockedCountryOpen] = useState(false);
   const [isBuyNetherlandsOpen, setIsBuyNetherlandsOpen] = useState(false);
-
-  // const normilizedWindValue = useMemo(() => {
-  //   if (countries && selectedCountry && windValue) {
-  //     const selectedCountryIndex =
-  //       countries.find(
-  //         (countrie) => countrie.shortName === selectedCountry.name,
-  //       )?.id || 0;
-  //     return windValue + (selectedCountryIndex - 1) * 4;
-  //   }
-  //   return windValue;
-  // }, [countries, selectedCountry, windValue]);
+  const valuesCount = useMemo(
+    () =>
+      shopValues.find((value) => value.area === selectedCountry.name)?.values
+        .length || 0,
+    [shopValues, selectedCountry.name],
+  );
 
   const convertedShopValues: ShopValues[] = useMemo(() => {
     const valuesData: ShopValues[] = [];
@@ -189,7 +184,7 @@ const Footer = () => {
     }
     dispatch(
       buyItemAction({
-        windSpeed: windValue % 4 === 0 ? 4 : windValue % 4,
+        windSpeed: startPosition === 0 ? windValue : windValue - startPosition,
         selectedArea: selectedCountry.name,
         uid: !!userData ? userData.id : "",
       }),
@@ -229,15 +224,27 @@ const Footer = () => {
     dispatch(setWithdrawModalOpen(true));
   };
 
-  const currentAviailableMods = useMemo(() => {
+  const startPosition = useMemo(() => {
     if (countries && userData) {
-      const lastBoughtCountry =
-        userData.areas.findIndex((area) => area.name === selectedCountry.name) +
-        1;
-      return lastBoughtCountry * 4;
+      let stopIncrement = false;
+      const sortedShopValues = [...shopValues].sort((a, b) => a.id - b.id);
+
+      let startPositionIndex = sortedShopValues.reduce((acc, curr) => {
+        if (curr.area === selectedCountry.name) {
+          stopIncrement = true;
+        }
+        if (stopIncrement) {
+          return acc;
+        }
+        return acc + curr.values.length;
+      }, 0);
+
+      return startPositionIndex;
     }
     return 0;
-  }, [shopValues, userData]);
+  }, [shopValues, userData, selectedCountry.name]);
+
+  console.log(startPosition, valuesCount);
 
   return (
     <>
@@ -415,8 +422,8 @@ const Footer = () => {
               }}
               disabled={
                 windValue === 0 ||
-                windValue > currentAviailableMods ||
-                windValue < currentAviailableMods - 3
+                windValue > startPosition + valuesCount ||
+                windValue < startPosition + 1
               }
               sx={{
                 backgroundColor: MAIN_COLORS.mainGreen,

@@ -1,9 +1,9 @@
-// export const SERVER_URL = "http://localhost:3003";
+export const SERVER_URL = "http://localhost:3003";
 // prod
-export const SERVER_URL = "https://turbinex.pp.ua";
+// export const SERVER_URL = "https://turbinex.pp.ua";
 
 export const USER_MOCK_TELEGRAM_DATA = {
-  telegramID: 123456789,
+  telegramID: 1111111111,
   firstName: "John21",
   lastName: "Doe21",
   userName: "john_doe21",
