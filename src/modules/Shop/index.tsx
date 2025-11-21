@@ -40,7 +40,6 @@ import { heightProportion } from "../../shared/utils";
 import { ShopValues } from "./types";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { useNavigate } from "react-router-dom";
-import { countrieModsProfit } from "../Planet/components/LockedCountryModal";
 import { modificatorsData } from "./components/modificatorsData";
 
 const Shop = () => {
@@ -466,7 +465,7 @@ const Shop = () => {
                 color="white"
               >
                 {t("lockedCountryContent2.3")}{" "}
-                {countrieModsProfit(selectedSliderCountry)}% {t("and from")}{" "}
+                {selectedSliderCountry?.percent_income}% {t("and from")}{" "}
                 {selectedSliderCountry?.basicBonusPerClick}{" "}
                 {t("basicBonusPerClick")}
               </Typography>
