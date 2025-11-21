@@ -37,6 +37,13 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   const buttonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (selectedLanguage !== "ru" && selectedLanguage !== "en") {
+      i18n.changeLanguage("en");
+      setSelectedLanguage("en");
+    }
+  }, [selectedLanguage]);
+
+  useEffect(() => {
     if (isOpen && buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
