@@ -79,7 +79,8 @@ const App = () => {
     if (location.pathname !== "/") {
       navigate("/");
     }
-  }, [location.pathname, navigate]);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (userSettings?.isTutorialFinished) {

@@ -44,7 +44,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (userData !== null) {
+    if (userData && userData.id) {
       dispatch(updateBalanceAction(userData.id));
     }
   }, [dispatch, userData]);
