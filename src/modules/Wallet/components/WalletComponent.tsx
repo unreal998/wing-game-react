@@ -41,7 +41,7 @@ export const WalletComponent = () => {
         .then(() => console.log("Wallet number copied!"))
         .catch((err) => console.error("Failed to copy: ", err));
     }
-  }, [walletNumber]);
+  }, [walletNumber, throttleMarkIcon]);
 
   return (
     <Box

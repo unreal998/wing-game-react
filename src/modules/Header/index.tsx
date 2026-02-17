@@ -97,7 +97,7 @@ const Header = () => {
       clearTimeout(timer);
       if (everyDayInterval) clearInterval(everyDayInterval);
     };
-  }, []);
+  }, [dispatch]);
 
   const isMobile = useMemo(
     () =>

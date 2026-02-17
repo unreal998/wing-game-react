@@ -47,7 +47,7 @@ export const Planet = () => {
   const [unavialableModalCountryData, setUnavialableModalCountryData] =
     useState<AreaType | null>(null);
   const userData = useSelector(selectUserData());
-  const [countryToBuy, setCountryToBuy] = useState<AreaType | null>(null);
+  const [countryToBuy] = useState<AreaType | null>(null);
   const lowBalanceModalOpen = useSelector(selectLowBalanceModalOpen());
   const animationRef = useRef<LottieRefCurrentProps | null>(null);
   const lastSelectedCountry = useSelector(selectLastSelectedCountry());
@@ -150,7 +150,7 @@ export const Planet = () => {
           />
           {userCountiresData &&
             userCountiresData?.length &&
-            userCountiresData.map((country, index) => (
+            userCountiresData.map((country: any, index: number) => (
               <StyledPlanetButton
                 key={country.name}
                 isBought={country.bought}

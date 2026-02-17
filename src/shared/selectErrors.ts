@@ -1,8 +1,6 @@
 import { RootState } from "../store";
 
 export const selectErrors = (state: RootState): string[] => {
-  const errors: string[] = [];
-
   const header = state.headerSlice as any;
   const home = state.homeSlice as any;
   const missions = state.missionsSlice as any;

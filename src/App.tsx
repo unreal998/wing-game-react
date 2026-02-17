@@ -3,7 +3,7 @@ import WebApp from "@twa-dev/sdk";
 import "./global.css";
 import { MAIN_COLORS } from "./shared/colors";
 import Referal from "./modules/Referal_temp";
-import { Box, Button, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import Header from "./modules/Header";
 import Settings from "./modules/Settings";
 import { Home } from "./modules/Home";
@@ -79,7 +79,7 @@ const App = () => {
     if (location.pathname !== "/") {
       navigate("/");
     }
-  }, []);
+  }, [location.pathname, navigate]);
 
   useEffect(() => {
     if (userSettings?.isTutorialFinished) {

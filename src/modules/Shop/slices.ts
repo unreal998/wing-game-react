@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BuyItemType, ShopData, ShopValues } from "./types";
+import { BuyItemType, ShopData } from "./types";
 
 type ShopState = {
   loading: boolean;

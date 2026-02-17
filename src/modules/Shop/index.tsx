@@ -37,10 +37,9 @@ import { StyledInput } from "../Referal_temp/components/StyledInput";
 import { countryFlags } from "./components/flag";
 import { selectSoundEnabled } from "../Settings/selectors";
 import { heightProportion } from "../../shared/utils";
-import { ShopValues } from "./types";
+import { ShopData, ShopValues } from "./types";
 import { PopUpMainButton } from "../../shared/components/PopUpMainButton";
 import { useNavigate } from "react-router-dom";
-import { modificatorsData } from "./components/modificatorsData";
 
 const Shop = () => {
   const { t } = useTranslation();
@@ -71,7 +70,7 @@ const Shop = () => {
   const soundEnabled = useSelector(selectSoundEnabled());
   const currentStep = useSelector(selectCurrentModule());
   const navigate = useNavigate();
-  const [isBuyButtonBlocked, setIsBuyButtonBlocked] = useState(false);
+  const [isBuyButtonBlocked] = useState(false);
 
   const sortedShopValues = useMemo(() => {
     return [...shopValues].sort((a, b) => a.id - b.id);
@@ -95,13 +94,13 @@ const Shop = () => {
     dispatch(setLowBalanceModalOpen(false));
   }, [dispatch]);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
   const convertedShopValues: ShopValues[] = useMemo(() => {
     const valuesData: ShopValues[] = [];
-    shopValues.forEach((shopValues) => {
+    shopValues.forEach((shopValues: ShopData) => {
       valuesData.push(...shopValues.values);
     });
     return valuesData.sort((a, b) => a.price - b.price);
@@ -161,24 +160,6 @@ const Shop = () => {
     if (soundEnabled) playSound();
   }, [playSound, soundEnabled]);
 
-  const currentAviailableMods = useMemo(() => {
-    if (countries && userData) {
-      let stopIncrement = false;
-      let startPositionIndex = shopValues.reduce((acc, curr) => {
-        if (curr.area === selectedCountry.name) {
-          stopIncrement = true;
-        }
-        if (stopIncrement) {
-          return acc;
-        }
-        return acc + curr.values.length;
-      }, 0);
-
-      return startPositionIndex;
-    }
-    return 0;
-  }, [shopValues, userData, selectedCountry.name]);
-
   const selectedSliderCountry = useMemo(() => {
     if (countriesRangeArray.length > 0 && countries) {
       const countryInRange = countriesRangeArray.find(
@@ -186,17 +167,17 @@ const Shop = () => {
       );
       if (countryInRange) {
         return countries.find(
-          (country) => country.shortName === countryInRange.country,
+          (country: any) => country.shortName === countryInRange.country,
         );
       }
       return null;
     }
 
     return null;
-  }, [countries, windValue, sortedShopValues]);
+  }, [countries, windValue, countriesRangeArray]);
 
   const handleWindSlide = useCallback(
-    (event: Event, newValue: number | number[]) => {
+    (_: Event, newValue: number | number[]) => {
       const newSlideValue = newValue as number;
       dispatch(setWindValue(newSlideValue));
       const currentShopIndex = shopMarks.find(
@@ -205,19 +186,8 @@ const Shop = () => {
       if (currentShopIndex) {
         setSelectedScruberPosition(currentShopIndex.level - 1);
       }
-
-      // if (
-      //   newSlideValue > (currentAviailableMods + valuesCount) &&
-      //   selectedSliderCountry &&
-      //   countries
-      // ) {
-      //   setIsBuyButtonBlocked(true);
-      //   return;
-      // } else {
-      //   setIsBuyButtonBlocked(false);
-      // }
     },
-    [dispatch, shopMarks, currentAviailableMods, selectedSliderCountry],
+    [dispatch, shopMarks],
   );
 
   const formatValue = (num: number) =>
@@ -226,7 +196,7 @@ const Shop = () => {
   return (
     <MainBox
       position={"relative"}
-      onClick={(e) => {
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         if (!isTutorialFinished) {
           e.stopPropagation();
           e.preventDefault();

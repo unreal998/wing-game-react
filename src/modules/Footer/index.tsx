@@ -123,7 +123,7 @@ const Footer = () => {
     } else {
       setConfirmOpen(true);
     }
-  }, [soundEnabled, playFooterButtonSound, userData, selectedCountry]);
+  }, [soundEnabled, playFooterButtonSound, selectedCountry]);
 
   const handleBuyNetherlands = useCallback(() => {
     if (soundEnabled) playFooterButtonSound();
@@ -172,6 +172,26 @@ const Footer = () => {
     soundEnabled,
   ]);
 
+  const startPosition = useMemo(() => {
+    if (countries && userData) {
+      let stopIncrement = false;
+      const sortedShopValues = [...shopValues].sort((a, b) => a.id - b.id);
+
+      let startPositionIndex = sortedShopValues.reduce((acc, curr) => {
+        if (curr.area === selectedCountry.name) {
+          stopIncrement = true;
+        }
+        if (stopIncrement) {
+          return acc;
+        }
+        return acc + curr.values.length;
+      }, 0);
+
+      return startPositionIndex;
+    }
+    return 0;
+  }, [shopValues, userData, selectedCountry.name, countries]);
+
   const buyModifier = useCallback(() => {
     const currentPrice = convertedShopValues.find(
       (value, index) => index === windValue - 1,
@@ -189,7 +209,14 @@ const Footer = () => {
         uid: !!userData ? userData.id : "",
       }),
     );
-  }, [dispatch, userData, shopValues, windValue, selectedCountry]);
+  }, [
+    dispatch,
+    userData,
+    windValue,
+    selectedCountry,
+    convertedShopValues,
+    startPosition,
+  ]);
 
   const calculateTime = useMemo(() => {
     const totalSeconds = Math.floor(nextPressButtonTimeDelay / 1000);
@@ -223,28 +250,6 @@ const Footer = () => {
   const handleWithdrawOpen = () => {
     dispatch(setWithdrawModalOpen(true));
   };
-
-  const startPosition = useMemo(() => {
-    if (countries && userData) {
-      let stopIncrement = false;
-      const sortedShopValues = [...shopValues].sort((a, b) => a.id - b.id);
-
-      let startPositionIndex = sortedShopValues.reduce((acc, curr) => {
-        if (curr.area === selectedCountry.name) {
-          stopIncrement = true;
-        }
-        if (stopIncrement) {
-          return acc;
-        }
-        return acc + curr.values.length;
-      }, 0);
-
-      return startPositionIndex;
-    }
-    return 0;
-  }, [shopValues, userData, selectedCountry.name]);
-
-  console.log(startPosition, valuesCount);
 
   return (
     <>
@@ -451,10 +456,8 @@ const Footer = () => {
               additionalbutton={
                 <PopUpMainButton
                   onClick={() => {
-                    {
-                      buyModifier();
-                      setConfirmOpen(false);
-                    }
+                    buyModifier();
+                    setConfirmOpen(false);
                   }}
                 >
                   {t("Buy")}

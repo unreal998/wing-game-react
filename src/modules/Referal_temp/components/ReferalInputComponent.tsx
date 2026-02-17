@@ -39,7 +39,7 @@ export const ReferalInputComponent = () => {
       .catch((err) => {
         console.error("Error copying text: ", err);
       });
-  }, [referalLink]);
+  }, [referalLink, throttleMarkIcon]);
 
   return (
     <Box
@@ -67,7 +67,7 @@ export const ReferalInputComponent = () => {
           open={isClicked}
           autoHideDuration={3000}
           onClose={() => setIsClicked(false)}
-          message={t("Copied" + " !")}
+          message={t("Copied") + " !"}
           sx={{
             "&.MuiSnackbar-root": {
               width: "100px",

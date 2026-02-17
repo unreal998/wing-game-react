@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { TableRow, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { MAIN_COLORS } from "../../../shared/colors";
 import { TableCellShop } from "./TableCellShop";
 import { UserData } from "../../../shared/types";

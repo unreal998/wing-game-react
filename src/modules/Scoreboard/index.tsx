@@ -25,7 +25,7 @@ export const Scoreboard = () => {
     if (uid) {
       dispatch(getScoreDataAction(uid));
     }
-  }, [dispatch]);
+  }, [dispatch, uid]);
 
   const tableHeight = useMemo(() => heightProportion - 100, []);
 

@@ -41,7 +41,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       i18n.changeLanguage("en");
       setSelectedLanguage("en");
     }
-  }, [selectedLanguage]);
+  }, [selectedLanguage, i18n]);
 
   useEffect(() => {
     if (isOpen && buttonRef.current) {

@@ -14,7 +14,7 @@ import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
 import { StyledBasicBox } from "./components/StyledBasicBox";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCountiresData, selectUserData } from "../Header/selectors";
+import { selectUserData } from "../Header/selectors";
 import { getReferalDataAction, selectReferalLoading } from "./slices";
 import {
   selectReferalData,
@@ -22,7 +22,6 @@ import {
   selectLoadingByParent,
 } from "./selectors";
 import LoaderComponent from "../../shared/components/LoaderComponent";
-import { AreaType } from "../../shared/types";
 import { updateBalanceAction } from "../Header/slices";
 import { ReferalData } from "./types";
 import { ModalComponent } from "../../shared/components/ModalComponent";
@@ -54,38 +53,12 @@ const Referal = () => {
   const { t } = useTranslation();
   const userData = useSelector(selectUserData());
   const referalData = useSelector(selectReferalData());
-  const countries = useSelector(selectCountiresData());
   const childrenByParent = useSelector(selectChildrenByParent());
   const loadingByParent = useSelector(selectLoadingByParent());
   const [isReferalInfoOpen, setIsReferalInfoOpen] = useState(false);
   const [isUserReferalInfoOpen, setIsUserReferalInfoOpen] = useState(false);
 
   const [expandedTids, setExpandedTids] = useState<Set<string>>(new Set());
-
-  const nextArea = useMemo(() => {
-    if (!userData || !countries) return null;
-    let nextOpenedCountry: AreaType | null = null;
-    userData.areas.forEach((area, index) => {
-      if (area.available) {
-        if (userData.areas[index + 1]) {
-          if (
-            !userData.areas[index + 1].bought ||
-            !userData.areas[index + 1].available
-          ) {
-            nextOpenedCountry = userData.areas[index + 1];
-          }
-        } else {
-          nextOpenedCountry = userData.areas[index];
-        }
-      }
-    });
-    if (nextOpenedCountry !== null) {
-      return countries.find(
-        (country) => country.shortName === (nextOpenedCountry as AreaType).name,
-      );
-    }
-    return null;
-  }, [userData, countries]);
 
   const dispatch = useDispatch();
 

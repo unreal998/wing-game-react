@@ -13,7 +13,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { StyledBasicBox } from "../Referal_temp/components/StyledBasicBox";
 import { CustomSwitch } from "./components/CustomSwitch";
-import LanguageSelector from "../../shared/components/LanguageSelector";
 import { TabBoxSettings } from "./components/TableBoxSettings";
 import { MainBox } from "../../shared/components/MainBox";
 import { NamedStyled } from "../../shared/components/NameStyled";
